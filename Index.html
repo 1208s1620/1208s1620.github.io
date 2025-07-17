@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Vendor List</title>
+  <style>
+    :root {
+      --background: #121212;
+      --surface: #1e1e1e;
+      --primary: #bb86fc;
+      --text: #ffffff;
+      --text-secondary: #a0a0a0;
+      --max-content-width: 1000px;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      box-sizing: border-box;
+      position: relative;
+      z-index: 1;
+    }
+
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 30% 30%, rgba(187, 134, 252, 0.2), transparent 40%),
+                  radial-gradient(circle at 70% 60%, rgba(0, 255, 255, 0.15), transparent 40%),
+                  radial-gradient(circle at 50% 80%, rgba(255, 0, 128, 0.2), transparent 40%);
+      filter: blur(80px);
+      z-index: 0;
+      animation: moveCircles 20s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    @keyframes moveCircles {
+      0% { transform: translate(0%, 0%); }
+      100% { transform: translate(-25%, -20%); }
+    }
+
+    body > *:not(.animated-bg) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: rgba(18, 18, 18, 0.95);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      z-index: 1000;
+      padding: 0.75rem 1rem;
+      box-sizing: border-box;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: var(--text);
+      flex: 1 1 auto;
+      min-width: 160px;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      flex: 0 1 auto;
+    }
+
+    .nav-button {
+      padding: 0.5rem 1.25rem;
+      border: 2px solid var(--primary);
+      border-radius: 25px;
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .nav-button:hover {
+      background: var(--primary);
+      color: var(--background);
+      transform: translateY(-2px);
+    }
+
+    .notification-legal {
+      max-width: var(--max-content-width);
+      margin: 90px auto 1rem auto;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
+      color: var(--background);
+      font-weight: 600;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(187, 134, 252, 0.4);
+      font-size: 1rem;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .tabs {
+      flex: 1;
+      margin: 0 auto 2rem;
+      max-width: var(--max-content-width);
+      padding: 0 1rem;
+      box-sizing: border-box;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .tab-button {
+      padding: 0.6rem 1.5rem;
+      background: var(--surface);
+      border: 2px solid var(--primary);
+      color: var(--text);
+      font-weight: 500;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .tab-button.active {
+      background: var(--primary);
+      color: var(--background);
+      box-shadow: 0 0 12px rgba(187, 134, 252, 0.4);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .ranking-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .rank-card {
+      background: linear-gradient(145deg, #2a2a2a, #1b1b1b);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.5rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      word-break: break-word;
+    }
+
+    .rank-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .rank-card h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.4rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      line-height: 1.2;
+      gap: 6px;
+    }
+
+    .stars {
+      display: inline-flex;
+      margin-left: 6px;
+      margin-right: 8px;
+      transform: translateY(2px);
+    }
+
+    .stars svg {
+      margin-right: 2px;
+    }
+
+    .rank-card h2 .indicator {
+      margin-left: 0px;
+      vertical-align: middle;
+      user-select: none;
+      display: inline-flex;
+      padding: 1px 4px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      border-radius: 8px;
+      position: relative;
+      top: 2px;
+      left: 4px;
+    }
+
+    .rank-card h2 .rating {
+      color: #ffcc00;
+      font-size: 1rem;
+      display: flex;
+      gap: 2px;
+      align-items: center;
+      margin-left: 4px;
+      user-select: none;
+      transform: translateY(2px);
+    }
+
+    .rank-card p {
+      margin: 0 0 0.75rem 0;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      flex-grow: 1;
+    }
+
+    .buttons-container {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .open-link-button {
+      padding: 0.5rem 1rem;
+      background: var(--primary);
+      color: var(--background);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      white-space: nowrap;
+      text-align: center;
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+
+    .open-link-button:hover {
+      background: #a465f9;
+    }
+
+    .footer {
+      width: 100%;
+      background: var(--surface);
+      text-align: center;
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      box-sizing: border-box;
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .indicator.new {
+      background-color: #ffb700;
+      color: #000;
+    }
+
+    .indicator.farm {
+      background-color: #888888;
+      color: #fff;
+    }
+
+    .indicator.password {
+      background-color: #0d8eea;
+      color: #fff;
+    }
+
+    .indicator.id {
+      background-color: #df5a5a;
+      color: #fff;
+    }
+
+    .product-types {
+      margin-top: 4px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .product-type-badge {
+      background-color: #333333;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    @media (max-width: 768px) {
+      html {
+        font-size: 14px;
+      }
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-buttons {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .tab-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+      }
+      .tab-button {
+        width: 100%;
+        padding: 0.75rem;
+      }
+      .rank-card {
+        padding: 1rem;
+      }
+      .rank-card h2 {
+        font-size: 1.2rem;
+      }
+      .rank-card p {
+        font-size: 0.9rem;
+      }
+      .open-link-button {
+        flex: 1 1 auto;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 400px) {
+      html {
+        font-size: 13px;
+      }
+      .header h1 {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <header class="header">
+    <div class="header-content">
+      <h1>💫 The Vendor List</h1>
+      <div class="nav-buttons">
+        <a href="https://discord.gg/SG2exQJdTm" class="nav-button">Subreddit</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="notification-legal">⚖️ Everything is 100% legal</div>
+  <div class="tabs">
+    <div class="tab-buttons" id="TabButtons"></div>
+    <div id="TabContents"></div>
+  </div>
+  <footer class="footer">
+    @that1dabaholic on discord, get in contact to be added to the list.
+  </footer>
+  <script>
+    const customTabOrder = ["Flower", "Concentrates", "Psychedelics", "Dissociatives", "Other"];
+    const Vendors = [
+      {
+        Title: "Clubhouse Drops",
+        Description: "Clubhouse Drops specializes in exotic brands, they offer a curated selection of flower and concentrates from trusted brands like 710 Labs and Coldfire, delivering high-quality cannabis experiences.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 5.0,
+        IsNew: false, IsFarm: true, Password: "CLUB", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "https://clubhousedrops.com/clubhouse-drops/" }]
+      },
+      {
+        Title: "Crysp",
+        Description: "Crysp sources high-quality cannabis products from passionate growers who care about the plant. They ensure their flower and concentrates are clean, flavorful, and affordable, providing customers with premium experiences without breaking the bank.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 5.0,
+        IsNew: false, IsFarm: true, Password: "", RequiresID: true,
+        Buttons: [{ Text: "Website", Link: "https://crysp.co/" }]
+      },
+      {
+        Title: "Simply Mary",
+        Description: "SimplyMary offers a curated selection of high-quality THCa products, including flower, concentrates, and edibles. Their THCa flower strains, such as Wagyu and Dr. J, are cultivated by reputable brands like Snowtill and Platinum Barn, ensuring top-tier quality and potency. Each product undergoes rigorous third-party lab testing to verify cannabinoid content and purity, providing customers with a clean and reliable experience.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 5.0,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: true,
+        Buttons: [{ Text: "Website", Link: "https://simplymary.co/" }]
+      },
+      {
+        Title: "Shop Hello Mary",
+        Description: "Shop Hello Mary offers a diverse selection of premium THCa cannabis products, including top-shelf flower, solventless rosin concentrates, and edibles. Their offerings feature strains like 818 OG, Hash Burger, and Halle Berry, cultivated by reputable producers to ensure quality and potency.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 4.5,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: true,
+        Buttons: [{ Text: "Website", Link: "https://shophellomary.com/" }]
+      },
+      {
+        Title: "Altura Hemp",
+        Description: "Altura Hemp is a new THCA-focused vendor that sources organically grown hemp, Unlike many brands, they sell real nug-run BHO extracts that offer a true full-spectrum experience.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 4,
+        IsNew: true, IsFarm: false, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "https://alturahemp.com/" }]
+      },
+      {
+        Title: "WNC-CBD",
+        Description: "WNC CBD is a family-owned business based in Asheville that’s known for producing some of the highest quality hemp products available. They prioritize quality over quantity, combining innovation, community values, and exceptional customer service to support natural wellness and a balanced lifestyle.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 5,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: true,
+        Buttons: [{ Text: "Website", Link: "https://wnc-cbd.com/" }]
+      },
+      {
+        Title: "Neptune Seed Bank",
+        Description: "Neptune Seed Bank specializes in top-quality cannabis products curated for every lifestyle. Shop now and experience their finest selection.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 4,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "https://neptuneseedbank.com/" }]
+      },
+      {
+        Title: "Discount Pharms",
+        Description: "Discount Pharms is one of the largest wholesale THCA suppliers in the country. The quality of our products and our low prices have helped us quickly become America’s preferred THCA vendor.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 2.5,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "http://discountpharms.com/" }]
+      },
+      {
+        Title: "HIGH THCA HEMP FLOWER",
+        Description: "HIGH THCA Hemp Flower stocks the best THCA Flower pounds, half pounds and quarter pounds. Buy strains of THCA flower for less than $100 an ounce when you buy a quarter pound or more.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 2.5,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "http://highthcahempflower.com/" }]
+      },
+      {
+        Title: "The Delta Connect",
+        Description: "The Delta Connect specializing in THCA products, including flower rosin. One Reddit user mentioned getting Ice Cream Cake from The Delta Connect. The vendor also offers strains like Banana Kush THCA Moroccan Hash Hybrid, which is described as potent.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 3.5,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "https://thedeltaconnect.com/" }]
+      },
+      {
+        Title: "Miracle Of The Desert",
+        Description: "Miracle Of The Desert is your go-to for organic, high-tier THCa flower, cartridges, rosin, and more. Grown in California’s desert, the heart of U.S. cannabis cultivation, we offer the hottest strains, rotating fresh inventory, and both premium and budget-friendly options.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 4.0,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "http://miracleofthedesert.com/" }]
+      },
+      {
+        Title: "Green Wrld",
+        Description: "Cannabis & Hemp genetics company specializing in creating one of a kind strains never seen before! We also offer THCA products such as flower and concentrates.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 2,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "http://greenwrldexclusive.com/" }]
+      },
+      {
+        Title: "The Flower Girls",
+        Description: "The Flower Girls is a brand focused on creating a social community dedicated to empowering, educating, and engaging women who are passionate about cannabis. Their THCA flower shop collaborates with them, offering products for flower enthusiasts, according to their Instagram account . ",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 5,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "https://theflowergirls.shop/" }]
+      },
+      {
+        Title: "Slavi Shop",
+        Description: "SLAViSHOP offers THCA products, including flower and concentrates. User reviews gathered from Reddit and their Discord server suggest the quality of their THCA products is a little above average.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 3,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "https://store.slavishop.com/" }]
+      },
+      {
+        Title: "Well Crafted Canna",
+        Description: "Well Crafted Canna is a family-owned and operated business based in North Carolina, specializing in federally compliant, artisanally crafted, hemp-derived cannabis products. They emphasize a grassroots philosophy, prioritizing customer safety and satisfaction above all else.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 4,
+        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "http://wellcraftedcanna.com/" }]
+      },
+      {
+        Title: "Rift Chems",
+        Description: "Rift Chems offers the most variety of research chemical products to scientific researchers online, including: Etizolam, Bromazolam, Rilmazafone, Clobromazolam, Odsmt, 2fdck, 4fmph, Ethylbromazolam (Bromoethylazolam), Phenazolam, 4metmp, Flubrotizolam & more.",
+        Sections: ["Dissociatives", "Other"],
+        Rating: 3,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "https://riftchems.com/" }]
+      },
+      {
+        Title: "DAMN GOOD",
+        Description: "Damn Good offers flower grown locally in North Carolina. With fresh batches each week. Damn Good® Concentrates are here. From rosin and sugar to badder, crumble, hash, and shatter — each one made with pure inputs and loud terp profiles. No fillers, no BS. Just potent, flavorful hits every time.",
+        Sections: ["Flower", "Concentrates"],
+        Rating: 5,
+        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+        Buttons: [{ Text: "Website", Link: "https://tokesugar.com/" }]
+      },
+      {
+        Title: "Chems CA",
+        Description: "Chems.ca is a Canadian online platform specializing in the sale and distribution of chemicals and laboratory supplies for research, industrial, and educational purposes. It offers a wide range of high-quality products backed by reliable customer service and regulatory compliance.",
+        Sections: ["Psychedelics"],
+        Rating: 4,
+        IsNew: false, IsFarm: false, Password: "", RequiresID: true,
+        Buttons: [{ Text: "Website", Link: "https://chems.ca/" }]
+      }
+    ];
+
+    const Tabs = [];
+    Vendors.forEach(vendor => {
+      vendor.Sections.forEach(section => {
+        if (!Tabs.includes(section)) Tabs.push(section);
+      });
+    });
+    const TabButtons = document.getElementById('TabButtons');
+    const TabContents = document.getElementById('TabContents');
+    customTabOrder.forEach((tab, index) => {
+      const btn = document.createElement('button');
+      btn.className = 'tab-button' + (index === 0 ? ' active' : '');
+      btn.textContent = tab;
+      btn.onclick = () => {
+        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.getElementById(`tab-content-${tab}`).classList.add('active');
+      };
+      TabButtons.appendChild(btn);
+      const contentDiv = document.createElement('div');
+      contentDiv.className = 'tab-content' + (index === 0 ? ' active' : '');
+      contentDiv.id = `tab-content-${tab}`;
+      const listDiv = document.createElement('div');
+      listDiv.className = 'ranking-list';
+      Vendors.filter(v => v.Sections.includes(tab)).sort((a, b) => b.Rating - a.Rating).forEach(vendor => {
+        const card = document.createElement('div');
+        card.className = 'rank-card';
+        const title = document.createElement('h2');
+        title.textContent = vendor.Title;
+        
+        const stars = document.createElement('span');
+        stars.className = 'rating';
+        for (let i = 0; i < 5; i++) {
+          const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          star.setAttribute('width', '16');
+          star.setAttribute('height', '16');
+          star.setAttribute('viewBox', '0 0 24 24');
+          star.setAttribute('fill', i < Math.floor(vendor.Rating) ? '#ffcc00' : 'none');
+          star.setAttribute('stroke', '#ffcc00');
+          star.setAttribute('stroke-width', '2');
+          star.setAttribute('stroke-linejoin', 'round');
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d', 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z');
+          star.appendChild(path);
+          stars.appendChild(star);
+        }
+        title.appendChild(stars);
+
+        if (vendor.IsNew) {
+          const newBadge = document.createElement('span');
+          newBadge.className = 'indicator new';
+          newBadge.textContent = 'New';
+          title.appendChild(newBadge);
+        }
+        if (vendor.IsFarm) {
+          const farmBadge = document.createElement('span');
+          farmBadge.className = 'indicator farm';
+          farmBadge.textContent = 'Farm';
+          title.appendChild(farmBadge);
+        }
+        if (vendor.Password) {
+          const passBadge = document.createElement('span');
+          passBadge.className = 'indicator password';
+          passBadge.textContent = `Password: ${vendor.Password}`;
+          title.appendChild(passBadge);
+        }
+        if (vendor.RequiresID) {
+          const idBadge = document.createElement('span');
+          idBadge.className = 'indicator id';
+          idBadge.textContent = 'Requires ID';
+          title.appendChild(idBadge);
+        }
+        
+        card.appendChild(title);
+        const desc = document.createElement('p');
+        desc.textContent = vendor.Description;
+        card.appendChild(desc);
+        if (vendor.Buttons && vendor.Buttons.length) {
+          const btnContainer = document.createElement('div');
+          btnContainer.className = 'buttons-container';
+          vendor.Buttons.forEach(b => {
+            const a = document.createElement('a');
+            a.href = b.Link;
+            a.textContent = b.Text;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            a.className = 'open-link-button';
+            btnContainer.appendChild(a);
+          });
+          card.appendChild(btnContainer);
+        }
+        listDiv.appendChild(card);
+      });
+      contentDiv.appendChild(listDiv);
+      TabContents.appendChild(contentDiv);
+    });
+  </script>
+</body>
+</html>
