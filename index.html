@@ -73,13 +73,17 @@
     }
 
     .header-content {
-      max-width: 1400px;
-      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.75rem;
+      flex-wrap: nowrap;
+      gap: 1rem;
+    }
+
+    .header-content h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      flex-shrink: 1;
     }
 
     .header h1 {
@@ -108,6 +112,7 @@
       font-size: 0.9rem;
       transition: all 0.3s ease;
       white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .nav-button:hover {
@@ -336,40 +341,30 @@
     }
 
     @media (max-width: 768px) {
-      html {
-        font-size: 14px;
-      }
-      .header-content {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .nav-buttons {
-        width: 100%;
-        justify-content: flex-start;
-      }
-      .tab-buttons {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.75rem;
-      }
-      .tab-button {
-        width: 100%;
-        padding: 0.75rem;
-      }
-      .rank-card {
-        padding: 1rem;
-      }
-      .rank-card h2 {
-        font-size: 1.2rem;
-      }
-      .rank-card p {
-        font-size: 0.9rem;
-      }
-      .open-link-button {
-        flex: 1 1 auto;
-        text-align: center;
-      }
-    }
+  html {
+    font-size: 14px;
+  }
+
+  .header-content {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .header-content h1 {
+    font-size: 1.25rem;
+    flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nav-buttons {
+    flex-shrink: 0;
+  }
+}
 
     @media (max-width: 400px) {
       html {
@@ -377,6 +372,15 @@
       }
       .header h1 {
         font-size: 1.25rem;
+      }
+      .tab-buttons {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .tab-button {
+        flex: 1 1 120px;
+        text-align: center;
       }
     }
   </style>
@@ -398,7 +402,7 @@
     <div id="TabContents"></div>
   </div>
   <footer class="footer">
-    Need to get in contact, @rcphetuxsaymfcov on <a href="https://discord.com/">discord</a>
+    Need to get in contact? message me on <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a>
   </footer>
   <script>
     const customTabOrder = ["Flower", "Concentrates", "Vapes"];
