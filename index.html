@@ -1,814 +1,946 @@
 <!DOCTYPE html>
+
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Vendor List</title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <style>
-    :root {
-      --background: #121212;
-      --surface: #1e1e1e;
-      --primary: #bb86fc;
-      --text: #ffffff;
-      --text-secondary: #a0a0a0;
-      --max-content-width: 1000px;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background-color: var(--background);
-      color: var(--text);
-      scroll-behavior: smooth;
-      overflow-x: hidden;
-      font-size: 16px;
-      line-height: 1.5;
-    }
+    <title>The Vendor List</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
-    body {
-      display: flex;
-      flex-direction: column;
-      box-sizing: border-box;
-      position: relative;
-      z-index: 1;
-    }
-
-    .animated-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle at 30% 30%, rgba(187, 134, 252, 0.2), transparent 40%),
-                  radial-gradient(circle at 70% 60%, rgba(0, 255, 255, 0.15), transparent 40%),
-                  radial-gradient(circle at 50% 80%, rgba(255, 0, 128, 0.2), transparent 40%);
-      filter: blur(80px);
-      z-index: 0;
-      animation: moveCircles 20s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
-
-    @keyframes moveCircles {
-      0% { transform: translate(0%, 0%); }
-      100% { transform: translate(-25%, -20%); }
-    }
-
-    body > *:not(.animated-bg) {
-      position: relative;
-      z-index: 1;
-    }
-
-    .header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background-color: rgba(18, 18, 18, 0.95);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-      z-index: 1000;
-      padding: 0.75rem 1rem;
-      box-sizing: border-box;
-    }
-
-    .header-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: nowrap;
-      gap: 1rem;
-    }
-
-    .header-content h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      flex-shrink: 1;
-    }
-
-    .header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-      color: var(--text);
-      flex: 1 1 auto;
-      min-width: 160px;
-    }
-
-    .nav-buttons {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      flex: 0 1 auto;
-    }
-
-    .nav-button {
-      padding: 0.5rem 1.25rem;
-      border: 2px solid var(--primary);
-      border-radius: 25px;
-      background: transparent;
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.9rem;
-      transition: all 0.3s ease;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .nav-button:hover {
-      background: var(--primary);
-      color: var(--background);
-      transform: translateY(-2px);
-    }
-
-    .notification-legal {
-      max-width: var(--max-content-width);
-      margin: 90px auto 1rem auto;
-      padding: 0.75rem 1.5rem;
-      background: var(--primary);
-      color: var(--background);
-      font-weight: 600;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(187, 134, 252, 0.4);
-      font-size: 1rem;
-      user-select: none;
-      box-sizing: border-box;
-    }
-
-    .tabs {
-      flex: 1;
-      margin: 0 auto 2rem;
-      max-width: var(--max-content-width);
-      padding: 0 1rem;
-      box-sizing: border-box;
-    }
-
-    .tab-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .tab-button {
-      padding: 0.6rem 1.5rem;
-      background: var(--surface);
-      border: 2px solid var(--primary);
-      color: var(--text);
-      font-weight: 500;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      white-space: nowrap;
-      flex-shrink: 0;
-      min-width: 100px;
-      text-align: center;
-    }
-
-    .tab-button.active {
-      background: var(--primary);
-      color: var(--background);
-      box-shadow: 0 0 12px rgba(187, 134, 252, 0.4);
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
-
-    .ranking-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .rank-card {
-      background: linear-gradient(145deg, #2a2a2a, #1b1b1b);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 1.5rem;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      transition: transform 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      word-break: break-word;
-    }
-
-    .rank-card:hover {
-      transform: translateY(-5px);
-    }
-
-    .rank-card h2 {
-      margin: 0 0 0.5rem 0;
-      font-size: 1.4rem;
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      line-height: 1.2;
-      gap: 6px;
-    }
-
-    .stars {
-      display: inline-flex;
-      margin-left: 6px;
-      margin-right: 8px;
-      transform: translateY(2px);
-    }
-
-    .stars svg {
-      margin-right: 2px;
-    }
-
-    .rank-card h2 .indicator {
-      margin-left: 0px;
-      vertical-align: middle;
-      user-select: none;
-      display: inline-flex;
-      padding: 1px 4px;
-      font-size: 0.65rem;
-      font-weight: 700;
-      border-radius: 8px;
-      position: relative;
-      top: 2px;
-      left: 4px;
-    }
-
-    .rank-card h2 .rating {
-      color: #ffcc00;
-      font-size: 1rem;
-      display: flex;
-      gap: 2px;
-      align-items: center;
-      margin-left: 4px;
-      user-select: none;
-      transform: translateY(2px);
-    }
-
-    .rank-card p {
-      margin: 0 0 0.75rem 0;
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      flex-grow: 1;
-    }
-
-    .buttons-container {
-      margin-top: 1rem;
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }
-
-    .open-link-button {
-      padding: 0.5rem 1rem;
-      background: var(--primary);
-      color: var(--background);
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
-      white-space: nowrap;
-      text-align: center;
-      flex-shrink: 0;
-      text-decoration: none;
-    }
-
-    .open-link-button:hover {
-      background: #a465f9;
-    }
-
-    .footer {
-      width: 100%;
-      background: var(--surface);
-      text-align: center;
-      padding: 0.75rem 1rem;
-      font-size: 0.8rem;
-      color: var(--text-secondary);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      box-sizing: border-box;
-    }
-
-    .footer a {
-      color: var(--primary);
-      text-decoration: none;
-    }
-
-    .footer a:hover {
-      text-decoration: underline;
-    }
-
-    .indicator.new {
-      background-color: #ffb700;
-      color: #000;
-    }
-
-    .indicator.farm {
-      background-color: #888888;
-      color: #fff;
-    }
-
-    .indicator.password {
-      background-color: #0d8eea;
-      color: #fff;
-    }
-
-    .indicator.id {
-      background-color: #df5a5a;
-      color: #fff;
-    }
-
-    .product-types {
-      margin-top: 4px;
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .product-type-badge {
-      background-color: #333333;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      user-select: none;
-    }
-
-    @media (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-
-  .header-content {
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-  }
-
-  .header-content h1 {
-    font-size: 1.25rem;
-    flex-shrink: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .nav-buttons {
-    flex-shrink: 0;
-  }
-}
-
-    @media (max-width: 400px) {
-      html {
-        font-size: 13px;
+    <style>
+      :root {
+        --background: #121212;
+        --surface: #1e1e1e;
+        --primary: #bb86fc;
+        --text: #ffffff;
+        --text-secondary: #a0a0a0;
+        --max-content-width: 1000px;
       }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background-color: var(--background);
+        color: var(--text);
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+      }
+
+      .animated-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 30% 30%, rgba(187, 134, 252, 0.2), transparent 40%),
+                    radial-gradient(circle at 70% 60%, rgba(0, 255, 255, 0.15), transparent 40%),
+                    radial-gradient(circle at 50% 80%, rgba(255, 0, 128, 0.2), transparent 40%);
+        filter: blur(80px);
+        z-index: 0;
+        animation: moveCircles 20s ease-in-out infinite alternate;
+        pointer-events: none;
+      }
+
+      @keyframes moveCircles {
+        0% { transform: translate(0%, 0%); }
+        100% { transform: translate(-25%, -20%); }
+      }
+
+      body > *:not(.animated-bg) {
+        position: relative;
+        z-index: 1;
+      }
+
+      .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: rgba(18, 18, 18, 0.95);
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        z-index: 1000;
+        padding: 0.75rem 1rem;
+        box-sizing: border-box;
+      }
+
+      .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 1rem;
+      }
+
+      .header-content h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        flex-shrink: 1;
+      }
+
       .header h1 {
-        font-size: 1.25rem;
+        font-size: 1.5rem;
+        color: var(--text);
+        flex: 1 1 auto;
+        min-width: 160px;
       }
+
+      .nav-buttons {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        flex: 0 1 auto;
+      }
+
+      .nav-button {
+        padding: 0.5rem 1.25rem;
+        border: 2px solid var(--primary);
+        border-radius: 25px;
+        background: transparent;
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .nav-button:hover {
+        background: var(--primary);
+        color: var(--background);
+        transform: translateY(-2px);
+      }
+
+      .notification-legal {
+        max-width: var(--max-content-width);
+        margin: 90px auto 1rem auto;
+        padding: 0.75rem 1.5rem;
+        background: var(--primary);
+        color: var(--background);
+        font-weight: 600;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(187, 134, 252, 0.4);
+        font-size: 1rem;
+        user-select: none;
+        box-sizing: border-box;
+      }
+
+      .tabs {
+        flex: 1;
+        margin: 0 auto 2rem;
+        max-width: var(--max-content-width);
+        padding: 0 1rem;
+        box-sizing: border-box;
+      }
+
       .tab-buttons {
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
       }
+
       .tab-button {
-        flex: 1 1 120px;
+        padding: 0.6rem 1.5rem;
+        background: var(--surface);
+        border: 2px solid var(--primary);
+        color: var(--text);
+        font-weight: 500;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        flex-shrink: 0;
+        min-width: 100px;
         text-align: center;
       }
-    }
-  </style>
-</head>
-<body>
-  <div class="animated-bg"></div>
-  <header class="header">
-    <div class="header-content">
-      <h1>💫 The Vendor List</h1>
-      <div class="nav-buttons">
-        <a href="https://www.reddit.com/r/TheVendorList/" class="nav-button">Subreddit</a>
-      </div>
-    </div>
-  </header>
 
-  <div class="notification-legal">⚖️ Everything is 100% legal</div>
-  <div class="tabs">
-    <div class="tab-buttons" id="TabButtons"></div>
-    <div id="TabContents"></div>
-  </div>
-  <footer class="footer">
-    Need to get in contact? message me on <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a>
-  </footer>
-  <script>
-    const customTabOrder = ["Flower", "Concentrates", "Vapes"];
-    const Vendors = [
-      {
-        Title: "Clubhouse Drops",
-        Description: "Clubhouse Drops specializes in exotic brands, they offer a curated selection of flower and concentrates from trusted brands like 710 Labs and Coldfire, delivering high-quality cannabis experiences.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 5.0,
-        IsNew: false, IsFarm: true, Password: "CLUB", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://clubhousedrops.com/clubhouse-drops/" }]
-      },
-      {
-        Title: "Crysp",
-        Description: "Crysp sources high-quality cannabis products from passionate growers who care about the plant. They ensure their flower and concentrates are clean, flavorful, and affordable, providing customers with premium experiences without breaking the bank.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 5.0,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: true,
-        Buttons: [{ Text: "Website", Link: "https://crysp.co/" }]
-      },
-      {
-        Title: "Simply Mary",
-        Description: "SimplyMary offers a curated selection of high-quality THCa products, including flower, concentrates, and edibles. Their THCa flower strains, such as Wagyu and Dr. J, are cultivated by reputable brands like Snowtill and Platinum Barn, ensuring top-tier quality and potency. Each product undergoes rigorous third-party lab testing to verify cannabinoid content and purity, providing customers with a clean and reliable experience.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 5.0,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: true,
-        Buttons: [{ Text: "Website", Link: "https://simplymary.co/" }]
-      },
-      {
-        Title: "Shop Hello Mary",
-        Description: "Shop Hello Mary offers a diverse selection of premium THCa cannabis products, including top-shelf flower, solventless rosin concentrates, and edibles. Their offerings feature strains like 818 OG, Hash Burger, and Halle Berry, cultivated by reputable producers to ensure quality and potency.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 4.5,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: true,
-        Buttons: [{ Text: "Website", Link: "https://shophellomary.com/" }]
-      },
-      {
-        Title: "Altura Hemp",
-        Description: "Altura Hemp is a new THCA-focused vendor that sources organically grown hemp, Unlike many brands, they sell real nug-run BHO extracts that offer a true full-spectrum experience.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 4,
-        IsNew: true, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://alturahemp.com/" }]
-      },
-      {
-        Title: "WNC-CBD",
-        Description: "WNC CBD is a family-owned business based in Asheville that’s known for producing some of the highest quality hemp products available. They prioritize quality over quantity, combining innovation, community values, and exceptional customer service to support natural wellness and a balanced lifestyle.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 5,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: true,
-        Buttons: [{ Text: "Website", Link: "https://wnc-cbd.com/" }]
-      },
-      {
-        Title: "Neptune Seed Bank",
-        Description: "Neptune Seed Bank specializes in top-quality cannabis products curated for every lifestyle. Shop now and experience their finest selection.",
-        Sections: ["Flower", "Concentrates"],
-        Rating: 3.5,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://neptuneseedbank.com/" }]
-      },
-      {
-        Title: "Discount Pharms",
-        Description: "Discount Pharms is one of the largest wholesale THCA suppliers in the country. The quality of our products and our low prices have helped us quickly become America’s preferred THCA vendor.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 2.5,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "http://discountpharms.com/" }]
-      },
-      {
-        Title: "HIGH THCA HEMP FLOWER",
-        Description: "HIGH THCA Hemp Flower stocks the best THCA Flower pounds, half pounds and quarter pounds. Buy strains of THCA flower for less than $100 an ounce when you buy a quarter pound or more.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 2.5,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "http://highthcahempflower.com/" }]
-      },
-      {
-        Title: "The Delta Connect",
-        Description: "The Delta Connect specializing in THCA products, including flower rosin. One Reddit user mentioned getting Ice Cream Cake from The Delta Connect. The vendor also offers strains like Banana Kush THCA Moroccan Hash Hybrid, which is described as potent.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 3.5,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://thedeltaconnect.com/" }]
-      },
-      {
-        Title: "Miracle Of The Desert",
-        Description: "Miracle Of The Desert is your go-to for organic, high-tier THCa flower, cartridges, rosin, and more. Grown in California’s desert, the heart of U.S. cannabis cultivation, we offer the hottest strains, rotating fresh inventory, and both premium and budget-friendly options.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 4.0,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "http://miracleofthedesert.com/" }]
-      },
-      {
-        Title: "Green Wrld",
-        Description: "Cannabis & Hemp genetics company specializing in creating one of a kind strains never seen before! We also offer THCA products such as flower and concentrates.",
-        Sections: ["Flower", "Concentrates"],
-        Rating: 2,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "http://greenwrldexclusive.com/" }]
-      },
-      {
-        Title: "The Flower Girls",
-        Description: "The Flower Girls is a brand focused on creating a social community dedicated to empowering, educating, and engaging women who are passionate about cannabis. Their THCA flower shop collaborates with them, offering products for flower enthusiasts, according to their Instagram account . ",
-        Sections: ["Flower", "Concentrates"],
-        Rating: 5,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://theflowergirls.shop/" }]
-      },
-      {
-        Title: "Slavi Shop",
-        Description: "SLAViSHOP offers THCA products, including flower and concentrates. User reviews gathered from Reddit and their Discord server suggest the quality of their THCA products is a little above average.",
-        Sections: ["Flower", "Concentrates"],
-        Rating: 3,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://store.slavishop.com/" }]
-      },
-      {
-        Title: "Well Crafted Canna",
-        Description: "Well Crafted Canna is a family-owned and operated business based in North Carolina, specializing in federally compliant, artisanally crafted, hemp-derived cannabis products. They emphasize a grassroots philosophy, prioritizing customer safety and satisfaction above all else.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 4,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "http://wellcraftedcanna.com/" }]
-      },
-      {
-        Title: "DAMN GOOD",
-        Description: "Damn Good offers flower grown locally in North Carolina. With fresh batches each week. Damn Good® Concentrates are here. From rosin and sugar to badder, crumble, hash, and shatter — each one made with pure inputs and loud terp profiles. No fillers, no BS. Just potent, flavorful hits every time.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 5,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://tokesugar.com/" }]
-      },
-      {
-        Title: "Puffy",
-        Description: "Puffy / Myqwin offers premium THCa flower, weed vapes, and potent cannabis extracts at unbeatable prices. Shop legal cannabis products including live rosin, badder and crumble for unbeatable prices.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 5,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://www.myqwin.com/" }]
-      },
-      {
-        Title: "LIT Farms",
-        Description: "Lost In Translation (aka LIT Farms) are world known pioneers of hemp, bringing together generations of breeding experience.",
-        Sections: ["Flower"],
-        Rating: 1,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://litfarms.com/" }]
-      },
-      {
-        Title: "J Littys",
-        Description: "J Litty offers a wide variety of THCA products including flower, rosin, badder, crumble, and live resin, however, they have a less than stellar reputation.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 1,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://jlittys.com/" }]
-      },
-      {
-        Title: "Flow Gardens",
-        Description: "If you're looking for CBD, CBG, Delta 9, THCa, and similar products, you must try the award-winning products at Flow Gardens!",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 5,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://flowgardens.com/" }]
-      },
-      {
-        Title: "Upstate Hemp Company",
-        Description: "Since 2018 Upstate Hemp Co has been synonymous with 'high-end' flower. We would rather 'out of stock' than provide sub-par or dangerous products.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 4,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://upstatehempco.com/" }]
-      },
-      {
-        Title: "hmp. / Co Exotics",
-        Description: "At HMP, we champion a farm-direct approach that connects you with the finest THCa products sourced from trusted local farmers. Our strong ties to the farming community ensure that every product is cultivated with care, utilizing sustainable practices to deliver pure and potent THCa straight from farm to you. Experience the difference of quality, community, and transparency.",
-        Sections: ["Flower", "Concentrates"],
-        Rating: 4,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://hmp.store/" }, { Text: "Wholesale", Link: "https://thcawholesale.deals/" }]
-      },
-      {
-        Title: "Mystic Smoke",
-        Description: "Mystic Smoke offers premium THCa and Hemp products. The best THCa shatter, Sugar, Diamonds and more. Farm bill compliant.",
-        Sections: ["Flower", "Concentrates"],
-        Rating: 4,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://mysticsmoke.cloud/" }]
-      },
-      {
-        Title: "The Hemp Hut 508",
-        Description: "We specialize in bringing you the finest THCa Flower this country has to offer right to your door!!! We ship nationwide.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 5,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://www.thehemphut508.com/" }]
-      },
-      {
-        Title: "LegendaryThcaCBD",
-        Description: "Hand-selected from only the finest sources of craft Cannabis and concentrates sourced in California. Our quality and pricing are guaranteed to seriously rival your local dispensary or plug",
-        Sections: ["Flower", "Concentrates"],
-        Rating: 3.5,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://legendarythcacbd.com/" }]
-      },
-      {
-        Title: "I Am Hemp",
-        Description: "I AM HEMP Inc is a family oriented THCa/Hemp/CBD wellness company. We strive to offer pricing that’s fair and top quality. The healing power of this plant is why we do what we do.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 3,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://www.iamhemp.co/" }]
-      },
-      {
-        Title: "Canna Crunchers CBD",
-        Description: " Here at CannaCrunchersCBD, we aim to supply only the highest quality products and products that our customers can both trust and love.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 3.5,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://cannacruncherscbd.com/" }]
-      },
-      {
-        Title: "Canna Cured",
-        Description: "Canna Cured offers THCa in various forms to cater to different preferences: THCa Flower and THCa Concentrates.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 4.5,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://cannacured.com/" }]
-      },
-      {
-        Title: "JGrows 420",
-        Description: "Top Quality Thca products. Free shipping over $150.",
-        Sections: ["Flower", "Concentrates"],
-        Rating: 3.5,
-        IsNew: false, IsFarm: false, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://www.jgrows420.com/" }]
-      },
-      {
-        Title: "Veteran Grown Hemp",
-        Description: "Exotic THCa Flower & Concentrates · Veteran-owned, lab-tested, and priced to move. Shop wax, badder, crumble & smalls.",
-        Sections: ["Flower", "Concentrates"],
-        Rating: 2.5,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://www.veterangrownhemp.com/" }]
-      },
-      {
-        Title: "DR. Ganja",
-        Description: "Dr.Ganja brings customers all around the world the best variety of legal hemp products.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 3.5,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://www.drganja.com/" }]
-      },
-      {
-        Title: "Southern Harvest Hemp",
-        Description: "We are a mom and pop store in Texas. Our family farm and processors are in Oregon. We are Farm Bill compliant.",
-        Sections: ["Flower", "Concentrates"],
-        Rating: 4,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://southernharvesthemp.com/" }]
-      },
-      {
-        Title: "Preston Herb Co",
-        Description: "Discover premium herbal products at Preston Herb Co. Explore our selection of natural remedies and wellness solutions.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 4.5,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://www.prestonherbco.com/" }]
-      },
-      {
-        Title: "Smoky Mountain CBD",
-        Description: "Every item we offer is made with peak-quality hemp, directly sourced from plants grown and harvested in the Smoky Mountains of East Tennessee.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 4,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://www.smokymountaincbd.com/" }]
-      },
-      {
-        Title: "Wildflower Hemp Co",
-        Description: "At Wildflower Hemp Co, we understand that true quality cannot be rushed. That’s why we allow our carefully cultivated plants to undergo a full month cure before processing. This meticulous approach guarantees the perfect moisture ratio of water to flower, resulting in a smooth and enjoyable burn with every gram.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 3,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://wildflowerhempco.com/" }]
-      },
-      {
-        Title: "Lucky Elk",
-        Description: "Small-batch THCa flower and concentrates grown by the best farmers in the Pacific Northwest—cultivated with organic practices, rich in terpenes, and crafted with care from seed to sale.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 5,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://luckyelk.com/" }]
-      },
-      {
-        Title: "Blue Ridge Bubble",
-        Description: "Experience all forms of Hashish, Static Sift, Bubble Hash, Rosin, Jam & More, Piatella, Mutantella, & Various other experimental creations.",
-        Sections: ["Concentrates"],
-        Rating: 5,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://brbubble.com/" }]
-      },
-      {
-        Title: "Arete Hemp",
-        Description: "   Organic Premium Cannabis Products - We are a family owned and operated company that is purpose driven working hard to bring the purest organic natural remedies to market.",
-        Sections: ["Flower", "Concentrates", "Vapes"],
-        Rating: 5,
-        IsNew: false, IsFarm: true, Password: "", RequiresID: false,
-        Buttons: [{ Text: "Website", Link: "https://aretehemp.com/" }]
+      .tab-button.active {
+        background: var(--primary);
+        color: var(--background);
+        box-shadow: 0 0 12px rgba(187, 134, 252, 0.4);
       }
-    ];
 
-    const Tabs = [];
-    Vendors.forEach(vendor => {
-      vendor.Sections.forEach(section => {
-        if (!Tabs.includes(section)) Tabs.push(section);
-      });
-    });
-    const TabButtons = document.getElementById('TabButtons');
-    const TabContents = document.getElementById('TabContents');
-    customTabOrder.forEach((tab, index) => {
-      const btn = document.createElement('button');
-      btn.className = 'tab-button' + (index === 0 ? ' active' : '');
-      btn.textContent = tab;
-      btn.onclick = () => {
-        document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        document.getElementById(`tab-content-${tab}`).classList.add('active');
-      };
-      TabButtons.appendChild(btn);
-      const contentDiv = document.createElement('div');
-      contentDiv.className = 'tab-content' + (index === 0 ? ' active' : '');
-      contentDiv.id = `tab-content-${tab}`;
-      const listDiv = document.createElement('div');
-      listDiv.className = 'ranking-list';
-      Vendors.filter(v => v.Sections.includes(tab)).sort((a, b) => b.Rating - a.Rating).forEach(vendor => {
-        const card = document.createElement('div');
-        card.className = 'rank-card';
-        const title = document.createElement('h2');
-        title.textContent = vendor.Title;
-        
-        const stars = document.createElement('span');
-        stars.className = 'rating';
-        for (let i = 0; i < 5; i++) {
-          const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-          star.setAttribute('width', '16');
-          star.setAttribute('height', '16');
-          star.setAttribute('viewBox', '0 0 24 24');
-          star.setAttribute('fill', i < Math.floor(vendor.Rating) ? '#ffcc00' : 'none');
-          star.setAttribute('stroke', '#ffcc00');
-          star.setAttribute('stroke-width', '2');
-          star.setAttribute('stroke-linejoin', 'round');
-          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-          path.setAttribute('d', 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z');
-          star.appendChild(path);
-          stars.appendChild(star);
-        }
-        title.appendChild(stars);
+      .tab-content {
+        display: none;
+      }
 
-        if (vendor.IsNew) {
-          const newBadge = document.createElement('span');
-          newBadge.className = 'indicator new';
-          newBadge.textContent = 'New';
-          title.appendChild(newBadge);
+      .tab-content.active {
+        display: block;
+      }
+
+      .ranking-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .rank-card {
+        background: linear-gradient(145deg, #2a2a2a, #1b1b1b);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        transition: transform 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        word-break: break-word;
+      }
+
+      .rank-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .rank-card h2 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.4rem;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        line-height: 1.2;
+        gap: 6px;
+      }
+
+      .stars {
+        display: inline-flex;
+        margin-left: 6px;
+        margin-right: 8px;
+      }
+
+      .stars svg {
+        margin-right: 2px;
+      }
+
+      .rank-card h2 .indicator {
+        display: inline-flex;
+        padding: 1px 4px;
+        font-size: 0.65rem;
+        font-weight: 700;
+        border-radius: 4px;
+        position: relative;
+        top: 2px;
+        left: 4px;
+        user-select: none;
+      }
+
+      .rank-card h2 .rating {
+        color: #ffcc00;
+        font-size: 1rem;
+        display: flex;
+        gap: 2px;
+        align-items: center;
+        margin-left: 4px;
+        user-select: none;
+        transform: translateY(2px);
+      }
+
+      .rank-card p {
+        margin: 0 0 0.75rem 0;
+        font-size: 0.95rem;
+        color: var(--text-secondary);
+        flex-grow: 1;
+      }
+
+      .buttons-container {
+        margin-top: 1rem;
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .open-link-button {
+        padding: 0.5rem 1rem;
+        background: var(--primary);
+        color: var(--background);
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+        white-space: nowrap;
+        text-align: center;
+        flex-shrink: 0;
+        text-decoration: none;
+      }
+
+      .open-link-button:hover {
+        background: #a465f9;
+      }
+
+      .footer {
+        width: 100%;
+        background: var(--surface);
+        text-align: center;
+        padding: 0.75rem 1rem;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        box-sizing: border-box;
+      }
+
+      .footer a {
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      .indicator.new {
+        background-color: #ffb700;
+        color: #000;
+      }
+
+      .indicator.farm {
+        background-color: #888888;
+        color: #fff;
+      }
+
+      .indicator.password {
+        background-color: #0d8eea;
+        color: #fff;
+      }
+
+      .indicator.id {
+        background-color: #df5a5a;
+        color: #fff;
+      }
+
+      .product-types {
+        margin-top: 4px;
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+
+      .product-type-badge {
+        background-color: #333333;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        user-select: none;
+      }
+
+      @media (max-width: 768px) {
+        html {
+          font-size: 14px;
         }
-        if (vendor.IsFarm) {
-          const farmBadge = document.createElement('span');
-          farmBadge.className = 'indicator farm';
-          farmBadge.textContent = 'Farm';
-          title.appendChild(farmBadge);
+
+        .header-content {
+          flex-direction: row;
+          flex-wrap: nowrap;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.5rem;
         }
-        if (vendor.Password) {
-          const passBadge = document.createElement('span');
-          passBadge.className = 'indicator password';
-          passBadge.textContent = `Password: ${vendor.Password}`;
-          title.appendChild(passBadge);
+
+        .header-content h1 {
+          font-size: 1.25rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
-        if (vendor.RequiresID) {
-          const idBadge = document.createElement('span');
-          idBadge.className = 'indicator id';
-          idBadge.textContent = 'Requires ID';
-          title.appendChild(idBadge);
+
+        .nav-buttons {
+          flex-shrink: 0;
         }
-        
-        card.appendChild(title);
-        const desc = document.createElement('p');
-        desc.textContent = vendor.Description;
-        card.appendChild(desc);
-        if (vendor.Buttons && vendor.Buttons.length) {
-          const btnContainer = document.createElement('div');
-          btnContainer.className = 'buttons-container';
-          vendor.Buttons.forEach(b => {
-            const a = document.createElement('a');
-            a.href = b.Link;
-            a.textContent = b.Text;
-            a.target = '_blank';
-            a.rel = 'noopener noreferrer';
-            a.className = 'open-link-button';
-            btnContainer.appendChild(a);
-          });
-          card.appendChild(btnContainer);
+      }
+
+      @media (max-width: 400px) {
+        html {
+          font-size: 13px;
         }
-        listDiv.appendChild(card);
+
+        .header h1 {
+          font-size: 1.25rem;
+        }
+
+        .tab-buttons {
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .tab-button {
+          flex: 1 1 120px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="animated-bg"></div>
+    <header class="header">
+      <div class="header-content">
+        <h1>💫 The Vendor List</h1>
+        <div class="nav-buttons">
+          <a href="https://www.reddit.com/r/TheVendorList/" class="nav-button">Subreddit</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="notification-legal">⚖️ Everything is 100% legal</div>
+    <div class="tabs">
+      <div class="tab-buttons" id="TabButtons"></div>
+      <div id="TabContents"></div>
+    </div>
+
+    <footer class="footer">
+      Need to get in contact? message me on <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a>
+    </footer>
+
+    <script>
+      const customTabOrder = ["Flower", "Concentrates", "Vapes", "Subreddits"];
+      const Vendors = [
+        {
+          Title: "Clubhouse Drops",
+          Description: "Clubhouse Drops specializes in exotic brands, they offer a curated selection of flower and concentrates from trusted brands like 710 Labs and Coldfire, delivering high-quality cannabis experiences.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 5.0,
+          IsNew: false, IsFarm: true, Password: "CLUB", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://clubhousedrops.com/clubhouse-drops/" }]
+        },
+        {
+          Title: "Crysp",
+          Description: "Crysp sources high-quality cannabis products from passionate growers who care about the plant. They ensure their flower and concentrates are clean, flavorful, and affordable, providing customers with premium experiences without breaking the bank.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 5.0,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: true,
+          Buttons: [{ Text: "Website", Link: "https://crysp.co/" }]
+        },
+        {
+          Title: "Simply Mary",
+          Description: "SimplyMary offers a curated selection of high-quality THCa products, including flower, concentrates, and edibles. Their THCa flower strains, such as Wagyu and Dr. J, are cultivated by reputable brands like Snowtill and Platinum Barn, ensuring top-tier quality and potency. Each product undergoes rigorous third-party lab testing to verify cannabinoid content and purity, providing customers with a clean and reliable experience.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 5.0,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: true,
+          Buttons: [{ Text: "Website", Link: "https://simplymary.co/" }]
+        },
+        {
+          Title: "Shop Hello Mary",
+          Description: "Shop Hello Mary offers a diverse selection of premium THCa cannabis products, including top-shelf flower, solventless rosin concentrates, and edibles. Their offerings feature strains like 818 OG, Hash Burger, and Halle Berry, cultivated by reputable producers to ensure quality and potency.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 4.5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: true,
+          Buttons: [{ Text: "Website", Link: "https://shophellomary.com/" }]
+        },
+        {
+          Title: "Altura Hemp",
+          Description: "Altura Hemp is a new THCA-focused vendor that sources organically grown hemp, Unlike many brands, they sell real nug-run BHO extracts that offer a true full-spectrum experience.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 4,
+          IsNew: true, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://alturahemp.com/" }]
+        },
+        {
+          Title: "WNC-CBD",
+          Description: "WNC CBD is a family-owned business based in Asheville that’s known for producing some of the highest quality hemp products available. They prioritize quality over quantity, combining innovation, community values, and exceptional customer service to support natural wellness and a balanced lifestyle.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 5,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: true,
+          Buttons: [{ Text: "Website", Link: "https://wnc-cbd.com/" }]
+        },
+        {
+          Title: "Neptune Seed Bank",
+          Description: "Neptune Seed Bank specializes in top-quality cannabis products curated for every lifestyle. Shop now and experience their finest selection.",
+          Sections: ["Flower", "Concentrates"],
+          Rating: 3.5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://neptuneseedbank.com/" }]
+        },
+        {
+          Title: "Discount Pharms",
+          Description: "Discount Pharms is one of the largest wholesale THCA suppliers in the country. The quality of our products and our low prices have helped us quickly become America’s preferred THCA vendor.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 2.5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "http://discountpharms.com/" }]
+        },
+        {
+          Title: "HIGH THCA HEMP FLOWER",
+          Description: "HIGH THCA Hemp Flower stocks the best THCA Flower pounds, half pounds and quarter pounds. Buy strains of THCA flower for less than $100 an ounce when you buy a quarter pound or more.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 2.5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "http://highthcahempflower.com/" }]
+        },
+        {
+          Title: "The Delta Connect",
+          Description: "The Delta Connect specializing in THCA products, including flower rosin. One Reddit user mentioned getting Ice Cream Cake from The Delta Connect. The vendor also offers strains like Banana Kush THCA Moroccan Hash Hybrid, which is described as potent.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 3.5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://thedeltaconnect.com/" }]
+        },
+        {
+          Title: "Miracle Of The Desert",
+          Description: "Miracle Of The Desert is your go-to for organic, high-tier THCa flower, cartridges, rosin, and more. Grown in California’s desert, the heart of U.S. cannabis cultivation, we offer the hottest strains, rotating fresh inventory, and both premium and budget-friendly options.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 4.0,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "http://miracleofthedesert.com/" }]
+        },
+        {
+          Title: "Green Wrld",
+          Description: "Cannabis & Hemp genetics company specializing in creating one of a kind strains never seen before! We also offer THCA products such as flower and concentrates.",
+          Sections: ["Flower", "Concentrates"],
+          Rating: 2,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "http://greenwrldexclusive.com/" }]
+        },
+        {
+          Title: "The Flower Girls",
+          Description: "The Flower Girls is a brand focused on creating a social community dedicated to empowering, educating, and engaging women who are passionate about cannabis. Their THCA flower shop collaborates with them, offering products for flower enthusiasts, according to their Instagram account . ",
+          Sections: ["Flower", "Concentrates"],
+          Rating: 5,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://theflowergirls.shop/" }]
+        },
+        {
+          Title: "Slavi Shop",
+          Description: "SLAViSHOP offers THCA products, including flower and concentrates. User reviews gathered from Reddit and their Discord server suggest the quality of their THCA products is a little above average.",
+          Sections: ["Flower", "Concentrates"],
+          Rating: 3,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://store.slavishop.com/" }]
+        },
+        {
+          Title: "Well Crafted Canna",
+          Description: "Well Crafted Canna is a family-owned and operated business based in North Carolina, specializing in federally compliant, artisanally crafted, hemp-derived cannabis products. They emphasize a grassroots philosophy, prioritizing customer safety and satisfaction above all else.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 4,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "http://wellcraftedcanna.com/" }]
+        },
+        {
+          Title: "DAMN GOOD",
+          Description: "Damn Good offers flower grown locally in North Carolina. With fresh batches each week. Damn Good® Concentrates are here. From rosin and sugar to badder, crumble, hash, and shatter — each one made with pure inputs and loud terp profiles. No fillers, no BS. Just potent, flavorful hits every time.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 5,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://tokesugar.com/" }]
+        },
+        {
+          Title: "Puffy",
+          Description: "Puffy / Myqwin offers premium THCa flower, weed vapes, and potent cannabis extracts at unbeatable prices. Shop legal cannabis products including live rosin, badder and crumble for unbeatable prices.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://www.myqwin.com/" }]
+        },
+        {
+          Title: "LIT Farms",
+          Description: "Lost In Translation (aka LIT Farms) are world known pioneers of hemp, bringing together generations of breeding experience.",
+          Sections: ["Flower"],
+          Rating: 1,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://litfarms.com/" }]
+        },
+        {
+          Title: "J Littys",
+          Description: "J Litty offers a wide variety of THCA products including flower, rosin, badder, crumble, and live resin, however, they have a less than stellar reputation.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 1,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://jlittys.com/" }]
+        },
+        {
+          Title: "Flow Gardens",
+          Description: "If you're looking for CBD, CBG, Delta 9, THCa, and similar products, you must try the award-winning products at Flow Gardens!",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://flowgardens.com/" }]
+        },
+        {
+          Title: "Upstate Hemp Company",
+          Description: "Since 2018 Upstate Hemp Co has been synonymous with 'high-end' flower. We would rather 'out of stock' than provide sub-par or dangerous products.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 4,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://upstatehempco.com/" }]
+        },
+        {
+          Title: "hmp. / Co Exotics",
+          Description: "At HMP, we champion a farm-direct approach that connects you with the finest THCa products sourced from trusted local farmers. Our strong ties to the farming community ensure that every product is cultivated with care, utilizing sustainable practices to deliver pure and potent THCa straight from farm to you. Experience the difference of quality, community, and transparency.",
+          Sections: ["Flower", "Concentrates"],
+          Rating: 4,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://hmp.store/" }, { Text: "Wholesale", Link: "https://thcawholesale.deals/" }]
+        },
+        {
+          Title: "Mystic Smoke",
+          Description: "Mystic Smoke offers premium THCa and Hemp products. The best THCa shatter, Sugar, Diamonds and more. Farm bill compliant.",
+          Sections: ["Flower", "Concentrates"],
+          Rating: 4,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://mysticsmoke.cloud/" }]
+        },
+        {
+          Title: "The Hemp Hut 508",
+          Description: "We specialize in bringing you the finest THCa Flower this country has to offer right to your door!!! We ship nationwide.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://www.thehemphut508.com/" }]
+        },
+        {
+          Title: "LegendaryThcaCBD",
+          Description: "Hand-selected from only the finest sources of craft Cannabis and concentrates sourced in California. Our quality and pricing are guaranteed to seriously rival your local dispensary or plug",
+          Sections: ["Flower", "Concentrates"],
+          Rating: 3.5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://legendarythcacbd.com/" }]
+        },
+        {
+          Title: "I Am Hemp",
+          Description: "I AM HEMP Inc is a family oriented THCa/Hemp/CBD wellness company. We strive to offer pricing that’s fair and top quality. The healing power of this plant is why we do what we do.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 3,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://www.iamhemp.co/" }]
+        },
+        {
+          Title: "Canna Crunchers CBD",
+          Description: " Here at CannaCrunchersCBD, we aim to supply only the highest quality products and products that our customers can both trust and love.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 3.5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://cannacruncherscbd.com/" }]
+        },
+        {
+          Title: "Canna Cured",
+          Description: "Canna Cured offers THCa in various forms to cater to different preferences: THCa Flower and THCa Concentrates.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 4.5,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://cannacured.com/" }]
+        },
+        {
+          Title: "JGrows 420",
+          Description: "Top Quality Thca products. Free shipping over $150.",
+          Sections: ["Flower", "Concentrates"],
+          Rating: 3.5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://www.jgrows420.com/" }]
+        },
+        {
+          Title: "Veteran Grown Hemp",
+          Description: "Exotic THCa Flower & Concentrates · Veteran-owned, lab-tested, and priced to move. Shop wax, badder, crumble & smalls.",
+          Sections: ["Flower", "Concentrates"],
+          Rating: 2.5,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://www.veterangrownhemp.com/" }]
+        },
+        {
+          Title: "DR. Ganja",
+          Description: "Dr.Ganja brings customers all around the world the best variety of legal hemp products.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 3.5,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://www.drganja.com/" }]
+        },
+        {
+          Title: "Southern Harvest Hemp",
+          Description: "We are a mom and pop store in Texas. Our family farm and processors are in Oregon. We are Farm Bill compliant.",
+          Sections: ["Flower", "Concentrates"],
+          Rating: 4,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://southernharvesthemp.com/" }]
+        },
+        {
+          Title: "Preston Herb Co",
+          Description: "Discover premium herbal products at Preston Herb Co. Explore our selection of natural remedies and wellness solutions.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 4.5,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://www.prestonherbco.com/" }]
+        },
+        {
+          Title: "Smoky Mountain CBD",
+          Description: "Every item we offer is made with peak-quality hemp, directly sourced from plants grown and harvested in the Smoky Mountains of East Tennessee.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 4,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://www.smokymountaincbd.com/" }]
+        },
+        {
+          Title: "Wildflower Hemp Co",
+          Description: "At Wildflower Hemp Co, we understand that true quality cannot be rushed. That’s why we allow our carefully cultivated plants to undergo a full month cure before processing. This meticulous approach guarantees the perfect moisture ratio of water to flower, resulting in a smooth and enjoyable burn with every gram.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 3,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://wildflowerhempco.com/" }]
+        },
+        {
+          Title: "Lucky Elk",
+          Description: "Small-batch THCa flower and concentrates grown by the best farmers in the Pacific Northwest—cultivated with organic practices, rich in terpenes, and crafted with care from seed to sale.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 5,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://luckyelk.com/" }]
+        },
+        {
+          Title: "Blue Ridge Bubble",
+          Description: "Experience all forms of Hashish, Static Sift, Bubble Hash, Rosin, Jam & More, Piatella, Mutantella, & Various other experimental creations.",
+          Sections: ["Concentrates"],
+          Rating: 5,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://brbubble.com/" }]
+        },
+        {
+
+          Title: "Arete Hemp",
+          Description: "Organic Premium Cannabis Products - We are a family owned and operated company that is purpose driven working hard to bring the purest organic natural remedies to market.",
+          Sections: ["Flower", "Concentrates", "Vapes"],
+          Rating: 5,
+          IsNew: false, IsFarm: true, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://aretehemp.com/" }]
+        },
+        // Subreddits (not rated)
+        {
+          Title: "The Vendor List",
+          Description: "The Vendor List is a curated hub that connects customers with legal THCA vendors. Our subreddit is currently in the process of being set up.",
+          Sections: ["Subreddits"],
+          Rating: 5,
+          IsNew: true, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Subreddit", Link: "https://www.reddit.com/r/TheVendorList/" }]
+        },
+        {
+          Title: "Cult of The Franklin",
+          Description: "The Place, Your Place for Federally Legal High THCa Hemp Worship. Welcome to The Cult.",
+          Sections: ["Subreddits"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Subreddit", Link: "https://www.reddit.com/r/CultoftheFranklin/" }]
+        },
+        {
+          Title: "THCA Extracts",
+          Description: "A place to come and discuss all THCA concentrates and extracts. Thanks for being here! Happy dabbing 😮‍💨",
+          Sections: ["Subreddits"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Subreddit", Link: "https://www.reddit.com/r/THCAextracts/" }]
+        },
+        {
+          Title: "Cult Concentrates",
+          Description: "For anything involving federally legal High THCA concentrates! Posts relating to current companies, new companies, concentrate listings, purchases/hauls, discounts, and more welcome!",
+          Sections: ["Subreddits"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Subreddit", Link: "https://www.reddit.com/r/THCAextracts/" }]
+        },
+        {
+          Title: "The Terp Table",
+          Description: "Welcome to The Terp Table. This is where real smokers drop real reviews. Flower, rosin, melt checks, stash pics, press talk — if it’s gas, we talk about it. If it’s mids? We say it. Built by a connoisseur for the community. No hype, no filters — just straight-up sesh truth. Pull up, spark up, and add to the table. 💨",
+          Sections: ["Subreddits"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Subreddit", Link: "https://www.reddit.com/r/The_Terp_Table/" }]
+        },
+        {
+          Title: "Budget Extractions THCA",
+          Description: "We are a budget community. We order legal hemp(50 state) products only and review budget options, and process them into better products. This is for personal DIY stuff. No reselling. What To Expect: 1.)Flower Rosin posts 2.)QWET posts 3.)Winterization/purging posts 4.)Cured bubble ice water hash posts(flower, smalls, shake, trim, etc) 5.) Freeze dryer goodies/reclaim/disty gummies 6.)Carts made from: flower rosin, resin, live resin, hash rosin, live rosin, diamonds, distillate, terps, HTE",
+          Sections: ["Subreddits"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Subreddit", Link: "https://www.reddit.com/r/The_Terp_Table/" }]
+        },
+        {
+          Title: "Zips Under 100",
+          Description: "🌿 This community is dedicated to THCA hemp. Check out our vendor list linked below We love ounces under $100!",
+          Sections: ["Subreddits"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Subreddit", Link: "https://www.reddit.com/r/ZipsUnder100/" }]
+        },
+        {
+          Title: "THCa Users and Reviews",
+          Description: "A mature learning hub for adults who value education over ego. Unlike other cannabis spaces filled with drama and gatekeeping, we foster respectful discourse where medical patients and farm bill enthusiasts share authentic experiences and science-based knowledge. We support transparent vendors with proper COAs while building up our entire culture through genuine reviews and educational discussions. Farm bill compliant. Zero Drama Allowed.",
+          Sections: ["Subreddits"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Subreddit", Link: "https://www.reddit.com/r/THCaUsersandReviews/" }]
+        },
+        {
+          Title: "THCa Flower",
+          Description: "Community to discuss hemp-derived THCa flower.",
+          Sections: ["Subreddits"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Subreddit", Link: "https://www.reddit.com/r/THCaFlower/" }]
+        },
+        {
+          Title: "THCA Online",
+          Description: "For anything about federally legal Thca but online (no alt noids). In this community we want everyone to be unbiased and share opinions, we also want you all to feel comfortable so our mods and I will take take each flagged post under careful review and bans are last resort please be respectful and build a community you want to be a part of.",
+          Sections: ["Subreddits"],
+          Rating: 5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Subreddit", Link: "https://www.reddit.com/r/THCA_Online/" }]
+        }
+      ];
+
+      const Tabs = [];
+      Vendors.forEach(vendor => {
+        vendor.Sections.forEach(section => {
+          if (!Tabs.includes(section)) Tabs.push(section);
+        });
       });
-      contentDiv.appendChild(listDiv);
-      TabContents.appendChild(contentDiv);
-    });
-  </script>
-</body>
+      
+      const TabButtons = document.getElementById('TabButtons');
+      const TabContents = document.getElementById('TabContents');
+
+      customTabOrder.forEach((tab, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'tab-button' + (index === 0 ? ' active' : '');
+        btn.textContent = tab;
+
+        btn.onclick = () => {
+          document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+          document.getElementById(`tab-content-${tab}`).classList.add('active');
+        };
+
+        TabButtons.appendChild(btn);
+
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'tab-content' + (index === 0 ? ' active' : '');
+        contentDiv.id = `tab-content-${tab}`;
+
+        const listDiv = document.createElement('div');
+        listDiv.className = 'ranking-list';
+
+        Vendors.filter(v => v.Sections.includes(tab)).sort((a, b) => b.Rating - a.Rating).forEach(vendor => {
+          const card = document.createElement('div');
+          card.className = 'rank-card';
+
+          const title = document.createElement('h2');
+          title.textContent = vendor.Title;
+          
+          const stars = document.createElement('span');
+          stars.className = 'rating';
+
+          for (let i = 0; i < 5; i++) {
+            const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            star.setAttribute('width', '16');
+            star.setAttribute('height', '16');
+            star.setAttribute('viewBox', '0 0 24 24');
+
+            const rating = vendor.Rating;
+
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+
+            if (i < rating && i >= Math.floor(rating)) {
+              // HALF STAR: add mask for fill
+              const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
+              mask.setAttribute('id', `half-mask-${i}`);
+
+              const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+              rect.setAttribute('x', '0');
+              rect.setAttribute('y', '0');
+              rect.setAttribute('width', '12'); // Half of viewBox width
+              rect.setAttribute('height', '24');
+              rect.setAttribute('fill', 'white');
+
+              mask.appendChild(rect);
+              defs.appendChild(mask);
+              star.appendChild(defs);
+
+              // Filled half
+              const filledPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+              filledPath.setAttribute('d', 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z');
+              filledPath.setAttribute('fill', '#ffcc00');
+              filledPath.setAttribute('mask', `url(#half-mask-${i})`);
+              star.appendChild(filledPath);
+            }
+
+            // Outline (and full fill if needed)
+            const outlinePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            outlinePath.setAttribute('d', 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z');
+            outlinePath.setAttribute('fill', i < Math.floor(rating) ? '#ffcc00' : 'none');
+            outlinePath.setAttribute('stroke', '#ffcc00');
+            outlinePath.setAttribute('stroke-width', '2');
+            outlinePath.setAttribute('stroke-linejoin', 'round');
+
+            star.appendChild(outlinePath);
+            stars.appendChild(star);
+          }
+
+          title.appendChild(stars);
+
+          if (vendor.IsNew) {
+            const newBadge = document.createElement('span');
+            newBadge.className = 'indicator new';
+            newBadge.textContent = 'New';
+            title.appendChild(newBadge);
+          }
+          if (vendor.IsFarm) {
+            const farmBadge = document.createElement('span');
+            farmBadge.className = 'indicator farm';
+            farmBadge.textContent = 'Farm';
+            title.appendChild(farmBadge);
+          }
+          if (vendor.Password) {
+            const passBadge = document.createElement('span');
+            passBadge.className = 'indicator password';
+            passBadge.textContent = `Password: ${vendor.Password}`;
+            title.appendChild(passBadge);
+          }
+          if (vendor.RequiresID) {
+            const idBadge = document.createElement('span');
+            idBadge.className = 'indicator id';
+            idBadge.textContent = 'Requires ID';
+            title.appendChild(idBadge);
+          }
+          
+          card.appendChild(title);
+
+          const desc = document.createElement('p');
+          desc.textContent = vendor.Description;
+          card.appendChild(desc);
+
+          if (vendor.Buttons && vendor.Buttons.length) {
+            const btnContainer = document.createElement('div');
+            btnContainer.className = 'buttons-container';
+
+            vendor.Buttons.forEach(b => {
+              const a = document.createElement('a');
+              a.href = b.Link;
+              a.textContent = b.Text;
+              a.target = '_blank';
+              a.rel = 'noopener noreferrer';
+              a.className = 'open-link-button';
+              btnContainer.appendChild(a);
+            });
+
+            card.appendChild(btnContainer);
+          }
+
+          listDiv.appendChild(card);
+        });
+
+        contentDiv.appendChild(listDiv);
+        TabContents.appendChild(contentDiv);
+      });
+    </script>
+  </body>
 </html>
