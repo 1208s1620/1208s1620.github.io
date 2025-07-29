@@ -410,13 +410,13 @@
     </footer>
 
     <script>
-      const TabOrder = ["Flower", "Concentrates", "Vapes", "Edibles", "Subreddits"];
+      const TabOrder = ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Subreddits"];
 
       const Vendors = [
         {
           Title: "Clubhouse Drops",
           Description: "Clubhouse Drops specializes in exotic brands, they offer a curated selection of flower and concentrates from trusted brands like 710 Labs and Coldfire, delivering high-quality cannabis experiences.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 5.0,
           IsNew: false, IsFarm: true, Password: "CLUB", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://clubhousedrops.com/clubhouse-drops/" }]
@@ -424,7 +424,7 @@
         {
           Title: "Crysp",
           Description: "Crysp sources high-quality cannabis products from passionate growers who care about the plant. They ensure their flower and concentrates are clean, flavorful, and affordable, providing customers with premium experiences without breaking the bank.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 5.0,
           IsNew: false, IsFarm: true, Password: "", RequiresID: true,
           Buttons: [{ Text: "Website", Link: "https://crysp.co/" }]
@@ -432,31 +432,23 @@
         {
           Title: "Simply Mary",
           Description: "SimplyMary offers a curated selection of high-quality THCa products, including flower, concentrates, and edibles. Their THCa flower strains, such as Wagyu and Dr. J, are cultivated by reputable brands like Snowtill and Platinum Barn, ensuring top-tier quality and potency. Each product undergoes rigorous third-party lab testing to verify cannabinoid content and purity, providing customers with a clean and reliable experience.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-          Rating: 4.5,
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
+          Rating: 5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: true,
           Buttons: [{ Text: "Website", Link: "https://simplymary.co/" }]
         },
         {
           Title: "Shop Hello Mary",
           Description: "Shop Hello Mary offers a diverse selection of premium THCa cannabis products, including top-shelf flower, solventless rosin concentrates, and edibles. Their offerings feature strains like 818 OG, Hash Burger, and Halle Berry, cultivated by reputable producers to ensure quality and potency.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-          Rating: 4.0,
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
+          Rating: 4.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: true,
           Buttons: [{ Text: "Website", Link: "https://shophellomary.com/" }]
         },
         {
-          Title: "Altura Hemp",
-          Description: "Altura Hemp began as a small, family-owned farm nestled in the heart of Oregon, where a love for quality cannabis and honest cultivation took root in 2017. What started as a humble operation has since grown into a full-spectrum hemp brand—featuring a concentrate processing lab, in-house pre-roll production, and some of the most thoughtfully grown THCa hemp flower available on the market. Despite our growth, we remain proudly family owned and operated, staying true to our roots while continuing to innovate in the cannabis space.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
-          Rating: 4.0,
-          IsNew: true, IsFarm: false, Password: "", RequiresID: false,
-          Buttons: [{ Text: "Website", Link: "https://alturahemp.com/" }]
-        },
-        {
           Title: "Quantum Exotics",
           Description: "We think cannabis should be easily accessible, affordable, convenient, and transparent. Convenience and total privacy in the shopping journey is our ideal. But most importantly, we believe in supporting the American farmers who make all of this possible. Our core values are a commitment to product quality and to world-class customer experiences. Our company culture is one that fosters open communication and open doors: everybody here has a voice, and we believe that by investing in both our people and our customers, we all will rise.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.quantumexotics.com/" }]
@@ -464,7 +456,7 @@
         {
           Title: "Sherlocks Glass",
           Description: "Established in 2015, Sherlocks Glass & Dispensary is the premier cannabis store in Raleigh and Durham, North Carolina. We offer the city's largest selection of THCa Flower strains meticulously handpicked for flavor profile and effect. Find top quality Hash Rosin and a wide range of delta 9 edibles, vapes, and high-end American-made glass pipes. We are the only premier Puffco product supplier in North Carolina. ",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 4,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://sherlocksglass.com/" }]
@@ -472,7 +464,15 @@
         {
           Title: "CANNA HAUS FARMS",
           Description: "Canna Haus Farms was founded with a simple belief: the best cannabis comes from living soil, clean inputs, and pure, solventless extraction. Since day one, we have been committed to regenerative organic practices, cultivating in native soil outdoors and crafting small-batch harvests in controlled indoor environments — always staying true to our roots in living soil and solventless resin production. We are growers, hashmakers, and stewards of the land. Our approach focuses on building healthy, living ecosystems beneath our plants, where natural biology thrives. Instead of relying on bottled nutrients or synthetic additives, we nurture our soils with cover crops, compost, and closed-loop regenerative methods that feed the soil, not just the plants. This deep relationship with the land is what gives our resin its unique expression of terroir — and it’s why we believe living soil is the foundation of truly authentic cannabis.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
+          Rating: 4.5,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://cannahausfarms.com/" }]
+        },
+        {
+          Title: "Cali Blaise",
+          Description: "Canna Haus Farms was founded with a simple belief: the best cannabis comes from living soil, clean inputs, and pure, solventless extraction. Since day one, we have been committed to regenerative organic practices, cultivating in native soil outdoors and crafting small-batch harvests in controlled indoor environments — always staying true to our roots in living soil and solventless resin production. We are growers, hashmakers, and stewards of the land. Our approach focuses on building healthy, living ecosystems beneath our plants, where natural biology thrives. Instead of relying on bottled nutrients or synthetic additives, we nurture our soils with cover crops, compost, and closed-loop regenerative methods that feed the soil, not just the plants. This deep relationship with the land is what gives our resin its unique expression of terroir — and it’s why we believe living soil is the foundation of truly authentic cannabis.",
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 4.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://cannahausfarms.com/" }]
@@ -480,7 +480,7 @@
         {
           Title: "Illest Haze",
           Description: "Our farm-fresh THCa flower is straight fire, grown under open skies and shipped direct to your door. Every bud is 100% federally compliant, so you can chill, stay safe, and be worry-free. No fluff, no filler – just pure, organic THCa that hits smooth. Ready to raise the bar on your stash?",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 4.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://illesthaze.com/" }]
@@ -488,7 +488,7 @@
         {
           Title: "THE HEMP COLLECT",
           Description: "We’re cannabis innovators driven by a passion to create superior, compliant goods. Our mission is simple: deliver the best for the people we serve. Our craft products set the standard for taste, effect, and potency. By using full-spectrum live resin—not just terpenes labeled as live resin—we achieve richer flavor and more profound effects. Every batch is rigorously tested, ensuring unmatched quality. With us, the bar isn’t just raised—it’s redefined.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://thehempcollect.com/" }]
@@ -496,7 +496,7 @@
         {
           Title: "WNC-CBD",
           Description: "WNC CBD is a family-owned business based in Asheville that’s known for producing some of the highest quality hemp products available. They prioritize quality over quantity, combining innovation, community values, and exceptional customer service to support natural wellness and a balanced lifestyle.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 3.5,
           IsNew: false, IsFarm: true, Password: "", RequiresID: true,
           Buttons: [{ Text: "Website", Link: "https://wnc-cbd.com/" }]
@@ -504,7 +504,7 @@
         {
           Title: "Neptune Seed Bank",
           Description: "Neptune Seed Bank specializes in top-quality cannabis products curated for every lifestyle. Shop now and experience their finest selection.",
-          Sections: ["Flower", "Concentrates"],
+          Sections: ["All", "Flower", "Concentrates"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://neptuneseedbank.com/" }]
@@ -512,7 +512,7 @@
         {
           Title: "Discount Pharms",
           Description: "Discount Pharms is one of the largest wholesale THCA suppliers in the country. The quality of our products and our low prices have helped us quickly become America’s preferred THCA vendor.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 2.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "http://discountpharms.com/" }]
@@ -520,7 +520,7 @@
         {
           Title: "HIGH THCA HEMP FLOWER",
           Description: "HIGH THCA Hemp Flower stocks the best THCA Flower pounds, half pounds and quarter pounds. Buy strains of THCA flower for less than $100 an ounce when you buy a quarter pound or more.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 2.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "http://highthcahempflower.com/" }]
@@ -528,7 +528,7 @@
         {
           Title: "The Delta Connect",
           Description: "The Delta Connect specializing in THCA products, including flower rosin. One Reddit user mentioned getting Ice Cream Cake from The Delta Connect. The vendor also offers strains like Banana Kush THCA Moroccan Hash Hybrid, which is described as potent.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://thedeltaconnect.com/" }]
@@ -536,7 +536,7 @@
         {
           Title: "Miracle Of The Desert",
           Description: "Miracle Of The Desert is your go-to for organic, high-tier THCa flower, cartridges, rosin, and more. Grown in California’s desert, the heart of U.S. cannabis cultivation, we offer the hottest strains, rotating fresh inventory, and both premium and budget-friendly options.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "http://miracleofthedesert.com/" }]
@@ -544,7 +544,7 @@
         {
           Title: "Homegrown Happiness",
           Description: "At Homegrown Happiness, we’re a family-owned company dedicated to bringing you the finest in cannabis products. Rooted in our values of quality, integrity, and care, we’re committed to offering a selection of premium cannabis that supports your well being.",
-          Sections: ["Flower", "Concentrates", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Edibles"],
           Rating: 4,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://homegrownhappiness.store/" }]
@@ -552,7 +552,7 @@
         {
           Title: "Green Wrld",
           Description: "Cannabis & Hemp genetics company specializing in creating one of a kind strains never seen before! We also offer THCA products such as flower and concentrates.",
-          Sections: ["Flower", "Concentrates"],
+          Sections: ["All", "Flower", "Concentrates"],
           Rating: 2.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "http://greenwrldexclusive.com/" }]
@@ -560,7 +560,7 @@
         {
           Title: "The Flower Girls",
           Description: "The Flower Girls is a brand focused on creating a social community dedicated to empowering, educating, and engaging women who are passionate about cannabis. Their THCA flower shop collaborates with them, offering products for flower enthusiasts, according to their Instagram account . ",
-          Sections: ["Flower", "Concentrates"],
+          Sections: ["All", "Flower", "Concentrates"],
           Rating: 4,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://theflowergirls.shop/" }]
@@ -568,7 +568,7 @@
         {
           Title: "Well Crafted Canna",
           Description: "Well Crafted Canna is a family-owned and operated business based in North Carolina, specializing in federally compliant, artisanally crafted, hemp-derived cannabis products. They emphasize a grassroots philosophy, prioritizing customer safety and satisfaction above all else.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 3,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "http://wellcraftedcanna.com/" }]
@@ -576,7 +576,7 @@
         {
           Title: "DAMN GOOD",
           Description: "Damn Good offers flower grown locally in North Carolina. With fresh batches each week. Damn Good® Concentrates are here. From rosin and sugar to badder, crumble, hash, and shatter — each one made with pure inputs and loud terp profiles. No fillers, no BS. Just potent, flavorful hits every time.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 5,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://tokesugar.com/" }]
@@ -584,7 +584,7 @@
         {
           Title: "Puffy / Myqwin",
           Description: "Puffy / Myqwin offers premium THCa flower, weed vapes, and potent cannabis extracts at unbeatable prices. Shop legal cannabis products including live rosin, badder and crumble for unbeatable prices.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.myqwin.com/" }]
@@ -592,7 +592,7 @@
         {
           Title: "LIT Farms",
           Description: "Lost In Translation (aka LIT Farms) are world known pioneers of hemp, bringing together generations of breeding experience.",
-          Sections: ["Flower"],
+          Sections: ["All", "Flower"],
           Rating: 2.5,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://litfarms.com/" }]
@@ -600,7 +600,7 @@
         {
           Title: "J Littys",
           Description: "J Litty offers a wide variety of THCA products including flower, rosin, badder, crumble, and live resin, however, they have a less than stellar reputation.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 2,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://jlittys.com/" }]
@@ -608,7 +608,7 @@
         {
           Title: "Flow Gardens",
           Description: "If you're looking for CBD, CBG, Delta 9, THCa, and similar products, you must try the award-winning products at Flow Gardens!",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://flowgardens.com/" }]
@@ -616,7 +616,7 @@
         {
           Title: "Upstate Hemp Company",
           Description: "Since 2018 Upstate Hemp Co has been synonymous with 'high-end' flower. We would rather 'out of stock' than provide sub-par or dangerous products.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 4,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://upstatehempco.com/" }]
@@ -624,7 +624,7 @@
         {
           Title: "hmp. / Co Exotics",
           Description: "At HMP, we champion a farm-direct approach that connects you with the finest THCa products sourced from trusted local farmers. Our strong ties to the farming community ensure that every product is cultivated with care, utilizing sustainable practices to deliver pure and potent THCa straight from farm to you. Experience the difference of quality, community, and transparency.",
-          Sections: ["Flower", "Concentrates", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Edibles"],
           Rating: 3.5,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://hmp.store/" }, { Text: "Wholesale", Link: "https://thcawholesale.deals/" }]
@@ -632,7 +632,7 @@
         {
           Title: "Mystic Smoke",
           Description: "Mystic Smoke offers premium THCa and Hemp products. The best THCa shatter, Sugar, Diamonds and more. Farm bill compliant.",
-          Sections: ["Flower", "Concentrates", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Edibles"],
           Rating: 4,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://mysticsmoke.cloud/" }]
@@ -640,7 +640,7 @@
         {
           Title: "The Hemp Hut 508",
           Description: "We specialize in bringing you the finest THCa Flower this country has to offer right to your door!!! We ship nationwide.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.thehemphut508.com/" }]
@@ -648,7 +648,7 @@
         {
           Title: "LegendaryThcaCBD",
           Description: "Hand-selected from only the finest sources of craft Cannabis and concentrates sourced in California. Our quality and pricing are guaranteed to seriously rival your local dispensary or plug",
-          Sections: ["Flower", "Concentrates"],
+          Sections: ["All", "Flower", "Concentrates"],
           Rating: 4,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://legendarythcacbd.com/" }]
@@ -656,7 +656,7 @@
         {
           Title: "I Am Hemp",
           Description: "I AM HEMP Inc is a family oriented THCa/Hemp/CBD wellness company. We strive to offer pricing that’s fair and top quality. The healing power of this plant is why we do what we do.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 3,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.iamhemp.co/" }]
@@ -664,7 +664,7 @@
         {
           Title: "Canna Crunchers CBD",
           Description: " Here at CannaCrunchersCBD, we aim to supply only the highest quality products and products that our customers can both trust and love.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://cannacruncherscbd.com/" }]
@@ -672,7 +672,7 @@
         {
           Title: "Canna Cured",
           Description: "Canna Cured offers THCa in various forms to cater to different preferences: THCa Flower and THCa Concentrates.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 4.5,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://cannacured.com/" }]
@@ -680,7 +680,7 @@
         {
           Title: "JGrows 420",
           Description: "Top Quality Thca products. Free shipping over $150.",
-          Sections: ["Flower", "Concentrates", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Edibles"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.jgrows420.com/" }]
@@ -688,7 +688,7 @@
         {
           Title: "Veteran Grown Hemp",
           Description: "Exotic THCa Flower & Concentrates · Veteran-owned, lab-tested, and priced to move. Shop wax, badder, crumble & smalls.",
-          Sections: ["Flower", "Concentrates", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Edibles"],
           Rating: 2.5,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.veterangrownhemp.com/" }]
@@ -696,7 +696,7 @@
         {
           Title: "DR. Ganja",
           Description: "Dr.Ganja brings customers all around the world the best variety of legal hemp products.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 3,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.drganja.com/" }]
@@ -704,7 +704,7 @@
         {
           Title: "Southern Harvest Hemp",
           Description: "We are a mom and pop store in Texas. Our family farm and processors are in Oregon. We are Farm Bill compliant.",
-          Sections: ["Flower", "Concentrates"],
+          Sections: ["All", "Flower", "Concentrates"],
           Rating: 4,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://southernharvesthemp.com/" }]
@@ -712,7 +712,7 @@
         {
           Title: "Preston Herb Co",
           Description: "Discover premium herbal products at Preston Herb Co. Explore our selection of natural remedies and wellness solutions.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 4.5,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.prestonherbco.com/" }]
@@ -720,7 +720,7 @@
         {
           Title: "Smoky Mountain CBD",
           Description: "Every item we offer is made with peak-quality hemp, directly sourced from plants grown and harvested in the Smoky Mountains of East Tennessee.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 4,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.smokymountaincbd.com/" }]
@@ -728,7 +728,7 @@
         {
           Title: "Wildflower Hemp Co",
           Description: "At Wildflower Hemp Co, we understand that true quality cannot be rushed. That’s why we allow our carefully cultivated plants to undergo a full month cure before processing. This meticulous approach guarantees the perfect moisture ratio of water to flower, resulting in a smooth and enjoyable burn with every gram.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 3,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://wildflowerhempco.com/" }]
@@ -736,7 +736,7 @@
         {
           Title: "Lucky Elk",
           Description: "Small-batch THCa flower and concentrates grown by the best farmers in the Pacific Northwest—cultivated with organic practices, rich in terpenes, and crafted with care from seed to sale.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://luckyelk.com/" }]
@@ -752,7 +752,7 @@
         {
           Title: "Arete Hemp",
           Description: "Organic Premium Cannabis Products - We are a family owned and operated company that is purpose driven working hard to bring the purest organic natural remedies to market.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://aretehemp.com/" }]
@@ -760,7 +760,7 @@
         {
           Title: "Elk Creek Genetics",
           Description: "Sun-grown, living soil, no-till, organic, Mendocino County cannabis cultivation since 1978. Award Winning Strains, Expert Growers, Elk Creek Genetics.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 5,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.elkcreekgenetics.com/category/all-products" }] // Use link to shop since they're home page is so fucking confusing.
@@ -768,7 +768,7 @@
         {
           Title: "Herbal Healers CBD",
           Description: "Herbal Healers was started in 2017 out of my college dorm room, on a mission to provide humanity with the highest quality CBD products and education at a fair price. I have always loved cannabis, and in 2017 I saw an opportunity to get in on an industry that would be able to make a real positive impact on people's lives. At the time I was in college for health sciences, not really enjoying what I was learning and knew that wanted to start a business before I graduated, so that I'd have something established for when I graduated. So, I asked my mom if she would help me get it started, and since she already has a few successful businesses, it would provide me the knowledge and habits to run a successful business. She agreed, fast forward to now and she is still along for the ride! Check out what separates us below!",
-          Sections: ["Flower", "Concentrates", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Edibles"],
           Rating: 4,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://herbalhealerscbd.com/" }]
@@ -776,7 +776,7 @@
         {
           Title: "Earthy Select",
           Description: "Our potency levels range from mild to strong, so you can control your own cannabis experience. Our Delta-8, Delta-9, and Delta-10 THC and THCa products reward you with feelings of relaxation, relief, energy, creativity and joy to the levels you desire.",
-          Sections: ["Flower", "Concentrates"],
+          Sections: ["All", "Flower", "Concentrates"],
           Rating: 3.5,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.earthyselect.com/" }]
@@ -784,7 +784,7 @@
         {
           Title: "Hemp Hop",
           Description: "Hemp Hop started because of the significant experience with a family member. In 2014, after sourcing CBD capsules, he noticed some relief in different areas. Today he is a healthy, happy person. The delivery service was started to ensure these hemp products get to other families as well. We aim to create and sell quality, affordable products for everyone.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://hemphop.co/" }]
@@ -792,7 +792,7 @@
         {
           Title: "Roz From Frasier",
           Description: "The folks behind @rozfromfrasier have been involved in the cannabis community since their teenage years. Having witnessed many trends and ideas come and go over the decades, they realized that the cannabis world is changing rapidly and finally decided it was high time to start interacting with the cannabis community in a more modern context.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 4.0,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://rozfromfrasier.com/" }]
@@ -800,7 +800,7 @@
         {
           Title: "The Southern Maryland Experience Hemp",
           Description: "Since the very beginning our top priorities have been quality, safety, satisfaction, and good pricing. We continue to uphold these values to this day. Bringing customers top quality organic products, from Greenhouse, Light Deps (light deprivation) and Indoor grown methods. Our Company was founded in the Southern Maryland area and was built from the ground up through passion and dedication to consistent quality and equitable business practice. We look forward with enthusiasm and we welcome you to The Southern Maryland Experience.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 4.0,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://thesomdexp.com/" }]
@@ -808,7 +808,7 @@
         {
           Title: "Green Gas Hemp",
           Description: "At GreenGas, we’re delivering a new generation of hemp — fresh, potent, and fully compliant. Thanks to the 2018 Farm Bill, hemp products containing less than 0.3% Delta-9 THC by dry weight are federally legal. Our flower comes from the same plant species as traditional marijuana, but it’s carefully cultivated and processed to meet strict federal standards — giving you the premium quality you deserve, without the worry.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 4.0,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://greengashemp.me/" }]
@@ -816,7 +816,7 @@
         {
           Title: "Sesh City",
           Description: "Shop THCa products at SeshCity! Buy your THCa shatter, flower, dabs, vapes and more online! Free shipping! Ounces of dabs for under $290! NEW DROPS!",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 2.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://seshcity.shop/" }]
@@ -824,7 +824,7 @@
         {
           Title: "Asheville Dispensary",
           Description: "Asheville Dispensary, the premier cannabis destination in Asheville, NC, & Chattanooga, TN. Buy THCA flower, Delta 9 THC, & CBD. Shop online.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://avldispensary.com/" }]
@@ -832,7 +832,7 @@
         {
           Title: "Sticky Buds",
           Description: "At Sticky Buds, we pride ourselves on offering the highest quality cannabis products on the market at unbeatable prices. Whether you’re in search of top-shelf flower, cutting-edge vapes, or potent concentrates, we’ve got you covered. With our commitment to excellence, we ensure that every product meets rigorous standards for potency and purity. Plus, with lightning-fast shipping, all orders are dispatched within 24 hours, so you can enjoy your favorite products sooner. Explore our wide selection and experience the Sticky Buds difference today!",
-          Sections: ["Flower", "Concentrates", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Edibles"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://sticky-buds.com/" }]
@@ -840,7 +840,7 @@
         {
           Title: "Snap Dragon Hemp",
           Description: "Welcome to our cannabis wonderland, where passion meets excellence. Immerse yourself in a world of unparalleled quality and innovation. Our mission is to provide you with top-notch products, exceptional customer service, and a sense of community. Explore our offerings, embrace the magic of cannabis, and unlock a realm of endless possibilities. Join us on this green adventure and let your cannabis journey begin.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 3,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.snapdragonhemp.com/" }]
@@ -848,7 +848,7 @@
         {
           Title: "Boston Hemp Inc",
           Description: "Tired of buying overpriced and low-quality products in fancy packaging? At Boston Hemp Inc. we stay true to our grassroots approach and are consistent in providing the highest quality products and raw materials at an affordable price. After five years of being in business since the inception of the hemp industry, Boston Hemp Inc has made it a priority to provide our customers with the highest quality hemp products, lab tested, and 100% insured for your maximum confidence in purity.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 3,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://bostonhempinc.com/" }]
@@ -856,7 +856,7 @@
         {
           Title: "Elyxr",
           Description: "ELYXR LA was founded in October 2020 with a focus on providing high-quality Delta-8 products, but the brand’s success didn’t happen overnight. By leveraging the strengths of its individual member groups and building a strong infrastructure as a team, ELYXR LA was able to quickly expand its product line and customer base. Unlike many other brands, ELYXR LA is committed to serving a deeper purpose by providing exceptional product quality, artistic design, and unparalleled customer service. With over 2,000+ products, ELYXR LA sets itself apart by offering same-day shipping and putting quality before profit. ELYXR LA is a brand that customers can trust.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 1,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.elyxr.com/" }]
@@ -864,7 +864,7 @@
         {
           Title: "Binoid",
           Description: "Binoid is your best source for the highest quality and effective products made from hemp-derived CBD & Delta 8 THC. Based in Los Angeles, California we at Binoid are dedicated to providing you with CBD & Delta 8 products you can trust, and enjoy.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 1,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://www.binoidcbd.com/" }]
@@ -872,7 +872,7 @@
         {
           Title: "Stoney Branch",
           Description: "We don't just grow cannabis; we cultivate it in a living, thriving soil system we've crafted from scratch. Our precise blend of coco, peat moss, compost, lava rock & minerals comes to life when properly made compost extract hits the soil. We closely analyze & maintain our ecosystem using microscope analysis and soil testing. These are our living soil beds filled with soil we will use for years to come. While other growers discard soil after each harvest, we're cultivating a permanent, living environment that gets richer and more robust with every cycle.",
-          Sections: ["Flower", "Edibles"],
+          Sections: ["All", "Flower", "Edibles"],
           Rating: 3.5,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://stoneybranch.com/" }]
@@ -880,7 +880,7 @@
         {
           Title: "Holy City Farms",
           Description: "Holy City Farms is a family-owned and operated hemp farm in South Carolina offering premium type 2 and 3 CBD products delivered to your door.",
-          Sections: ["Flower"],
+          Sections: ["All", "Flower"],
           Rating: 3.5,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://holycityfarms.com/" }]
@@ -888,7 +888,7 @@
         {
           Title: "Golden Hour Hemp",
           Description: "Golden Hour Hemp started in 2020 as a hemp farm in Waldo, Florida with 6,000 sqft of greenhouses, 10,000 sqft of garden space, and a 5-acre field. We grew our own flower for 2 years, but farming cannabis in Florida is no easy task, and we wanted to focus on our newest pivot into processing. The time on the farm was a great experience we will always cherish, and  we hope to return to farming again in 2025.  By May of 2021 we opened our first processing and production facility, where we focused primarily on making joints and blunts for shops and brands nationwide. And by 2022, instead of growing our own flower in Florida, we partnered with an Oregon farm who grows all of our flower for us. As of late 2023 we have opened up our website to individual consumers, giving brand-level quality at wholesale pricing directly to the end customer.",
-          Sections: ["Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes"],
           Rating: 3,
           IsNew: false, IsFarm: true, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://goldenhourhemp.com/" }]
@@ -896,10 +896,26 @@
         {
           Title: "KIND",
           Description: "At Smoke Kind, we are passionate about delivering only the finest products to improve your lifestyle. Whether you're seeking premium strains, exclusive edibles, or top-tier vapes, we carefully curate each item to ensure quality, satisfaction.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-          Rating: 3.5,
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
+          Rating: 0,
           IsNew: false, IsFarm: false, Password: "", RequiresID: false,
           Buttons: [{ Text: "Website", Link: "https://smokekind.com/" }]
+        },
+        {
+          Title: "KIND",
+          Description: "At Smoke Kind, we are passionate about delivering only the finest products to improve your lifestyle. Whether you're seeking premium strains, exclusive edibles, or top-tier vapes, we carefully curate each item to ensure quality, satisfaction.",
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
+          Rating: 0,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://smokekind.com/" }]
+        },
+        {
+          Title: "ZAZA DELIVERY",
+          Description: "ZAZA Delivery is your go-to online store for premium CBD and THCa products. We offer a wide selection of vapes, edibles, flower, and concentrates, all delivered straight to your door. Our products are compliant with the 2018 Farm Bill, making them federally legal.",
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
+          Rating: 0,
+          IsNew: false, IsFarm: false, Password: "", RequiresID: false,
+          Buttons: [{ Text: "Website", Link: "https://shopzazadelivery.com/" }]
         },
         // Subreddits (not rated)
         {
