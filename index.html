@@ -284,6 +284,7 @@
         backdrop-filter: blur(4px);
         box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
         transition: all 0.3s ease;
+        white-space: nowrap;
       }
 
       .open-link-button:hover {
@@ -1376,6 +1377,7 @@
 
               const imgPath = `Resources/${b.Text}.png`;
               const testImg = new Image();
+              let imgcopy = null;
 
               testImg.onload = function() {
                 const img = document.createElement('img');
@@ -1393,6 +1395,7 @@
 
                 a.textContent = '';
                 a.appendChild(img);
+                imgcopy = img;
               };
 
               testImg.src = imgPath;
@@ -1430,7 +1433,13 @@
 
                       if (countdown < 0) {
                         clearInterval(interval);
-                        a.textContent = originalText;
+                        if (imgcopy) {
+                            a.textContent = '';
+                            a.appendChild(imgcopy);
+                        } else {
+                            a.textContent = originalText;
+                        }
+                        
                         a.style.pointerEvents = '';
                         a.style.opacity = '1';
 
