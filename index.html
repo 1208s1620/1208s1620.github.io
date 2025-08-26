@@ -421,7 +421,7 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 5.0,
           IsNew: false, IsFarm: true, Password: "CLUB",
-          Buttons: [{ Text: "Website", Link: "https://clubhousedrops.com/clubhouse-drops/" }]
+          Buttons: [{ Text: "Website", Link: "https://clubhousedrops.com/clubhouse-drops/", Warning: true }]
         },
         {
           Title: "Crysp",
@@ -1257,13 +1257,70 @@
             btnContainer.className = 'buttons-container';
 
             vendor.Buttons.forEach(b => {
+              // Wrap button + label together
+              const wrapper = document.createElement('div');
+              wrapper.style.display = 'flex';
+              wrapper.style.alignItems = 'center';
+              wrapper.style.gap = '8px'; // space between button and label
+
               const a = document.createElement('a');
               a.href = b.Link;
               a.textContent = b.Text;
               a.target = '_blank';
               a.rel = 'noopener noreferrer';
               a.className = 'open-link-button';
-              btnContainer.appendChild(a);
+
+              wrapper.appendChild(a);
+
+              if (b.Warning) {
+                // Add unsafe label (white instead of red)
+                const warningLabel = document.createElement('span');
+                warningLabel.textContent = 'This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.';
+                warningLabel.style.color = 'lightgrey';
+                warningLabel.style.fontSize = '0.65em';
+                wrapper.appendChild(warningLabel);
+
+                let timerActive = false;
+
+                a.addEventListener('click', function (e) {
+                  if (!timerActive) {
+                    e.preventDefault();
+                    timerActive = true;
+
+                    const originalText = b.Text;
+                    let countdown = 5;
+
+                    a.style.pointerEvents = 'none'; // disable clicking
+                    a.style.opacity = '0.6';
+
+                    // Update immediately before waiting
+                    a.textContent = `Please wait ${countdown}s...`;
+                    countdown--;
+
+                    const interval = setInterval(() => {
+                      a.textContent = `Please wait ${countdown}s...`;
+                      countdown--;
+
+                      if (countdown < 0) {
+                        clearInterval(interval);
+                        a.textContent = originalText;
+                        a.style.pointerEvents = '';
+                        a.style.opacity = '1';
+
+                        // Attach new click handler that actually opens link
+                        a.addEventListener('click', function openLink() {
+                          window.open(b.Link, '_blank', 'noopener,noreferrer');
+                          // a.removeEventListener('click', openLink);
+                        });
+                      }
+                    }, 1000);
+                  } else {
+                    e.preventDefault();
+                  }
+                });
+              }
+
+              btnContainer.appendChild(wrapper);
             });
 
             card.appendChild(btnContainer);
