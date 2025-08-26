@@ -104,22 +104,23 @@
       }
 
       .nav-button {
-        padding: 0.5rem 1.25rem;
-        border: 2px solid var(--primary);
-        border-radius: 10px;
-        background: transparent;
-        color: var(--text);
+        background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
+        border: 1px solid rgba(187, 134, 252, 0.4);
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+        font-weight: 600;
         text-decoration: none;
-        font-weight: 500;
-        font-size: 0.9rem;
+        color: rgb(205, 178, 255);
         transition: all 0.3s ease;
         white-space: nowrap;
         flex-shrink: 0;
       }
 
       .nav-button:hover {
-        background: var(--primary);
-        color: var(--background);
+        color: #fff;
+        border-color: var(--primary);
+        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
         transform: translateY(-2px);
       }
 
@@ -157,24 +158,29 @@
       }
 
       .tab-button {
-        padding: 0.6rem 1.5rem;
-        background: var(--surface);
-        border: 2px solid var(--primary);
+        background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
+        border: 1px solid rgba(187, 134, 252, 0.4);
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
         color: var(--text);
         font-weight: 500;
         border-radius: 10px;
+        color: rgb(205, 178, 255);
         cursor: pointer;
-        transition: all 0.3s ease;
-        white-space: nowrap;
-        flex-shrink: 0;
-        min-width: 100px;
-        text-align: center;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
+        transition: all 0.2s ease;
+      }
+
+      .tab-button:hover {
+          border-color: var(--primary);
+          box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
+          transform: translateY(-2px);
       }
 
       .tab-button.active {
-        background: var(--primary);
-        color: var(--background);
-        box-shadow: 0 0 12px rgba(187, 134, 252, 0.4);
+          border-color: var(--primary);
+          box-shadow: 0 8px 24px rgba(187, 134, 252, 0.35);
       }
 
       .tab-content {
@@ -267,22 +273,30 @@
       }
 
       .open-link-button {
-        padding: 0.5rem 1rem;
-        background: var(--primary);
-        color: var(--background);
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
+        background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
+        border: 1px solid rgba(187, 134, 252, 0.4);
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        font-size: 1rem;
         font-weight: 600;
-        transition: background-color 0.3s ease;
-        white-space: nowrap;
-        text-align: center;
-        flex-shrink: 0;
-        text-decoration: none;
+        color: rgba(255, 255, 255, 0.7);
+        cursor: pointer;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
+        transition: all 0.3s ease;
       }
 
       .open-link-button:hover {
-        background: #a465f9;
+          color: #fff;
+          border-color: var(--primary);
+          box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
+      }
+
+      .open-link-button.active {
+          color: #fff;
+          border: 1px solid var(--primary);
+          background: linear-gradient(145deg, var(--primary), #985eff);
+          box-shadow: 0 8px 24px rgba(187, 134, 252, 0.35);
       }
 
       .footer {
@@ -429,7 +443,10 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 5.0,
           IsNew: false, IsFarm: true, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://crysp.co/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://crysp.co/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/crysp.co/" }
+          ]
         },
         {
           Title: "Simply Mary",
@@ -437,7 +454,10 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
           Rating: 5,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://simplymary.co/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://simplymary.co/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/simplymary/" }
+          ]
         },
         {
           Title: "Shop Hello Mary",
@@ -445,7 +465,11 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
           Rating: 4.5,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://shophellomary.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://shophellomary.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/hellomary0fficial/" },
+            
+          ]
         },
         {
           Title: "Quantum Exotics",
@@ -453,7 +477,10 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 5,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://www.quantumexotics.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://www.quantumexotics.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/quantumexotics710/" }
+          ]
         },
         {
           Title: "Sherlocks Glass",
@@ -461,7 +488,12 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
           Rating: 4,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://sherlocksglass.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://sherlocksglass.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/sherlocksglass/" },
+            { Text: "Youtube", Link: "https://www.youtube.com/@sherlocksglass/" },
+            { Text: "TikTok", Link: "https://www.tiktok.com/@sherlocksglass/" }
+          ]
         },
         {
           Title: "CANNA HAUS FARMS",
@@ -469,7 +501,10 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 4.5,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://cannahausfarms.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://cannahausfarms.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/cannahausfarms/" }
+          ]
         },
         {
           Title: "Tesoro Hemp",
@@ -477,7 +512,13 @@
           Sections: ["All", "Flower", "Concentrates", "Wholesale"],
           Rating: 4,
           IsNew: true, IsFarm: true, IsCheap: true, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://tesorohemp.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://tesorohemp.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/tesorohempco/" },
+            { Text: "Facebook", Link: "https://facebook.com/tesorohemp/" },
+            { Text: "Reddit", Link: "https://reddit.com/r/tesorohemp/" },
+            { Text: "TikTok", Link: "https://tiktok.com/tesorohemp/" }
+          ]
         },
         {
           Title: "Cali Blaise",
@@ -485,7 +526,13 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
           Rating: 4.5,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://caliblaise.net/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://caliblaise.net/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/caliblaise_online/" },
+            { Text: "Twitter", Link: "https://x.com/CaliBlaiseNews/" },
+            { Text: "Youtube", Link: "https://www.youtube.com/@CaliBlaise_net/" },
+            { Text: "TikTok", Link: "https://www.tiktok.com/@caliblaise.net/" }
+          ]
         },
         {
           Title: "Illest Haze",
@@ -493,7 +540,13 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
           Rating: 4.5,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://illesthaze.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://illesthaze.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/caliblaise_online/" },
+            { Text: "Facebook", Link: "https://www.facebook.com/illesthazedispensary/" },
+            { Text: "Twitter", Link: "https://www.x.com/ILLESTHAZEHEMP/" },
+            { Text: "Youtube", Link: "https://www.youtube.com/@ILLESTHAZEREVIEWS/" }
+          ]
         },
         {
           Title: "THE HEMP COLLECT",
@@ -501,7 +554,12 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://thehempcollect.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://thehempcollect.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/modernherbcogoodsofficial/" },
+            { Text: "Facebook", Link: "https://www.facebook.com/ModernHerbCo/" },
+            { Text: "Twitter", Link: "https://x.com/HempCollect/" },
+          ]
         },
         {
           Title: "THE HEMP BARN",
@@ -509,7 +567,11 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Wholesale"],
           Rating: 4,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://thehempbarn.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://thehempbarn.com/" },
+            { Text: "Facebook", Link: "https://www.facebook.com/thehempbarn/" },
+            { Text: "Twitter", Link: "https://x.com/thehempbarn/" }
+          ]
         },
         {
           Title: "The Mad Skunk",
@@ -517,7 +579,12 @@
           Sections: ["All", "Flower"],
           Rating: 3.5,
           IsNew: false, IsFarm: true, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://www.themadskunk.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://www.themadskunk.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/Themadskunkva/" },
+            { Text: "Twitter", Link: "https://twitter.com/madskunkery/" },
+            { Text: "TikTok", Link: "https://www.tiktok.com/@Madskunkery/" }
+          ]
         },
         {
           Title: "INDACLOUD",
@@ -525,7 +592,12 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Wholesale"],
           Rating: 3,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://indacloud.co/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://indacloud.co/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/indacloudco/" },
+            { Text: "Facebook", Link: "https://www.facebook.com/indacloud.co/" },
+            { Text: "Twitter", Link: "https://twitter.com/indacloudco/" },
+          ]
         },
         { // They dropship DP products, reason for the low rating.
           Title: "Purple Candy Gas",
@@ -533,7 +605,10 @@
           Sections: ["All", "Flower", "Wholesale"],
           Rating: 3,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://purplecandygas.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://purplecandygas.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/purple_candy_gas/" }
+          ]
         },
         {
           Title: "DAILY HI",
@@ -541,7 +616,12 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
           Rating: 3,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://www.daily-hi.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://www.daily-hi.com/" },
+            { Text: "Instagram", Link: "http://instagram.com/shopdailyhi/" },
+            { Text: "Facebook", Link: "https://www.facebook.com/people/Daily-Hi/61576755503827/" },
+            { Text: "Twitter", Link: "https://x.com/yourdailyhi/" }
+          ]
         },
         {
           Title: "WNC-CBD",
@@ -549,7 +629,12 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
           Rating: 3.5,
           IsNew: false, IsFarm: true, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://wnc-cbd.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://wnc-cbd.com/" },
+            { Text: "Instagram", Link: "http://instagram.com/shopdailyhi/" },
+            { Text: "Facebook", Link: "https://www.facebook.com/people/Daily-Hi/61576755503827/" },
+            { Text: "Twitter", Link: "https://x.com/yourdailyhi/" }
+          ]
         },
         {
           Title: "Rise Hemp Co",
@@ -557,7 +642,12 @@
           Sections: ["All", "Flower", "Concentrates"],
           Rating: 4,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Website", Link: "https://www.risehempllc.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://www.risehempllc.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/risehempcollc/" },
+            { Text: "Discord", Link: "https://discord.com/channels/1340421288136671412/1340421288136671415/" },
+            { Text: "Twitter", Link: "https://x.com/RiseHempLLC/" }
+          ]
         },
         {
           Title: "Surfside Brands",
@@ -1279,10 +1369,33 @@
 
               const a = document.createElement('a');
               a.href = b.Link;
-              a.textContent = b.Text;
+              a.textContent = b.Text
               a.target = '_blank';
               a.rel = 'noopener noreferrer';
               a.className = 'open-link-button';
+
+              const imgPath = `Resources/${b.Text}.png`;
+              const testImg = new Image();
+
+              testImg.onload = function() {
+                const img = document.createElement('img');
+                img.src = imgPath;
+                img.alt = b.Text;
+                img.style.height = '24px';
+                img.style.width = '24px';
+                img.style.objectFit = 'contain';
+                img.style.display = 'block';
+                img.style.margin = '0 auto';
+
+                a.style.display = 'flex';
+                a.style.alignItems = 'center';
+                a.style.justifyContent = 'center';
+
+                a.textContent = '';
+                a.appendChild(img);
+              };
+
+              testImg.src = imgPath;
 
               wrapper.appendChild(a);
 
