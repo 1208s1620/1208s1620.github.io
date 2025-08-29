@@ -210,6 +210,18 @@
         word-break: break-word;
       }
 
+      .rank-card.sorting {
+        background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        transition: transform 0.2s ease;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        word-break: break-word;
+      }
+
       .rank-card:hover {
         transform: translateY(-5px);
       }
@@ -1562,243 +1574,640 @@
         },
       ];
 
-      const Tabs = [];
+      const tabs = [];
       Vendors.forEach(vendor => {
         vendor.Sections.forEach(section => {
-          if (!Tabs.includes(section)) Tabs.push(section);
+          if (!tabs.includes(section)) {
+            tabs.push(section);
+          }
         });
       });
-      
-      const TabButtons = document.getElementById('TabButtons');
-      const TabContents = document.getElementById('TabContents');
+
+      const tabButtonsContainer = document.getElementById('TabButtons');
+      const tabContentsContainer = document.getElementById('TabContents');
+
+      let currentSortBy = 'rating';
+      let currentSortOrder = 'desc';
 
       TabOrder.forEach((tab, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'tab-button' + (index === 0 ? ' active' : '');
-        btn.textContent = tab;
+        createTabButton(tab, index);
+        createTabContent(tab, index);
+      });
 
-        btn.onclick = () => {
-          document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-          document.getElementById(`tab-content-${tab}`).classList.add('active');
-        };
+      function createTabButton(tab, index) {
+        const button = document.createElement('button');
+        button.className = `tab-button${index === 0 ? ' active' : ''}`;
+        button.textContent = tab;
+        
+        button.onclick = () => switchTab(tab);
+        tabButtonsContainer.appendChild(button);
+      }
 
-        TabButtons.appendChild(btn);
+      function switchTab(tab) {
+        document.querySelectorAll('.tab-button').forEach(btn => 
+          btn.classList.remove('active')
+        );
+        document.querySelectorAll('.tab-content').forEach(content => 
+          content.classList.remove('active')
+        );
+        
+        event.target.classList.add('active');
+        document.getElementById(`tab-content-${tab}`).classList.add('active');
+      }
 
+      function createTabContent(tab, index) {
         const contentDiv = document.createElement('div');
-        contentDiv.className = 'tab-content' + (index === 0 ? ' active' : '');
+        contentDiv.className = `tab-content${index === 0 ? ' active' : ''}`;
         contentDiv.id = `tab-content-${tab}`;
+
+        const sortingControls = createSortingControls(tab);
+        contentDiv.appendChild(sortingControls);
 
         const listDiv = document.createElement('div');
         listDiv.className = 'ranking-list';
+        listDiv.id = `ranking-list-${tab}`;
 
-        Vendors.filter(v => v.Sections.includes(tab)).sort((a, b) => b.Rating - a.Rating).forEach(vendor => {
-          const card = document.createElement('div');
-          card.className = 'rank-card';
-
-          const title = document.createElement('h2');
-          title.textContent = vendor.Title;
-          
-          const stars = document.createElement('span');
-          stars.className = 'rating';
-
-          for (let i = 0; i < 5; i++) {
-            const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            star.setAttribute('width', '16');
-            star.setAttribute('height', '16');
-            star.setAttribute('viewBox', '0 0 24 24');
-
-            const rating = vendor.Rating;
-
-            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-
-            if (i < rating && i >= Math.floor(rating)) {
-              // HALF STAR: add mask for fill
-              const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
-              mask.setAttribute('id', `half-mask-${i}`);
-
-              const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-              rect.setAttribute('x', '0');
-              rect.setAttribute('y', '0');
-              rect.setAttribute('width', '12'); // Half of viewBox width
-              rect.setAttribute('height', '24');
-              rect.setAttribute('fill', 'white');
-
-              mask.appendChild(rect);
-              defs.appendChild(mask);
-              star.appendChild(defs);
-
-              // Filled half
-              const filledPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-              filledPath.setAttribute('d', 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z');
-              filledPath.setAttribute('fill', '#ffcc00');
-              filledPath.setAttribute('mask', `url(#half-mask-${i})`);
-              star.appendChild(filledPath);
-            }
-
-            // Outline (and full fill if needed)
-            const outlinePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            outlinePath.setAttribute('d', 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z');
-            outlinePath.setAttribute('fill', i < Math.floor(rating) ? '#ffcc00' : 'none');
-            outlinePath.setAttribute('stroke', '#ffcc00');
-            outlinePath.setAttribute('stroke-width', '2');
-            outlinePath.setAttribute('stroke-linejoin', 'round');
-
-            star.appendChild(outlinePath);
-            stars.appendChild(star);
-          }
-
-          title.appendChild(stars);
-
-          if (vendor.Password) {
-            const passBadge = document.createElement('span');
-            passBadge.className = 'indicator password';
-            passBadge.textContent = `Password: ${vendor.Password}`;
-            title.appendChild(passBadge);
-          }
-          if (vendor.IsNew) {
-            const newBadge = document.createElement('span');
-            newBadge.className = 'indicator new';
-            newBadge.textContent = 'New';
-            title.appendChild(newBadge);
-          }
-          if (vendor.IsCheap) {
-            const cheapBadge = document.createElement('span');
-            cheapBadge.className = 'indicator cheap';
-            cheapBadge.textContent = 'Budget';
-            title.appendChild(cheapBadge);
-          }
-          if (vendor.IsFarm) {
-            const farmBadge = document.createElement('span');
-            farmBadge.className = 'indicator farm';
-            farmBadge.textContent = 'Farm';
-            title.appendChild(farmBadge);
-          }
-          
-          card.appendChild(title);
-
-          const desc = document.createElement('p');
-          desc.textContent = vendor.Description;
-          card.appendChild(desc);
-
-          if (vendor.Buttons && vendor.Buttons.length) {
-            const btnContainer = document.createElement('div');
-            btnContainer.className = 'buttons-container';
-
-            vendor.Buttons.forEach(b => {
-              // Wrap button + label together
-              const wrapper = document.createElement('div');
-              wrapper.style.display = 'flex';
-              wrapper.style.alignItems = 'center';
-              wrapper.style.gap = '8px'; // space between button and label
-
-              const a = document.createElement('a');
-              a.href = b.Link;
-              a.target = '_blank';
-              a.rel = 'noopener noreferrer';
-              a.className = 'open-link-button';
-
-              const imgPath = `Resources/${b.Text}.png`;
-              const testImg = new Image();
-              let imgcopy = null;
-
-              testImg.onload = function() {
-                const img = document.createElement('img');
-                img.src = imgPath;
-                img.alt = b.Text;
-                img.style.height = '24px';
-                img.style.width = '24px';
-                img.style.objectFit = 'contain';
-                img.style.display = 'block';
-
-                a.style.display = 'flex';
-                a.style.alignItems = 'center';
-                a.style.justifyContent = 'center';
-                a.style.textDecoration = 'none';
-                a.style.color = 'rgb(205, 178, 255)';
-                a.style.fontSize = '0.9em';
-                a.style.gap = '6px'; // space between image and text
-
-                // Add both image and text
-                a.textContent = ''; // clear previous
-                a.appendChild(img);
-                a.appendChild(document.createTextNode(b.Text));
-                imgcopy = img;
-              };
-
-              testImg.onerror = function() {
-                // If image is missing, just use text
-                a.textContent = b.Text;
-              };
-
-              testImg.src = imgPath;
-              wrapper.appendChild(a);
-
-              if (b.Warning) {
-                // Add unsafe label (white instead of red)
-                const warningLabel = document.createElement('span');
-                warningLabel.textContent = 'This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.';
-                warningLabel.style.color = 'lightgrey';
-                warningLabel.style.fontSize = '0.65em';
-                wrapper.appendChild(warningLabel);
-
-                let timerActive = false;
-
-                a.addEventListener('click', function (e) {
-                  if (!timerActive) {
-                    e.preventDefault();
-                    timerActive = true;
-
-                    const originalText = b.Text;
-                    let countdown = 5;
-
-                    a.style.pointerEvents = 'none';
-                    a.style.opacity = '0.6';
-                    a.textContent = `Please wait ${countdown}s...`;
-                    countdown--;
-
-                    const interval = setInterval(() => {
-                      a.textContent = `Please wait ${countdown}s...`;
-                      countdown--;
-
-                      if (countdown < 0) {
-                        clearInterval(interval);
-                        a.style.pointerEvents = '';
-                        a.style.opacity = '1';
-
-                        // Restore image + text if available
-                        a.textContent = '';
-                        if (imgcopy) {
-                          a.appendChild(imgcopy);
-                          a.appendChild(document.createTextNode(originalText));
-                        } else {
-                          a.textContent = originalText;
-                        }
-
-                        a.addEventListener('click', function openLink() {
-                          window.open(b.Link, '_blank', 'noopener,noreferrer');
-                        });
-                      }
-                    }, 1000);
-                  } else {
-                    e.preventDefault();
-                  }
-                });
-              }
-
-              btnContainer.appendChild(wrapper);
-            });
-
-            card.appendChild(btnContainer);
-          }
-
-          listDiv.appendChild(card);
-        });
+        const tabVendors = getFilteredAndSortedVendors(tab);
+        populateVendorList(listDiv, tabVendors);
 
         contentDiv.appendChild(listDiv);
-        TabContents.appendChild(contentDiv);
-      });
+        tabContentsContainer.appendChild(contentDiv);
+      }
+
+      function createSortingControls(tab) {
+        const container = document.createElement('div');
+        container.className = 'rank-card';
+        container.style.flexDirection = 'row';
+
+        container.style.cssText = `
+          margin-bottom: 20px;
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+          align-items: center;
+          padding: 15px;
+        `;
+
+        const label = document.createElement('span');
+        label.textContent = 'Sort by:';
+        label.style.cssText = 'font-weight: 600; color: #fff; margin-right: 10px;';
+        container.appendChild(label);
+
+        const sortOptions = [
+          { value: 'rating', label: 'Rating' },
+          { value: 'new', label: 'New' },
+          { value: 'farm', label: 'Farm' },
+          { value: 'cheap', label: 'Budget' }
+        ];
+
+        sortOptions.forEach(option => {
+          const button = document.createElement('button');
+          button.className = `sort-button${currentSortBy === option.value ? ' active' : ''}`;
+          button.textContent = option.label;
+          button.style.cssText = `
+            padding: 8px 16px;
+            border: 2px solid rgb(205, 178, 255);
+            background: ${currentSortBy === option.value ? 'rgb(205, 178, 255)' : 'transparent'};
+            color: ${currentSortBy === option.value ? '#000' : 'rgb(205, 178, 255)'};
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+          `;
+
+          button.onmouseover = () => {
+            if (currentSortBy !== option.value) {
+              button.style.background = 'rgba(205, 178, 255, 0.1)';
+            }
+          };
+
+          button.onmouseout = () => {
+            if (currentSortBy !== option.value) {
+              button.style.background = 'transparent';
+            }
+          };
+
+          button.onclick = () => changeSorting(option.value, tab);
+          container.appendChild(button);
+        });
+
+        if (currentSortBy === 'rating') {
+          const orderButton = createSortOrderButton(tab);
+          container.appendChild(orderButton);
+        }
+
+        return container;
+      }
+
+      function createSortOrderButton(tab) {
+        const button = document.createElement('button');
+
+
+        button.onmouseover = () => {
+          button.style.background = 'rgba(204, 204, 204, 0.1)';
+        };
+
+        button.onmouseout = () => {
+          button.style.background = 'transparent';
+        };
+
+        button.onclick = () => {
+          currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc';
+          refreshTabContent(tab);
+        };
+
+        return button;
+      }
+
+      function changeSorting(sortBy, tab) {
+        currentSortBy = sortBy;
+        refreshTabContent(tab);
+      }
+
+      function refreshTabContent(tab) {
+        const contentDiv = document.getElementById(`tab-content-${tab}`);
+        contentDiv.innerHTML = '';
+
+        const sortingControls = createSortingControls(tab);
+        contentDiv.appendChild(sortingControls);
+
+        const listDiv = document.createElement('div');
+        listDiv.className = 'ranking-list';
+        listDiv.id = `ranking-list-${tab}`;
+
+        const tabVendors = getFilteredAndSortedVendors(tab);
+        populateVendorList(listDiv, tabVendors);
+
+        contentDiv.appendChild(listDiv);
+      }
+
+      function getFilteredAndSortedVendors(tab) {
+        const tabVendors = Vendors.filter(vendor => vendor.Sections.includes(tab));
+        return sortVendors(tabVendors, currentSortBy, currentSortOrder);
+      }
+
+      function sortVendors(vendors, sortBy, sortOrder) {
+        const sorted = [...vendors].sort((a, b) => {
+          let comparison = 0;
+
+          switch (sortBy) {
+            case 'rating':
+              comparison = a.Rating - b.Rating;
+              break;
+            case 'new':
+              if (a.IsNew !== b.IsNew) {
+                comparison = a.IsNew ? -1 : 1;
+              } else {
+                comparison = b.Rating - a.Rating;
+              }
+              return comparison;
+            case 'farm':
+              if (a.IsFarm !== b.IsFarm) {
+                comparison = a.IsFarm ? -1 : 1;
+              } else {
+                comparison = b.Rating - a.Rating;
+              }
+              return comparison;
+            case 'cheap':
+              if (a.IsCheap !== b.IsCheap) {
+                comparison = a.IsCheap ? -1 : 1;
+              } else {
+                comparison = b.Rating - a.Rating;
+              }
+              return comparison;
+          }
+
+          return sortOrder === 'desc' ? -comparison : comparison;
+        });
+
+        return sorted;
+      }
+
+      function populateVendorList(listDiv, vendors) {
+        vendors.forEach(vendor => {
+          const card = createVendorCard(vendor);
+          listDiv.appendChild(card);
+        });
+      }
+
+      function createVendorCard(vendor) {
+        const card = document.createElement('div');
+        card.className = 'rank-card';
+
+        const title = document.createElement('h2');
+        title.textContent = vendor.Title;
+        
+        const starsContainer = createStarRating(vendor.Rating);
+        title.appendChild(starsContainer);
+
+        addIndicatorBadges(title, vendor);
+        card.appendChild(title);
+
+        const description = document.createElement('p');
+        description.textContent = vendor.Description;
+        card.appendChild(description);
+
+        if (vendor.Buttons && vendor.Buttons.length > 0) {
+          const buttonsContainer = createButtonsContainer(vendor.Buttons);
+          card.appendChild(buttonsContainer);
+        }
+
+        return card;
+      }
+
+      function createStarRating(rating) {
+        const starsContainer = document.createElement('span');
+        starsContainer.className = 'rating';
+
+        for (let i = 0; i < 5; i++) {
+          const star = createStarSVG(i, rating);
+          starsContainer.appendChild(star);
+        }
+
+        return starsContainer;
+      }
+
+      function createStarSVG(starIndex, rating) {
+        const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        star.setAttribute('width', '16');
+        star.setAttribute('height', '16');
+        star.setAttribute('viewBox', '0 0 24 24');
+
+        const starPath = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
+
+        if (starIndex < rating && starIndex >= Math.floor(rating)) {
+          createHalfStar(star, starIndex, starPath);
+        } else {
+          createFullStar(star, starIndex, rating, starPath);
+        }
+
+        return star;
+      }
+
+      function createHalfStar(star, starIndex, starPath) {
+        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
+        mask.setAttribute('id', `half-mask-${starIndex}`);
+
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', '0');
+        rect.setAttribute('y', '0');
+        rect.setAttribute('width', '12');
+        rect.setAttribute('height', '24');
+        rect.setAttribute('fill', 'white');
+
+        mask.appendChild(rect);
+        defs.appendChild(mask);
+        star.appendChild(defs);
+
+        const filledPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        filledPath.setAttribute('d', starPath);
+        filledPath.setAttribute('fill', '#ffcc00');
+        filledPath.setAttribute('mask', `url(#half-mask-${starIndex})`);
+        star.appendChild(filledPath);
+
+        const outlinePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        outlinePath.setAttribute('d', starPath);
+        outlinePath.setAttribute('fill', 'none');
+        outlinePath.setAttribute('stroke', '#ffcc00');
+        outlinePath.setAttribute('stroke-width', '2');
+        outlinePath.setAttribute('stroke-linejoin', 'round');
+        star.appendChild(outlinePath);
+      }
+
+      function createFullStar(star, starIndex, rating, starPath) {
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', starPath);
+        path.setAttribute('fill', starIndex < Math.floor(rating) ? '#ffcc00' : 'none');
+        path.setAttribute('stroke', '#ffcc00');
+        path.setAttribute('stroke-width', '2');
+        path.setAttribute('stroke-linejoin', 'round');
+        star.appendChild(path);
+      }
+
+      function addIndicatorBadges(title, vendor) {
+        const badges = [
+          { condition: vendor.Password, class: 'password', text: `Password: ${vendor.Password}` },
+          { condition: vendor.IsNew, class: 'new', text: 'New' },
+          { condition: vendor.IsCheap, class: 'cheap', text: 'Budget' },
+          { condition: vendor.IsFarm, class: 'farm', text: 'Farm' }
+        ];
+
+        badges.forEach(badge => {
+          if (badge.condition) {
+            const badgeElement = document.createElement('span');
+            badgeElement.className = `indicator ${badge.class}`;
+            badgeElement.textContent = badge.text;
+            title.appendChild(badgeElement);
+          }
+        });
+      }
+
+      function createButtonsContainer(buttons) {
+        const container = document.createElement('div');
+        container.className = 'buttons-container';
+
+        buttons.forEach(buttonData => {
+          const wrapper = createButtonWrapper(buttonData);
+          container.appendChild(wrapper);
+        });
+
+        return container;
+      }
+
+      function createButtonWrapper(buttonData) {
+        const wrapper = document.createElement('div');
+        wrapper.style.display = 'flex';
+        wrapper.style.alignItems = 'center';
+        wrapper.style.gap = '8px';
+
+        const link = createButtonLink(buttonData);
+        wrapper.appendChild(link);
+
+        if (buttonData.Warning) {
+          const warning = createWarningLabel();
+          wrapper.appendChild(warning);
+          setupWarningClickHandler(link, buttonData);
+        }
+
+        return wrapper;
+      }
+
+      function createButtonLink(buttonData) {
+        const link = document.createElement('a');
+        link.href = buttonData.Link;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.className = 'open-link-button';
+
+        setupButtonImage(link, buttonData.Text);
+        
+        return link;
+      }
+
+      function setupButtonImage(link, buttonText) {
+        const imagePath = `Resources/${buttonText}.png`;
+        const testImage = new Image();
+
+        testImage.onload = () => {
+          setupLinkWithImage(link, imagePath, buttonText);
+        };
+
+        testImage.onerror = () => {
+          link.textContent = buttonText;
+        };
+
+        testImage.src = imagePath;
+      }
+
+      function setupLinkWithImage(link, imagePath, buttonText) {
+        const image = document.createElement('img');
+        image.src = imagePath;
+        image.alt = buttonText;
+        image.style.cssText = 'height: 24px; width: 24px; object-fit: contain; display: block;';
+
+        link.style.cssText = `
+          display: flex; 
+          align-items: center; 
+          justify-content: center; 
+          text-decoration: none; 
+          color: rgb(205, 178, 255); 
+          font-size: 0.9em; 
+          gap: 6px;
+        `;
+
+        link.textContent = '';
+        link.appendChild(image);
+        link.appendChild(document.createTextNode(buttonText));
+      }
+
+      function createWarningLabel() {
+        const warning = document.createElement('span');
+        warning.textContent = 'This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.';
+        warning.style.cssText = 'color: lightgrey; font-size: 0.65em;';
+        return warning;
+      }
+
+      function setupWarningClickHandler(link, buttonData) {
+        let timerActive = false;
+
+        link.addEventListener('click', function(event) {
+          if (timerActive) {
+            event.preventDefault();
+            return;
+          }
+
+          event.preventDefault();
+          timerActive = true;
+
+          const originalContent = {
+            text: buttonData.Text,
+            innerHTML: link.innerHTML
+          };
+
+          startCountdown(link, originalContent, buttonData.Link);
+        });
+      }
+
+      function startCountdown(link, originalContent, targetUrl) {
+        let countdown = 5;
+        
+        link.style.cssText += 'pointer-events: none; opacity: 0.6;';
+        updateCountdownText(link, countdown);
+
+        const interval = setInterval(() => {
+          countdown--;
+          
+          if (countdown < 0) {
+            clearInterval(interval);
+            restoreLinkAndEnableClick(link, originalContent, targetUrl);
+          } else {
+            updateCountdownText(link, countdown);
+          }
+        }, 1000);
+      }
+
+      function updateCountdownText(link, countdown) {
+        link.textContent = `Please wait ${countdown}s...`;
+      }
+
+      function restoreLinkAndEnableClick(link, originalContent, targetUrl) {
+        link.style.pointerEvents = '';
+        link.style.opacity = '1';
+        link.innerHTML = originalContent.innerHTML;
+
+        link.addEventListener('click', function openLink() {
+          window.open(targetUrl, '_blank', 'noopener,noreferrer');
+        }, { once: true });
+      }
+
+      function createSortingControls(tab) {
+        const container = document.createElement('div');
+        container.className = 'rank-card sorting';
+        container.style.cssText = `
+          margin-bottom: 20px;
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+          align-items: center;
+          padding: 15px;
+        `;
+
+        const label = document.createElement('span');
+        label.textContent = 'Sort by:';
+        label.style.cssText = 'font-weight: 600; color: #fff; margin-right: 10px;';
+        container.appendChild(label);
+
+        const sortOptions = [
+          { value: 'rating', label: 'Rating' },
+          { value: 'new', label: 'New' },
+          { value: 'cheap', label: 'Budget' },
+          { value: 'farm', label: 'Farm' }
+        ];
+
+        sortOptions.forEach(option => {
+          const button = document.createElement('button');
+          button.textContent = option.label;
+          button.style.cssText = `
+            padding: 8px 16px;
+            border: 2px solid rgb(205, 178, 255);
+            background: ${currentSortBy === option.value ? 'rgb(205, 178, 255)' : 'transparent'};
+            color: ${currentSortBy === option.value ? '#000' : 'rgb(205, 178, 255)'};
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+          `;
+
+          button.onmouseover = () => {
+            if (currentSortBy !== option.value) {
+              button.style.background = 'rgba(205, 178, 255, 0.1)';
+            }
+          };
+
+          button.onmouseout = () => {
+            if (currentSortBy !== option.value) {
+              button.style.background = 'transparent';
+            }
+          };
+
+          button.onclick = () => changeSorting(option.value, tab);
+          container.appendChild(button);
+        });
+
+        if (currentSortBy === 'rating') {
+          const orderButton = createSortOrderButton(tab);
+          container.appendChild(orderButton);
+        }
+
+        return container;
+      }
+
+      function createSortOrderButton(tab) {
+  const button = document.createElement('button');
+  button.className = 'sort-order-button';
+  button.textContent = currentSortOrder === 'desc' ? '↓ High to Low' : '↑ Low to High';
+  button.style.cssText = `
+    padding: 8px 16px;
+    border: 2px solid #ccc;
+    background: transparent;
+    color: #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-left: auto; /* Pushes button to the right */
+  `;
+
+  button.onmouseover = () => {
+    button.style.background = 'rgba(204, 204, 204, 0.1)';
+  };
+
+  button.onmouseout = () => {
+    button.style.background = 'transparent';
+  };
+
+  button.onclick = () => {
+    currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc';
+    refreshTabContent(tab);
+  };
+
+  return button;
+}
+
+      function changeSorting(sortBy, tab) {
+        currentSortBy = sortBy;
+        refreshTabContent(tab);
+      }
+
+      function refreshTabContent(tab) {
+        const contentDiv = document.getElementById(`tab-content-${tab}`);
+        contentDiv.innerHTML = '';
+
+        const sortingControls = createSortingControls(tab);
+        contentDiv.appendChild(sortingControls);
+
+        const listDiv = document.createElement('div');
+        listDiv.className = 'ranking-list';
+        listDiv.id = `ranking-list-${tab}`;
+
+        const tabVendors = getFilteredAndSortedVendors(tab);
+        populateVendorList(listDiv, tabVendors);
+
+        contentDiv.appendChild(listDiv);
+      }
+
+      function getFilteredAndSortedVendors(tab) {
+        const tabVendors = Vendors.filter(vendor => vendor.Sections.includes(tab));
+        return sortVendors(tabVendors, currentSortBy, currentSortOrder);
+      }
+
+      function sortVendors(vendors, sortBy, sortOrder) {
+        const sorted = [...vendors].sort((a, b) => {
+          let comparison = 0;
+
+          switch (sortBy) {
+            case 'rating':
+              comparison = a.Rating - b.Rating;
+              break;
+            case 'new':
+              if (a.IsNew !== b.IsNew) {
+                comparison = a.IsNew ? -1 : 1;
+              } else {
+                comparison = b.Rating - a.Rating;
+              }
+              return comparison;
+            case 'farm':
+              if (a.IsFarm !== b.IsFarm) {
+                comparison = a.IsFarm ? -1 : 1;
+              } else {
+                comparison = b.Rating - a.Rating;
+              }
+              return comparison;
+            case 'cheap':
+              if (a.IsCheap !== b.IsCheap) {
+                comparison = a.IsCheap ? -1 : 1;
+              } else {
+                comparison = b.Rating - a.Rating;
+              }
+              return comparison;
+          }
+
+          return sortOrder === 'desc' ? -comparison : comparison;
+        });
+
+        return sorted;
+      }
+
+      function populateVendorList(listDiv, vendors) {
+        vendors.forEach(vendor => {
+          const card = createVendorCard(vendor);
+          listDiv.appendChild(card);
+        });
+      }
     </script>
   </body>
 </html>
