@@ -420,7 +420,7 @@
     <div class="animated-bg"></div>
     <header class="header">
       <div class="header-content">
-        <h1>💫 The Vendor List</h1>
+        <h1 id="header-title">💫 The Vendor List</h1>
         <div class="nav-buttons">
           <a href="https://discord.gg/mqwB9xp8rJ" class="nav-button">Discord</a>
           <a href="https://www.reddit.com/r/TheVendorList/" class="nav-button">Subreddit</a>
@@ -1643,6 +1643,9 @@
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/myqwin/" }]
         },
       ];
+
+      const headerTitle = document.getElementById("header-title");
+      headerTitle.innerHTML = `💫 The Vendor List - <span style="color: #f7b268;">${Vendors.length} total</span>`;
 
       const tabs = [];
       Vendors.forEach(vendor => {
