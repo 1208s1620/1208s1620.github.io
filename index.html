@@ -457,7 +457,7 @@
     </footer>
 
     <script>
-      const TabOrder = ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale", "Subreddits"];
+      const TabOrder = ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale", "Communities"];
 
       const Vendors = [
         {
@@ -540,7 +540,7 @@
         {
           Title: "Tesoro Hemp",
           Description: "Tesoro Hemp began as a small, family-owned farm nestled in the heart of Oregon, where a love for quality cannabis and honest cultivation took root in 2017. What started as a humble operation has since grown into a full-spectrum hemp brand—featuring a concentrate processing lab, in-house pre-roll production, and some of the most thoughtfully grown THCa hemp flower available on the market. Despite our growth, we remain proudly family owned and operated, staying true to our roots while continuing to innovate in the cannabis space. Our team is committed to sustainability—not just environmentally, but economically and socially. As we've expanded, we’ve done so carefully, preserving jobs and upholding the high standards our customers have come to expect. We also perform in-house genetic work to stay at the forefront of emerging strains and trends in the cannabis world.",
-          Sections: ["All", "Flower", "Concentrates", "Wholesale"],
+          Sections: ["All", "Flower", "Concentrates", "Wholesale", "Communities"],
           Rating: 2.5,
           IsNew: true, IsFarm: true, IsCheap: true, Password: "",
           Buttons: [
@@ -770,12 +770,13 @@
         {
           Title: "The Delta Connect",
           Description: "The Delta Connect specializing in THCA products, including flower rosin. One Reddit user mentioned getting Ice Cream Cake from The Delta Connect. The vendor also offers strains like Banana Kush THCA Moroccan Hash Hybrid, which is described as potent.",
-          Sections: ["All", "Flower", "Concentrates", "Vapes"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Wholesale", "Communities"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, IsCheap: true, Password: "",
           Buttons: [
             { Text: "Website", Link: "https://thedeltaconnect.com/" },
-            { Text: "Instagram", Link: "https://www.instagram.com/thedeltaconnect/" }
+            { Text: "Instagram", Link: "https://www.instagram.com/thedeltaconnect/" },
+            { Text: "Reddit", Link: "https://www.reddit.com/r/thedeltaconnect/" }
           ]
         },
         {
@@ -841,7 +842,7 @@
         {
           Title: "Puffy / Myqwin",
           Description: "Puffy / Myqwin offers premium THCa flower, weed vapes, and potent cannabis extracts at unbeatable prices. Shop legal cannabis products including live rosin, badder and crumble for unbeatable prices.",
-          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
+          Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale", "Communities"],
           Rating: 3.5,
           IsNew: false, IsFarm: false, IsCheap: true, Password: "",
           Buttons: [
@@ -1550,31 +1551,32 @@
           IsNew: false, IsFarm: false, Password: "",
           Buttons: [{ Text: "Website", Link: "https://yourgrannys.com/" }]
         },
-
-
-
-
-        // Subreddits (not rated)
+        {
+          Title: "Alderson Family Farms",
+          Description: "",
+          Sections: ["Communities"],
+          Rating: 3.5, // A little pricey and no bulk options, fix that and it'll be a 4.
+          IsNew: false, IsFarm: false, Password: "",
+          Buttons: [
+            { Text: "Website", Link: "https://aldersonfamilyfarms.store/" },
+            { Text: "Discord", Link: "https://discord.gg/JfsqJhTzBB" }
+          ]
+        },
         {
           Title: "The Vendor List",
           Description: "The Vendor List is a curated hub that connects customers with legal THCA vendors. Our subreddit is currently in the process of being set up.",
-          Sections: ["Subreddits"],
+          Sections: ["Communities"],
           Rating: 0,
           IsNew: true, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/TheVendorList/" }]
-        },
-        {
-          Title: "Tesoro Hemp",
-          Description: "Welcome to the official subreddit of Altura Hemp, a premium THCA cannabis brand based out of the Oregon. Follow along to stay up to date with our latest harvests and discount deals.",
-          Sections: ["Subreddits"],
-          Rating: 0,
-          IsNew: true, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/TesoroHemp/" }]      
+          Buttons: [
+            { Text: "Reddit", Link: "https://www.reddit.com/r/TheVendorList/" },
+            { Text: "Discord", Link: "https://discord.gg/mqwB9xp8rJ/" }
+          ]
         },
         {
           Title: "Cult of The Franklin",
           Description: "The Place, Your Place for Federally Legal High THCa Hemp Worship. Welcome to The Cult.",
-          Sections: ["Subreddits"],
+          Sections: ["Communities"],
           Rating: 0,
           IsNew: false, IsFarm: false, Password: "",
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/CultoftheFranklin/" }]
@@ -1582,7 +1584,7 @@
         {
           Title: "THCA Extracts",
           Description: "A place to come and discuss all THCA concentrates and extracts. Thanks for being here! Happy dabbing 😮‍💨",
-          Sections: ["Subreddits"],
+          Sections: ["Communities"],
           Rating: 0,
           IsNew: false, IsFarm: false, Password: "",
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCAextracts/" }]
@@ -1590,7 +1592,7 @@
         {
           Title: "Cult Concentrates",
           Description: "For anything involving federally legal High THCA concentrates! Posts relating to current companies, new companies, concentrate listings, purchases/hauls, discounts, and more welcome!",
-          Sections: ["Subreddits"],
+          Sections: ["Communities"],
           Rating: 0,
           IsNew: false, IsFarm: false, Password: "",
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCAextracts/" }]
@@ -1598,7 +1600,7 @@
         {
           Title: "The Terp Table",
           Description: "Welcome to The Terp Table. This is where real smokers drop real reviews. Flower, rosin, melt checks, stash pics, press talk — if it’s gas, we talk about it. If it’s mids? We say it. Built by a connoisseur for the community. No hype, no filters — just straight-up sesh truth. Pull up, spark up, and add to the table. 💨",
-          Sections: ["Subreddits"],
+          Sections: ["Communities"],
           Rating: 0,
           IsNew: false, IsFarm: false, Password: "",
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/The_Terp_Table/" }]
@@ -1606,7 +1608,7 @@
         {
           Title: "Budget Extractions THCA",
           Description: "We are a budget community. We order legal hemp(50 state) products only and review budget options, and process them into better products. This is for personal DIY stuff. No reselling. What To Expect: 1.)Flower Rosin posts 2.)QWET posts 3.)Winterization/purging posts 4.)Cured bubble ice water hash posts(flower, smalls, shake, trim, etc) 5.) Freeze dryer goodies/reclaim/disty gummies 6.)Carts made from: flower rosin, resin, live resin, hash rosin, live rosin, diamonds, distillate, terps, HTE",
-          Sections: ["Subreddits"],
+          Sections: ["Communities"],
           Rating: 0,
           IsNew: false, IsFarm: false, Password: "",
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/The_Terp_Table/" }]
@@ -1614,7 +1616,7 @@
         {
           Title: "Zips Under 100",
           Description: "🌿 This community is dedicated to THCA hemp. Check out our vendor list linked below We love ounces under $100!",
-          Sections: ["Subreddits"],
+          Sections: ["Communities"],
           Rating: 0,
           IsNew: false, IsFarm: false, Password: "",
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/ZipsUnder100/" }]
@@ -1622,7 +1624,7 @@
         {
           Title: "THCa Users and Reviews",
           Description: "A mature learning hub for adults who value education over ego. Unlike other cannabis spaces filled with drama and gatekeeping, we foster respectful discourse where medical patients and farm bill enthusiasts share authentic experiences and science-based knowledge. We support transparent vendors with proper COAs while building up our entire culture through genuine reviews and educational discussions. Farm bill compliant. Zero Drama Allowed.",
-          Sections: ["Subreddits"],
+          Sections: ["Communities"],
           Rating: 0,
           IsNew: false, IsFarm: false, Password: "",
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCaUsersandReviews/" }]
@@ -1630,7 +1632,7 @@
         {
           Title: "THCa Flower",
           Description: "Community to discuss hemp-derived THCa flower.",
-          Sections: ["Subreddits"],
+          Sections: ["Communities"],
           Rating: 0,
           IsNew: false, IsFarm: false, Password: "",
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCaFlower/" }]
@@ -1638,27 +1640,19 @@
         {
           Title: "THCA Online",
           Description: "For anything about federally legal Thca but online (no alt noids). In this community we want everyone to be unbiased and share opinions, we also want you all to feel comfortable so our mods and I will take take each flagged post under careful review and bans are last resort please be respectful and build a community you want to be a part of.",
-          Sections: ["Subreddits"],
+          Sections: ["Communities"],
           Rating: 0,
           IsNew: false, IsFarm: false, Password: "",
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCA_Online/" }]
         },
         {
-          Title: "The Delta Connect",
-          Description: "Welcome to The Delta Connect (TDC) community! This is your place to share your experience with TDC, drop reviews, and chat with others within the community. TDC is a one man operation based out of Tennessee serving discreet packs across the country! 🤝 TAP IN! 🔥",
-          Sections: ["Subreddits"],
+          Title: "Cowboys Canna Lounge",
+          Description: "",
+          Sections: ["Communities"],
           Rating: 0,
           IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/thedeltaconnect/" }]
-        },
-        {
-          Title: "Puffy / Myqwin",
-          Description: "The Flower Friday Originals, the King of the $50/oz, and flower for the people.",
-          Sections: ["Subreddits"],
-          Rating: 0,
-          IsNew: false, IsFarm: false, Password: "",
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/myqwin/" }]
-        },
+          Buttons: [{ Text: "Discord", Link: "https://discord.gg/WKhdjkkBrr" }]
+        }
       ];
 
       const headerTitle = document.getElementById("header-title");
@@ -2136,6 +2130,19 @@
       }
 
       function populateVendorList(listDiv, vendors) {
+        const card = document.createElement('div');
+        card.className = 'rank-card';
+        card.style.display = 'inline-block'; 
+        card.style.padding = '12px 16px'; 
+
+        const title = document.createElement('p');
+        title.style.margin = '0';
+        title.style.color = "lightgrey";
+        title.innerHTML = "There's a shortage of reliable vendors who supply <b>BHO</b>, If you’re a supplier or know one, please send me a message. You can message me via the Discord server or on Reddit. Thanks for all the support too — I never expected this website to become this popular!";
+
+        card.appendChild(title);
+        listDiv.appendChild(card);
+ 
         vendors.forEach(vendor => {
           const card = createVendorCard(vendor);
           listDiv.appendChild(card);
