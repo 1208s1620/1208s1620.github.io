@@ -451,13 +451,15 @@
     
     <div class="tabs">
         <div class="rank-card"> <h2>💫 The Vendor List:</h2> <b>The Vendor List</b> is a curated hub connecting customers with legal THCA vendors. It helps users find trustworthy vendors who prioritize safety and reliability, ensuring you won’t get scammed. Beyond just listings, it also connects you with other communities and similar sites, expanding your network for discovering even more vendors. Completely non-profit, Vendor List exists solely to serve the community—no monetary gain is sought.
-
+            
+          
+            <h2 id="rating-info">🏆 The rating system:</h2>
 
             <h2>⚠️ Legal & Safety Notice:</h2> <b>All products and content on this website contain less than 0.3% THC by dry weight</b>. This amount is below the federal legal limit for hemp-derived products. While these products are considered non-intoxicating, individual reactions may vary. Keep out of reach of children and pets. Consult your healthcare provider if you are pregnant, nursing, or have medical conditions before use.
 
 
             <h2>⚖️ Liability Disclaimer:</h2> <b>The Vendor List</b> and its owners are not responsible for any injury, harm, or adverse effects resulting from the use of these products. Any claims, complaints, or legal actions must be directed solely to the product vendor, as the website serves only as a platform and does not manufacture or control the products listed.
-        </div>
+          </div>
     </div>
 
     <footer class="footer">
@@ -465,31 +467,114 @@
     </footer>
 
     <script>
-        const tabContentsContainer = document.getElementById('TabContents');
+      function createStarRating(rating) {
+        const starsContainer = document.createElement('span');
+        starsContainer.className = 'rating';
 
-        const contentDiv = document.createElement('div');
-        contentDiv.className = 'tab-content active';
-        contentDiv.id = 'tab-content-about';
+        for (let i = 0; i < 3; i++) {
+          const star = createStarSVG(i, rating);
+          starsContainer.appendChild(star);
+        }
 
-        const listdiv = document.createElement('div');
-        listdiv.className = 'ranking-list';
-        listdiv.id = 'ranking-list-about';
+        return starsContainer;
+      }
 
-        const card = document.createElement('div');
-        card.className = 'rank-card';
-        card.style.display = 'inline-block'; 
-        card.style.padding = '12px 16px'; 
+      function createStarSVG(starIndex, rating) {
+        const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        star.setAttribute('width', '16');
+        star.setAttribute('height', '16');
+        star.setAttribute('viewBox', '0 0 24 24');
 
-        const title = document.createElement('p');
-        title.style.margin = '0';
-        title.style.color = 'lightgrey';
-        title.innerHTML = "<b>The Vendor List</b> is a curated hub connecting customers with legal THCA vendors. It helps users find trustworthy vendors who prioritize safety and reliability, ensuring you won’t get scammed. Beyond just listings, it also connects you with other communities and similar sites, expanding your network for discovering even more vendors. Completely non-profit, Vendor List exists solely to serve the community—no monetary gain is sought.";
+        const starPath = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
 
-        card.appendChild(title);
-        listdiv.appendChild(card);
-        contentDiv.appendChild(listdiv);
+        if (starIndex < rating && starIndex >= Math.floor(rating)) {
+          createHalfStar(star, starIndex, starPath);
+        } else {
+          createFullStar(star, starIndex, rating, starPath);
+        }
 
-        tabContentsContainer.appendChild(contentDiv);
+        return star;
+      }
+
+      function createHalfStar(star, starIndex, starPath) {
+        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
+        mask.setAttribute('id', `half-mask-${starIndex}`);
+
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', '0');
+        rect.setAttribute('y', '0');
+        rect.setAttribute('width', '12');
+        rect.setAttribute('height', '24');
+        rect.setAttribute('fill', 'white');
+
+        mask.appendChild(rect);
+        defs.appendChild(mask);
+        star.appendChild(defs);
+
+        const filledPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        filledPath.setAttribute('d', starPath);
+        filledPath.setAttribute('fill', '#ffcc00');
+        filledPath.setAttribute('mask', `url(#half-mask-${starIndex})`);
+        star.appendChild(filledPath);
+
+        const outlinePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        outlinePath.setAttribute('d', starPath);
+        outlinePath.setAttribute('fill', 'none');
+        outlinePath.setAttribute('stroke', '#ffcc00');
+        outlinePath.setAttribute('stroke-width', '2');
+        outlinePath.setAttribute('stroke-linejoin', 'round');
+        star.appendChild(outlinePath);
+      }
+
+      function createFullStar(star, starIndex, rating, starPath) {
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', starPath);
+        path.setAttribute('fill', starIndex < Math.floor(rating) ? '#ffcc00' : 'none');
+        path.setAttribute('stroke', '#ffcc00');
+        path.setAttribute('stroke-width', '2');
+        path.setAttribute('stroke-linejoin', 'round');
+        star.appendChild(path);
+      }
+    </script>
+
+    <script>
+          const ratinginfo = document.getElementById("rating-info");
+
+          const ratings = [
+            { label: "Vendors widely recognized as the very best in the community, known for their exceptional quality and consistency.", value: 3 },
+            { label: "Vendors who reliably provide quality products, though not necessarily regarded as top quality in the community.", value: 2 },
+            { label: "Vendors who consistently provide products, though not necessarily regarded as good quality in the community.", value: 1 },
+            { label: "Vendors you should avoid at all costs.", value: 0 },
+          ];
+
+          const ratingsContainer = document.createElement("div");
+          ratingsContainer.style.display = "flex";
+          ratingsContainer.style.flexDirection = "column";
+          ratingsContainer.style.gap = "8px";
+
+          ratings.forEach(rating => {
+            const row = document.createElement("div");
+            row.style.display = "flex";
+            row.style.alignItems = "center";
+            row.style.gap = "10px";
+
+            const starsContainer = createStarRating(rating.value);
+            starsContainer.style.display = "flex"; 
+            starsContainer.style.alignItems = "center"; 
+
+            const label = document.createElement("span");
+            label.textContent = rating.label;
+            label.style.display = "inline-block";
+            label.style.verticalAlign = "middle";
+
+            row.appendChild(starsContainer);
+            row.appendChild(label);
+            ratingsContainer.appendChild(row);
+          });
+
+          // Insert the full ratings container under ratinginfo
+          ratinginfo.parentNode.insertBefore(ratingsContainer, ratinginfo.nextSibling);
     </script>
   </body>
 </html>
