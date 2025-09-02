@@ -542,10 +542,11 @@
           const ratinginfo = document.getElementById("rating-info");
 
           const ratings = [
+            { label: "If you're unhappy with a rating on the vendor list, please don’t hesitate to reach out to me via the Discord server or Reddit. I’m happy to review and, update the rating. Each rating is based on multiple Reddit posts from a variety of users, combined with my own personal experience if I have tried the vendor myself. My goal is to provide accurate and helpful information, but feedback from the community is always welcome to ensure the list remains as reliable and accurate as possible!" },
             { label: "Vendors widely recognized as the very best in the community, known for their exceptional quality and consistency.", value: 3 },
             { label: "Vendors who reliably provide quality products, though not necessarily regarded as top quality in the community.", value: 2 },
             { label: "Vendors who consistently provide products, though not necessarily regarded as good quality in the community.", value: 1 },
-            { label: "Vendors you should avoid at all costs.", value: 0 },
+            { label: "Vendors you should avoid at all costs.", value: 0 }
           ];
 
           const ratingsContainer = document.createElement("div");
@@ -559,16 +560,19 @@
             row.style.alignItems = "center";
             row.style.gap = "10px";
 
-            const starsContainer = createStarRating(rating.value);
-            starsContainer.style.display = "flex"; 
-            starsContainer.style.alignItems = "center"; 
+            if (rating.value != null) {
+              const starsContainer = createStarRating(rating.value);
+              starsContainer.style.display = "flex"; 
+              starsContainer.style.alignItems = "center"; 
 
+              row.appendChild(starsContainer);
+            }
+            
             const label = document.createElement("span");
             label.textContent = rating.label;
             label.style.display = "inline-block";
             label.style.verticalAlign = "middle";
 
-            row.appendChild(starsContainer);
             row.appendChild(label);
             ratingsContainer.appendChild(row);
           });
