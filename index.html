@@ -391,6 +391,59 @@
         user-select: none;
       }
 
+      .issues-tooltip-container {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          margin-left: 8px;
+          cursor: pointer;
+          width: 18px;
+          height: 18px;
+          text-align: center;
+          line-height: 18px;
+          border-radius: 50%;
+          background-color: transparent; /* red */
+          
+          color: #fff;
+          font-weight: normal;
+          font-size: 12px;
+          font-family: 'Segoe UI', monospace; /* different font */
+          user-select: none;
+      }
+
+      .issues-tooltip-container span.question-mark {
+          display: inline-block;
+          transform: translateX(-1px); /* move ? 1px left */
+      }
+
+      .issues-tooltip {
+          display: none;
+          position: absolute;
+          top: 50%;
+          left: 110%; /* dock to the right of the ? */
+          transform: translateY(-50%);
+          background-color: #333;
+          color: #fff;
+          padding: 8px;
+          border-radius: 6px;
+          white-space: nowrap;
+          z-index: 1000;
+          font-size: 12px;
+          min-width: 180px;
+      }
+
+      .issues-tooltip a {
+          color: #fff;
+          text-decoration: none;
+          display: block;
+          margin: 1px 0; /* reduced spacing */
+      }
+
+      .issues-tooltip a:hover {
+          text-decoration: underline;
+      }
+
       @media (max-width: 768px) {
         html {
           font-size: 14px;
@@ -507,6 +560,11 @@
             { Text: "Website", Link: "https://shophellomary.com/" },
             { Text: "Instagram", Link: "https://www.instagram.com/hellomary0fficial/" },
             
+          ],
+
+          Issues: [
+            { Text: "Bug contamination", Link: "https://www.reddit.com/r/CultoftheFranklin/comments/1jfz8rb/avoid_shm_greenhouse_pest_filled_flower/" },
+            { Text: "Bug contamination 2", Link: "https://www.reddit.com/r/THCAextracts/comments/1n1rgrs/tesoro_trop_cherry_cured_resin/" }
           ]
         },
         {
@@ -558,6 +616,11 @@
             { Text: "Facebook", Link: "https://facebook.com/tesorohemp/" },
             { Text: "Reddit", Link: "https://reddit.com/r/tesorohemp/" },
             { Text: "TikTok", Link: "https://tiktok.com/tesorohemp/" }
+          ],
+
+          Issues: [
+            { Text: "Moisture contamination", Link: "https://www.reddit.com/r/THCAextracts/comments/1n17cbf/tesoro_stardust_dab_warning/" },
+            { Text: "Solvent contamination", Link: "https://www.reddit.com/r/THCAextracts/comments/1n1rgrs/tesoro_trop_cherry_cured_resin/" }
           ]
         },
         {
@@ -1416,7 +1479,13 @@
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
           Rating: 0,
           IsCheap: true, 
-          Buttons: [{ Text: "Website", Link: "https://vivimu.com/" }]
+          Buttons: [
+            { Text: "Website", Link: "https://vivimu.com/" }
+          ],
+          Issues: [
+            { Text: "Distillate contamination", Link: "https://www.reddit.com/r/altcannabinoids/comments/1gjpu6q/vivimu_order_dirty/" },
+            { Text: "Distillate contamination 2", Link: "https://www.reddit.com/r/altcannabinoids/comments/17m1hsw/vivimu_is_hit_or_miss_quality_no_reply_over_bunk/" }
+          ]
         },
         {
           Title: "MC Nutraceuticals",
@@ -1839,6 +1908,41 @@
             title.appendChild(badgeElement);
           }
         });
+
+        if (vendor.Issues && vendor.Issues.length > 0) {
+            const issuesContainer = document.createElement('span');
+            issuesContainer.className = 'issues-tooltip-container';
+            
+            const questionMark = document.createElement('span');
+            questionMark.className = 'question-mark';
+            questionMark.textContent = '⚠️';
+            issuesContainer.appendChild(questionMark); // add the ? inside
+
+            title.appendChild(issuesContainer);
+
+            const tooltip = document.createElement('div');
+            tooltip.className = 'issues-tooltip';
+            tooltip.innerHTML = vendor.Issues.map(issue => 
+                `<a href="${issue.Link}" target="_blank">${issue.Text} 🔗</a>`
+            ).join('');
+
+            issuesContainer.appendChild(tooltip);
+
+            let hideTimeout;
+            issuesContainer.addEventListener('mouseenter', () => {
+                clearTimeout(hideTimeout);
+                tooltip.style.display = 'block';
+            });
+            issuesContainer.addEventListener('mouseleave', () => {
+                hideTimeout = setTimeout(() => tooltip.style.display = 'none', 300);
+            });
+            tooltip.addEventListener('mouseenter', () => {
+                clearTimeout(hideTimeout);
+            });
+            tooltip.addEventListener('mouseleave', () => {
+                hideTimeout = setTimeout(() => tooltip.style.display = 'none', 300);
+            });
+        }
       }
 
       function createButtonsContainer(buttons) {
