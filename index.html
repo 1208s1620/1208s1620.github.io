@@ -1635,6 +1635,8 @@
           Sections: ["All", "Flower", "Concentrates", "Communities"],
           Rating: 2, // A little pricey and no bulk options, fix that and it'll be a 4.
           
+          IsNew: true,
+          
           Buttons: [
             { Text: "Website", Link: "https://aldersonfamilyfarms.store/" },
             { Text: "Discord", Link: "https://discord.gg/JfsqJhTzBB" }
@@ -1644,7 +1646,6 @@
           Title: "The Vendor List",
           Description: "The Vendor List is a curated hub that connects customers with legal THCA vendors. Our subreddit is currently in the process of being set up.",
           Sections: ["Communities"],
-          Rating: 0,
           IsNew: true, 
           Buttons: [
             { Text: "Reddit", Link: "https://www.reddit.com/r/TheVendorList/" },
@@ -1655,15 +1656,13 @@
           Title: "Cult of The Franklin",
           Description: "The Place, Your Place for Federally Legal High THCa Hemp Worship. Welcome to The Cult.",
           Sections: ["Communities"],
-          Rating: 0,
-          
+
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/CultoftheFranklin/" }]
         },
         {
           Title: "THCA Extracts",
           Description: "A place to come and discuss all THCA concentrates and extracts. Thanks for being here! Happy dabbing 😮‍💨",
           Sections: ["Communities"],
-          Rating: 0,
           
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCAextracts/" }]
         },
@@ -1671,7 +1670,6 @@
           Title: "Cult Concentrates",
           Description: "For anything involving federally legal High THCA concentrates! Posts relating to current companies, new companies, concentrate listings, purchases/hauls, discounts, and more welcome!",
           Sections: ["Communities"],
-          Rating: 0,
           
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCAextracts/" }]
         },
@@ -1679,7 +1677,6 @@
           Title: "The Terp Table",
           Description: "Welcome to The Terp Table. This is where real smokers drop real reviews. Flower, rosin, melt checks, stash pics, press talk — if it’s gas, we talk about it. If it’s mids? We say it. Built by a connoisseur for the community. No hype, no filters — just straight-up sesh truth. Pull up, spark up, and add to the table. 💨",
           Sections: ["Communities"],
-          Rating: 0,
           
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/The_Terp_Table/" }]
         },
@@ -1687,7 +1684,6 @@
           Title: "Budget Extractions THCA",
           Description: "We are a budget community. We order legal hemp(50 state) products only and review budget options, and process them into better products. This is for personal DIY stuff. No reselling. What To Expect: 1.)Flower Rosin posts 2.)QWET posts 3.)Winterization/purging posts 4.)Cured bubble ice water hash posts(flower, smalls, shake, trim, etc) 5.) Freeze dryer goodies/reclaim/disty gummies 6.)Carts made from: flower rosin, resin, live resin, hash rosin, live rosin, diamonds, distillate, terps, HTE",
           Sections: ["Communities"],
-          Rating: 0,
           
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/The_Terp_Table/" }]
         },
@@ -1695,7 +1691,6 @@
           Title: "Zips Under 100",
           Description: "🌿 This community is dedicated to THCA hemp. Check out our vendor list linked below We love ounces under $100!",
           Sections: ["Communities"],
-          Rating: 0,
           
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/ZipsUnder100/" }]
         },
@@ -1703,7 +1698,6 @@
           Title: "THCa Users and Reviews",
           Description: "A mature learning hub for adults who value education over ego. Unlike other cannabis spaces filled with drama and gatekeeping, we foster respectful discourse where medical patients and farm bill enthusiasts share authentic experiences and science-based knowledge. We support transparent vendors with proper COAs while building up our entire culture through genuine reviews and educational discussions. Farm bill compliant. Zero Drama Allowed.",
           Sections: ["Communities"],
-          Rating: 0,
           
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCaUsersandReviews/" }]
         },
@@ -1711,7 +1705,6 @@
           Title: "THCa Flower",
           Description: "Community to discuss hemp-derived THCa flower.",
           Sections: ["Communities"],
-          Rating: 0,
           
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCaFlower/" }]
         },
@@ -1719,7 +1712,6 @@
           Title: "THCA Online",
           Description: "For anything about federally legal Thca but online (no alt noids). In this community we want everyone to be unbiased and share opinions, we also want you all to feel comfortable so our mods and I will take take each flagged post under careful review and bans are last resort please be respectful and build a community you want to be a part of.",
           Sections: ["Communities"],
-          Rating: 0,
           
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCA_Online/" }]
         },
@@ -1727,7 +1719,6 @@
           Title: "Cowboys Canna Lounge",
           Description: "",
           Sections: ["Communities"],
-          Rating: 0,
           
           Buttons: [{ Text: "Discord", Link: "https://discord.gg/WKhdjkkBrr" }]
         },
@@ -1735,7 +1726,6 @@
           Title: "THCA Everything",
           Description: "a place we're we can talk about everything thca related and no rules...",
           Sections: ["Communities"],
-          Rating: 0,
           
           IsNew: true,
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/thcaeverything/" }]
@@ -1812,8 +1802,10 @@
         const title = document.createElement('h2');
         title.textContent = vendor.Title;
         
-        const starsContainer = createStarRating(vendor.Rating);
-        title.appendChild(starsContainer);
+        if (vendor.Rating != null) {
+          const starsContainer = createStarRating(vendor.Rating);
+          title.appendChild(starsContainer);
+        }
 
         addIndicatorBadges(title, vendor);
         card.appendChild(title);
