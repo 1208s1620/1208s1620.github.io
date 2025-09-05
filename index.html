@@ -694,7 +694,7 @@
           Title: "The Mad Skunk",
           Description: "Welcome to the Mad Skunk, we specialize in Craft/Exotic small batch THCa flower grown in living soil and hydroponics. The founder began this journey many moons ago with a genuine love for the flower, from cultivation to consumption. We currently do not grow on our own. Instead, we have an excellent partnership with a local farm who grows exclusively for TMS. We are born and bred Virginians and we love to travel. The Mad Skunk started as a vision and a dream. Never did we ever, as young adults, believe that we would be someday shipping dank all over the country! But here we are and here you are! We’re glad to have you and look forward to serving your cannaneeds for years to come!",
           Sections: ["All", "Flower"],
-          Rating: 3,
+          Rating: 2.5,
           IsNew: true, 
           Buttons: [
             { Text: "Website", Link: "https://www.themadskunk.com/" },
@@ -804,7 +804,7 @@
           Title: "Rosslyn",
           Description: "Rosslyn Direct was born from a simple belief: cannabis should be clean, potent, and expressive of the plant’s true nature — not stripped down, diluted, or over-marketed. We’re not here to chase trends. We’re here to preserve and deliver the full spectrum of what this plant can offer when treated with respect. Everything we carry is built on a foundation of trust in the process, the people, and the product. We partner with like minded cultivators and extractors who share our obsession with purity and who understand that great cannabis is grown, not manufactured. Our products start with clean, healthy plants cultivated without shortcuts, harvested at peak ripeness, and processed with intention.",
           Sections: ["All", "Concentrates"],
-          Rating: 2,
+          Rating: 1.5,
           IsNew: true, IsCheap: false, 
           Buttons: [
             { Text: "Website", Link: "https://rosslyn.direct/" },
@@ -826,7 +826,7 @@
           Title: "Wildwood",
           Description: "Land Of The Free. Home Of The Brave. Where Ego And Excuses Are Checked At The Door And You Solve Your Problems By Taking A Deep Breath And Going Outside. We Handcraft Our Live Resin In Small Batches From Terpene Rich Cannabis Sativa Grown In The Ruggedly Beautiful Pacific Northwest. The Best Cannabis In The World Grows Here And It’s With That Cannabis That We Proudly Make Live Resin Vapes That Taste Great And Work As Hard As You Do.",
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles"],
-          Rating: 1,
+          Rating: 1.5,
           IsCheap: false, 
           Buttons: [
             { Text: "Website", Link: "https://discoverwildwood.com/" },
@@ -857,7 +857,7 @@
           Title: "The Delta Connect",
           Description: "The Delta Connect specializing in THCA products, including flower rosin. One Reddit user mentioned getting Ice Cream Cake from The Delta Connect. The vendor also offers strains like Banana Kush THCA Moroccan Hash Hybrid, which is described as potent.",
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Wholesale", "Communities"],
-          Rating: 2,
+          Rating: 2.5,
           IsCheap: true, IsRecommended: true, 
           Buttons: [
             { Text: "Website", Link: "https://thedeltaconnect.com/" },
@@ -1060,10 +1060,13 @@
           Title: "LegendaryThcaCBD",
           Description: "Hand-selected from only the finest sources of craft Cannabis and concentrates sourced in California. Our quality and pricing are guaranteed to seriously rival your local dispensary or plug",
           Sections: ["All", "Flower", "Concentrates", "Wholesale"],
-          Rating: 2,
+          Rating: 2.5,
           IsRecommended: true, IsCheap: true, 
           Buttons: [
             { Text: "Website", Link: "https://legendarythcacbd.com/", Warning: true }
+          ],
+          Issues: [
+            { Text: "Bitcoin only!" }
           ]
         },
         {
@@ -1096,7 +1099,7 @@
           Title: "Canna Cured",
           Description: "Canna Cured offers THCa in various forms to cater to different preferences: THCa Flower and THCa Concentrates.",
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Wholesale"],
-          Rating: 2.5,
+          Rating: 2,
           IsFarm: true, 
           Buttons: [{ Text: "Website", Link: "https://cannacured.com/" }]
         },
@@ -1497,8 +1500,8 @@
             { Text: "Website", Link: "https://vivimu.com/" }
           ],
           Issues: [
-            { Text: "Distillate contamination (ongoing)", Link: "https://www.reddit.com/r/altcannabinoids/comments/1gjpu6q/vivimu_order_dirty/" },
-            { Text: "Distillate contamination 2 (ongoing)", Link: "https://www.reddit.com/r/altcannabinoids/comments/17m1hsw/vivimu_is_hit_or_miss_quality_no_reply_over_bunk/" }
+            { Text: "Distillate contamination (unresolved)", Link: "https://www.reddit.com/r/altcannabinoids/comments/1gjpu6q/vivimu_order_dirty/" },
+            { Text: "Distillate contamination 2 (unresolved)", Link: "https://www.reddit.com/r/altcannabinoids/comments/17m1hsw/vivimu_is_hit_or_miss_quality_no_reply_over_bunk/" }
           ]
         },
         {
@@ -1533,21 +1536,10 @@
           ]
         },
         {
-          Title: "Beleafer",
-          Description: "Behind our brand stands the highest of standards on every product we sell. We absolutely strive to deliver the most exquisite products in the industry with the least impact on your wallet. ",
-          Sections: ["All", "Flower"],
-          Rating: 1.5,
-          
-          Buttons: [
-            { Text: "Website", Link: "https://beleafer.com/" },
-            { Text: "Instagram", Link: "https://www.instagram.com/beleaferbuds/" }
-          ]
-        },
-        {
           Title: "Best Buds",
           Description: " Best Buds is a online based premium cannabis company headquartered in the Lowcountry of South Carolina. We focus on top shelf legal cannabis products including flower, edibles, vapes and concentrates. All of Best Buds goods are derived from hemp and are 2018 Farm Bill compliant and Federally legal, meaning you can feel comfortable and safe ordering our products online for discreet delivery to your hands!",
           Sections: ["All", "Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
-          Rating: 1.5,
+          Rating: 2,
           
           Buttons: [
             { Text: "Website", Link: "https://bestbudsbff.com/" },
@@ -1925,38 +1917,43 @@
         });
 
         if (vendor.Issues && vendor.Issues.length > 0) {
-            const issuesContainer = document.createElement('span');
-            issuesContainer.className = 'issues-tooltip-container';
-            
-            const questionMark = document.createElement('span');
-            questionMark.className = 'question-mark';
-            questionMark.textContent = '⚠️';
-            issuesContainer.appendChild(questionMark); // add the ? inside
+          const issuesContainer = document.createElement('span');
+          issuesContainer.className = 'issues-tooltip-container';
+          
+          const questionMark = document.createElement('span');
+          questionMark.className = 'question-mark';
+          questionMark.textContent = '⚠️';
+          issuesContainer.appendChild(questionMark);
 
-            title.appendChild(issuesContainer);
+          title.appendChild(issuesContainer);
 
-            const tooltip = document.createElement('div');
-            tooltip.className = 'issues-tooltip';
-            tooltip.innerHTML = vendor.Issues.map(issue => 
-                `<a href="${issue.Link}" target="_blank">${issue.Text} 🔗</a>`
-            ).join('');
+          const tooltip = document.createElement('div');
+          tooltip.className = 'issues-tooltip';
 
-            issuesContainer.appendChild(tooltip);
+          tooltip.innerHTML = vendor.Issues.map(issue => {
+              if (issue.Link) {
+                  return `<a href="${issue.Link}" target="_blank">${issue.Text} 🔗</a>`;
+              } else {
+                  return `<div class="issue-item">${issue.Text}</div>`;
+              }
+          }).join('');
 
-            let hideTimeout;
-            issuesContainer.addEventListener('mouseenter', () => {
-                clearTimeout(hideTimeout);
-                tooltip.style.display = 'block';
-            });
-            issuesContainer.addEventListener('mouseleave', () => {
-                hideTimeout = setTimeout(() => tooltip.style.display = 'none', 300);
-            });
-            tooltip.addEventListener('mouseenter', () => {
-                clearTimeout(hideTimeout);
-            });
-            tooltip.addEventListener('mouseleave', () => {
-                hideTimeout = setTimeout(() => tooltip.style.display = 'none', 300);
-            });
+          issuesContainer.appendChild(tooltip);
+
+          let hideTimeout;
+          issuesContainer.addEventListener('mouseenter', () => {
+              clearTimeout(hideTimeout);
+              tooltip.style.display = 'block';
+          });
+          issuesContainer.addEventListener('mouseleave', () => {
+              hideTimeout = setTimeout(() => tooltip.style.display = 'none', 300);
+          });
+          tooltip.addEventListener('mouseenter', () => {
+              clearTimeout(hideTimeout);
+          });
+          tooltip.addEventListener('mouseleave', () => {
+              hideTimeout = setTimeout(() => tooltip.style.display = 'none', 300);
+          });
         }
       }
 
