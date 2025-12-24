@@ -82,11 +82,14 @@
       .header-content h1 {
         font-size: 1.5rem;
         color: rgb(205, 178, 255);
-        flex: 1 1 auto;
-        min-width: 160px;
+        flex: 1 1 0;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
-      .nav-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+      .nav-buttons { display: flex; gap: 0.75rem; flex-wrap: nowrap; white-space: nowrap; }
 
       .nav-button {
         background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
@@ -153,6 +156,7 @@
         margin-top: 60px;
         padding: 0 1.5rem 2rem 1.5rem;
         width: 100%;
+        flex: 1;
       }
 
       .content-area {
@@ -344,7 +348,7 @@
         font-size: 0.8rem;
         color: rgb(124, 107, 155);
         border-top: 1px solid rgba(255, 255, 255, 0.1);
-        margin-top: 2rem;
+        margin-top: 0rem;
       }
 
       .footer a { color: var(--primary); text-decoration: none; }
@@ -420,6 +424,8 @@
         .main-container { 
           padding: 0 1rem 1.5rem 1rem;
           margin-top: 25px;
+          width: 100%;
+          flex: 1; 
         }
         
         .tab-bar {
