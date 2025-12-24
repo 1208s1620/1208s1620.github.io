@@ -1,43 +1,27 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-
     <title>The Vendor List</title>
     <link rel="icon" type="image/x-icon" href="Resources/favicon.ico" />
 
     <style>
       :root {
         --background: #121212;
-        --surface: #1e1e1e;
         --primary: #bb86fc;
         --text: #ffffff;
         --text-secondary: #a0a0a0;
-        --max-content-width: 1000px;
       }
 
-      ::-webkit-scrollbar {
-          width: 12px;
-          height: 12px;
-      }
+      ::-webkit-scrollbar { width: 12px; height: 12px; }
+      ::-webkit-scrollbar-track { background: #110616; }
+      ::-webkit-scrollbar-thumb { background-color: rgb(205, 178, 255); }
+      ::-webkit-scrollbar-thumb:hover { background-color: rgb(161, 140, 199); }
 
-      ::-webkit-scrollbar-track {
-          background: #110616;
-      }
- 
-      ::-webkit-scrollbar-thumb { 
-          background-color: rgb(205, 178, 255);
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-          background-color: rgb(161, 140, 199);
-      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
 
       html, body {
-        margin: 0;
-        padding: 0;
         height: 100%;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         background-color: var(--background);
@@ -51,9 +35,9 @@
       body {
         display: flex;
         flex-direction: column;
-        box-sizing: border-box;
         position: relative;
-        z-index: 1;
+        min-height: 100vh;
+        background-color: var(--background);
       }
 
       .animated-bg {
@@ -76,49 +60,33 @@
         100% { transform: translate(-25%, -20%); }
       }
 
-      body > *:not(.animated-bg) {
-        position: relative;
-        z-index: 1;
-      }
+      body > *:not(.animated-bg) { position: relative; z-index: 1; }
 
       .header {
         position: fixed;
         top: 0;
         width: 100%;
         background-color: rgb(44, 33, 58);
-        box-shadow: 0 2px 4px rgba(44, 33, 58,1);
+        box-shadow: 0 2px 4px rgba(44, 33, 58, 1);
         z-index: 1000;
         padding: 0.75rem 1rem;
-        box-sizing: border-box;
       }
 
       .header-content {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: nowrap;
         gap: 1rem;
       }
 
       .header-content h1 {
-        margin: 0;
-        font-size: 1.5rem;
-        flex-shrink: 1;
-      }
-
-      .header h1 {
         font-size: 1.5rem;
         color: rgb(205, 178, 255);
         flex: 1 1 auto;
         min-width: 160px;
       }
 
-      .nav-buttons {
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-        flex: 0 1 auto;
-      }
+      .nav-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 
       .nav-button {
         background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
@@ -131,7 +99,6 @@
         color: rgb(205, 178, 255);
         transition: all 0.3s ease;
         white-space: nowrap;
-        flex-shrink: 0;
       }
 
       .nav-button:hover {
@@ -141,36 +108,18 @@
         transform: translateY(-2px);
       }
 
-      .notification-legal {
-        width: fit-content;
-        max-width: 93%;
-        margin: 1.5rem auto;
-        padding: 0.75rem 1.5rem;
-        background: var(--primary);
-        color: var(--background);
-        font-weight: 600;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 4px 10px rgba(187, 134, 252, 0.4);
-        font-size: 1rem;
-        user-select: none;
-        box-sizing: border-box;
-        display: block;
-      }
-
-      .tabs {
-        flex: 1;
-        margin: 0 auto 2rem;
-        max-width: var(--max-content-width);
-        padding: 0 1rem;
-        box-sizing: border-box;
+      .tab-bar {
+        position: fixed;
+        top: 30px;
+        width: 100%;
+        background-color: transparent;
+        z-index: 999;
+        padding: 0 1.5rem;
       }
 
       .tab-buttons {
         display: flex;
-        gap: 1rem;
-        justify-content: center;
-        margin-bottom: 2rem;
+        gap: 0.75rem;
         flex-wrap: wrap;
       }
 
@@ -178,40 +127,126 @@
         background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
         border: 1px solid rgba(187, 134, 252, 0.4);
         border-radius: 8px;
-        padding: 0.6rem 1.2rem;
-        color: var(--text);
-        font-weight: 500;
-        border-radius: 10px;
+        padding: 0.6rem 1rem;
         color: rgb(205, 178, 255);
+        font-weight: 500;
         cursor: pointer;
         backdrop-filter: blur(4px);
         box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
         transition: all 0.2s ease;
+        font-size: 0.9rem;
       }
 
       .tab-button:hover {
-          border-color: var(--primary);
-          box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
-          transform: translateY(-2px);
+        border-color: var(--primary);
+        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
+        transform: translateY(-2px);
       }
 
       .tab-button.active {
-          border-color: var(--primary);
-          box-shadow: 0 8px 24px rgba(187, 134, 252, 0.35);
+        border-color: var(--primary);
+        background: linear-gradient(145deg, rgba(187,134,252,0.25), rgba(187,134,252,0.15));
+        box-shadow: 0 8px 24px rgba(187, 134, 252, 0.35);
       }
 
-      .tab-content {
-        display: none;
+      .main-container {
+        margin-top: 60px;
+        padding: 0 1.5rem 2rem 1.5rem;
+        width: 100%;
       }
 
-      .tab-content.active {
-        display: block;
+      .content-area {
+        display: flex;
+        gap: 2rem;
+        width: 100%;
+        min-height: 60vh;
       }
 
-      .ranking-list {
+      .tab-content { display: none; width: 100%; }
+      .tab-content.active { display: flex; gap: 2rem; width: 100%; }
+
+      .sorting-panel {
+        background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        width: 250px;
+        height: fit-content;
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .sorting-panel h3 {
+        margin: 0 0 1rem 0;
+        font-size: 1rem;
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .sort-options {
         display: flex;
         flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .sort-option {
+        background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
+        border: 1px solid rgba(187, 134, 252, 0.4);
+        border-radius: 8px;
+        padding: 0.6rem 0.8rem;
+        color: rgb(205, 178, 255);
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        text-align: left;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
+      }
+
+      .sort-option:hover {
+        background: linear-gradient(145deg, rgba(187,134,252,0.2), rgba(187,134,252,0.1));
+        border-color: var(--primary);
+        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
+      }
+
+      .sort-option.active {
+        background: rgb(205, 178, 255);
+        color: #000;
+        border-color: var(--primary);
+      }
+
+      .sort-order-btn {
+        margin-top: 1rem;
+        background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
+        border: 1px solid rgba(187, 134, 252, 0.4);
+        border-radius: 8px;
+        padding: 0.6rem 0.8rem;
+        color: rgb(205, 178, 255);
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        width: 100%;
+        text-align: center;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
+      }
+
+      .sort-order-btn:hover {
+        background: linear-gradient(145deg, rgba(187,134,252,0.2), rgba(187,134,252,0.1));
+        border-color: var(--primary);
+        color: #fff;
+        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
+      }
+
+      .ranking-list { 
+        display: flex; 
+        flex-direction: column; 
         gap: 1.5rem;
+        flex: 1;
+        width: 100%;
       }
 
       .rank-card {
@@ -220,28 +255,18 @@
         padding: 1.5rem;
         border-radius: 16px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        transition: transform 0.2s ease;
+        transition: transform 0.2s ease, opacity 0.3s ease;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
         word-break: break-word;
+        opacity: 0;
+      }
+      
+      .rank-card.loaded {
+        opacity: 1;
       }
 
-      .rank-card.sorting {
-        background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        transition: transform 0.2s ease;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        word-break: break-word;
-      }
-
-      .rank-card:hover {
-        transform: translateY(-5px);
-      }
+      .rank-card:hover { transform: translateY(-5px); }
 
       .rank-card h2 {
         margin: 0 0 0.5rem 0;
@@ -252,16 +277,6 @@
         flex-wrap: wrap;
         line-height: 1.2;
         gap: 6px;
-      }
-
-      .stars {
-        display: inline-flex;
-        margin-left: 6px;
-        margin-right: 8px;
-      }
-
-      .stars svg {
-        margin-right: 2px;
       }
 
       .rank-card h2 .indicator {
@@ -287,6 +302,8 @@
         transform: translateY(2px);
       }
 
+      .rating svg { margin-right: 2px; }
+
       .rank-card p {
         margin: 0 0 0.75rem 0;
         font-size: 0.95rem;
@@ -294,17 +311,9 @@
         flex-grow: 1;
       }
 
-      .rank-card p a {
-        color: #bb86fc;
-        text-decoration: none;
-      }
+      .rank-card p a { color: #bb86fc; text-decoration: none; }
 
-      .buttons-container {
-        margin-top: 1rem;
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-      }
+      .buttons-container { margin-top: 1rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
 
       .open-link-button {
         background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
@@ -322,182 +331,156 @@
       }
 
       .open-link-button:hover {
-          color: #fff;
-          border-color: var(--primary);
-          box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
-      }
-
-      .open-link-button.active {
-          color: #fff;
-          border: 1px solid var(--primary);
-          background: linear-gradient(145deg, var(--primary), #985eff);
-          box-shadow: 0 8px 24px rgba(187, 134, 252, 0.35);
+        color: #fff;
+        border-color: var(--primary);
+        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
       }
 
       .footer {
         width: 100%;
-        background: var(--surface);
         background-color: rgb(44, 33, 58);
         text-align: center;
-        padding: 0.75rem 1rem;
+        padding: 1rem;
         font-size: 0.8rem;
         color: rgb(124, 107, 155);
         border-top: 1px solid rgba(255, 255, 255, 0.1);
-        box-sizing: border-box;
+        margin-top: 2rem;
       }
 
-      .footer a {
-        color: var(--primary);
-        text-decoration: none;
-      }
+      .footer a { color: var(--primary); text-decoration: none; }
+      .footer a:hover { text-decoration: underline; }
 
-      .footer a:hover {
-        text-decoration: underline;
-      }
+      .indicator.new { background-color: #ffb700; color: #000; }
+      .indicator.farm { background-color: #888888; color: #fff; }
+      .indicator.password { background-color: #0d8eea; color: #fff; }
+      .indicator.cheap { background-color: #8f6ce7; color: #fff; }
+      .indicator.recommended { background-color: #f7b268; color: #fff; }
 
-      .indicator.new {
-        background-color: #ffb700;
-        color: #000;
-      }
-
-      .indicator.farm {
-        background-color: #888888;
-        color: #fff;
-      }
-
-      .indicator.password {
-        background-color: #0d8eea;
-        color: #fff;
-      }
-
-      .indicator.cheap {
-        background-color: #8f6ce7;
-        color: #fff;
-      }
-  
-      .indicator.recommended { 
-        background-color: #f7b268;
-        color: #fff;
-      }
-
-      .product-types {
-        margin-top: 4px;
-        display: flex;
-        gap: 6px;
-        flex-wrap: wrap;
-      }
-
-      .product-type-badge {
-        background-color: #333333;
-        padding: 2px 8px;
-        border-radius: 12px;
-        font-size: 0.75rem;
-        font-weight: 600;
+      .issues-tooltip-container {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin-left: 8px;
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
         user-select: none;
       }
 
-      .issues-tooltip-container {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-          margin-left: 8px;
-          cursor: pointer;
-          width: 18px;
-          height: 18px;
-          text-align: center;
-          line-height: 18px;
-          border-radius: 50%;
-          background-color: transparent; /* red */
-          
-          color: #fff;
-          font-weight: normal;
-          font-size: 12px;
-          font-family: 'Segoe UI', monospace; /* different font */
-          user-select: none;
-      }
-
-      .issues-tooltip-container span.question-mark {
-          display: inline-block;
-          transform: translateX(-1px); /* move ? 1px left */
-      }
+      .issues-tooltip-container span.question-mark { display: inline-block; transform: translateX(-1px); }
 
       .issues-tooltip {
-          display: none;
-          position: absolute;
-          top: 50%;
-          left: 110%; /* dock to the right of the ? */
-          transform: translateY(-50%);
-          background-color: #333;
-          color: #fff;
-          padding: 8px;
-          border-radius: 6px;
-          white-space: nowrap;
-          z-index: 1000;
-          font-size: 12px;
-          min-width: 180px;
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 110%;
+        transform: translateY(-50%);
+        background-color: #333;
+        color: #fff;
+        padding: 8px;
+        border-radius: 6px;
+        white-space: nowrap;
+        z-index: 1000;
+        font-size: 12px;
+        min-width: 180px;
       }
 
-      .issues-tooltip a {
-          color: #fff;
-          text-decoration: none;
-          display: block;
-          margin: 1px 0; /* reduced spacing */
-      }
+      .issues-tooltip a { color: #fff; text-decoration: none; display: block; margin: 1px 0; }
+      .issues-tooltip a:hover { text-decoration: underline; }
 
-      .issues-tooltip a:hover {
-          text-decoration: underline;
+      @media (max-width: 1024px) {
+        .content-area { flex-direction: column; }
+        .tab-content.active { flex-direction: column; }
+        .sorting-panel {
+          width: 100%;
+        }
       }
 
       @media (max-width: 768px) {
-        html {
-          font-size: 14px;
+        html { font-size: 14px; }
+        
+        .header {
+          padding: 0.5rem 1rem;
+        }
+        
+        .header-content { 
+          gap: 0.5rem; 
+        }
+        
+        .header-content h1 { 
+          font-size: 1.1rem;
+        }
+        
+        .nav-button {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.75rem;
+        }
+        
+        .main-container { 
+          padding: 0 1rem 1.5rem 1rem;
+          margin-top: 25px;
+        }
+        
+        .tab-bar {
+          padding: 0 1rem;
+          top: 15px;
         }
 
-        .header-content {
-          flex-direction: row;
-          flex-wrap: nowrap;
-          align-items: center;
-          justify-content: space-between;
+        .rank-card h2 {
+          font-size: 1.2rem;
+        }
+        
+        .tab-buttons {
           gap: 0.5rem;
+          overflow-x: auto;
+          overflow-y: visible;
+          flex-wrap: nowrap;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(187, 134, 252, 0.6) rgba(255, 255, 255, 0.1);
+          padding: 0.5rem 0 0.5rem 0;
+          margin: -0.5rem 0;
         }
-
-        .header-content h1 {
-          font-size: 1.25rem;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+        
+        .tab-buttons::-webkit-scrollbar {
+          height: 6px;
         }
-
-        .nav-buttons {
+        
+        .tab-buttons::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 3px;
+        }
+        
+        .tab-buttons::-webkit-scrollbar-thumb {
+          background: rgba(187, 134, 252, 0.6);
+          border-radius: 3px;
+        }
+        
+        .tab-buttons::-webkit-scrollbar-thumb:hover {
+          background: rgba(187, 134, 252, 0.8);
+        }
+        
+        .tab-button {
+          padding: 0.5rem 0.8rem;
+          font-size: 0.85rem;
           flex-shrink: 0;
+        }
+
+        .sorting-panel {
+          top: 10px;
         }
       }
 
       @media (max-width: 400px) {
-        html {
-          font-size: 13px;
-        }
-
-        .header h1 {
-          font-size: 1.25rem;
-        }
-
-        .tab-buttons {
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
-        }
-
-        .tab-button {
-          flex: 1 1 120px;
-        }
+        html { font-size: 13px; }
       }
     </style>
   </head>
 
   <body>
     <div class="animated-bg"></div>
+    
     <header class="header">
       <div class="header-content">
         <h1 id="header-title">💫 The Vendor List</h1>
@@ -509,11 +492,12 @@
       </div>
     </header>
 
-    <div class="notification-legal">⚖️ Laws vary by state — check with vendors about shipping. Most will still ship regardless.</div>
-    
-    <div class="tabs">
+    <div class="tab-bar">
       <div class="tab-buttons" id="TabButtons"></div>
-      <div id="TabContents"></div>
+    </div>
+
+    <div class="main-container">
+      <div class="content-area" id="TabContents"></div>
     </div>
 
     <footer class="footer">
@@ -521,8 +505,7 @@
     </footer>
 
     <script>
-      const TabOrder = ["Flower", "Concentrates", "Vapes", "Edibles", "Psychedelics", "Wholesale", "Communities"];
-
+      const Categories = ["Flower", "Concentrates", "Vapes", "Edibles", "Psychedelics", "Wholesale", "Communities"];
       const Vendors = [
         {
           Title: "Clubhouse Drops",
@@ -607,7 +590,7 @@
         {
           Title: "Tesoro Hemp",
           Description: "Tesoro Hemp began as a small, family-owned farm nestled in the heart of Oregon, where a love for quality cannabis and honest cultivation took root in 2017. What started as a humble operation has since grown into a full-spectrum hemp brand—featuring a concentrate processing lab, in-house pre-roll production, and some of the most thoughtfully grown THCa hemp flower available on the market. Despite our growth, we remain proudly family owned and operated, staying true to our roots while continuing to innovate in the cannabis space. Our team is committed to sustainability—not just environmentally, but economically and socially. As we've expanded, we’ve done so carefully, preserving jobs and upholding the high standards our customers have come to expect. We also perform in-house genetic work to stay at the forefront of emerging strains and trends in the cannabis world.",
-          Rating: 3,
+          Rating: 1.5,
 
           Sections: ["Flower", "Concentrates", "Wholesale", "Communities"],
           IsNew: false, IsRecommended: true, IsFarm: true, IsCheap: true, 
@@ -618,13 +601,18 @@
             { Text: "Facebook", Link: "https://facebook.com/tesorohemp/" },
             { Text: "Reddit", Link: "https://reddit.com/r/tesorohemp/" },
             { Text: "TikTok", Link: "https://tiktok.com/tesorohemp/" }
+          ],
+
+          Issues: [
+            { Text: "Contaminated live resin", Link: "https://www.reddit.com/r/TesoroHemp/comments/1pu4ifs/sigh/" },
+            { Text: "Moldy outdoor flower", Link: "https://www.reddit.com/r/Tesoro_Hemp/comments/1pu87t6/mold_in_ice_cream_cake_smalls/" },
           ]
         },
         {
           Title: "Bake Boxx",
           Description: "BakeBoxx was born from a simple vision: to create a trusted platform where quality meets innovation. We believe that everyone deserves access to premium hemp products that enhance their well-being and lifestyle.",
           Sections: ["Flower", "Edibles", "Wholesale"],
-          Rating: 2,
+          Rating: 1.5,
           
           Buttons: [
             { Text: "Website", Link: "https://www.bakeboxx.com/" },
@@ -652,7 +640,7 @@
           Title: "Ole Skool Hemp",
           Description: "Family-owned North Carolina hemp farm growing premium THCA flower in our 6,000 sqft indoor facility. From seed to sale, we control every step ensuring lab-tested, Farm Bill compliant products delivered fresh from our farm to your door.",
           Sections: ["Flower", "Concentrates"],
-          Rating: 2.5,
+          Rating: 2,
           
           IsFarm: true,
 
@@ -705,7 +693,7 @@
           Title: "The Mad Skunk",
           Description: "Welcome to the Mad Skunk, we specialize in Craft/Exotic small batch THCa flower grown in living soil and hydroponics. The founder began this journey many moons ago with a genuine love for the flower, from cultivation to consumption. We currently do not grow on our own. Instead, we have an excellent partnership with a local farm who grows exclusively for TMS. We are born and bred Virginians and we love to travel. The Mad Skunk started as a vision and a dream. Never did we ever, as young adults, believe that we would be someday shipping dank all over the country! But here we are and here you are! We’re glad to have you and look forward to serving your cannaneeds for years to come!",
           Sections: ["Flower"],
-          Rating: 2.5,
+          Rating: 3,
           IsNew: false, 
           Buttons: [
             { Text: "Website", Link: "https://www.themadskunk.com/" },
@@ -966,7 +954,7 @@
           Title: "DAMN GOOD",
           Description: "Damn Good offers flower grown locally in North Carolina. With fresh batches each week. Damn Good® Concentrates are here. From rosin and sugar to badder, crumble, hash, and shatter — each one made with pure inputs and loud terp profiles. No fillers, no BS. Just potent, flavorful hits every time.",
           Sections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-          Rating: 3,
+          Rating: 1.5,
           IsFarm: true, IsRecommended: true, 
           Buttons: [
             { Text: "Website", Link: "https://tokesugar.com/" },
@@ -1295,7 +1283,7 @@
           Title: "Lucky Elk",
           Description: "Small-batch THCa flower and concentrates grown by the best farmers in the Pacific Northwest—cultivated with organic practices, rich in terpenes, and crafted with care from seed to sale.",
           Sections: ["Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
-          Rating: 3,
+          Rating: 2,
           
           Buttons: [
             { Text: "Website", Link: "https://luckyelk.com/" },
@@ -1573,7 +1561,7 @@
           Title: "Secret Nature",
           Description: "Feeling is the secret, and our mission is to help people feel better everyday. High-CBD, low-THC means all the benefits and none of the common negative side effects like anxiety and paranoia. We have been breeding and growing high CBD cannabis for over 10 years, and are excited to finally offer these revolutionary products to people all over the world. It’s time for a new wave of cannabis that can enhance your lifestyle, not hinder it.",
           Sections: ["Flower", "Edibles", "Wholesale"],
-          Rating: 2.5,
+          Rating: 1.5,
           
           Buttons: [
             { Text: "Website", Link: "https://secretnature.com/" },
@@ -1660,7 +1648,7 @@
           Title: "Black Owl Hemp Clinic",
           Description: "We’re a family-owned business driven by a passion for the science of cannabinoids and a commitment to educating our customers on how they work within the body. What sets us apart? It’s our focus on education, exclusive formulations, and using only the highest quality ingredients in all of our products. 🌱 We hold ourselves to the highest standards, with everything produced in our own lab and third-party tested for quality and transparency. As a Christian family, we believe in the power of plant-based medicine and its responsible use. 🌿",
           Sections: ["Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
-          Rating: 2.5,
+          Rating: 2,
           
           Buttons: [
             { Text: "Website", Link: "https://blackowlhempclinic.com/" },
@@ -1904,552 +1892,303 @@
           Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/hempflowers/" }]
         }
       ];
+      
+      function updateHeaderTitle() {
+        const headerTitle = document.getElementById("header-title");
 
-      const headerTitle = document.getElementById("header-title");
-      headerTitle.innerHTML = `💫 The Vendor List - <span style="color: #f7b268;">${Vendors.length} total</span>`;
+        if (window.innerWidth > 768) {
+          headerTitle.innerHTML = `💫 The Vendor List - <span style="color: #f7b268;">${Vendors.length} total</span>`;
+        } else {
+          headerTitle.innerHTML = `💫 The Vendor List`;
+        }
+      }
 
-      const tabs = [];
-      Vendors.forEach(vendor => {
-        vendor.Sections.forEach(section => {
-          if (!tabs.includes(section)) {
-            tabs.push(section);
+      updateHeaderTitle();
+      window.addEventListener("resize", updateHeaderTitle);
+
+      let currentSortBy = 'rating', currentSortOrder = 'desc', currentTab = Categories[0];
+
+      Categories.forEach((tab, i) => {
+        const btn = document.createElement('button');
+        btn.className = `tab-button${i === 0 ? ' active' : ''}`;
+        btn.textContent = tab;
+        btn.onclick = () => {
+          currentTab = tab;
+          document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById(`tab-content-${tab}`).classList.add('active');
+        };
+        TabButtons.appendChild(btn);
+
+        const content = document.createElement('div');
+        content.className = `tab-content${i === 0 ? ' active' : ''}`;
+        content.id = `tab-content-${tab}`;
+
+        const sortPanel = document.createElement('div');
+        sortPanel.className = 'sorting-panel';
+        sortPanel.id = `sorting-panel-${tab}`;
+        content.appendChild(sortPanel);
+
+        const list = document.createElement('div');
+        list.className = 'ranking-list';
+        list.id = `ranking-list-${tab}`;
+        populateVendorList(list, getSortedVendors(tab));
+        content.appendChild(list);
+        TabContents.appendChild(content);
+      });
+
+      updateSortingPanel();
+
+      function updateSortingPanel() {
+        Categories.forEach(tab => {
+          const panel = document.getElementById(`sorting-panel-${tab}`);
+          if (!panel) return;
+          
+          panel.innerHTML = '';
+          
+          const h3 = document.createElement('h3');
+          h3.textContent = 'Sort By';
+          panel.appendChild(h3);
+
+          const optionsDiv = document.createElement('div');
+          optionsDiv.className = 'sort-options';
+
+          ['rating', 'new', 'recommended', 'cheap', 'farm'].forEach(val => {
+            const btn = document.createElement('button');
+            btn.className = `sort-option${currentSortBy === val ? ' active' : ''}`;
+            btn.textContent = val.charAt(0).toUpperCase() + val.slice(1);
+            if (val === 'cheap') btn.textContent = 'Budget';
+            btn.onclick = () => { 
+              currentSortBy = val; 
+              updateSortingPanel();
+              refreshTab(currentTab); 
+            };
+            optionsDiv.appendChild(btn);
+          });
+
+          panel.appendChild(optionsDiv);
+
+          if (currentSortBy === 'rating') {
+            const orderBtn = document.createElement('button');
+            orderBtn.className = 'sort-order-btn';
+            orderBtn.textContent = currentSortOrder === 'desc' ? '↓ High to Low' : '↑ Low to High';
+            orderBtn.onclick = () => { 
+              currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc'; 
+              updateSortingPanel();
+              refreshTab(currentTab); 
+            };
+            panel.appendChild(orderBtn);
           }
         });
-      });
-
-      const tabButtonsContainer = document.getElementById('TabButtons');
-      const tabContentsContainer = document.getElementById('TabContents');
-
-      let currentSortBy = 'rating';
-      let currentSortOrder = 'desc';
-
-      TabOrder.forEach((tab, index) => {
-        createTabButton(tab, index);
-        createTabContent(tab, index);
-      });
-
-      function createTabButton(tab, index) {
-        const button = document.createElement('button');
-        button.className = `tab-button${index === 0 ? ' active' : ''}`;
-        button.textContent = tab;
-        
-        button.onclick = () => switchTab(tab);
-        tabButtonsContainer.appendChild(button);
       }
 
-      function switchTab(tab) {
-        document.querySelectorAll('.tab-button').forEach(btn => 
-          btn.classList.remove('active')
-        );
-        document.querySelectorAll('.tab-content').forEach(content => 
-          content.classList.remove('active')
-        );
-        
-        event.target.classList.add('active');
-        document.getElementById(`tab-content-${tab}`).classList.add('active');
+      function refreshTab(tab) {
+        const list = document.getElementById(`ranking-list-${tab}`);
+        list.innerHTML = '';
+        populateVendorList(list, getSortedVendors(tab));
       }
 
-      function createTabContent(tab, index) {
-        const contentDiv = document.createElement('div');
-        contentDiv.className = `tab-content${index === 0 ? ' active' : ''}`;
-        contentDiv.id = `tab-content-${tab}`;
-
-        const sortingControls = createSortingControls(tab);
-        contentDiv.appendChild(sortingControls);
-
-        const listDiv = document.createElement('div');
-        listDiv.className = 'ranking-list';
-        listDiv.id = `ranking-list-${tab}`;
-
-        const tabVendors = getFilteredAndSortedVendors(tab);
-        populateVendorList(listDiv, tabVendors);
-
-        contentDiv.appendChild(listDiv);
-        tabContentsContainer.appendChild(contentDiv);
+      function getSortedVendors(tab) {
+        return Vendors.filter(v => v.Sections.includes(tab)).sort((a, b) => {
+          let cmp = 0;
+          if (currentSortBy === 'rating') cmp = a.Rating - b.Rating;
+          else if (currentSortBy === 'new') return a.IsNew !== b.IsNew ? (a.IsNew ? -1 : 1) : b.Rating - a.Rating;
+          else if (currentSortBy === 'farm') return a.IsFarm !== b.IsFarm ? (a.IsFarm ? -1 : 1) : b.Rating - a.Rating;
+          else if (currentSortBy === 'cheap') return a.IsCheap !== b.IsCheap ? (a.IsCheap ? -1 : 1) : b.Rating - a.Rating;
+          else if (currentSortBy === 'recommended') return a.IsRecommended !== b.IsRecommended ? (a.IsRecommended ? -1 : 1) : b.Rating - a.Rating;
+          return currentSortOrder === 'desc' ? -cmp : cmp;
+        });
       }
 
-      function createVendorCard(vendor) {
+      function populateVendorList(list, vendors) {
+        if (list.id === "ranking-list-Psychedelics") {
+          const card = document.createElement('div');
+          card.className = 'rank-card loaded';
+          card.style.cssText = 'display: inline-block; padding: 12px 16px;';
+          const p = document.createElement('p');
+          p.style.cssText = 'margin: 0; color: lightgrey;';
+          p.innerHTML = "There's a shortage of trustworthy vendors. If you're a supplier or know of one, please reach out to me. You can contact me through our Discord server or on Reddit.<br><br><b>Before using any product, make sure to do proper research to determine accurate dosage information. I recommend checking the pages for the substance on <a href='https://erowid.org' target='_blank'>Erowid</a> or <a href='https://psychonautwiki.org' target='_blank'>PsychonautWiki</a> for reliable guidance. Failing to do so may result in serious harm or even death, depending on the substance.</b>";
+          card.appendChild(p);
+          list.appendChild(card);
+        }
+        vendors.forEach(v => list.appendChild(createVendorCard(v)));
+      }
+
+      function createVendorCard(v) {
         const card = document.createElement('div');
         card.className = 'rank-card';
 
-        const title = document.createElement('h2');
-        title.textContent = vendor.Title;
+        const h2 = document.createElement('h2');
+        h2.textContent = v.Title;
+        if (v.Rating != null) h2.appendChild(createStars(v.Rating));
         
-        if (vendor.Rating != null) {
-          const starsContainer = createStarRating(vendor.Rating);
-          title.appendChild(starsContainer);
+        [
+          { cond: v.IsNew, cls: 'new', txt: 'New' },
+          { cond: v.Password, cls: 'password', txt: `Password: ${v.Password}` },
+          { cond: v.IsRecommended, cls: 'recommended', txt: 'Recommended' },
+          { cond: v.IsCheap, cls: 'cheap', txt: 'Budget' },
+          { cond: v.IsFarm, cls: 'farm', txt: 'Farm' }
+        ].forEach(b => {
+          if (b.cond) {
+            const span = document.createElement('span');
+            span.className = `indicator ${b.cls}`;
+            span.textContent = b.txt;
+            h2.appendChild(span);
+          }
+        });
+
+        if (v.Issues?.length) {
+          const tooltip = document.createElement('span');
+          tooltip.className = 'issues-tooltip-container';
+          const mark = document.createElement('span');
+          mark.className = 'question-mark';
+          mark.textContent = '⚠️';
+          tooltip.appendChild(mark);
+          const tip = document.createElement('div');
+          tip.className = 'issues-tooltip';
+          tip.innerHTML = v.Issues.map(i => i.Link ? `<a href="${i.Link}" target="_blank">${i.Text} 🔗</a>` : `<div>${i.Text}</div>`).join('');
+          tooltip.appendChild(tip);
+          let hide;
+          tooltip.onmouseenter = () => { clearTimeout(hide); tip.style.display = 'block'; };
+          tooltip.onmouseleave = () => { hide = setTimeout(() => tip.style.display = 'none', 300); };
+          tip.onmouseenter = () => clearTimeout(hide);
+          tip.onmouseleave = () => { hide = setTimeout(() => tip.style.display = 'none', 300); };
+          h2.appendChild(tooltip);
         }
 
-        addIndicatorBadges(title, vendor);
-        card.appendChild(title);
+        card.appendChild(h2);
 
-        const description = document.createElement('p');
-        description.textContent = vendor.Description;
-        card.appendChild(description);
+        const p = document.createElement('p');
+        p.textContent = v.Description;
+        card.appendChild(p);
 
-        if (vendor.Buttons && vendor.Buttons.length > 0) {
-          const buttonsContainer = createButtonsContainer(vendor.Buttons);
-          card.appendChild(buttonsContainer);
+        if (v.Buttons?.length) {
+          const btns = document.createElement('div');
+          btns.className = 'buttons-container';
+          
+          let imagesLoaded = 0;
+          const totalImages = v.Buttons.length;
+          
+          const checkAllLoaded = () => {
+            imagesLoaded++;
+            if (imagesLoaded === totalImages) {
+              setTimeout(() => card.classList.add('loaded'), 50);
+            }
+          };
+          
+          v.Buttons.forEach(b => {
+            const wrap = document.createElement('div');
+            wrap.style.cssText = 'display: flex; align-items: center; gap: 8px;';
+            const link = document.createElement('a');
+            link.href = b.Link;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.className = 'open-link-button';
+            
+            const img = new Image();
+            img.onload = () => {
+              const i = document.createElement('img');
+              i.src = `Resources/${b.Text}.png`;
+              i.alt = b.Text;
+              i.style.cssText = 'height: 24px; width: 24px; object-fit: contain;';
+              link.style.cssText = 'display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgb(205, 178, 255); font-size: 0.9em; gap: 6px;';
+              link.textContent = '';
+              link.appendChild(i);
+              link.appendChild(document.createTextNode(b.Text));
+              checkAllLoaded();
+            };
+            img.onerror = () => {
+              link.textContent = b.Text;
+              checkAllLoaded();
+            };
+            img.src = `Resources/${b.Text}.png`;
+
+            wrap.appendChild(link);
+            if (b.Warning) {
+              const warn = document.createElement('span');
+              warn.textContent = 'This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.';
+              warn.style.cssText = 'color: lightgrey; font-size: 0.65em;';
+              wrap.appendChild(warn);
+              
+              let timer = false;
+              link.onclick = e => {
+                if (timer) { e.preventDefault(); return; }
+                e.preventDefault();
+                timer = true;
+                const orig = link.innerHTML;
+                let cd = 5;
+                link.style.cssText += 'pointer-events: none; opacity: 0.6;';
+                link.textContent = `Please wait ${cd}s...`;
+                const intv = setInterval(() => {
+                  cd--;
+                  if (cd < 0) {
+                    clearInterval(intv);
+                    link.style.pointerEvents = '';
+                    link.style.opacity = '1';
+                    link.innerHTML = orig;
+                    link.addEventListener('click', () => window.open(b.Link, '_blank', 'noopener,noreferrer'), { once: true });
+                  } else link.textContent = `Please wait ${cd}s...`;
+                }, 1000);
+              };
+            }
+            btns.appendChild(wrap);
+          });
+          card.appendChild(btns);
+        } else {
+          setTimeout(() => card.classList.add('loaded'), 50);
         }
 
         return card;
       }
 
-      function createStarRating(rating) {
-        const starsContainer = document.createElement('span');
-        starsContainer.className = 'rating';
-
+      function createStars(rating) {
+        const span = document.createElement('span');
+        span.className = 'rating';
         for (let i = 0; i < 3; i++) {
-          const star = createStarSVG(i, rating);
-          starsContainer.appendChild(star);
-        }
-
-        return starsContainer;
-      }
-
-      function createStarSVG(starIndex, rating) {
-        const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        star.setAttribute('width', '16');
-        star.setAttribute('height', '16');
-        star.setAttribute('viewBox', '0 0 24 24');
-
-        const starPath = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
-
-        if (starIndex < rating && starIndex >= Math.floor(rating)) {
-          createHalfStar(star, starIndex, starPath);
-        } else {
-          createFullStar(star, starIndex, rating, starPath);
-        }
-
-        return star;
-      }
-
-      function createHalfStar(star, starIndex, starPath) {
-        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-        const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
-        mask.setAttribute('id', `half-mask-${starIndex}`);
-
-        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        rect.setAttribute('x', '0');
-        rect.setAttribute('y', '0');
-        rect.setAttribute('width', '12');
-        rect.setAttribute('height', '24');
-        rect.setAttribute('fill', 'white');
-
-        mask.appendChild(rect);
-        defs.appendChild(mask);
-        star.appendChild(defs);
-
-        const filledPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        filledPath.setAttribute('d', starPath);
-        filledPath.setAttribute('fill', '#ffcc00');
-        filledPath.setAttribute('mask', `url(#half-mask-${starIndex})`);
-        star.appendChild(filledPath);
-
-        const outlinePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        outlinePath.setAttribute('d', starPath);
-        outlinePath.setAttribute('fill', 'none');
-        outlinePath.setAttribute('stroke', '#ffcc00');
-        outlinePath.setAttribute('stroke-width', '2');
-        outlinePath.setAttribute('stroke-linejoin', 'round');
-        star.appendChild(outlinePath);
-      }
-
-      function createFullStar(star, starIndex, rating, starPath) {
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', starPath);
-        path.setAttribute('fill', starIndex < Math.floor(rating) ? '#ffcc00' : 'none');
-        path.setAttribute('stroke', '#ffcc00');
-        path.setAttribute('stroke-width', '2');
-        path.setAttribute('stroke-linejoin', 'round');
-        star.appendChild(path);
-      }
-
-      function addIndicatorBadges(title, vendor) {
-        const badges = [
-          { condition: vendor.IsNew, class: 'new', text: 'New' },
-          { condition: vendor.Password, class: 'password', text: `Password: ${vendor.Password}` },
-          { condition: vendor.IsRecommended, class: 'recommended', text: 'Recommended' },
-          { condition: vendor.IsCheap, class: 'cheap', text: 'Budget' },
-          { condition: vendor.IsFarm, class: 'farm', text: 'Farm' }
-        ];
-
-        badges.forEach(badge => {
-          if (badge.condition) {
-            const badgeElement = document.createElement('span');
-            badgeElement.className = `indicator ${badge.class}`;
-            badgeElement.textContent = badge.text;
-            title.appendChild(badgeElement);
-          }
-        });
-
-        if (vendor.Issues && vendor.Issues.length > 0) {
-          const issuesContainer = document.createElement('span');
-          issuesContainer.className = 'issues-tooltip-container';
+          const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          svg.setAttribute('width', '16');
+          svg.setAttribute('height', '16');
+          svg.setAttribute('viewBox', '0 0 24 24');
+          const path = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
           
-          const questionMark = document.createElement('span');
-          questionMark.className = 'question-mark';
-          questionMark.textContent = '⚠️';
-          issuesContainer.appendChild(questionMark);
-
-          title.appendChild(issuesContainer);
-
-          const tooltip = document.createElement('div');
-          tooltip.className = 'issues-tooltip';
-
-          tooltip.innerHTML = vendor.Issues.map(issue => {
-              if (issue.Link) {
-                  return `<a href="${issue.Link}" target="_blank">${issue.Text} 🔗</a>`;
-              } else {
-                  return `<div class="issue-item">${issue.Text}</div>`;
-              }
-          }).join('');
-
-          issuesContainer.appendChild(tooltip);
-
-          let hideTimeout;
-          issuesContainer.addEventListener('mouseenter', () => {
-              clearTimeout(hideTimeout);
-              tooltip.style.display = 'block';
-          });
-          issuesContainer.addEventListener('mouseleave', () => {
-              hideTimeout = setTimeout(() => tooltip.style.display = 'none', 300);
-          });
-          tooltip.addEventListener('mouseenter', () => {
-              clearTimeout(hideTimeout);
-          });
-          tooltip.addEventListener('mouseleave', () => {
-              hideTimeout = setTimeout(() => tooltip.style.display = 'none', 300);
-          });
-        }
-      }
-
-      function createButtonsContainer(buttons) {
-        const container = document.createElement('div');
-        container.className = 'buttons-container';
-
-        buttons.forEach(buttonData => {
-          const wrapper = createButtonWrapper(buttonData);
-          container.appendChild(wrapper);
-        });
-
-        return container;
-      }
-
-      function createButtonWrapper(buttonData) {
-        const wrapper = document.createElement('div');
-        wrapper.style.display = 'flex';
-        wrapper.style.alignItems = 'center';
-        wrapper.style.gap = '8px';
-
-        const link = createButtonLink(buttonData);
-        wrapper.appendChild(link);
-
-        if (buttonData.Warning) {
-          const warning = createWarningLabel();
-          wrapper.appendChild(warning);
-          setupWarningClickHandler(link, buttonData);
-        }
-
-        return wrapper;
-      }
-
-      function createButtonLink(buttonData) {
-        const link = document.createElement('a');
-        link.href = buttonData.Link;
-        link.target = '_blank';
-        link.rel = 'noopener noreferrer';
-        link.className = 'open-link-button';
-
-        setupButtonImage(link, buttonData.Text);
-        
-        return link;
-      }
-
-      function setupButtonImage(link, buttonText) {
-        const imagePath = `Resources/${buttonText}.png`;
-        const testImage = new Image();
-
-        testImage.onload = () => {
-          setupLinkWithImage(link, imagePath, buttonText);
-        };
-
-        testImage.onerror = () => {
-          link.textContent = buttonText;
-        };
-
-        testImage.src = imagePath;
-      }
-
-      function setupLinkWithImage(link, imagePath, buttonText) {
-        const image = document.createElement('img');
-        image.src = imagePath;
-        image.alt = buttonText;
-        image.style.cssText = 'height: 24px; width: 24px; object-fit: contain; display: block;';
-
-        link.style.cssText = `
-          display: flex; 
-          align-items: center; 
-          justify-content: center; 
-          text-decoration: none; 
-          color: rgb(205, 178, 255); 
-          font-size: 0.9em; 
-          gap: 6px;
-        `;
-
-        link.textContent = '';
-        link.appendChild(image);
-        link.appendChild(document.createTextNode(buttonText));
-      }
-
-      function createWarningLabel() {
-        const warning = document.createElement('span');
-        warning.textContent = 'This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.';
-        warning.style.cssText = 'color: lightgrey; font-size: 0.65em;';
-        return warning;
-      }
-
-      function setupWarningClickHandler(link, buttonData) {
-        let timerActive = false;
-
-        link.addEventListener('click', function(event) {
-          if (timerActive) {
-            event.preventDefault();
-            return;
-          }
-
-          event.preventDefault();
-          timerActive = true;
-
-          const originalContent = {
-            text: buttonData.Text,
-            innerHTML: link.innerHTML
-          };
-
-          startCountdown(link, originalContent, buttonData.Link);
-        });
-      }
-
-      function startCountdown(link, originalContent, targetUrl) {
-        let countdown = 5;
-        
-        link.style.cssText += 'pointer-events: none; opacity: 0.6;';
-        updateCountdownText(link, countdown);
-
-        const interval = setInterval(() => {
-          countdown--;
-          
-          if (countdown < 0) {
-            clearInterval(interval);
-            restoreLinkAndEnableClick(link, originalContent, targetUrl);
+          if (i < rating && i >= Math.floor(rating)) {
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
+            mask.setAttribute('id', `half-mask-${i}`);
+            const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            rect.setAttribute('x', '0');
+            rect.setAttribute('y', '0');
+            rect.setAttribute('width', '12');
+            rect.setAttribute('height', '24');
+            rect.setAttribute('fill', 'white');
+            mask.appendChild(rect);
+            defs.appendChild(mask);
+            svg.appendChild(defs);
+            const p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            p1.setAttribute('d', path);
+            p1.setAttribute('fill', '#ffcc00');
+            p1.setAttribute('mask', `url(#half-mask-${i})`);
+            svg.appendChild(p1);
+            const p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            p2.setAttribute('d', path);
+            p2.setAttribute('fill', 'none');
+            p2.setAttribute('stroke', '#ffcc00');
+            p2.setAttribute('stroke-width', '2');
+            p2.setAttribute('stroke-linejoin', 'round');
+            svg.appendChild(p2);
           } else {
-            updateCountdownText(link, countdown);
+            const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            p.setAttribute('d', path);
+            p.setAttribute('fill', i < Math.floor(rating) ? '#ffcc00' : 'none');
+            p.setAttribute('stroke', '#ffcc00');
+            p.setAttribute('stroke-width', '2');
+            p.setAttribute('stroke-linejoin', 'round');
+            svg.appendChild(p);
           }
-        }, 1000);
-      }
-
-      function updateCountdownText(link, countdown) {
-        link.textContent = `Please wait ${countdown}s...`;
-      }
-
-      function restoreLinkAndEnableClick(link, originalContent, targetUrl) {
-        link.style.pointerEvents = '';
-        link.style.opacity = '1';
-        link.innerHTML = originalContent.innerHTML;
-
-        link.addEventListener('click', function openLink() {
-          window.open(targetUrl, '_blank', 'noopener,noreferrer');
-        }, { once: true });
-      }
-
-      function createSortingControls(tab) {
-        const container = document.createElement('div');
-        container.className = 'rank-card sorting';
-        container.style.cssText = `
-          margin-bottom: 20px;
-          display: flex;
-          gap: 10px;
-          flex-wrap: wrap;
-          align-items: center;
-          padding: 15px;
-        `;
-
-        const label = document.createElement('span');
-        label.textContent = 'Sort by:';
-        label.style.cssText = 'font-weight: 600; color: #fff; margin-right: 10px;';
-        container.appendChild(label);
-
-        const sortOptions = [
-          { value: 'rating', label: 'Rating' },
-          { value: 'new', label: 'New' },
-          { value: 'recommended', label: 'Recommended' },
-          { value: 'cheap', label: 'Budget' },
-          { value: 'farm', label: 'Farm' }
-        ];
-
-        sortOptions.forEach(option => {
-          const button = document.createElement('button');
-          button.textContent = option.label;
-          button.style.cssText = `
-            padding: 8px 16px;
-            border: 2px solid rgb(205, 178, 255);
-            background: ${currentSortBy === option.value ? 'rgb(205, 178, 255)' : 'transparent'};
-            color: ${currentSortBy === option.value ? '#000' : 'rgb(205, 178, 255)'};
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9em;
-            font-weight: 500;
-            transition: all 0.3s ease;
-          `;
-
-          button.onmouseover = () => {
-            if (currentSortBy !== option.value) {
-              button.style.background = 'rgba(205, 178, 255, 0.1)';
-            }
-          };
-
-          button.onmouseout = () => {
-            if (currentSortBy !== option.value) {
-              button.style.background = 'transparent';
-            }
-          };
-
-          button.onclick = () => changeSorting(option.value, tab);
-          container.appendChild(button);
-        });
-
-        if (currentSortBy === 'rating') {
-          const orderButton = createSortOrderButton(tab);
-          container.appendChild(orderButton);
+          span.appendChild(svg);
         }
-
-        return container;
-      }
-
-      function createSortOrderButton(tab) {
-        const button = document.createElement('button');
-        button.className = 'sort-order-button';
-        button.textContent = currentSortOrder === 'desc' ? '↓ High to Low' : '↑ Low to High';
-        button.style.cssText = `
-          padding: 8px 16px;
-          border: 2px solid #ccc;
-          background: transparent;
-          color: #ccc;
-          border-radius: 20px;
-          cursor: pointer;
-          font-size: 0.9em;
-          font-weight: 500;
-          transition: all 0.3s ease;
-          margin-left: auto; /* Pushes button to the right */
-        `;
-
-        button.onmouseover = () => {
-          button.style.background = 'rgba(204, 204, 204, 0.1)';
-        };
-
-        button.onmouseout = () => {
-          button.style.background = 'transparent';
-        };
-
-        button.onclick = () => {
-          currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc';
-          refreshTabContent(tab);
-        };
-
-        return button;
-      }
-
-      function changeSorting(sortBy, tab) {
-        currentSortBy = sortBy;
-        refreshTabContent(tab);
-      }
-
-      function refreshTabContent(tab) {
-        const contentDiv = document.getElementById(`tab-content-${tab}`);
-        contentDiv.innerHTML = '';
-
-        const sortingControls = createSortingControls(tab);
-        contentDiv.appendChild(sortingControls);
-
-        const listDiv = document.createElement('div');
-        listDiv.className = 'ranking-list';
-        listDiv.id = `ranking-list-${tab}`;
-
-        const tabVendors = getFilteredAndSortedVendors(tab);
-        populateVendorList(listDiv, tabVendors);
-
-        contentDiv.appendChild(listDiv);
-      }
-
-      function getFilteredAndSortedVendors(tab) {
-        const tabVendors = Vendors.filter(vendor => vendor.Sections.includes(tab));
-        return sortVendors(tabVendors, currentSortBy, currentSortOrder);
-      }
-
-      function sortVendors(vendors, sortBy, sortOrder) {
-        const sorted = [...vendors].sort((a, b) => {
-          let comparison = 0;
-
-          switch (sortBy) {
-            case 'rating':
-              comparison = a.Rating - b.Rating;
-              break;
-            case 'new':
-              if (a.IsNew !== b.IsNew) {
-                comparison = a.IsNew ? -1 : 1;
-              } else {
-                comparison = b.Rating - a.Rating;
-              }
-              return comparison;
-            case 'farm':
-              if (a.IsFarm !== b.IsFarm) {
-                comparison = a.IsFarm ? -1 : 1;
-              } else {
-                comparison = b.Rating - a.Rating;
-              }
-              return comparison;
-            case 'cheap':
-              if (a.IsCheap !== b.IsCheap) {
-                comparison = a.IsCheap ? -1 : 1;
-              } else {
-                comparison = b.Rating - a.Rating;
-              }
-              return comparison;
-            case 'recommended':
-              if (a.IsRecommended !== b.IsRecommended) {
-                comparison = a.IsRecommended ? -1 : 1;
-              } else {
-                comparison = b.Rating - a.Rating;
-              }
-              return comparison;
-          }
-
-          return sortOrder === 'desc' ? -comparison : comparison;
-        });
-
-        return sorted;
-      }
-
-      function populateVendorList(listDiv, vendors) {
-        if (listDiv.id == "ranking-list-Psychedelics") {
-          const card = document.createElement('div');
-          card.className = 'rank-card';
-          card.style.display = 'inline-block'; 
-          card.style.padding = '12px 16px'; 
-
-          const title = document.createElement('p');
-          title.style.margin = '0';
-          title.style.color = "lightgrey";
-          title.innerHTML = "There's a shortage of trustworthy vendors. If you’re a supplier or know of one, please reach out to me. You can contact me through our Discord server or on Reddit.<br><br><b>Before using any product, make sure to do proper research to determine accurate dosage information. I recommend checking the pages for the substance on <a href='https://erowid.org' target='_blank'>Erowid</a> or <a href='https://psychonautwiki.org' target='_blank'>PsychonautWiki</a> for reliable guidance. Failing to do so may result in serious harm or even death, depending on the substance.</b>";
-
-          card.appendChild(title);
-          listDiv.appendChild(card);
-        }
- 
-        vendors.forEach(vendor => {
-          const card = createVendorCard(vendor);
-          listDiv.appendChild(card);
-        });
+        return span;
       }
     </script>
   </body>
