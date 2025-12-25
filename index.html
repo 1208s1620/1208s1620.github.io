@@ -2059,7 +2059,9 @@
           document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
           btn.classList.add('active');
           document.getElementById(`tab-content-${tab}`).classList.add('active');
-        };
+          updateSortingPanel();
+          refreshTab(tab);
+        }; 
         TabButtons.appendChild(btn);
 
         const content = document.createElement('div');
