@@ -11,7 +11,7 @@
         --background: #121212;
         --primary: #bb86fc;
         --text: #ffffff;
-        --text-secondary: #a0a0a0;
+        --text-secondary: #bdbdbd;
       }
 
       ::-webkit-scrollbar { width: 12px; height: 12px; }
@@ -365,7 +365,7 @@
         align-items: center;
         justify-content: center;
         position: relative;
-        margin-left: 8px;
+        margin-left: 14px;
         cursor: pointer;
         width: 18px;
         height: 18px;
@@ -378,16 +378,34 @@
         display: none;
         position: absolute;
         top: 50%;
-        left: 110%;
+        left: 180%;
         transform: translateY(-50%);
-        background-color: #333;
-        color: #fff;
-        padding: 8px;
-        border-radius: 6px;
+        background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(4px);
+        color: var(--text-secondary);
+        padding: 0;
         white-space: nowrap;
         z-index: 1000;
-        font-size: 12px;
+        font-size: 0.85rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.5;
         min-width: 180px;
+      }
+
+      .issues-tooltip-header {
+        background: rgba(187, 134, 252, 0.1);
+        padding: 8px 12px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px 16px 0 0;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .issues-tooltip-content {
+        padding: 6px 10px;
       }
 
       .issues-tooltip a { color: #fff; text-decoration: none; display: block; margin: 1px 0; }
@@ -507,11 +525,11 @@
     </div>
 
     <footer class="footer">
-      Need to get in contact? message me on <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a> or join the <a href="https://discord.gg/ASPwEKFWWj/">discord server</a>.
+      Need to get in contact? message me on <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a> or join the <a href="https://discord.gg/mqwB9xp8rJ/">discord server</a>.
     </footer>
 
     <script>
-      const Categories = ["Flower", "Concentrates", "Vapes", "Edibles", "Psychedelics", "Wholesale", "Communities"];
+      const Categories = ["Flower", "Concentrates", "Vapes", "Edibles", "Psychedelics", "Kratom", /*"Benzodiazepines",*/ "Wholesale", "Communities"];
       const Vendors = [
         {
           Title: "Clubhouse Drops",
@@ -1756,6 +1774,8 @@
             { Text: "Facebook", Link: "https://www.facebook.com/aldersonfamilyfarms" }
           ]
         },
+
+        // Psychedelics
         {
           Title: "Wicked Tablets",
           Description: "Wicked Tablets lives for the relentless pursuit to create unique, reliable, and responsibly sourced mind-expanding products more accessible to curious, conscious adults. Wicked is a small, independent brand aiming to leave a big mark in the development of psychedelic treatments, and responsible recreational use",
@@ -1771,7 +1791,7 @@
         {
           Title: "ADVANCED MYCOLOGY",
           Description: "Before we even started our company, we have been long-time psychedelic enthusiasts. Improving access to the benefits of psychedelics has been one of our major goals, and along with our affection for mycology we were happy to bring the magic of mushrooms to people through our grow bags mushroom genetics. We will continue to do so, for those that desire them. We know, however, that mushrooms take time to grow, and metocin is an accessible compound that produces effects we are similarly fond of.",
-          Sections: ["Psychedelics"],
+          Sections: ["Psychedelics", "Communities"],
           Rating: 1.5, // too damn pricey.
           
           IsNew: true,
@@ -1785,6 +1805,121 @@
             { Text: "Instagram", Link: "https://instagram.com/advancedmyco" },
           ]
         },
+
+        // Kratom
+        {
+          Title: "KRATOM DISTRO",
+          Description: "With a combined 40 years of experience in importing and selling wholesale kratom Distro, our team has seen just about everything there is to see in this industry.  From bad harvests to import bans to doctored imported powder and customs seizures, we’ve figured out who to trust for our south Asian kratom sources, and what it takes to get the world’s best kratom into your hands without any hassles or stress.  Give us a little patience as we nail down the retail side of things and we we will be the last site you ever need for kratom.",
+          Sections: ["Kratom"],
+          Rating: 2,
+          
+          IsNew: false,
+          
+          Buttons: [
+            { Text: "Website", Link: "https://www.kratomdistro.com/" },
+            { Text: "Facebook", Link: "https://www.facebook.com/groups/833891957420924" }
+          ]
+        },
+        {
+          Title: "BRONX EXTRACTS",
+          Description: "At Bronx Extracts we pride ourselves on providing the finest 7-OH and mitragynine products available. Our commitment to quality and integrity ensures that every product meets the highest standards. We believe in transparency and never cut corners, delivering only the best for our customers. Experience the difference with Bronx Extracts!",
+          Sections: ["Kratom"],
+          Rating: 2,
+          
+          IsNew: false,
+          
+          Buttons: [
+            { Text: "Website", Link: "https://bxtracts.com/" }
+          ]
+        },
+        {
+          Title: "TBK YELLOW",
+          Description: "No description currently.",
+          Sections: ["Kratom"],
+          Rating: 0, // unrated
+          IsNew: false,
+          Buttons: [
+            { Text: "Website", Link: "https://tbkyellow.com" }
+          ]
+        },
+        {
+          Title: "ETXtracts",
+          Description: "No description currently.",
+          Sections: ["Kratom"],
+          Rating: 0, // unrated
+          IsNew: false,
+          Buttons: [
+            { Text: "Website", Link: "https://etxtracts.com" },
+            { Text: "Discord", Link: "https://discord.com/invite/pfEcCsMq" }
+          ]
+        },
+        {
+          Title: "MG Medica Labs",
+          Description: "No description currently.",
+          Sections: ["Kratom"],
+          Rating: 0, // unrated
+          IsNew: false,
+          Buttons: [
+            { Text: "Website", Link: "https://mgmedicalabs.org/" },
+            { Text: "Telegram", Link: "https://t.me/+ORHfSvopRithNjdh" }
+          ]
+        },
+        {
+          Title: "Stout Alkz",
+          Description: "We’re not here to flood the market. We’re here to raise the bar. Others have approached us with cheaper shortcuts – we don’t take them. We stand by what matters: quality over quantity, integrity over hype, and products that never disappoint. Stout Alkz didn’t join the movement. We built it. For the customer. For the research. For the standar",
+          Sections: ["Kratom"],
+          Rating: 3,
+          IsNew: false,
+          Buttons: [
+            { Text: "Website", Link: "https://stoutalkz.com" }
+          ]
+        },
+        {
+          Title: "7OH Tab World",
+          Description: "No description currently.",
+          Sections: ["Kratom"],
+          Rating: 0, // unrated
+          IsNew: false,
+          Buttons: [
+            { Text: "Website", Link: "https://7ohtabworld.com" },
+            { Text: "Facebook", Link: "https://www.facebook.com/profile.php?id=61573230890346/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/7ohtabworld/" },
+            { Text: "Website", Link: "https://7ohtabworld.com" },
+            { Text: "Website", Link: "https://7ohtabworld.com" },
+          ]
+        },
+        {
+          Title: "Koalaty Kratom",
+          Description: "No description currently.",
+          Sections: ["Kratom"],
+          Rating: 0, // unrated
+          IsNew: false,
+          Buttons: [
+            { Text: "Website", Link: "https://koalatykratom.com" }
+          ]
+        },
+        {
+          Title: "Catalyst Edge Labs",
+          Description: "At Catalyst Edge Labs, we’re all about making science approachable and exciting for everyone. We started this journey because we believe that groundbreaking tools like 7-OH shouldn’t just be for big labs or elite researchers—they should be available to anyone with a spark of curiosity.",
+          Sections: ["Kratom"],
+          Rating: 0, // unrated
+          IsNew: false,
+          Buttons: [
+            { Text: "Website", Link: "https://catalystedgelab.com" }
+          ]
+        },
+        {
+          Title: "Ritually Pure",
+          Description: "Try our proprietary Kratom extract. None of our products have synthetic kratom alkaloids. Experience the difference of our exclusive water-based photo conversion process. No solvents, no synthetic chemicals - just pure MGM at honest prices (MGM is 2.5x potent as synthetic kratom alkaloids with same effects, lasts 10 hours!).",
+          Sections: ["Kratom"],
+          Rating: 0, // unrated
+          IsNew: false,
+          Buttons: [
+            { Text: "Website", Link: "https://rituallypure.com" }
+          ]
+        },
+
+        // Communities / Subreddits
         {
           Title: "The Vendor List",
           Description: "The Vendor List is a curated hub that connects customers with legal THCA vendors. Our subreddit is currently in the process of being set up.",
@@ -2008,7 +2143,7 @@
       }
 
       function populateVendorList(list, vendors) {
-        if (list.id === "ranking-list-Psychedelics") {
+        if (list.id === "ranking-list-Psychedelics" || list.id === "ranking-list-Kratom" || list.id === "ranking-list-Benzodiazepines") {
           const card = document.createElement('div');
           card.className = 'rank-card loaded';
           card.style.cssText = 'display: inline-block; padding: 12px 16px;';
@@ -2053,7 +2188,17 @@
           tooltip.appendChild(mark);
           const tip = document.createElement('div');
           tip.className = 'issues-tooltip';
-          tip.innerHTML = v.Issues.map(i => i.Link ? `<a href="${i.Link}" target="_blank">${i.Text} 🔗</a>` : `<div>${i.Text}</div>`).join('');
+          
+          const header = document.createElement('div');
+          header.className = 'issues-tooltip-header';
+          header.textContent = 'Issues:';
+          tip.appendChild(header);
+          
+          const content = document.createElement('div');
+          content.className = 'issues-tooltip-content';
+          content.innerHTML = v.Issues.map(i => i.Link ? `<a href="${i.Link}" target="_blank">${i.Text} 🔗</a>` : `<div>${i.Text}</div>`).join('');
+          tip.appendChild(content);
+          
           tooltip.appendChild(tip);
           let hide;
           tooltip.onmouseenter = () => { clearTimeout(hide); tip.style.display = 'block'; };
@@ -2112,90 +2257,88 @@
 
             wrap.appendChild(link);
             if (b.Warning) {
-              const warn = document.createElement('span');
-              warn.textContent = 'This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.';
-              warn.style.cssText = 'color: lightgrey; font-size: 0.65em;';
-              wrap.appendChild(warn);
-              
-              let timer = false;
-              link.onclick = e => {
-                if (timer) { e.preventDefault(); return; }
-                e.preventDefault();
-                timer = true;
-                const orig = link.innerHTML;
-                let cd = 5;
-                link.style.cssText += 'pointer-events: none; opacity: 0.6;';
-                link.textContent = `Please wait ${cd}s...`;
-                const intv = setInterval(() => {
-                  cd--;
-                  if (cd < 0) {
-                    clearInterval(intv);
-                    link.style.pointerEvents = '';
-                    link.style.opacity = '1';
-                    link.innerHTML = orig;
-                    link.addEventListener('click', () => window.open(b.Link, '_blank', 'noopener,noreferrer'), { once: true });
-                  } else link.textContent = `Please wait ${cd}s...`;
-                }, 1000);
-              };
-            }
-            btns.appendChild(wrap);
-          });
-          card.appendChild(btns);
-        } else {
-          setTimeout(() => card.classList.add('loaded'), 50);
-        }
-
-        return card;
-      }
-
-      function createStars(rating) {
-        const span = document.createElement('span');
-        span.className = 'rating';
-        for (let i = 0; i < 3; i++) {
-          const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-          svg.setAttribute('width', '16');
-          svg.setAttribute('height', '16');
-          svg.setAttribute('viewBox', '0 0 24 24');
-          const path = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
+          const warn = document.createElement('span');
+          warn.textContent = 'This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.';
+          warn.style.cssText = 'color: lightgrey; font-size: 0.65em;';
+          wrap.appendChild(warn);
           
-          if (i < rating && i >= Math.floor(rating)) {
-            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-            const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
-            mask.setAttribute('id', `half-mask-${i}`);
-            const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-            rect.setAttribute('x', '0');
-            rect.setAttribute('y', '0');
-            rect.setAttribute('width', '12');
-            rect.setAttribute('height', '24');
-            rect.setAttribute('fill', 'white');
-            mask.appendChild(rect);
-            defs.appendChild(mask);
-            svg.appendChild(defs);
-            const p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            p1.setAttribute('d', path);
-            p1.setAttribute('fill', '#ffcc00');
-            p1.setAttribute('mask', `url(#half-mask-${i})`);
-            svg.appendChild(p1);
-            const p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            p2.setAttribute('d', path);
-            p2.setAttribute('fill', 'none');
-            p2.setAttribute('stroke', '#ffcc00');
-            p2.setAttribute('stroke-width', '2');
-            p2.setAttribute('stroke-linejoin', 'round');
-            svg.appendChild(p2);
-          } else {
-            const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            p.setAttribute('d', path);
-            p.setAttribute('fill', i < Math.floor(rating) ? '#ffcc00' : 'none');
-            p.setAttribute('stroke', '#ffcc00');
-            p.setAttribute('stroke-width', '2');
-            p.setAttribute('stroke-linejoin', 'round');
-            svg.appendChild(p);
-          }
-          span.appendChild(svg);
+          let timer = false;
+          link.onclick = e => {
+            if (timer) { e.preventDefault(); return; }
+            e.preventDefault();
+            timer = true;
+            const orig = link.innerHTML;
+            let cd = 5;
+            link.style.cssText += 'pointer-events: none; opacity: 0.6;';
+            link.textContent = `Please wait ${cd}s...`;
+            const intv = setInterval(() => {
+              cd--;
+              if (cd < 0) {
+                clearInterval(intv);
+                link.style.pointerEvents = '';
+                link.style.opacity = '1';
+                link.innerHTML = orig;
+                link.addEventListener('click', () => window.open(b.Link, '_blank', 'noopener,noreferrer'), { once: true });
+              } else link.textContent = `Please wait ${cd}s...`;
+            }, 1000);
+          };
         }
-        return span;
+        btns.appendChild(wrap);
+      });
+      card.appendChild(btns);
+    } else {
+      setTimeout(() => card.classList.add('loaded'), 50);
+    }
+
+    return card;
+  }
+
+  function createStars(rating) {
+    const span = document.createElement('span');
+    span.className = 'rating';
+    for (let i = 0; i < 3; i++) {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('width', '16');
+      svg.setAttribute('height', '16');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      const path = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
+      
+      if (i < rating && i >= Math.floor(rating)) {
+        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
+        mask.setAttribute('id', `half-mask-${i}`);
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', '0');
+        rect.setAttribute('y', '0');
+        rect.setAttribute('width', '12');
+        rect.setAttribute('height', '24');
+        rect.setAttribute('fill', 'white');
+        mask.appendChild(rect);
+        defs.appendChild(mask);
+        svg.appendChild(defs);
+        const p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p1.setAttribute('d', path);
+        p1.setAttribute('fill', '#ffcc00');
+        p1.setAttribute('mask', `url(#half-mask-${i})`);
+        svg.appendChild(p1);
+        const p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p2.setAttribute('d', path);
+        p2.setAttribute('fill', 'none');
+        p2.setAttribute('stroke', '#ffcc00');
+        p2.setAttribute('stroke-width', '2');
+        p2.setAttribute('stroke-linejoin', 'round');
+        svg.appendChild(p2);
+      } else {
+        const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        p.setAttribute('d', path);
+        p.setAttribute('fill', i < Math.floor(rating) ? '#ffcc00' : 'none');
+        p.setAttribute('stroke', '#ffcc00');
+        p.setAttribute('stroke-width', '2');
+        p.setAttribute('stroke-linejoin', 'round');
+        svg.appendChild(p);
       }
-    </script>
-  </body>
-</html>
+      span.appendChild(svg);
+    }
+    return span;
+  }
+</script>
