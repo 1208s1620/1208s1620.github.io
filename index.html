@@ -66,10 +66,12 @@
         position: fixed;
         top: 0;
         width: 100%;
-        background-color: rgb(44, 33, 58);
-        box-shadow: 0 2px 4px rgba(44, 33, 58, 1);
+        background: linear-gradient(145deg, rgba(44, 33, 58, 0.95), rgba(30, 22, 42, 0.95));
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+        box-shadow: 0 4px 20px rgba(187, 134, 252, 0.15);
         z-index: 1000;
-        padding: 0.75rem 1rem;
+        padding: 1rem 1.5rem;
       }
 
       .header-content {
@@ -80,13 +82,26 @@
       }
 
       .header-content h1 {
-        font-size: 1.5rem;
-        color: rgb(205, 178, 255);
+        font-size: 1.6rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #bb86fc, #f7b268);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         flex: 1 1 0;
         min-width: 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        letter-spacing: -0.02em;
+      }
+
+      .header-total {
+        color: var(--text-secondary);
+        -webkit-text-fill-color: var(--text-secondary);
+        background: none;
+        -webkit-background-clip: initial;
+        background-clip: initial;
       }
 
       .nav-buttons { display: flex; gap: 0.75rem; flex-wrap: nowrap; white-space: nowrap; }
@@ -118,6 +133,7 @@
         background-color: transparent;
         z-index: 999;
         padding: 0 1.5rem;
+        overflow: visible;
       }
 
       .tab-buttons {
@@ -279,8 +295,18 @@
         display: flex;
         align-items: center;
         flex-wrap: wrap;
-        line-height: 1.2;
         gap: 6px;
+      }
+
+      .vendor-website-link {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .vendor-website-icon {
+        height: 20px;
+        width: 20px;
+        object-fit: contain;
       }
 
       .rank-card h2 .indicator {
@@ -289,9 +315,6 @@
         font-size: 0.65rem;
         font-weight: 700;
         border-radius: 4px;
-        position: relative;
-        top: 2px;
-        left: 4px;
         user-select: none;
       }
 
@@ -303,10 +326,51 @@
         align-items: center;
         margin-left: 4px;
         user-select: none;
-        transform: translateY(2px);
       }
 
       .rating svg { margin-right: 2px; }
+
+      .rating-tooltip {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .rating-tooltip .tooltip-text {
+        visibility: hidden;
+        width: 80px;
+        background-color: rgba(187, 134, 252, 0.9);
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 4px 8px;
+        position: absolute;
+        z-index: 1;
+        bottom: 150%;
+        left: 50%;
+        margin-left: -40px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+        white-space: nowrap;
+      }
+
+      .rating-tooltip .tooltip-text::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: rgba(187, 134, 252, 0.9) transparent transparent transparent;
+      }
+
+      .rating-tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
 
       .rank-card p {
         margin: 0 0 0.75rem 0;
@@ -392,6 +456,8 @@
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         line-height: 1.5;
         min-width: 180px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
       }
 
       .issues-tooltip-header {
@@ -422,7 +488,7 @@
         html { font-size: 14px; }
         
         .header {
-          padding: 0.5rem 1rem;
+          padding: 0.75rem 1rem;
         }
         
         .header-content { 
@@ -430,7 +496,8 @@
         }
         
         .header-content h1 { 
-          font-size: 1.1rem;
+          font-size: 1.2rem;
+          font-weight: 600;
         }
         
         .nav-button {
@@ -448,10 +515,20 @@
         .tab-bar {
           padding: 0 1rem;
           top: 15px;
+          overflow: visible;
         }
 
         .rank-card h2 {
           font-size: 1.2rem;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+
+        .rank-card h2 .indicator {
+          font-size: 0.75rem;
+          padding: 2px 6px;
+          border-radius: 6px;
+          margin-top: 4px;
         }
         
         .tab-buttons {
@@ -468,6 +545,7 @@
         
         .tab-buttons::-webkit-scrollbar {
           height: 6px;
+          display: block;
         }
         
         .tab-buttons::-webkit-scrollbar-track {
@@ -616,8 +694,8 @@
           Rating: 1.5,
 
           Sections: ["Flower", "Concentrates", "Wholesale", "Communities"],
-          IsNew: false, IsRecommended: true,IsCheap: true, 
-
+          IsNew: false, IsRecommended: false, IsCheap: true, 
+          
           Buttons: [
             { Text: "Website", Link: "https://tesorohemp.com/" },
             { Text: "Instagram", Link: "https://www.instagram.com/tesorohempco/" },
@@ -826,7 +904,7 @@
         },
         {
           Title: "Pack Trapper",
-          Description: "",
+          Description: "Pack Trapper is a wholesale THCA supplier that offers a wide range of products, including flower, concentrates, vapes, edibles, and more.",
           Sections: ["Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
           Rating: 1.5,
           IsCheap: true, 
@@ -1188,7 +1266,7 @@ IsCheap: true,
 
           Buttons: [
             { Text: "Website", Link: "https://www.purecannaco.com/" },
-            { Text: "Instagram", Link: "https://www.instagram.com/pure.canna.co?igsh=djF5MnlpNWM5M254/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/pure.canna.co?igshid=djF5MnlpNWM5M254/" },
           ]
         },
         {
@@ -2243,7 +2321,7 @@ IsCheap: true,
         const headerTitle = document.getElementById("header-title");
 
         if (window.innerWidth > 768) {
-          headerTitle.innerHTML = `💫 The Vendor List - <span style="color: #f7b268;">${Vendors.length} total</span>`;
+          headerTitle.innerHTML = `💫 The Vendor List - <span class="header-total">${Vendors.length} total</span>`;
         } else {
           headerTitle.innerHTML = `💫 The Vendor List`;
         }
@@ -2302,13 +2380,21 @@ IsCheap: true,
           const optionsDiv = document.createElement('div');
           optionsDiv.className = 'sort-options';
 
-          ['rating', 'new', 'recommended', 'cheap'].forEach(val => {
+          const sortOptions = [
+            { val: 'rating', label: 'Rating', hasOrder: true },
+            { val: 'name', label: 'Name', hasOrder: true },
+            { val: 'new', label: 'New', hasOrder: false },
+            { val: 'recommended', label: 'Recommended', hasOrder: false },
+            { val: 'cheap', label: 'Budget', hasOrder: false },
+            { val: 'issues', label: 'Has Issues', hasOrder: false }
+          ];
+
+          sortOptions.forEach(option => {
             const btn = document.createElement('button');
-            btn.className = `sort-option${currentSortBy === val ? ' active' : ''}`;
-            btn.textContent = val.charAt(0).toUpperCase() + val.slice(1);
-            if (val === 'cheap') btn.textContent = 'Budget';
+            btn.className = `sort-option${currentSortBy === option.val ? ' active' : ''}`;
+            btn.textContent = option.label;
             btn.onclick = () => { 
-              currentSortBy = val; 
+              currentSortBy = option.val; 
               updateSortingPanel();
               refreshTab(currentTab); 
             };
@@ -2317,10 +2403,14 @@ IsCheap: true,
 
           panel.appendChild(optionsDiv);
 
-          if (currentSortBy === 'rating') {
+          if (sortOptions.find(opt => opt.val === currentSortBy)?.hasOrder) {
             const orderBtn = document.createElement('button');
             orderBtn.className = 'sort-order-btn';
-            orderBtn.textContent = currentSortOrder === 'desc' ? '↓ High to Low' : '↑ Low to High';
+            if (currentSortBy === 'rating') {
+              orderBtn.textContent = currentSortOrder === 'desc' ? '↓ High to Low' : '↑ Low to High';
+            } else if (currentSortBy === 'name') {
+              orderBtn.textContent = currentSortOrder === 'desc' ? '↓ Z to A' : '↑ A to Z';
+            }
             orderBtn.onclick = () => { 
               currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc'; 
               updateSortingPanel();
@@ -2341,9 +2431,11 @@ IsCheap: true,
         return Vendors.filter(v => v.Sections.includes(tab)).sort((a, b) => {
           let cmp = 0;
           if (currentSortBy === 'rating') cmp = a.Rating - b.Rating;
+          else if (currentSortBy === 'name') cmp = a.Title.localeCompare(b.Title);
           else if (currentSortBy === 'new') return a.IsNew !== b.IsNew ? (a.IsNew ? -1 : 1) : b.Rating - a.Rating;
           else if (currentSortBy === 'cheap') return a.IsCheap !== b.IsCheap ? (a.IsCheap ? -1 : 1) : b.Rating - a.Rating;
           else if (currentSortBy === 'recommended') return a.IsRecommended !== b.IsRecommended ? (a.IsRecommended ? -1 : 1) : b.Rating - a.Rating;
+          else if (currentSortBy === 'issues') return (a.Issues?.length || 0) - (b.Issues?.length || 0);
           return currentSortOrder === 'desc' ? -cmp : cmp;
         });
       }
@@ -2367,7 +2459,37 @@ IsCheap: true,
         card.className = 'rank-card';
 
         const h2 = document.createElement('h2');
-        h2.textContent = v.Title;
+        const websiteBtn = v.Buttons?.find(b => b.Text === 'Website');
+        const websiteIcon = document.createElement('img');
+        
+        if (websiteBtn?.Link) {
+          try {
+            const hostname = new URL(websiteBtn.Link).hostname;
+            websiteIcon.src = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
+          } catch (e) {
+            websiteIcon.src = 'Resources/Website.png';
+          }
+        } else {
+          websiteIcon.src = 'Resources/Website.png';
+        }
+        
+        websiteIcon.alt = 'Website';
+        websiteIcon.className = 'vendor-website-icon';
+        websiteIcon.style.cssText = 'height: 40px; width: 40px; object-fit: contain; border-radius: 4px; margin-right: 5px;';
+
+        if (websiteBtn?.Link) {
+          const websiteLink = document.createElement('a');
+          websiteLink.href = websiteBtn.Link;
+          websiteLink.target = '_blank';
+          websiteLink.rel = 'noopener noreferrer';
+          websiteLink.className = 'vendor-website-link';
+          websiteLink.appendChild(websiteIcon);
+          h2.appendChild(websiteLink);
+        } else {
+          h2.appendChild(websiteIcon);
+        }
+
+        h2.appendChild(document.createTextNode(v.Title));
         if (v.Rating != null) h2.appendChild(createStars(v.Rating));
         
         [
@@ -2401,15 +2523,15 @@ IsCheap: true,
           
           const content = document.createElement('div');
           content.className = 'issues-tooltip-content';
-          content.innerHTML = v.Issues.map(i => i.Link ? `<a href="${i.Link}" target="_blank">${i.Text} 🔗</a>` : `<div>${i.Text}</div>`).join('');
+          content.innerHTML = v.Issues.map(i => i.Link ? `<a href="${i.Link}" target="_blank">${i.Text} </a>` : `<div>${i.Text}</div>`).join('');
           tip.appendChild(content);
           
           tooltip.appendChild(tip);
           let hide;
-          tooltip.onmouseenter = () => { clearTimeout(hide); tip.style.display = 'block'; };
-          tooltip.onmouseleave = () => { hide = setTimeout(() => tip.style.display = 'none', 300); };
+          tooltip.onmouseenter = () => { clearTimeout(hide); tip.style.display = 'block'; setTimeout(() => tip.style.opacity = '1', 10); };
+          tooltip.onmouseleave = () => { hide = setTimeout(() => tip.style.opacity = '0', 50); setTimeout(() => tip.style.display = 'none', 350); };
           tip.onmouseenter = () => clearTimeout(hide);
-          tip.onmouseleave = () => { hide = setTimeout(() => tip.style.display = 'none', 300); };
+          tip.onmouseleave = () => { hide = setTimeout(() => tip.style.opacity = '0', 50); setTimeout(() => tip.style.display = 'none', 350); };
           h2.appendChild(tooltip);
         }
 
@@ -2442,23 +2564,22 @@ IsCheap: true,
             link.rel = 'noopener noreferrer';
             link.className = 'open-link-button';
             
-            const img = new Image();
-            img.onload = () => {
-              const i = document.createElement('img');
-              i.src = `Resources/${b.Text}.png`;
-              i.alt = b.Text;
-              i.style.cssText = 'height: 20px; width: 20px; object-fit: contain;';
-              link.style.cssText = 'display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgb(205, 178, 255); gap: 6px;';
-              link.textContent = '';
-              link.appendChild(i);
-              link.appendChild(document.createTextNode(b.Text));
-              checkAllLoaded();
-            };
-            img.onerror = () => {
+            const i = document.createElement('img');
+            i.src = `Resources/${b.Text}.png`;
+            i.alt = b.Text;
+            i.style.cssText = 'height: 20px; width: 20px; object-fit: contain;';
+            
+            link.style.cssText = 'display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgb(205, 178, 255); gap: 6px;';
+            link.textContent = '';
+            link.appendChild(i);
+            link.appendChild(document.createTextNode(b.Text));
+            
+            i.onerror = () => {
+              i.style.display = 'none';
               link.textContent = b.Text;
-              checkAllLoaded();
             };
-            img.src = `Resources/${b.Text}.png`;
+            
+            checkAllLoaded();
 
             wrap.appendChild(link);
             if (b.Warning) {
@@ -2508,7 +2629,7 @@ IsCheap: true,
       svg.setAttribute('viewBox', '0 0 24 24');
       const path = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
       
-      if (i < rating && i >= Math.floor(rating)) {
+      if (i === Math.floor(rating) && rating % 1 !== 0) {
         const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
         const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
         mask.setAttribute('id', `half-mask-${i}`);
@@ -2521,29 +2642,40 @@ IsCheap: true,
         mask.appendChild(rect);
         defs.appendChild(mask);
         svg.appendChild(defs);
+        
         const p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         p1.setAttribute('d', path);
-        p1.setAttribute('fill', '#ffcc00');
-        p1.setAttribute('mask', `url(#half-mask-${i})`);
+        p1.setAttribute('fill', '#4a4a4a');
         svg.appendChild(p1);
+        
         const p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         p2.setAttribute('d', path);
-        p2.setAttribute('fill', 'none');
-        p2.setAttribute('stroke', '#ffcc00');
-        p2.setAttribute('stroke-width', '2');
-        p2.setAttribute('stroke-linejoin', 'round');
+        p2.setAttribute('fill', '#ffcc00');
+        p2.setAttribute('mask', `url(#half-mask-${i})`);
         svg.appendChild(p2);
       } else {
         const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         p.setAttribute('d', path);
-        p.setAttribute('fill', i < Math.floor(rating) ? '#ffcc00' : 'none');
-        p.setAttribute('stroke', '#ffcc00');
-        p.setAttribute('stroke-width', '2');
-        p.setAttribute('stroke-linejoin', 'round');
+        p.setAttribute('fill', i < Math.floor(rating) ? '#ffcc00' : '#4a4a4a');
         svg.appendChild(p);
       }
       span.appendChild(svg);
     }
+    
+    // Add tooltip for 0/3 stars (unreviewed)
+    if (rating === 0) {
+      const tooltipContainer = document.createElement('div');
+      tooltipContainer.className = 'rating-tooltip';
+      tooltipContainer.appendChild(span);
+      
+      const tooltipText = document.createElement('span');
+      tooltipText.className = 'tooltip-text';
+      tooltipText.textContent = 'Unreviewed';
+      tooltipContainer.appendChild(tooltipText);
+      
+      return tooltipContainer;
+    }
+    
     return span;
   }
 </script>
