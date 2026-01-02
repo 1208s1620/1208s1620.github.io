@@ -2332,6 +2332,49 @@ IsCheap: true,
 
       let currentSortBy = 'rating', currentSortOrder = 'desc', currentTab = Categories[0];
 
+      const faviconCache = new Map();
+      
+      function preloadAllFavicons() {
+        const websiteLinks = new Set();
+
+        Vendors.forEach(vendor => {
+          const websiteBtn = vendor.Buttons?.find(b => b.Text === 'Website');
+          if (websiteBtn?.Link) {
+            try {
+              const hostname = new URL(websiteBtn.Link).hostname;
+              websiteLinks.add(hostname);
+            } catch (e) {}
+          }
+        });
+
+        websiteLinks.forEach(hostname => {
+          const img = new Image();
+          const faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
+          
+          img.onload = () => {
+            faviconCache.set(hostname, faviconUrl);
+          };
+          
+          img.onerror = () => {
+            faviconCache.set(hostname, 'Resources/Website.png');
+          };
+          
+          img.src = faviconUrl;
+        });
+      }
+      
+      function getCachedFavicon(hostname) {
+        if (faviconCache.has(hostname)) {
+          return faviconCache.get(hostname);
+        }
+        
+        const faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
+        faviconCache.set(hostname, faviconUrl);
+        return faviconUrl;
+      }
+      
+      preloadAllFavicons();
+
       Categories.forEach((tab, i) => {
         const btn = document.createElement('button');
         btn.className = `tab-button${i === 0 ? ' active' : ''}`;
@@ -2465,7 +2508,7 @@ IsCheap: true,
         if (websiteBtn?.Link) {
           try {
             const hostname = new URL(websiteBtn.Link).hostname;
-            websiteIcon.src = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
+            websiteIcon.src = getCachedFavicon(hostname);
           } catch (e) {
             websiteIcon.src = 'Resources/Website.png';
           }
