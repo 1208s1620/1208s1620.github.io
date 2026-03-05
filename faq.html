@@ -65,10 +65,12 @@
         position: fixed;
         top: 0;
         width: 100%;
-        background-color: rgb(44, 33, 58);
-        box-shadow: 0 2px 4px rgba(44, 33, 58, 1);
+        background: linear-gradient(145deg, rgba(44, 33, 58, 0.95), rgba(30, 22, 42, 0.95));
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+        box-shadow: 0 4px 20px rgba(187, 134, 252, 0.15);
         z-index: 1000;
-        padding: 0.75rem 1rem;
+        padding: 1rem 1.5rem;
       }
 
       .header-content {
@@ -79,13 +81,21 @@
       }
 
       .header-content h1 {
-        font-size: 1.5rem;
-        color: rgb(205, 178, 255);
-        flex: 1 1 auto;
-        min-width: 160px;
+        font-size: 1.6rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #bb86fc, #f7b268);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        flex: 1 1 0;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        letter-spacing: -0.02em;
       }
 
-      .nav-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+      .nav-buttons { display: flex; gap: 0.75rem; flex-wrap: nowrap; white-space: nowrap; }
 
       .nav-button {
         background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
@@ -110,7 +120,7 @@
       .notification-legal {
         width: fit-content;
         max-width: 93%;
-        margin: 2rem auto 2.0rem;
+        margin: 6rem auto 2rem;
         padding: 0.75rem 1.5rem;
         background: var(--primary);
         color: var(--background);
@@ -183,15 +193,13 @@
         margin: 0 4px;
       }
 
-      .rating svg {
-        margin-right: 2px;
-      }
+      .rating svg { margin-right: 2px; }
 
       .footer {
         width: 100%;
         background-color: rgb(44, 33, 58);
         text-align: center;
-        padding: 0.75rem 1rem;
+        padding: 1rem;
         font-size: 0.8rem;
         color: rgb(124, 107, 155);
         border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -203,22 +211,25 @@
 
       @media (max-width: 768px) {
         html { font-size: 14px; }
-        
-        .header { padding: 0.5rem 1rem; }
-        
+
+        .header { padding: 0.75rem 1rem; }
+
         .header-content { gap: 0.5rem; }
-        
-        .header-content h1 { font-size: 1.1rem; }
-        
+
+        .header-content h1 {
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
+
         .nav-button {
           padding: 0.4rem 0.8rem;
           font-size: 0.75rem;
         }
-        
+
         .notification-legal {
-          margin-top: 5rem;
+          margin-top: 5.5rem;
         }
-        
+
         .content-container {
           padding: 0 1rem;
         }
@@ -232,7 +243,7 @@
 
   <body>
     <div class="animated-bg"></div>
-    
+
     <header class="header">
       <div class="header-content">
         <h1>💫 The Vendor List - FAQ</h1>
@@ -245,7 +256,7 @@
     </header>
 
     <div class="notification-legal">⚖️ Laws vary by state — check with vendors about shipping. Most will still ship regardless.</div>
-    
+
     <div class="content-container">
       <div class="faq-card">
         <h2>💫 The Vendor List:</h2>
@@ -279,12 +290,9 @@
       function createStarRating(rating) {
         const starsContainer = document.createElement('span');
         starsContainer.className = 'rating';
-
         for (let i = 0; i < 3; i++) {
-          const star = createStarSVG(i, rating);
-          starsContainer.appendChild(star);
+          starsContainer.appendChild(createStarSVG(i, rating));
         }
-
         return starsContainer;
       }
 
@@ -293,15 +301,12 @@
         star.setAttribute('width', '16');
         star.setAttribute('height', '16');
         star.setAttribute('viewBox', '0 0 24 24');
-
         const starPath = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
-
         if (starIndex < rating && starIndex >= Math.floor(rating)) {
           createHalfStar(star, starIndex, starPath);
         } else {
           createFullStar(star, starIndex, rating, starPath);
         }
-
         return star;
       }
 
@@ -309,29 +314,18 @@
         const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
         const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
         mask.setAttribute('id', `half-mask-${starIndex}`);
-
         const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        rect.setAttribute('x', '0');
-        rect.setAttribute('y', '0');
-        rect.setAttribute('width', '12');
-        rect.setAttribute('height', '24');
+        rect.setAttribute('x', '0'); rect.setAttribute('y', '0');
+        rect.setAttribute('width', '12'); rect.setAttribute('height', '24');
         rect.setAttribute('fill', 'white');
-
-        mask.appendChild(rect);
-        defs.appendChild(mask);
-        star.appendChild(defs);
-
+        mask.appendChild(rect); defs.appendChild(mask); star.appendChild(defs);
         const filledPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        filledPath.setAttribute('d', starPath);
-        filledPath.setAttribute('fill', '#ffcc00');
+        filledPath.setAttribute('d', starPath); filledPath.setAttribute('fill', '#ffcc00');
         filledPath.setAttribute('mask', `url(#half-mask-${starIndex})`);
         star.appendChild(filledPath);
-
         const outlinePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        outlinePath.setAttribute('d', starPath);
-        outlinePath.setAttribute('fill', 'none');
-        outlinePath.setAttribute('stroke', '#ffcc00');
-        outlinePath.setAttribute('stroke-width', '2');
+        outlinePath.setAttribute('d', starPath); outlinePath.setAttribute('fill', 'none');
+        outlinePath.setAttribute('stroke', '#ffcc00'); outlinePath.setAttribute('stroke-width', '2');
         outlinePath.setAttribute('stroke-linejoin', 'round');
         star.appendChild(outlinePath);
       }
@@ -340,8 +334,7 @@
         const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttribute('d', starPath);
         path.setAttribute('fill', starIndex < Math.floor(rating) ? '#ffcc00' : 'none');
-        path.setAttribute('stroke', '#ffcc00');
-        path.setAttribute('stroke-width', '2');
+        path.setAttribute('stroke', '#ffcc00'); path.setAttribute('stroke-width', '2');
         path.setAttribute('stroke-linejoin', 'round');
         star.appendChild(path);
       }
@@ -357,28 +350,19 @@
       ];
 
       const ratingsWrapper = document.createElement("div");
-      ratingsWrapper.style.display = "flex";
-      ratingsWrapper.style.flexDirection = "column";
-      ratingsWrapper.style.gap = "8px";
+      ratingsWrapper.style.cssText = "display: flex; flex-direction: column; gap: 8px;";
 
       ratings.forEach(rating => {
         const row = document.createElement("div");
-        row.style.display = "flex";
-        row.style.alignItems = "center";
-        row.style.gap = "10px";
-
+        row.style.cssText = "display: flex; align-items: center; gap: 10px;";
         if (rating.value != null) {
           const starsContainer = createStarRating(rating.value);
-          starsContainer.style.display = "flex";
-          starsContainer.style.alignItems = "center";
+          starsContainer.style.cssText = "display: flex; align-items: center;";
           row.appendChild(starsContainer);
         }
-
         const label = document.createElement("span");
         label.textContent = rating.label;
-        label.style.display = "inline-block";
-        label.style.verticalAlign = "middle";
-
+        label.style.cssText = "display: inline-block; vertical-align: middle;";
         row.appendChild(label);
         ratingsWrapper.appendChild(row);
       });
