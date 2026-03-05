@@ -61,6 +61,7 @@
       }
 
       body > *:not(.animated-bg) { position: relative; z-index: 1; }
+      .pw-modal-overlay { position: fixed !important; z-index: 9999 !important; }
 
       .header {
         position: fixed;
@@ -203,6 +204,75 @@
         color: var(--primary);
         font-weight: 600;
       }
+
+      /* ── Search box ── */
+      .search-wrapper {
+        position: relative;
+        margin-bottom: 1.25rem;
+      }
+
+      .search-wrapper svg {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+        opacity: 0.5;
+      }
+
+      .search-input {
+        width: 100%;
+        background: linear-gradient(145deg, rgba(187,134,252,0.10), rgba(187,134,252,0.04));
+        border: 1px solid rgba(187, 134, 252, 0.4);
+        border-radius: 8px;
+        padding: 0.55rem 2rem 0.55rem 2.2rem;
+        color: #fff;
+        font-size: 0.88rem;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .search-input::placeholder {
+        color: rgba(205, 178, 255, 0.45);
+      }
+
+      .search-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.15);
+      }
+
+      .search-clear {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: rgba(205, 178, 255, 0.55);
+        cursor: pointer;
+        font-size: 1rem;
+        line-height: 1;
+        padding: 2px 4px;
+        border-radius: 4px;
+        display: none;
+        transition: color 0.15s ease;
+      }
+
+      .search-clear:hover { color: #fff; }
+
+      .no-results-card {
+        background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 1.5rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        opacity: 1;
+      }
+
+      /* ── end search box ── */
 
       .sort-options {
         display: flex;
@@ -576,12 +646,133 @@
       @media (max-width: 400px) {
         html { font-size: 13px; }
       }
+
+      /* ── Password / Warning modal ── */
+      .pw-modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.65);
+        backdrop-filter: blur(4px);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+      .pw-modal-overlay.open { display: flex; }
+      .pw-modal {
+        background: linear-gradient(145deg, rgba(44, 33, 58, 0.98), rgba(28, 18, 40, 0.98));
+        border: 1px solid rgba(187, 134, 252, 0.35);
+        border-radius: 18px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(187,134,252,0.1);
+        padding: 2rem;
+        max-width: 480px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        animation: modalIn 0.2s ease;
+      }
+      @keyframes modalIn {
+        from { opacity: 0; transform: scale(0.95) translateY(8px); }
+        to   { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      .pw-modal-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+      .pw-modal-password-box {
+        background: rgba(187, 134, 252, 0.1);
+        border: 1px solid rgba(187, 134, 252, 0.35);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+      }
+      .pw-modal-password-label {
+        font-size: 0.75rem;
+        color: rgba(205, 178, 255, 0.6);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 2px;
+      }
+      .pw-modal-password-value { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: 0.04em; }
+      .pw-modal-copy-btn {
+        background: linear-gradient(145deg, rgba(187,134,252,0.2), rgba(187,134,252,0.08));
+        border: 1px solid rgba(187,134,252,0.4);
+        border-radius: 7px;
+        padding: 0.4rem 0.8rem;
+        color: rgb(205, 178, 255);
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .pw-modal-copy-btn:hover { border-color: var(--primary); color: #fff; }
+      .pw-modal-warning {
+        font-size: 0.78rem;
+        color: rgba(189, 189, 189, 0.75);
+        line-height: 1.55;
+        border-left: 2px solid rgba(187, 134, 252, 0.4);
+        padding-left: 0.75rem;
+      }
+      .pw-modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
+      .pw-modal-cancel {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.15);
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .pw-modal-cancel:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
+      .pw-modal-proceed {
+        background: linear-gradient(145deg, rgba(187,134,252,0.3), rgba(187,134,252,0.15));
+        border: 1px solid rgba(187,134,252,0.6);
+        border-radius: 8px;
+        padding: 0.6rem 1.4rem;
+        color: #fff;
+        font-size: 0.9rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .pw-modal-proceed:hover {
+        background: linear-gradient(145deg, rgba(187,134,252,0.45), rgba(187,134,252,0.25));
+        box-shadow: 0 6px 18px rgba(187,134,252,0.3);
+      }
+      /* ── end modal ── */
     </style>
   </head>
 
   <body>
     <div class="animated-bg"></div>
-    
+
+    <!-- Password / Warning modal -->
+    <div class="pw-modal-overlay" id="pwModalOverlay">
+      <div class="pw-modal">
+        <div class="pw-modal-title">🔒 Site Password</div>
+        <div class="pw-modal-password-box">
+          <div>
+            <div class="pw-modal-password-label">Password</div>
+            <div class="pw-modal-password-value" id="pwModalPasswordValue"></div>
+          </div>
+          <button class="pw-modal-copy-btn" id="pwModalCopyBtn">Copy</button>
+        </div>
+        <div class="pw-modal-warning">
+          This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.
+        </div>
+        <div class="pw-modal-actions">
+          <button class="pw-modal-cancel" id="pwModalCancel">Cancel</button>
+          <button class="pw-modal-proceed" id="pwModalProceed">Proceed to Site →</button>
+        </div>
+      </div>
+    </div>
+
     <header class="header">
       <div class="header-content">
         <h1 id="header-title">💫 The Vendor List</h1>
@@ -606,8 +797,8 @@
     </footer>
 
     <script>
-      const Categories = ["Flower", "Concentrates", "Vapes", "Edibles", "Psychedelics", "Kratom", /*"Benzodiazepines",*/ "Wholesale", "Communities"];
-      const Vendors = [
+      const Categories = ["Flower", "Concentrates", "Vapes", "Edibles", "Psychedelics", "Kratom", /*"Benzodiazepines",*/ "Wholesale"];
+       const Vendors = [
         {
           Title: "Clubhouse Drops",
           Description: "Clubhouse Drops specializes in exotic brands, they offer a curated selection of flower and concentrates from trusted brands like 710 Labs and Coldfire, delivering high-quality cannabis experiences.",
@@ -693,7 +884,7 @@
           Description: "Tesoro Hemp began as a small, family-owned farm nestled in the heart of Oregon, where a love for quality cannabis and honest cultivation took root in 2017. What started as a humble operation has since grown into a full-spectrum hemp brand—featuring a concentrate processing lab, in-house pre-roll production, and some of the most thoughtfully grown THCa hemp flower available on the market. Despite our growth, we remain proudly family owned and operated, staying true to our roots while continuing to innovate in the cannabis space. Our team is committed to sustainability—not just environmentally, but economically and socially. As we've expanded, we’ve done so carefully, preserving jobs and upholding the high standards our customers have come to expect. We also perform in-house genetic work to stay at the forefront of emerging strains and trends in the cannabis world.",
           Rating: 1.5,
 
-          Sections: ["Flower", "Concentrates", "Wholesale", "Communities"],
+          Sections: ["Flower", "Concentrates", "Wholesale"],
           IsNew: false, IsRecommended: false, IsCheap: true, 
           
           Buttons: [
@@ -999,7 +1190,7 @@
         {
           Title: "The Delta Connect",
           Description: "The Delta Connect specializing in THCA products, including flower rosin. One Reddit user mentioned getting Ice Cream Cake from The Delta Connect. The vendor also offers strains like Banana Kush THCA Moroccan Hash Hybrid, which is described as potent.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Wholesale", "Communities"],
+          Sections: ["Flower", "Concentrates", "Vapes", "Wholesale"],
           Rating: 2,
           IsCheap: true, IsRecommended: true, 
           Buttons: [
@@ -1080,7 +1271,7 @@ IsRecommended: true,
         {
           Title: "Puffy / Myqwin",
           Description: "Puffy / Myqwin offers premium THCa flower, weed vapes, and potent cannabis extracts at unbeatable prices. Shop legal cannabis products including live rosin, badder and crumble for unbeatable prices.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Edibles", "Wholesale", "Communities"],
+          Sections: ["Flower", "Concentrates", "Vapes", "Edibles", "Wholesale"],
           Rating: 1,
           IsCheap: true, 
           Buttons: [
@@ -1286,7 +1477,7 @@ IsCheap: true,
         {
           Title: "Cowboy Cannabis",
           Description: "Top Quality Thca products. Free shipping over $150.",
-          Sections: ["Flower", "Concentrates", "Vapes", "Wholesale", "Communities"],
+          Sections: ["Flower", "Concentrates", "Vapes", "Wholesale"],
           Rating: 2.0,
           
           IsCheap: true,
@@ -1305,7 +1496,7 @@ IsCheap: true,
         {
           Title: "Zero Point Extraction",
           Description: "Zero Point Extraction is a 7,500 square foot hemp extraction facility in Prineville, Oregon that has been in operation since 2019. We are dedicated to producing and developing high-quality hemp-derived distillate, isolate, and crumble that can be incorporated into a variety of finished products such as tinctures, vapes, gummies, and capsules.",
-          Sections: ["Concentrates", "Vapes", "Wholesale", "Communities"],
+          Sections: ["Concentrates", "Vapes", "Wholesale"],
           Rating: 1.5,
           
           Buttons: [
@@ -1316,7 +1507,7 @@ IsCheap: true,
         {
           Title: "Alive and Well",
           Description: "At Alive & Well, we don’t just create products—we craft experiences. Guided by the philosophy of delivering good karma, one gram at a time, we are committed to redefining wellness through exceptional hemp products that enrich lives and support holistic health. With over 30 years of experience, research, and innovation, we strive to elevate cannabis culture by blending the best of tradition and modern science.",
-          Sections: ["Concentrates", "Vapes", "Wholesale", "Communities"],
+          Sections: ["Concentrates", "Vapes", "Wholesale"],
           Rating: 1.5,
           
           Buttons: [
@@ -1964,7 +2155,7 @@ IsCheap: true,
         {
           Title: "Alderson Family Farms",
           Description: "At Alderson Family Farms, we blend quality with care, crafting exceptional hemp strains that support your relaxation and wellness needs.",
-          Sections: ["Flower", "Concentrates", "Communities"],
+          Sections: ["Flower", "Concentrates"],
           Rating: 2,
           
           Buttons: [
@@ -1986,6 +2177,23 @@ IsCheap: true,
           
           Buttons: [
             { Text: "Website", Link: "https://wickedtablets.store/" }
+          ]
+        },
+        {
+          Title: "XUM / ADVANCED MYCOLOG",
+          Description: "Before we even started our company, we have been long-time psychedelic enthusiasts. Improving access to the benefits of psychedelics has been one of our major goals, and along with our affection for mycology we were happy to bring the magic of mushrooms to people through our grow bags mushroom genetics. We will continue to do so, for those that desire them. We know, however, that mushrooms take time to grow, and metocin is an accessible compound that produces effects we are similarly fond of.",
+          Sections: ["Psychedelics"],
+          Rating: 2,
+          
+          IsNew: false,
+          
+          Buttons: [
+            { Text: "Website", Link: "https://xumtrip.com/" },
+            { Text: "Discord", Link: "https://discord.gg/mgBr6wjY" },
+            { Text: "Facebook", Link: "https://www.facebook.com/advancedmyco" },
+            { Text: "Twitter", Link: "https://twitter.com/advancedmyco" },
+            { Text: "Reddit", Link: "https://www.reddit.com/r/advancedmyco/" },
+            { Text: "Instagram", Link: "https://instagram.com/advancedmyco" },
           ]
         },
 
@@ -2187,118 +2395,45 @@ IsCheap: true,
           Buttons: [
             { Text: "Website", Link: "https://rituallypure.com" }
           ]
-        },
-
-        // Communities / Subreddits
-        {
-          Title: "The Vendor List",
-          Description: "The Vendor List is a curated hub that connects customers with legal THCA vendors. Our subreddit is currently in the process of being set up.",
-          Sections: ["Communities"],
-          IsNew: false, 
-          Buttons: [
-            { Text: "Reddit", Link: "https://www.reddit.com/r/TheVendorList/" },
-            { Text: "Discord", Link: "https://discord.gg/mqwB9xp8rJ/" }
-          ]
-        },
-        {
-          Title: "Cult of The Franklin",
-          Description: "The Place, Your Place for Federally Legal High THCa Hemp Worship. Welcome to The Cult.",
-          Sections: ["Communities"],
-
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/CultoftheFranklin/" }]
-        },
-        {
-          Title: "THCA Extracts",
-          Description: "A place to come and discuss all THCA concentrates and extracts. Thanks for being here! Happy dabbing 😮‍💨",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCAextracts/" }]
-        },
-        {
-          Title: "Cult Concentrates",
-          Description: "For anything involving federally legal High THCA concentrates! Posts relating to current companies, new companies, concentrate listings, purchases/hauls, discounts, and more welcome!",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCAextracts/" }]
-        },
-        {
-          Title: "The Terp Table",
-          Description: "Welcome to The Terp Table. This is where real smokers drop real reviews. Flower, rosin, melt checks, stash pics, press talk — if it’s gas, we talk about it. If it’s mids? We say it. Built by a connoisseur for the community. No hype, no filters — just straight-up sesh truth. Pull up, spark up, and add to the table. 💨",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/The_Terp_Table/" }]
-        },
-        {
-          Title: "Budget Extractions THCA",
-          Description: "We are a budget community. We order legal hemp(50 state) products only and review budget options, and process them into better products. This is for personal DIY stuff. No reselling. What To Expect: 1.)Flower Rosin posts 2.)QWET posts 3.)Winterization/purging posts 4.)Cured bubble ice water hash posts(flower, smalls, shake, trim, etc) 5.) Freeze dryer goodies/reclaim/disty gummies 6.)Carts made from: flower rosin, resin, live resin, hash rosin, live rosin, diamonds, distillate, terps, HTE",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/The_Terp_Table/" }]
-        },
-        {
-          Title: "Zips Under 100",
-          Description: "🌿 This community is dedicated to THCA hemp. Check out our vendor list linked below We love ounces under $100!",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/ZipsUnder100/" }]
-        },
-        {
-          Title: "THCa Users and Reviews",
-          Description: "A mature learning hub for adults who value education over ego. Unlike other cannabis spaces filled with drama and gatekeeping, we foster respectful discourse where medical patients and farm bill enthusiasts share authentic experiences and science-based knowledge. We support transparent vendors with proper COAs while building up our entire culture through genuine reviews and educational discussions. Farm bill compliant. Zero Drama Allowed.",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCaUsersandReviews/" }]
-        },
-        {
-          Title: "THCa Flower",
-          Description: "Community to discuss hemp-derived THCa flower.",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCaFlower/" }]
-        },
-        {
-          Title: "THCA Online",
-          Description: "For anything about federally legal Thca but online (no alt noids). In this community we want everyone to be unbiased and share opinions, we also want you all to feel comfortable so our mods and I will take take each flagged post under careful review and bans are last resort please be respectful and build a community you want to be a part of.",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCA_Online/" }]
-        },
-        {
-          Title: "THCA Everything",
-          Description: "a place we're we can talk about everything thca related and no rules...",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/thcaeverything/" }]
-        },
-        {
-          Title: "Best THCa Flower Online",
-          Description: "We'll discuss the explosion of THCa flower and where to buy the best THCa flower online.",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/BestTHCaFlowerOnline/" }]
-        },
-        {
-          Title: "THCA Products",
-          Description: "Best THCA products derived from hemp and 100% compliant with the 2018 Farm Bill. THCA dabs, THCA concentrate, THCA vapes, THCA gummies, THCA flower",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCAproducts/" }]
-        },
-        {
-          Title: "THCA Hub",
-          Description: "An open community to discuss the wonderful world of THCa Flower and Hash in the US. Please be kind and respectful to one another💚",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/THCaHub/" }]
-        },
-        {
-          Title: "Hemp Flowers",
-          Description: "A place to discuss and review legal hemp flowers that have high CBD and low THC levels.",
-          Sections: ["Communities"],
-          
-          Buttons: [{ Text: "Reddit", Link: "https://www.reddit.com/r/hempflowers/" }]
         }
       ];
+      
+      // ── Modal logic ──
+      const pwOverlay   = document.getElementById('pwModalOverlay');
+      const pwPassEl    = document.getElementById('pwModalPasswordValue');
+      const pwCopyBtn   = document.getElementById('pwModalCopyBtn');
+      const pwCancel    = document.getElementById('pwModalCancel');
+      const pwProceed   = document.getElementById('pwModalProceed');
+      let   _pwPendingUrl = null;
+
+      function openPwModal(password, url) {
+        _pwPendingUrl = url;
+        pwPassEl.textContent = password;
+        pwCopyBtn.textContent = 'Copy';
+        pwOverlay.classList.add('open');
+      }
+
+      function closePwModal() {
+        pwOverlay.classList.remove('open');
+        _pwPendingUrl = null;
+      }
+
+      pwCancel.onclick  = closePwModal;
+      pwOverlay.onclick = e => { if (e.target === pwOverlay) closePwModal(); };
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closePwModal(); });
+
+      pwCopyBtn.onclick = () => {
+        navigator.clipboard.writeText(pwPassEl.textContent).then(() => {
+          pwCopyBtn.textContent = 'Copied!';
+          setTimeout(() => pwCopyBtn.textContent = 'Copy', 1800);
+        });
+      };
+
+      pwProceed.onclick = () => {
+        if (_pwPendingUrl) window.open(_pwPendingUrl, '_blank', 'noopener,noreferrer');
+        closePwModal();
+      };
+      // ── end modal logic ──
       
       function updateHeaderTitle() {
         const headerTitle = document.getElementById("header-title");
@@ -2314,6 +2449,7 @@ IsCheap: true,
       window.addEventListener("resize", updateHeaderTitle);
 
       let currentSortBy = 'rating', currentSortOrder = 'desc', currentTab = Categories[0];
+      let currentSearch = '';
 
       const faviconCache = new Map();
       
@@ -2364,6 +2500,7 @@ IsCheap: true,
         btn.textContent = tab;
         btn.onclick = () => {
           currentTab = tab;
+          currentSearch = '';
           document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
           document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
           btn.classList.add('active');
@@ -2398,7 +2535,50 @@ IsCheap: true,
           if (!panel) return;
           
           panel.innerHTML = '';
-          
+
+          // ── Search box ──
+          const searchWrapper = document.createElement('div');
+          searchWrapper.className = 'search-wrapper';
+
+          // magnifier icon
+          searchWrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(205,178,255)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`;
+
+          const searchInput = document.createElement('input');
+          searchInput.type = 'text';
+          searchInput.className = 'search-input';
+          searchInput.placeholder = 'Search vendors…';
+          searchInput.value = tab === currentTab ? currentSearch : '';
+          searchInput.setAttribute('autocomplete', 'off');
+          searchInput.setAttribute('spellcheck', 'false');
+
+          const clearBtn = document.createElement('button');
+          clearBtn.className = 'search-clear';
+          clearBtn.title = 'Clear search';
+          clearBtn.textContent = '✕';
+          clearBtn.style.display = searchInput.value ? 'block' : 'none';
+
+
+
+          searchInput.addEventListener('input', () => {
+            if (tab !== currentTab) return;
+            currentSearch = searchInput.value.trim();
+            clearBtn.style.display = currentSearch ? 'block' : 'none';
+            refreshTab(tab);
+          });
+
+          clearBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            currentSearch = '';
+            clearBtn.style.display = 'none';
+            searchInput.focus();
+            refreshTab(tab);
+          });
+
+          searchWrapper.appendChild(searchInput);
+          searchWrapper.appendChild(clearBtn);
+          panel.appendChild(searchWrapper);
+          // ── end search box ──
+
           const h3 = document.createElement('h3');
           h3.textContent = 'Sort By';
           panel.appendChild(h3);
@@ -2445,6 +2625,7 @@ IsCheap: true,
             panel.appendChild(orderBtn);
           }
         });
+
       }
 
       function refreshTab(tab) {
@@ -2454,16 +2635,26 @@ IsCheap: true,
       }
 
       function getSortedVendors(tab) {
-        return Vendors.filter(v => v.Sections.includes(tab)).sort((a, b) => {
-          let cmp = 0;
-          if (currentSortBy === 'rating') cmp = a.Rating - b.Rating;
-          else if (currentSortBy === 'name') cmp = a.Title.localeCompare(b.Title);
-          else if (currentSortBy === 'new') return a.IsNew !== b.IsNew ? (a.IsNew ? -1 : 1) : b.Rating - a.Rating;
-          else if (currentSortBy === 'cheap') return a.IsCheap !== b.IsCheap ? (a.IsCheap ? -1 : 1) : b.Rating - a.Rating;
-          else if (currentSortBy === 'recommended') return a.IsRecommended !== b.IsRecommended ? (a.IsRecommended ? -1 : 1) : b.Rating - a.Rating;
-          else if (currentSortBy === 'issues') return (a.Issues?.length || 0) - (b.Issues?.length || 0);
-          return currentSortOrder === 'desc' ? -cmp : cmp;
-        });
+        const query = currentSearch.toLowerCase();
+        return Vendors
+          .filter(v => v.Sections.includes(tab))
+          .filter(v => {
+            if (!query) return true;
+            return (
+              v.Title.toLowerCase().includes(query) ||
+              (v.Description && v.Description.toLowerCase().includes(query))
+            );
+          })
+          .sort((a, b) => {
+            let cmp = 0;
+            if (currentSortBy === 'rating') cmp = a.Rating - b.Rating;
+            else if (currentSortBy === 'name') cmp = a.Title.localeCompare(b.Title);
+            else if (currentSortBy === 'new') return a.IsNew !== b.IsNew ? (a.IsNew ? -1 : 1) : b.Rating - a.Rating;
+            else if (currentSortBy === 'cheap') return a.IsCheap !== b.IsCheap ? (a.IsCheap ? -1 : 1) : b.Rating - a.Rating;
+            else if (currentSortBy === 'recommended') return a.IsRecommended !== b.IsRecommended ? (a.IsRecommended ? -1 : 1) : b.Rating - a.Rating;
+            else if (currentSortBy === 'issues') return (a.Issues?.length || 0) - (b.Issues?.length || 0);
+            return currentSortOrder === 'desc' ? -cmp : cmp;
+          });
       }
 
       function populateVendorList(list, vendors) {
@@ -2477,6 +2668,15 @@ IsCheap: true,
           card.appendChild(p);
           list.appendChild(card);
         }
+
+        if (vendors.length === 0 && currentSearch) {
+          const noResults = document.createElement('div');
+          noResults.className = 'no-results-card';
+          noResults.textContent = `No vendors found matching "${currentSearch}".`;
+          list.appendChild(noResults);
+          return;
+        }
+
         vendors.forEach(v => list.appendChild(createVendorCard(v)));
       }
 
@@ -2520,7 +2720,7 @@ IsCheap: true,
         
         [
           { cond: v.IsNew, cls: 'new', txt: 'New' },
-          { cond: v.Password, cls: 'password', txt: `Password: ${v.Password}` },
+          { cond: v.Password, cls: 'password', txt: `Password protected` },
           { cond: v.IsRecommended, cls: 'recommended', txt: 'Recommended' },
           { cond: v.IsCheap, cls: 'cheap', txt: 'Budget' }
         ].forEach(b => {
@@ -2608,34 +2808,16 @@ IsCheap: true,
             checkAllLoaded();
 
             wrap.appendChild(link);
-            if (b.Warning) {
-          const warn = document.createElement('span');
-          warn.textContent = 'This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.';
-          warn.style.cssText = 'color: lightgrey; font-size: 0.65em;';
-          wrap.appendChild(warn);
-          
-          let timer = false;
-          link.onclick = e => {
-            if (timer) { e.preventDefault(); return; }
-            e.preventDefault();
-            timer = true;
-            const orig = link.innerHTML;
-            let cd = 5;
-            link.style.cssText += 'pointer-events: none; opacity: 0.6;';
-            link.textContent = `Please wait ${cd}s...`;
-            const intv = setInterval(() => {
-              cd--;
-              if (cd < 0) {
-                clearInterval(intv);
-                link.style.pointerEvents = '';
-                link.style.opacity = '1';
-                link.innerHTML = orig;
-                link.addEventListener('click', () => window.open(b.Link, '_blank', 'noopener,noreferrer'), { once: true });
-              } else link.textContent = `Please wait ${cd}s...`;
-            }, 1000);
-          };
-        }
-        btns.appendChild(wrap);
+
+            // If this vendor has a password and this is the Website button, show modal on click
+            if (v.Password && b.Text === 'Website') {
+              link.onclick = e => {
+                e.preventDefault();
+                openPwModal(v.Password, b.Link);
+              };
+            }
+
+            btns.appendChild(wrap);
       });
       card.appendChild(btns);
     } else {
@@ -2704,4 +2886,4 @@ IsCheap: true,
     
     return span;
   }
-</script>
+</script></body></html>
