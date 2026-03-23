@@ -797,7 +797,7 @@
     </footer>
 
     <script>
-      const Categories = ["Flower", "Concentrates", "Vapes", "Edibles", "Psychedelics", "Kratom", "Black markets", /*"Benzodiazepines",*/ "Wholesale"];
+      const Categories = ["Flower", "Concentrates", "Vapes", "Edibles", "Psychedelics", "Kratom", "Other", "Wholesale"];
        const Vendors = [
         {
           Title: "Clubhouse Drops",
@@ -2196,7 +2196,22 @@ IsCheap: true,
             { Text: "Instagram", Link: "https://instagram.com/advancedmyco" },
           ]
         },
-
+        {
+          Title: "SŌKO CANNABIS",
+          Description: "SōKO Cannabis is the highest rated top-shelf luxury Cannabis and Psychedelics company with only the most potent and pure products available online. We use only Premium organic cannabis and pure grade Metocin from the happy farmers and scientists who care for their craft.",
+          Sections: ["Edibles", "Vapes", "Psychedelics"],
+          Rating: 1.5,
+           
+          IsNew: false,
+          
+          Buttons: [
+            { Text: "Website", Link: "https://sokocanna.com/" },
+            { Text: "TikTok", Link: "https://www.tiktok.com/@sokocanna" },
+            { Text: "Facebook", Link: "https://www.facebook.com/Thesokocanna" },
+            { Text: "Youtube", Link: "https://www.youtube.com/channel/UCJS_NQuFawULkhViEkwrS-A" },
+            { Text: "Instagram", Link: "https://www.instagram.com/sokocannabis/" },
+          ]
+        },
         // Kratom
         {
           Title: "KRATOM DISTRO",
@@ -2396,30 +2411,24 @@ IsCheap: true,
             { Text: "Website", Link: "https://rituallypure.com" }
           ]
         },
-
-
-        // Black market
         {
-          Title: "Dark Matter",
-          Description: "",
-          Sections: ["Black markets"],
-          Rating: 0,
+          Title: "Rift Chems",
+          Description: "Rift Chems is the best site to buy research chemicals in the USA, including: Bromazolam, Rilmazafone, Clobromazolam, O-dsmt, 2fdck, SR-17018, Fluoprazolam, 2FXiPr, 4fmph, , Phenazolam, 4-metmp, Bromonordiazepam & more.",
+          Sections: ["Other"],
+          Rating: 2,
           IsNew: false,
           Buttons: [
-            { Text: "Website", Link: "http://darkmat3kdxestusl437urshpsravq7oqb7t3m36u2l62vnmmldzdmid.onion/" },
-            { Text: "Website", Link: "http://darkmmk3owyft4zzg3j3t25ri4z5bw7klapq6q3l762kxra72sli4mid.onion/" },
-            { Text: "Website", Link: "http://darkmmro6j5xekpe7jje74maidkkkkw265nngjqxrv4ik7v3aiwdbtad.onion/" }
+            { Text: "Website", Link: "https://riftchems.com/" }
           ]
         },
-
         {
-          Title: "Drug Hub",
-          Description: "",
-          Sections: ["Black markets"],
-          Rating: 0,
+          Title: "Fractal Elephant",
+          Description: "At Fractal Elephant we have put together quality psychedelics for sale online that meet customers quality expectations. We have been in business since 2020 and our goal is to provide high quality products at affordable prices. Our customers can expect nothing but the best from us and our products!",
+          Sections: ["Other"],
+          Rating: 2,
           IsNew: false,
           Buttons: [
-            { Text: "Website", Link: "http://drughub666py6fgnml5kmxa7fva5noppkf6wkai4fwwvzwt4rz645aqd.onion/" }
+            { Text: "Website", Link: "https://fractalelephant.com/" }
           ]
         }
       ];
@@ -2684,7 +2693,7 @@ IsCheap: true,
       }
 
       function populateVendorList(list, vendors) {
-        if (list.id === "ranking-list-Psychedelics" || list.id === "ranking-list-Kratom" || list.id === "ranking-list-Benzodiazepines") {
+        if (list.id === "ranking-list-Psychedelics" || list.id === "ranking-list-Kratom" || list.id === "ranking-list-Other") {
           const card = document.createElement('div');
           card.className = 'rank-card loaded';
           card.style.cssText = 'display: inline-block; padding: 12px 16px;';
@@ -2853,26 +2862,32 @@ IsCheap: true,
     return card;
   }
 
-  function createStars(rating) {
+  // Add this once, just before the createStars function
+var _starMaskCounter = 0;
+
+function createStars(rating) {
     const span = document.createElement('span');
     span.className = 'rating';
+    const maskId = `half-mask-${_starMaskCounter++}`; // unique per call
+
     for (let i = 0; i < 3; i++) {
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('width', '16');
       svg.setAttribute('height', '16');
       svg.setAttribute('viewBox', '0 0 24 24');
       const path = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
-      
+
       if (i === Math.floor(rating) && rating % 1 !== 0) {
         const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
         const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
-        mask.setAttribute('id', `half-mask-${i}`);
+        mask.setAttribute('id', maskId); // unique ID
+        // ... rest unchanged
         const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         rect.setAttribute('x', '0');
         rect.setAttribute('y', '0');
         rect.setAttribute('width', '12');
         rect.setAttribute('height', '24');
-        rect.setAttribute('fill', 'white');
+        rect.setAttribute('fill', 'white'); 
         mask.appendChild(rect);
         defs.appendChild(mask);
         svg.appendChild(defs);
@@ -2886,6 +2901,7 @@ IsCheap: true,
         p2.setAttribute('d', path);
         p2.setAttribute('fill', '#ffcc00');
         p2.setAttribute('mask', `url(#half-mask-${i})`);
+        p2.setAttribute('mask', `url(#${maskId})`); // reference the unique ID
         svg.appendChild(p2);
       } else {
         const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
