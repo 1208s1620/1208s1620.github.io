@@ -7,745 +7,132 @@
     <link rel="icon" type="image/x-icon" href="Resources/favicon.ico" />
 
     <style>
-      :root {
-        --background: #121212;
-        --primary: #bb86fc;
-        --text: #ffffff;
-        --text-secondary: #bdbdbd;
-      }
-
+      :root { --background: #121212; --primary: #bb86fc; --text: #ffffff; --text-secondary: #bdbdbd; }
       ::-webkit-scrollbar { width: 12px; height: 12px; }
       ::-webkit-scrollbar-track { background: #110616; }
       ::-webkit-scrollbar-thumb { background-color: rgb(205, 178, 255); }
       ::-webkit-scrollbar-thumb:hover { background-color: rgb(161, 140, 199); }
-
       * { margin: 0; padding: 0; box-sizing: border-box; }
-
-      html, body {
-        height: 100%;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        background-color: var(--background);
-        color: var(--text);
-        scroll-behavior: smooth;
-        overflow-x: hidden;
-        font-size: 16px;
-        line-height: 1.5;
-      }
-
-      body {
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        min-height: 100vh;
-        background-color: var(--background);
-      }
-
-      .animated-bg {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle at 30% 30%, rgba(187, 134, 252, 0.2), transparent 40%),
-                    radial-gradient(circle at 70% 60%, rgba(0, 255, 255, 0.15), transparent 40%),
-                    radial-gradient(circle at 50% 80%, rgba(255, 0, 128, 0.2), transparent 40%);
-        filter: blur(80px);
-        z-index: 0;
-        animation: moveCircles 20s ease-in-out infinite alternate;
-        pointer-events: none;
-      }
-
-      @keyframes moveCircles {
-        0% { transform: translate(0%, 0%); }
-        100% { transform: translate(-25%, -20%); }
-      }
-
+      html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background-color: var(--background); color: var(--text); scroll-behavior: smooth; overflow-x: hidden; font-size: 16px; line-height: 1.5; }
+      body { display: flex; flex-direction: column; position: relative; min-height: 100vh; background-color: var(--background); }
+      .animated-bg { position: fixed; top: 0; left: 0; width: 200%; height: 200%; background: radial-gradient(circle at 30% 30%, rgba(187, 134, 252, 0.2), transparent 40%), radial-gradient(circle at 70% 60%, rgba(0, 255, 255, 0.15), transparent 40%), radial-gradient(circle at 50% 80%, rgba(255, 0, 128, 0.2), transparent 40%); filter: blur(80px); z-index: 0; animation: moveCircles 20s ease-in-out infinite alternate; pointer-events: none; }
+      @keyframes moveCircles { 0% { transform: translate(0%, 0%); } 100% { transform: translate(-25%, -20%); } }
       body > *:not(.animated-bg) { position: relative; z-index: 1; }
       .pw-modal-overlay { position: fixed !important; z-index: 9999 !important; }
-
-      .header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background: linear-gradient(145deg, rgba(44, 33, 58, 0.95), rgba(30, 22, 42, 0.95));
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(187, 134, 252, 0.2);
-        box-shadow: 0 4px 20px rgba(187, 134, 252, 0.15);
-        z-index: 1000;
-        padding: 1rem 1.5rem;
-      }
-
-      .header-content {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      .header-content h1 {
-        font-size: 1.6rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, #bb86fc, #f7b268);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        flex: 1 1 0;
-        min-width: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        letter-spacing: -0.02em;
-      }
-
-      .header-total {
-        color: var(--text-secondary);
-        -webkit-text-fill-color: var(--text-secondary);
-        background: none;
-        -webkit-background-clip: initial;
-        background-clip: initial;
-      }
-
+      .header { position: fixed; top: 0; width: 100%; background: linear-gradient(145deg, rgba(44, 33, 58, 0.95), rgba(30, 22, 42, 0.95)); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(187, 134, 252, 0.2); box-shadow: 0 4px 20px rgba(187, 134, 252, 0.15); z-index: 1000; padding: 1rem 1.5rem; }
+      .header-content { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+      .header-content h1 { font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, #bb86fc, #f7b268); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.02em; }
+      .header-total { color: var(--text-secondary); -webkit-text-fill-color: var(--text-secondary); background: none; -webkit-background-clip: initial; background-clip: initial; }
       .nav-buttons { display: flex; gap: 0.75rem; flex-wrap: nowrap; white-space: nowrap; }
-
-      .nav-button {
-        background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.6rem 1.2rem;
-        font-size: 0.85rem;
-        font-weight: 600;
-        text-decoration: none;
-        color: rgb(205, 178, 255);
-        transition: all 0.3s ease;
-        white-space: nowrap;
-      }
-
-      .nav-button:hover {
-        color: #fff;
-        border-color: var(--primary);
-        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
-        transform: translateY(-2px);
-      }
-
-      .tab-bar {
-        position: fixed;
-        top: 30px;
-        width: 100%;
-        background-color: transparent;
-        z-index: 999;
-        padding: 0 1.5rem;
-        overflow: visible;
-      }
-
-      .tab-buttons {
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-      }
-
-      .tab-button {
-        background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.6rem 1rem;
-        color: rgb(205, 178, 255);
-        font-weight: 500;
-        cursor: pointer;
-        backdrop-filter: blur(4px);
-        box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
-        transition: all 0.2s ease;
-        font-size: 0.9rem;
-      }
-
-      .tab-button:hover {
-        border-color: var(--primary);
-        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
-        transform: translateY(-2px);
-      }
-
-      .tab-button.active {
-        border-color: var(--primary);
-        background: linear-gradient(145deg, rgba(187,134,252,0.25), rgba(187,134,252,0.15));
-        box-shadow: 0 8px 24px rgba(187, 134, 252, 0.35);
-      }
-
-      .main-container {
-        margin-top: 60px;
-        padding: 0 1.5rem 2rem 1.5rem;
-        width: 100%;
-        flex: 1;
-      }
-
-      .content-area {
-        display: flex;
-        gap: 2rem;
-        width: 100%;
-        min-height: 60vh;
-      }
-
+      .nav-button { background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05)); border: 1px solid rgba(187, 134, 252, 0.4); border-radius: 8px; padding: 0.6rem 1.2rem; font-size: 0.85rem; font-weight: 600; text-decoration: none; color: rgb(205, 178, 255); transition: all 0.3s ease; white-space: nowrap; }
+      .nav-button:hover { color: #fff; border-color: var(--primary); box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25); transform: translateY(-2px); }
+      .tab-bar { position: fixed; top: 30px; width: 100%; background-color: transparent; z-index: 999; padding: 0 1.5rem; overflow: visible; }
+      .tab-buttons { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+      .tab-button { background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05)); border: 1px solid rgba(187, 134, 252, 0.4); border-radius: 8px; padding: 0.6rem 1rem; color: rgb(205, 178, 255); font-weight: 500; cursor: pointer; backdrop-filter: blur(4px); box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1); transition: all 0.2s ease; font-size: 0.9rem; }
+      .tab-button:hover { border-color: var(--primary); box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25); transform: translateY(-2px); }
+      .tab-button.active { border-color: var(--primary); background: linear-gradient(145deg, rgba(187,134,252,0.25), rgba(187,134,252,0.15)); box-shadow: 0 8px 24px rgba(187, 134, 252, 0.35); }
+      .main-container { margin-top: 60px; padding: 0 1.5rem 2rem 1.5rem; width: 100%; flex: 1; }
+      .content-area { display: flex; gap: 2rem; width: 100%; min-height: 60vh; }
       .tab-content { display: none; width: 100%; }
       .tab-content.active { display: flex; gap: 2rem; width: 100%; }
-
-      .sorting-panel {
-        background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 1.5rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        width: 250px;
-        height: fit-content;
-        position: relative;
-        flex-shrink: 0;
-      }
-
-      .sorting-panel h3 {
-        margin: 0 0 1rem 0;
-        font-size: 1rem;
-        color: var(--primary);
-        font-weight: 600;
-      }
-
-      /* ── Search box ── */
-      .search-wrapper {
-        position: relative;
-        margin-bottom: 1.25rem;
-      }
-
-      .search-wrapper svg {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-        opacity: 0.5;
-      }
-
-      .search-input {
-        width: 100%;
-        background: linear-gradient(145deg, rgba(187,134,252,0.10), rgba(187,134,252,0.04));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.55rem 2rem 0.55rem 2.2rem;
-        color: #fff;
-        font-size: 0.88rem;
-        font-family: inherit;
-        outline: none;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .search-input::placeholder {
-        color: rgba(205, 178, 255, 0.45);
-      }
-
-      .search-input:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.15);
-      }
-
-      .search-clear {
-        position: absolute;
-        right: 8px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: rgba(205, 178, 255, 0.55);
-        cursor: pointer;
-        font-size: 1rem;
-        line-height: 1;
-        padding: 2px 4px;
-        border-radius: 4px;
-        display: none;
-        transition: color 0.15s ease;
-      }
-
+      .sorting-panel { background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025)); border: 1px solid rgba(255, 255, 255, 0.08); padding: 1.5rem; border-radius: 16px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); width: 250px; height: fit-content; position: relative; flex-shrink: 0; }
+      .sorting-panel h3 { margin: 0 0 1rem 0; font-size: 1rem; color: var(--primary); font-weight: 600; }
+      .search-wrapper { position: relative; margin-bottom: 1.25rem; }
+      .search-wrapper svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: 0.5; }
+      .search-input { width: 100%; background: linear-gradient(145deg, rgba(187,134,252,0.10), rgba(187,134,252,0.04)); border: 1px solid rgba(187, 134, 252, 0.4); border-radius: 8px; padding: 0.55rem 2rem 0.55rem 2.2rem; color: #fff; font-size: 0.88rem; font-family: inherit; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+      .search-input::placeholder { color: rgba(205, 178, 255, 0.45); }
+      .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.15); }
+      .search-clear { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: rgba(205, 178, 255, 0.55); cursor: pointer; font-size: 1rem; line-height: 1; padding: 2px 4px; border-radius: 4px; display: none; transition: color 0.15s ease; }
       .search-clear:hover { color: #fff; }
-
-      .no-results-card {
-        background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 1.5rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        color: var(--text-secondary);
-        font-size: 0.95rem;
-        opacity: 1;
-      }
-
-      /* ── end search box ── */
-
-      .sort-options {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
-
-      .sort-option {
-        background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.6rem 0.8rem;
-        color: rgb(205, 178, 255);
-        cursor: pointer;
-        font-size: 0.9rem;
-        font-weight: 500;
-        transition: all 0.2s ease;
-        text-align: left;
-        backdrop-filter: blur(4px);
-        box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
-      }
-
-      .sort-option:hover {
-        background: linear-gradient(145deg, rgba(187,134,252,0.2), rgba(187,134,252,0.1));
-        border-color: var(--primary);
-        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
-      }
-
-      .sort-option.active {
-        background: rgb(205, 178, 255);
-        color: #000;
-        border-color: var(--primary);
-      }
-
-      .sort-order-btn {
-        margin-top: 1rem;
-        background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.6rem 0.8rem;
-        color: rgb(205, 178, 255);
-        cursor: pointer;
-        font-size: 0.9rem;
-        font-weight: 500;
-        transition: all 0.2s ease;
-        width: 100%;
-        text-align: center;
-        backdrop-filter: blur(4px);
-        box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
-      }
-
-      .sort-order-btn:hover {
-        background: linear-gradient(145deg, rgba(187,134,252,0.2), rgba(187,134,252,0.1));
-        border-color: var(--primary);
-        color: #fff;
-        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
-      }
-
-      .ranking-list { 
-        display: flex; 
-        flex-direction: column; 
-        gap: 1.5rem;
-        flex: 1;
-        width: 100%;
-      }
-
-      .rank-card {
-        background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 1.5rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        transition: transform 0.2s ease, opacity 0.3s ease;
-        display: flex;
-        flex-direction: column;
-        word-break: break-word;
-        opacity: 0;
-      }
-      
-      .rank-card.loaded {
-        opacity: 1;
-      }
-
+      .no-results-card { background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025)); border: 1px solid rgba(255, 255, 255, 0.08); padding: 1.5rem; border-radius: 16px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); color: var(--text-secondary); font-size: 0.95rem; opacity: 1; }
+      .sort-options { display: flex; flex-direction: column; gap: 0.5rem; }
+      .sort-option { background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05)); border: 1px solid rgba(187, 134, 252, 0.4); border-radius: 8px; padding: 0.6rem 0.8rem; color: rgb(205, 178, 255); cursor: pointer; font-size: 0.9rem; font-weight: 500; transition: all 0.2s ease; text-align: left; backdrop-filter: blur(4px); box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1); }
+      .sort-option:hover { background: linear-gradient(145deg, rgba(187,134,252,0.2), rgba(187,134,252,0.1)); border-color: var(--primary); box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25); }
+      .sort-option.active { background: rgb(205, 178, 255); color: #000; border-color: var(--primary); }
+      .sort-order-btn { margin-top: 1rem; background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05)); border: 1px solid rgba(187, 134, 252, 0.4); border-radius: 8px; padding: 0.6rem 0.8rem; color: rgb(205, 178, 255); cursor: pointer; font-size: 0.9rem; font-weight: 500; transition: all 0.2s ease; width: 100%; text-align: center; backdrop-filter: blur(4px); box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1); }
+      .sort-order-btn:hover { background: linear-gradient(145deg, rgba(187,134,252,0.2), rgba(187,134,252,0.1)); border-color: var(--primary); color: #fff; box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25); }
+      .ranking-list { display: flex; flex-direction: column; gap: 1.5rem; flex: 1; width: 100%; }
+      .rank-card { background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025)); border: 1px solid rgba(255, 255, 255, 0.08); padding: 1.5rem; border-radius: 16px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); transition: transform 0.2s ease, opacity 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease; display: flex; flex-direction: column; word-break: break-word; opacity: 0; position: relative; }
+      .rank-card.loaded { opacity: 1; }
       .rank-card:hover { transform: translateY(-5px); }
 
-      .rank-card h2 {
-        margin: 0 0 0.5rem 0;
-        font-size: 1.4rem;
-        color: var(--primary);
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 6px;
-      }
+      /* ── Favorites ── */
+      .fav-btn { position: absolute; top: 0.9rem; right: 0.9rem; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 1rem; line-height: 1; opacity: 0.25; transition: opacity 0.18s ease, transform 0.18s ease, background 0.18s ease; z-index: 2; }
+      .rank-card:hover .fav-btn { opacity: 0.55; }
+      .rank-card .fav-btn:hover { opacity: 1 !important; transform: scale(1.22); background: rgba(255,100,150,0.12); }
+      .rank-card.favorited .fav-btn { opacity: 1; }
+      .rank-card.favorited { border-color: rgba(255, 100, 150, 0.38); box-shadow: 0 8px 20px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,100,150,0.12); }
+      .fav-filter-btn { width: 100%; margin-bottom: 1rem; background: linear-gradient(145deg, rgba(255,100,150,0.10), rgba(255,100,150,0.04)); border: 1px solid rgba(255,100,150,0.32); border-radius: 8px; padding: 0.58rem 0.85rem; color: rgba(255,155,185,0.9); cursor: pointer; font-size: 0.88rem; font-weight: 600; font-family: inherit; text-align: left; display: flex; align-items: center; gap: 0.45rem; transition: all 0.2s ease; }
+      .fav-filter-btn:hover { border-color: rgba(255,100,150,0.6); color: #ffb3ca; background: linear-gradient(145deg, rgba(255,100,150,0.16), rgba(255,100,150,0.07)); }
+      .fav-filter-btn.active { background: linear-gradient(145deg, rgba(255,100,150,0.24), rgba(255,100,150,0.12)); border-color: rgba(255,100,150,0.65); color: #fff; box-shadow: 0 4px 14px rgba(255,100,150,0.22); }
+      .fav-count { margin-left: auto; background: rgba(255,100,150,0.18); border-radius: 10px; padding: 1px 7px; font-size: 0.76rem; color: rgba(255,180,200,0.9); }
+      /* ── end favorites ── */
 
-      .vendor-website-link {
-        display: inline-flex;
-        align-items: center;
-      }
-
-      .vendor-website-icon {
-        height: 20px;
-        width: 20px;
-        object-fit: contain;
-      }
-
-      .rank-card h2 .indicator {
-        display: inline-flex;
-        padding: 1px 4px;
-        font-size: 0.65rem;
-        font-weight: 700;
-        border-radius: 4px;
-        user-select: none;
-      }
-
-      .rank-card h2 .rating {
-        color: #ffcc00;
-        font-size: 1rem;
-        display: flex;
-        gap: 2px;
-        align-items: center;
-        margin-left: 4px;
-        user-select: none;
-      }
-
+      .rank-card h2 { margin: 0 0 0.5rem 0; font-size: 1.4rem; color: var(--primary); display: flex; align-items: center; flex-wrap: wrap; gap: 6px; padding-right: 2rem; }
+      .vendor-website-link { display: inline-flex; align-items: center; }
+      .vendor-website-icon { height: 20px; width: 20px; object-fit: contain; }
+      .rank-card h2 .indicator { display: inline-flex; padding: 1px 4px; font-size: 0.65rem; font-weight: 700; border-radius: 4px; user-select: none; }
+      .rank-card h2 .rating { color: #ffcc00; font-size: 1rem; display: flex; gap: 2px; align-items: center; margin-left: 4px; user-select: none; }
       .rating svg { margin-right: 2px; }
-
-      .rating-tooltip {
-        position: relative;
-        cursor: pointer;
-      }
-
-      .rating-tooltip .tooltip-text {
-        visibility: hidden;
-        width: 80px;
-        background-color: rgba(187, 134, 252, 0.9);
-        color: #fff;
-        text-align: center;
-        border-radius: 6px;
-        padding: 4px 8px;
-        position: absolute;
-        z-index: 1;
-        bottom: 150%;
-        left: 50%;
-        margin-left: -40px;
-        font-size: 0.75rem;
-        font-weight: 500;
-        opacity: 0;
-        transition: opacity 0.3s;
-        pointer-events: none;
-        white-space: nowrap;
-      }
-
-      .rating-tooltip .tooltip-text::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: rgba(187, 134, 252, 0.9) transparent transparent transparent;
-      }
-
-      .rating-tooltip:hover .tooltip-text {
-        visibility: visible;
-        opacity: 1;
-      }
-
-      .rank-card p {
-        margin: 0 0 0.75rem 0;
-        font-size: 0.95rem;
-        color: var(--text-secondary);
-        flex-grow: 1;
-      }
-
+      .rating-tooltip { position: relative; cursor: pointer; }
+      .rating-tooltip .tooltip-text { visibility: hidden; width: 80px; background-color: rgba(187, 134, 252, 0.9); color: #fff; text-align: center; border-radius: 6px; padding: 4px 8px; position: absolute; z-index: 1; bottom: 150%; left: 50%; margin-left: -40px; font-size: 0.75rem; font-weight: 500; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
+      .rating-tooltip .tooltip-text::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: rgba(187, 134, 252, 0.9) transparent transparent transparent; }
+      .rating-tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
+      .rank-card p { margin: 0 0 0.75rem 0; font-size: 0.95rem; color: var(--text-secondary); flex-grow: 1; }
       .rank-card p a { color: #bb86fc; text-decoration: none; }
-
       .buttons-container { margin-top: 1rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
-      .open-link-button {
-        background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.6rem 1.2rem;
-        font-size: 1rem;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 0.7);
-        cursor: pointer;
-        backdrop-filter: blur(4px);
-        box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
-        transition: all 0.3s ease;
-        white-space: nowrap;
-      }
-
-      .open-link-button:hover {
-        color: #fff;
-        border-color: var(--primary);
-        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
-      }
-
-      .footer {
-        width: 100%;
-        background-color: rgb(44, 33, 58);
-        text-align: center;
-        padding: 1rem;
-        font-size: 0.8rem;
-        color: rgb(124, 107, 155);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        margin-top: 0rem;
-      }
-
+      .open-link-button { background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05)); border: 1px solid rgba(187, 134, 252, 0.4); border-radius: 8px; padding: 0.6rem 1.2rem; font-size: 1rem; font-weight: 600; color: rgba(255, 255, 255, 0.7); cursor: pointer; backdrop-filter: blur(4px); box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1); transition: all 0.3s ease; white-space: nowrap; }
+      .open-link-button:hover { color: #fff; border-color: var(--primary); box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25); }
+      .footer { width: 100%; background-color: rgb(44, 33, 58); text-align: center; padding: 1rem; font-size: 0.8rem; color: rgb(124, 107, 155); border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: 0rem; }
       .footer a { color: var(--primary); text-decoration: none; }
       .footer a:hover { text-decoration: underline; }
-
       .indicator.new { background-color: #ff5700; color: #ffffff; }
       .indicator.password { background-color: #2eabff; color: #ffffff; }
       .indicator.cheap { background-color: #70dd73; color: #ffffff; }
       .indicator.recommended { background-color: var(--primary); color: #ffffff; }
-
-      .issues-tooltip-container {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        margin-left: 14px;
-        cursor: pointer;
-        width: 18px;
-        height: 18px;
-        user-select: none;
-      }
-
+      .issues-tooltip-container { display: inline-flex; align-items: center; justify-content: center; position: relative; margin-left: 14px; cursor: pointer; width: 18px; height: 18px; user-select: none; }
       .issues-tooltip-container span.question-mark { display: inline-block; transform: translateX(-1px); }
-
-      .issues-tooltip {
-        display: none;
-        position: absolute;
-        top: 50%;
-        left: 180%;
-        transform: translateY(-50%);
-        background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(4px);
-        color: var(--text-secondary);
-        padding: 0;
-        white-space: nowrap;
-        z-index: 1000;
-        font-size: 0.85rem;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        line-height: 1.5;
-        min-width: 180px;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      .issues-tooltip-header {
-        background: rgba(187, 134, 252, 0.1);
-        padding: 8px 12px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px 16px 0 0;
-        font-weight: 600;
-        color: var(--text);
-      }
-
-      .issues-tooltip-content {
-        padding: 6px 10px;
-      }
-
+      .issues-tooltip { display: none; position: absolute; top: 50%; left: 180%; transform: translateY(-50%); background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025)); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); color: var(--text-secondary); padding: 0; white-space: nowrap; z-index: 1000; font-size: 0.85rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; line-height: 1.5; min-width: 180px; opacity: 0; transition: opacity 0.3s ease; }
+      .issues-tooltip-header { background: rgba(187, 134, 252, 0.1); padding: 8px 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px 16px 0 0; font-weight: 600; color: var(--text); }
+      .issues-tooltip-content { padding: 6px 10px; }
       .issues-tooltip a { color: #fff; text-decoration: none; display: block; margin: 1px 0; }
       .issues-tooltip a:hover { text-decoration: underline; }
-
-      @media (max-width: 1024px) {
-        .content-area { flex-direction: column; }
-        .tab-content.active { flex-direction: column; }
-        .sorting-panel {
-          width: 100%;
-        }
-      }
-
+      @media (max-width: 1024px) { .content-area { flex-direction: column; } .tab-content.active { flex-direction: column; } .sorting-panel { width: 100%; } }
       @media (max-width: 768px) {
         html { font-size: 14px; }
-        
-        .header {
-          padding: 0.75rem 1rem;
-        }
-        
-        .header-content { 
-          gap: 0.5rem; 
-        }
-        
-        .header-content h1 { 
-          font-size: 1.2rem;
-          font-weight: 600;
-        }
-        
-        .nav-button {
-          padding: 0.4rem 0.8rem;
-          font-size: 0.75rem;
-        }
-        
-        .main-container { 
-          padding: 0 1rem 1.5rem 1rem;
-          margin-top: 25px;
-          width: 100%;
-          flex: 1; 
-        }
-        
-        .tab-bar {
-          padding: 0 1rem;
-          top: 15px;
-          overflow: visible;
-        }
-
-        .rank-card h2 {
-          font-size: 1.2rem;
-          flex-wrap: wrap;
-          gap: 8px;
-        }
-
-        .rank-card h2 .indicator {
-          font-size: 0.75rem;
-          padding: 2px 6px;
-          border-radius: 6px;
-          margin-top: 4px;
-        }
-        
-        .tab-buttons {
-          gap: 0.5rem;
-          overflow-x: auto;
-          overflow-y: visible;
-          flex-wrap: nowrap;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: thin;
-          scrollbar-color: rgba(187, 134, 252, 0.6) rgba(255, 255, 255, 0.1);
-          padding: 0.5rem 0 0.5rem 0;
-          margin: -0.5rem 0;
-        }
-        
-        .tab-buttons::-webkit-scrollbar {
-          height: 6px;
-          display: block;
-        }
-        
-        .tab-buttons::-webkit-scrollbar-track {
-          background: rgba(255, 255, 255, 0.1);
-          border-radius: 3px;
-        }
-        
-        .tab-buttons::-webkit-scrollbar-thumb {
-          background: rgba(187, 134, 252, 0.6);
-          border-radius: 3px;
-        }
-        
-        .tab-buttons::-webkit-scrollbar-thumb:hover {
-          background: rgba(187, 134, 252, 0.8);
-        }
-        
-        .tab-button {
-          padding: 0.5rem 0.8rem;
-          font-size: 0.85rem;
-          flex-shrink: 0;
-        }
-
-        .sorting-panel {
-          top: 10px;
-        }
+        .header { padding: 0.75rem 1rem; }
+        .header-content { gap: 0.5rem; }
+        .header-content h1 { font-size: 1.2rem; font-weight: 600; }
+        .nav-button { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+        .main-container { padding: 0 1rem 1.5rem 1rem; margin-top: 25px; width: 100%; flex: 1; }
+        .tab-bar { padding: 0 1rem; top: 15px; overflow: visible; }
+        .rank-card h2 { font-size: 1.2rem; flex-wrap: wrap; gap: 8px; }
+        .rank-card h2 .indicator { font-size: 0.75rem; padding: 2px 6px; border-radius: 6px; margin-top: 4px; }
+        .tab-buttons { gap: 0.5rem; overflow-x: auto; overflow-y: visible; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: rgba(187, 134, 252, 0.6) rgba(255, 255, 255, 0.1); padding: 0.5rem 0 0.5rem 0; margin: -0.5rem 0; }
+        .tab-buttons::-webkit-scrollbar { height: 6px; display: block; }
+        .tab-buttons::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); border-radius: 3px; }
+        .tab-buttons::-webkit-scrollbar-thumb { background: rgba(187,134,252,0.6); border-radius: 3px; }
+        .tab-buttons::-webkit-scrollbar-thumb:hover { background: rgba(187,134,252,0.8); }
+        .tab-button { padding: 0.5rem 0.8rem; font-size: 0.85rem; flex-shrink: 0; }
+        .sorting-panel { top: 10px; }
       }
-
-      @media (max-width: 400px) {
-        html { font-size: 13px; }
-      }
-
-      /* ── Password / Warning modal ── */
-      .pw-modal-overlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.65);
-        backdrop-filter: blur(4px);
-        z-index: 9999;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-      }
+      @media (max-width: 400px) { html { font-size: 13px; } }
+      .pw-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(4px); z-index: 9999; align-items: center; justify-content: center; padding: 1rem; }
       .pw-modal-overlay.open { display: flex; }
-      .pw-modal {
-        background: linear-gradient(145deg, rgba(44, 33, 58, 0.98), rgba(28, 18, 40, 0.98));
-        border: 1px solid rgba(187, 134, 252, 0.35);
-        border-radius: 18px;
-        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(187,134,252,0.1);
-        padding: 2rem;
-        max-width: 480px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-        animation: modalIn 0.2s ease;
-      }
-      @keyframes modalIn {
-        from { opacity: 0; transform: scale(0.95) translateY(8px); }
-        to   { opacity: 1; transform: scale(1) translateY(0); }
-      }
+      .pw-modal { background: linear-gradient(145deg, rgba(44,33,58,0.98), rgba(28,18,40,0.98)); border: 1px solid rgba(187,134,252,0.35); border-radius: 18px; box-shadow: 0 24px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(187,134,252,0.1); padding: 2rem; max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 1.25rem; animation: modalIn 0.2s ease; }
+      @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
       .pw-modal-title { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
-      .pw-modal-password-box {
-        background: rgba(187, 134, 252, 0.1);
-        border: 1px solid rgba(187, 134, 252, 0.35);
-        border-radius: 10px;
-        padding: 0.75rem 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.75rem;
-      }
-      .pw-modal-password-label {
-        font-size: 0.75rem;
-        color: rgba(205, 178, 255, 0.6);
-        text-transform: uppercase;
-        letter-spacing: 0.06em;
-        margin-bottom: 2px;
-      }
+      .pw-modal-password-box { background: rgba(187,134,252,0.1); border: 1px solid rgba(187,134,252,0.35); border-radius: 10px; padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+      .pw-modal-password-label { font-size: 0.75rem; color: rgba(205,178,255,0.6); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
       .pw-modal-password-value { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: 0.04em; }
-      .pw-modal-copy-btn {
-        background: linear-gradient(145deg, rgba(187,134,252,0.2), rgba(187,134,252,0.08));
-        border: 1px solid rgba(187,134,252,0.4);
-        border-radius: 7px;
-        padding: 0.4rem 0.8rem;
-        color: rgb(205, 178, 255);
-        font-size: 0.8rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-        flex-shrink: 0;
-      }
+      .pw-modal-copy-btn { background: linear-gradient(145deg, rgba(187,134,252,0.2), rgba(187,134,252,0.08)); border: 1px solid rgba(187,134,252,0.4); border-radius: 7px; padding: 0.4rem 0.8rem; color: rgb(205,178,255); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0; }
       .pw-modal-copy-btn:hover { border-color: var(--primary); color: #fff; }
-      .pw-modal-warning {
-        font-size: 0.78rem;
-        color: rgba(189, 189, 189, 0.75);
-        line-height: 1.55;
-        border-left: 2px solid rgba(187, 134, 252, 0.4);
-        padding-left: 0.75rem;
-      }
+      .pw-modal-warning { font-size: 0.78rem; color: rgba(189,189,189,0.75); line-height: 1.55; border-left: 2px solid rgba(187,134,252,0.4); padding-left: 0.75rem; }
       .pw-modal-actions { display: flex; gap: 0.75rem; justify-content: flex-end; }
-      .pw-modal-cancel {
-        background: transparent;
-        border: 1px solid rgba(255,255,255,0.15);
-        border-radius: 8px;
-        padding: 0.6rem 1.2rem;
-        color: var(--text-secondary);
-        font-size: 0.9rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
+      .pw-modal-cancel { background: transparent; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; padding: 0.6rem 1.2rem; color: var(--text-secondary); font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
       .pw-modal-cancel:hover { border-color: rgba(255,255,255,0.35); color: #fff; }
-      .pw-modal-proceed {
-        background: linear-gradient(145deg, rgba(187,134,252,0.3), rgba(187,134,252,0.15));
-        border: 1px solid rgba(187,134,252,0.6);
-        border-radius: 8px;
-        padding: 0.6rem 1.4rem;
-        color: #fff;
-        font-size: 0.9rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-      .pw-modal-proceed:hover {
-        background: linear-gradient(145deg, rgba(187,134,252,0.45), rgba(187,134,252,0.25));
-        box-shadow: 0 6px 18px rgba(187,134,252,0.3);
-      }
-      /* ── end modal ── */
+      .pw-modal-proceed { background: linear-gradient(145deg, rgba(187,134,252,0.3), rgba(187,134,252,0.15)); border: 1px solid rgba(187,134,252,0.6); border-radius: 8px; padding: 0.6rem 1.4rem; color: #fff; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+      .pw-modal-proceed:hover { background: linear-gradient(145deg, rgba(187,134,252,0.45), rgba(187,134,252,0.25)); box-shadow: 0 6px 18px rgba(187,134,252,0.3); }
     </style>
   </head>
 
@@ -2462,100 +1849,69 @@ IsCheap: true,
         }
       ];
       
+       // ── Favorites ──
+      const FAVS_KEY = 'tvl_favorites';
+      function loadFavorites() {
+        try { return new Set(JSON.parse(localStorage.getItem(FAVS_KEY) || '[]')); }
+        catch { return new Set(); }
+      }
+      function saveFavorites() {
+        localStorage.setItem(FAVS_KEY, JSON.stringify([...favorites]));
+      }
+      let favorites = loadFavorites();
+      let showFavoritesOnly = false;
+      // ── end favorites ──
+
       // ── Modal logic ──
-      const pwOverlay   = document.getElementById('pwModalOverlay');
-      const pwPassEl    = document.getElementById('pwModalPasswordValue');
-      const pwCopyBtn   = document.getElementById('pwModalCopyBtn');
-      const pwCancel    = document.getElementById('pwModalCancel');
-      const pwProceed   = document.getElementById('pwModalProceed');
-      let   _pwPendingUrl = null;
-
-      function openPwModal(password, url) {
-        _pwPendingUrl = url;
-        pwPassEl.textContent = password;
-        pwCopyBtn.textContent = 'Copy';
-        pwOverlay.classList.add('open');
-      }
-
-      function closePwModal() {
-        pwOverlay.classList.remove('open');
-        _pwPendingUrl = null;
-      }
-
-      pwCancel.onclick  = closePwModal;
+      const pwOverlay = document.getElementById('pwModalOverlay');
+      const pwPassEl  = document.getElementById('pwModalPasswordValue');
+      const pwCopyBtn = document.getElementById('pwModalCopyBtn');
+      const pwCancel  = document.getElementById('pwModalCancel');
+      const pwProceed = document.getElementById('pwModalProceed');
+      let _pwPendingUrl = null;
+      function openPwModal(password, url) { _pwPendingUrl = url; pwPassEl.textContent = password; pwCopyBtn.textContent = 'Copy'; pwOverlay.classList.add('open'); }
+      function closePwModal() { pwOverlay.classList.remove('open'); _pwPendingUrl = null; }
+      pwCancel.onclick = closePwModal;
       pwOverlay.onclick = e => { if (e.target === pwOverlay) closePwModal(); };
       document.addEventListener('keydown', e => { if (e.key === 'Escape') closePwModal(); });
+      pwCopyBtn.onclick = () => { navigator.clipboard.writeText(pwPassEl.textContent).then(() => { pwCopyBtn.textContent = 'Copied!'; setTimeout(() => pwCopyBtn.textContent = 'Copy', 1800); }); };
+      pwProceed.onclick = () => { if (_pwPendingUrl) window.open(_pwPendingUrl, '_blank', 'noopener,noreferrer'); closePwModal(); };
 
-      pwCopyBtn.onclick = () => {
-        navigator.clipboard.writeText(pwPassEl.textContent).then(() => {
-          pwCopyBtn.textContent = 'Copied!';
-          setTimeout(() => pwCopyBtn.textContent = 'Copy', 1800);
-        });
-      };
-
-      pwProceed.onclick = () => {
-        if (_pwPendingUrl) window.open(_pwPendingUrl, '_blank', 'noopener,noreferrer');
-        closePwModal();
-      };
-      // ── end modal logic ──
-      
       function updateHeaderTitle() {
         const headerTitle = document.getElementById("header-title");
-
         if (window.innerWidth > 768) {
           headerTitle.innerHTML = `💫 The Vendor List - <span class="header-total">${Vendors.length} total</span>`;
         } else {
           headerTitle.innerHTML = `💫 The Vendor List`;
         }
       }
-
       updateHeaderTitle();
       window.addEventListener("resize", updateHeaderTitle);
 
       let currentSortBy = 'rating', currentSortOrder = 'desc', currentTab = Categories[0];
       let currentSearch = '';
-
       const faviconCache = new Map();
-      
+
       function preloadAllFavicons() {
         const websiteLinks = new Set();
-
         Vendors.forEach(vendor => {
           const websiteBtn = vendor.Buttons?.find(b => b.Text === 'Website');
-          if (websiteBtn?.Link) {
-            try {
-              const hostname = new URL(websiteBtn.Link).hostname;
-              websiteLinks.add(hostname);
-            } catch (e) {}
-          }
+          if (websiteBtn?.Link) { try { const hostname = new URL(websiteBtn.Link).hostname; websiteLinks.add(hostname); } catch (e) {} }
         });
-
         websiteLinks.forEach(hostname => {
           const img = new Image();
           const faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
-          
-          img.onload = () => {
-            faviconCache.set(hostname, faviconUrl);
-          };
-          
-          img.onerror = () => {
-            faviconCache.set(hostname, 'Resources/Website.png');
-          };
-          
+          img.onload = () => { faviconCache.set(hostname, faviconUrl); };
+          img.onerror = () => { faviconCache.set(hostname, 'Resources/Website.png'); };
           img.src = faviconUrl;
         });
       }
-      
       function getCachedFavicon(hostname) {
-        if (faviconCache.has(hostname)) {
-          return faviconCache.get(hostname);
-        }
-        
+        if (faviconCache.has(hostname)) return faviconCache.get(hostname);
         const faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
         faviconCache.set(hostname, faviconUrl);
         return faviconUrl;
       }
-      
       preloadAllFavicons();
 
       Categories.forEach((tab, i) => {
@@ -2563,26 +1919,22 @@ IsCheap: true,
         btn.className = `tab-button${i === 0 ? ' active' : ''}`;
         btn.textContent = tab;
         btn.onclick = () => {
-          currentTab = tab;
-          currentSearch = '';
+          currentTab = tab; currentSearch = '';
           document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
           document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
           btn.classList.add('active');
           document.getElementById(`tab-content-${tab}`).classList.add('active');
-          updateSortingPanel();
-          refreshTab(tab);
-        }; 
+          updateSortingPanel(); refreshTab(tab);
+        };
         TabButtons.appendChild(btn);
 
         const content = document.createElement('div');
         content.className = `tab-content${i === 0 ? ' active' : ''}`;
         content.id = `tab-content-${tab}`;
-
         const sortPanel = document.createElement('div');
         sortPanel.className = 'sorting-panel';
         sortPanel.id = `sorting-panel-${tab}`;
         content.appendChild(sortPanel);
-
         const list = document.createElement('div');
         list.className = 'ranking-list';
         list.id = `ranking-list-${tab}`;
@@ -2597,99 +1949,72 @@ IsCheap: true,
         Categories.forEach(tab => {
           const panel = document.getElementById(`sorting-panel-${tab}`);
           if (!panel) return;
-          
           panel.innerHTML = '';
+
+          // ── Favorites toggle ──
+          const favFilterBtn = document.createElement('button');
+          favFilterBtn.className = `fav-filter-btn${showFavoritesOnly ? ' active' : ''}`;
+          const favCount = favorites.size;
+          favFilterBtn.innerHTML = `${showFavoritesOnly ? '❤️' : '🤍'} Favorites only <span class="fav-count">${favCount}</span>`;
+          favFilterBtn.onclick = () => {
+            showFavoritesOnly = !showFavoritesOnly;
+            updateSortingPanel();
+            Categories.forEach(t => refreshTab(t));
+          };
+          panel.appendChild(favFilterBtn);
 
           // ── Search box ──
           const searchWrapper = document.createElement('div');
           searchWrapper.className = 'search-wrapper';
-
-          // magnifier icon
           searchWrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(205,178,255)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`;
-
           const searchInput = document.createElement('input');
-          searchInput.type = 'text';
-          searchInput.className = 'search-input';
-          searchInput.placeholder = 'Search vendors…';
+          searchInput.type = 'text'; searchInput.className = 'search-input'; searchInput.placeholder = 'Search vendors…';
           searchInput.value = tab === currentTab ? currentSearch : '';
-          searchInput.setAttribute('autocomplete', 'off');
-          searchInput.setAttribute('spellcheck', 'false');
-
+          searchInput.setAttribute('autocomplete', 'off'); searchInput.setAttribute('spellcheck', 'false');
           const clearBtn = document.createElement('button');
-          clearBtn.className = 'search-clear';
-          clearBtn.title = 'Clear search';
-          clearBtn.textContent = '✕';
+          clearBtn.className = 'search-clear'; clearBtn.title = 'Clear search'; clearBtn.textContent = '✕';
           clearBtn.style.display = searchInput.value ? 'block' : 'none';
-
-
-
           searchInput.addEventListener('input', () => {
             if (tab !== currentTab) return;
             currentSearch = searchInput.value.trim();
             clearBtn.style.display = currentSearch ? 'block' : 'none';
             refreshTab(tab);
           });
-
           clearBtn.addEventListener('click', () => {
-            searchInput.value = '';
-            currentSearch = '';
-            clearBtn.style.display = 'none';
-            searchInput.focus();
-            refreshTab(tab);
+            searchInput.value = ''; currentSearch = ''; clearBtn.style.display = 'none'; searchInput.focus(); refreshTab(tab);
           });
-
-          searchWrapper.appendChild(searchInput);
-          searchWrapper.appendChild(clearBtn);
+          searchWrapper.appendChild(searchInput); searchWrapper.appendChild(clearBtn);
           panel.appendChild(searchWrapper);
-          // ── end search box ──
 
-          const h3 = document.createElement('h3');
-          h3.textContent = 'Sort By';
-          panel.appendChild(h3);
-
-          const optionsDiv = document.createElement('div');
-          optionsDiv.className = 'sort-options';
-
+          const h3 = document.createElement('h3'); h3.textContent = 'Sort By'; panel.appendChild(h3);
+          const optionsDiv = document.createElement('div'); optionsDiv.className = 'sort-options';
           const sortOptions = [
             { val: 'rating', label: 'Rating', hasOrder: true },
             { val: 'name', label: 'Name', hasOrder: true },
             { val: 'new', label: 'New', hasOrder: false },
             { val: 'recommended', label: 'Recommended', hasOrder: false },
             { val: 'cheap', label: 'Budget', hasOrder: false },
-            { val: 'issues', label: 'Has Issues', hasOrder: false }
+            { val: 'issues', label: 'Has Issues', hasOrder: false },
+            { val: 'favorites', label: '❤️ Favorited', hasOrder: false }
           ];
-
           sortOptions.forEach(option => {
             const btn = document.createElement('button');
             btn.className = `sort-option${currentSortBy === option.val ? ' active' : ''}`;
             btn.textContent = option.label;
-            btn.onclick = () => { 
-              currentSortBy = option.val; 
-              updateSortingPanel();
-              refreshTab(currentTab); 
-            };
+            btn.onclick = () => { currentSortBy = option.val; updateSortingPanel(); refreshTab(currentTab); };
             optionsDiv.appendChild(btn);
           });
-
           panel.appendChild(optionsDiv);
 
           if (sortOptions.find(opt => opt.val === currentSortBy)?.hasOrder) {
             const orderBtn = document.createElement('button');
             orderBtn.className = 'sort-order-btn';
-            if (currentSortBy === 'rating') {
-              orderBtn.textContent = currentSortOrder === 'desc' ? '↓ High to Low' : '↑ Low to High';
-            } else if (currentSortBy === 'name') {
-              orderBtn.textContent = currentSortOrder === 'desc' ? '↓ Z to A' : '↑ A to Z';
-            }
-            orderBtn.onclick = () => { 
-              currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc'; 
-              updateSortingPanel();
-              refreshTab(currentTab); 
-            };
+            if (currentSortBy === 'rating') orderBtn.textContent = currentSortOrder === 'desc' ? '↓ High to Low' : '↑ Low to High';
+            else if (currentSortBy === 'name') orderBtn.textContent = currentSortOrder === 'desc' ? '↓ Z to A' : '↑ A to Z';
+            orderBtn.onclick = () => { currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc'; updateSortingPanel(); refreshTab(currentTab); };
             panel.appendChild(orderBtn);
           }
         });
-
       }
 
       function refreshTab(tab) {
@@ -2702,12 +2027,10 @@ IsCheap: true,
         const query = currentSearch.toLowerCase();
         return Vendors
           .filter(v => v.Sections.includes(tab))
+          .filter(v => !showFavoritesOnly || favorites.has(v.Title))
           .filter(v => {
             if (!query) return true;
-            return (
-              v.Title.toLowerCase().includes(query) ||
-              (v.Description && v.Description.toLowerCase().includes(query))
-            );
+            return v.Title.toLowerCase().includes(query) || (v.Description && v.Description.toLowerCase().includes(query));
           })
           .sort((a, b) => {
             let cmp = 0;
@@ -2717,6 +2040,10 @@ IsCheap: true,
             else if (currentSortBy === 'cheap') return a.IsCheap !== b.IsCheap ? (a.IsCheap ? -1 : 1) : b.Rating - a.Rating;
             else if (currentSortBy === 'recommended') return a.IsRecommended !== b.IsRecommended ? (a.IsRecommended ? -1 : 1) : b.Rating - a.Rating;
             else if (currentSortBy === 'issues') return (a.Issues?.length || 0) - (b.Issues?.length || 0);
+            else if (currentSortBy === 'favorites') {
+              const af = favorites.has(a.Title), bf = favorites.has(b.Title);
+              return af !== bf ? (af ? -1 : 1) : b.Rating - a.Rating;
+            }
             return currentSortOrder === 'desc' ? -cmp : cmp;
           });
       }
@@ -2729,16 +2056,16 @@ IsCheap: true,
           const p = document.createElement('p');
           p.style.cssText = 'margin: 0; color: lightgrey;';
           p.innerHTML = "There's a shortage of trustworthy vendors. If you're a supplier or know of one, please reach out to me. You can contact me through our Discord server or on Reddit.<br><br><b>Before using any product, make sure to do proper research to determine accurate dosage information. I recommend checking the pages for the substance on <a href='https://erowid.org' target='_blank'>Erowid</a> or <a href='https://psychonautwiki.org' target='_blank'>PsychonautWiki</a> for reliable guidance. Failing to do so may result in serious harm or even death, depending on the substance.</b>";
-          card.appendChild(p);
-          list.appendChild(card);
+          card.appendChild(p); list.appendChild(card);
         }
 
-        if (vendors.length === 0 && currentSearch) {
+        if (vendors.length === 0) {
           const noResults = document.createElement('div');
           noResults.className = 'no-results-card';
-          noResults.textContent = `No vendors found matching "${currentSearch}".`;
-          list.appendChild(noResults);
-          return;
+          noResults.textContent = showFavoritesOnly && !currentSearch
+            ? "No favorites saved in this category yet. Click the 🤍 on any vendor card to save it."
+            : `No vendors found matching "${currentSearch}".`;
+          list.appendChild(noResults); return;
         }
 
         vendors.forEach(v => list.appendChild(createVendorCard(v)));
@@ -2747,214 +2074,129 @@ IsCheap: true,
       function createVendorCard(v) {
         const card = document.createElement('div');
         card.className = 'rank-card';
+        if (favorites.has(v.Title)) card.classList.add('favorited');
+
+        // ── Favorite button ──
+        const favBtn = document.createElement('button');
+        favBtn.className = 'fav-btn';
+        favBtn.title = favorites.has(v.Title) ? 'Remove from favorites' : 'Save to favorites';
+        favBtn.textContent = favorites.has(v.Title) ? '❤️' : '🤍';
+        favBtn.addEventListener('click', () => {
+          if (favorites.has(v.Title)) {
+            favorites.delete(v.Title);
+            favBtn.textContent = '🤍';
+            favBtn.title = 'Save to favorites';
+            card.classList.remove('favorited');
+          } else {
+            favorites.add(v.Title);
+            favBtn.textContent = '❤️';
+            favBtn.title = 'Remove from favorites';
+            card.classList.add('favorited');
+            // brief pulse animation
+            favBtn.style.transform = 'scale(1.4)';
+            setTimeout(() => favBtn.style.transform = '', 200);
+          }
+          saveFavorites();
+          updateSortingPanel(); // refresh fav count
+          if (showFavoritesOnly) Categories.forEach(t => refreshTab(t));
+        });
+        card.appendChild(favBtn);
 
         const h2 = document.createElement('h2');
         const websiteBtn = v.Buttons?.find(b => b.Text === 'Website');
         const websiteIcon = document.createElement('img');
-        
         if (websiteBtn?.Link) {
-          try {
-            const hostname = new URL(websiteBtn.Link).hostname;
-            websiteIcon.src = getCachedFavicon(hostname);
-          } catch (e) {
-            websiteIcon.src = 'Resources/Website.png';
-          }
-        } else {
-          websiteIcon.src = 'Resources/Website.png';
-        }
-        
-        websiteIcon.alt = 'Website';
-        websiteIcon.className = 'vendor-website-icon';
+          try { const hostname = new URL(websiteBtn.Link).hostname; websiteIcon.src = getCachedFavicon(hostname); } catch (e) { websiteIcon.src = 'Resources/Website.png'; }
+        } else { websiteIcon.src = 'Resources/Website.png'; }
+        websiteIcon.alt = 'Website'; websiteIcon.className = 'vendor-website-icon';
         websiteIcon.style.cssText = 'height: 40px; width: 40px; object-fit: contain; border-radius: 4px; margin-right: 5px;';
-
         if (websiteBtn?.Link) {
           const websiteLink = document.createElement('a');
-          websiteLink.href = websiteBtn.Link;
-          websiteLink.target = '_blank';
-          websiteLink.rel = 'noopener noreferrer';
-          websiteLink.className = 'vendor-website-link';
-          websiteLink.appendChild(websiteIcon);
-          h2.appendChild(websiteLink);
-        } else {
-          h2.appendChild(websiteIcon);
-        }
-
+          websiteLink.href = websiteBtn.Link; websiteLink.target = '_blank'; websiteLink.rel = 'noopener noreferrer';
+          websiteLink.className = 'vendor-website-link'; websiteLink.appendChild(websiteIcon); h2.appendChild(websiteLink);
+        } else { h2.appendChild(websiteIcon); }
         h2.appendChild(document.createTextNode(v.Title));
         if (v.Rating != null) h2.appendChild(createStars(v.Rating));
-        
         [
           { cond: v.IsNew, cls: 'new', txt: 'New' },
-          { cond: v.Password, cls: 'password', txt: `Password protected` },
+          { cond: v.Password, cls: 'password', txt: 'Password protected' },
           { cond: v.IsRecommended, cls: 'recommended', txt: 'Recommended' },
           { cond: v.IsCheap, cls: 'cheap', txt: 'Budget' }
         ].forEach(b => {
-          if (b.cond) {
-            const span = document.createElement('span');
-            span.className = `indicator ${b.cls}`;
-            span.textContent = b.txt;
-            h2.appendChild(span);
-          }
+          if (b.cond) { const span = document.createElement('span'); span.className = `indicator ${b.cls}`; span.textContent = b.txt; h2.appendChild(span); }
         });
-
         if (v.Issues?.length) {
-          const tooltip = document.createElement('span');
-          tooltip.className = 'issues-tooltip-container';
-          const mark = document.createElement('span');
-          mark.className = 'question-mark';
-          mark.textContent = '⚠️';
-          tooltip.appendChild(mark);
-          const tip = document.createElement('div');
-          tip.className = 'issues-tooltip';
-          
-          const header = document.createElement('div');
-          header.className = 'issues-tooltip-header';
-          header.textContent = 'Issues:';
-          tip.appendChild(header);
-          
-          const content = document.createElement('div');
-          content.className = 'issues-tooltip-content';
-          content.innerHTML = v.Issues.map(i => i.Link ? `<a href="${i.Link}" target="_blank">${i.Text} </a>` : `<div>${i.Text}</div>`).join('');
-          tip.appendChild(content);
-          
-          tooltip.appendChild(tip);
+          const tooltip = document.createElement('span'); tooltip.className = 'issues-tooltip-container';
+          const mark = document.createElement('span'); mark.className = 'question-mark'; mark.textContent = '⚠️'; tooltip.appendChild(mark);
+          const tip = document.createElement('div'); tip.className = 'issues-tooltip';
+          const header = document.createElement('div'); header.className = 'issues-tooltip-header'; header.textContent = 'Issues:'; tip.appendChild(header);
+          const content = document.createElement('div'); content.className = 'issues-tooltip-content';
+          content.innerHTML = v.Issues.map(i => i.Link ? `<a href="${i.Link}" target="_blank">${i.Text}</a>` : `<div>${i.Text}</div>`).join('');
+          tip.appendChild(content); tooltip.appendChild(tip);
           let hide;
           tooltip.onmouseenter = () => { clearTimeout(hide); tip.style.display = 'block'; setTimeout(() => tip.style.opacity = '1', 10); };
-          tooltip.onmouseleave = () => { hide = setTimeout(() => tip.style.opacity = '0', 50); setTimeout(() => tip.style.display = 'none', 350); };
+          tooltip.onmouseleave = () => { hide = setTimeout(() => { tip.style.opacity = '0'; setTimeout(() => tip.style.display = 'none', 300); }, 50); };
           tip.onmouseenter = () => clearTimeout(hide);
-          tip.onmouseleave = () => { hide = setTimeout(() => tip.style.opacity = '0', 50); setTimeout(() => tip.style.display = 'none', 350); };
+          tip.onmouseleave = () => { hide = setTimeout(() => { tip.style.opacity = '0'; setTimeout(() => tip.style.display = 'none', 300); }, 50); };
           h2.appendChild(tooltip);
         }
-
         card.appendChild(h2);
 
-        const p = document.createElement('p');
-        p.textContent = v.Description;
-        card.appendChild(p);
+        const p = document.createElement('p'); p.textContent = v.Description; card.appendChild(p);
 
         if (v.Buttons?.length) {
-          const btns = document.createElement('div');
-          btns.className = 'buttons-container';
-          
+          const btns = document.createElement('div'); btns.className = 'buttons-container';
           let imagesLoaded = 0;
-          const totalImages = v.Buttons.length;
-          
-          const checkAllLoaded = () => {
-            imagesLoaded++;
-            if (imagesLoaded === totalImages) {
-              setTimeout(() => card.classList.add('loaded'), 50);
-            }
-          };
-          
+          const checkAllLoaded = () => { imagesLoaded++; if (imagesLoaded === v.Buttons.length) setTimeout(() => card.classList.add('loaded'), 50); };
           v.Buttons.forEach(b => {
-            const wrap = document.createElement('div');
-            wrap.style.cssText = 'display: flex; align-items: center; gap: 8px;';
+            const wrap = document.createElement('div'); wrap.style.cssText = 'display: flex; align-items: center; gap: 8px;';
             const link = document.createElement('a');
-            link.href = b.Link;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            link.className = 'open-link-button';
-            
-            const i = document.createElement('img');
-            i.src = `Resources/${b.Text}.png`;
-            i.alt = b.Text;
+            link.href = b.Link; link.target = '_blank'; link.rel = 'noopener noreferrer'; link.className = 'open-link-button';
+            const i = document.createElement('img'); i.src = `Resources/${b.Text}.png`; i.alt = b.Text;
             i.style.cssText = 'height: 20px; width: 20px; object-fit: contain;';
-            
             link.style.cssText = 'display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgb(205, 178, 255); gap: 6px;';
-            link.textContent = '';
-            link.appendChild(i);
-            link.appendChild(document.createTextNode(b.Text));
-            
-            i.onerror = () => {
-              i.style.display = 'none';
-              link.textContent = b.Text;
-            };
-            
+            link.textContent = ''; link.appendChild(i); link.appendChild(document.createTextNode(b.Text));
+            i.onerror = () => { i.style.display = 'none'; link.textContent = b.Text; };
             checkAllLoaded();
-
             wrap.appendChild(link);
-
-            // If this vendor has a password and this is the Website button, show modal on click
             if (v.Password && b.Text === 'Website') {
-              link.onclick = e => {
-                e.preventDefault();
-                openPwModal(v.Password, b.Link);
-              };
+              link.onclick = e => { e.preventDefault(); openPwModal(v.Password, b.Link); };
             }
-
             btns.appendChild(wrap);
-      });
-      card.appendChild(btns);
-    } else {
-      setTimeout(() => card.classList.add('loaded'), 50);
-    }
-
-    return card;
-  }
-
-  // Add this once, just before the createStars function
-var _starMaskCounter = 0;
-
-function createStars(rating) {
-    const span = document.createElement('span');
-    span.className = 'rating';
-    const maskId = `half-mask-${_starMaskCounter++}`; // unique per call
-
-    for (let i = 0; i < 3; i++) {
-      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('width', '16');
-      svg.setAttribute('height', '16');
-      svg.setAttribute('viewBox', '0 0 24 24');
-      const path = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
-
-      if (i === Math.floor(rating) && rating % 1 !== 0) {
-        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-        const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
-        mask.setAttribute('id', maskId); // unique ID
-        // ... rest unchanged
-        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        rect.setAttribute('x', '0');
-        rect.setAttribute('y', '0');
-        rect.setAttribute('width', '12');
-        rect.setAttribute('height', '24');
-        rect.setAttribute('fill', 'white'); 
-        mask.appendChild(rect);
-        defs.appendChild(mask);
-        svg.appendChild(defs);
-        
-        const p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        p1.setAttribute('d', path);
-        p1.setAttribute('fill', '#4a4a4a');
-        svg.appendChild(p1);
-        
-        const p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        p2.setAttribute('d', path);
-        p2.setAttribute('fill', '#ffcc00');
-        p2.setAttribute('mask', `url(#half-mask-${i})`);
-        p2.setAttribute('mask', `url(#${maskId})`); // reference the unique ID
-        svg.appendChild(p2);
-      } else {
-        const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        p.setAttribute('d', path);
-        p.setAttribute('fill', i < Math.floor(rating) ? '#ffcc00' : '#4a4a4a');
-        svg.appendChild(p);
+          });
+          card.appendChild(btns);
+        } else { setTimeout(() => card.classList.add('loaded'), 50); }
+        return card;
       }
-      span.appendChild(svg);
-    }
-    
-    // Add tooltip for 0/3 stars (unreviewed)
-    if (rating === 0) {
-      const tooltipContainer = document.createElement('div');
-      tooltipContainer.className = 'rating-tooltip';
-      tooltipContainer.appendChild(span);
-      
-      const tooltipText = document.createElement('span');
-      tooltipText.className = 'tooltip-text';
-      tooltipText.textContent = 'Unreviewed';
-      tooltipContainer.appendChild(tooltipText);
-      
-      return tooltipContainer;
-    }
-    
-    return span;
-  }
-</script></body></html>
+
+      var _starMaskCounter = 0;
+      function createStars(rating) {
+        const span = document.createElement('span'); span.className = 'rating';
+        const maskId = `half-mask-${_starMaskCounter++}`;
+        for (let i = 0; i < 3; i++) {
+          const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          svg.setAttribute('width', '16'); svg.setAttribute('height', '16'); svg.setAttribute('viewBox', '0 0 24 24');
+          const path = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
+          if (i === Math.floor(rating) && rating % 1 !== 0) {
+            const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+            const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask'); mask.setAttribute('id', maskId);
+            const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            rect.setAttribute('x', '0'); rect.setAttribute('y', '0'); rect.setAttribute('width', '12'); rect.setAttribute('height', '24'); rect.setAttribute('fill', 'white');
+            mask.appendChild(rect); defs.appendChild(mask); svg.appendChild(defs);
+            const p1 = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p1.setAttribute('d', path); p1.setAttribute('fill', '#4a4a4a'); svg.appendChild(p1);
+            const p2 = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p2.setAttribute('d', path); p2.setAttribute('fill', '#ffcc00'); p2.setAttribute('mask', `url(#${maskId})`); svg.appendChild(p2);
+          } else {
+            const p = document.createElementNS('http://www.w3.org/2000/svg', 'path'); p.setAttribute('d', path); p.setAttribute('fill', i < Math.floor(rating) ? '#ffcc00' : '#4a4a4a'); svg.appendChild(p);
+          }
+          span.appendChild(svg);
+        }
+        if (rating === 0) {
+          const tooltipContainer = document.createElement('div'); tooltipContainer.className = 'rating-tooltip'; tooltipContainer.appendChild(span);
+          const tooltipText = document.createElement('span'); tooltipText.className = 'tooltip-text'; tooltipText.textContent = 'Unreviewed'; tooltipContainer.appendChild(tooltipText);
+          return tooltipContainer;
+        }
+        return span;
+      }
+    </script>
+  </body>
+</html>
