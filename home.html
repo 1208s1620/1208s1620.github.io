@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Vendor List – Home</title>
+    <link rel="icon" type="image/x-icon" href="Resources/favicon.ico" />
+
+    <style>
+      :root {
+        --background: #121212;
+        --primary: #bb86fc;
+        --text: #ffffff;
+        --textSecondary: #bdbdbd;
+      }
+ 
+      ::-webkit-scrollbar { width: 12px; height: 12px; }
+      ::-webkit-scrollbar-track { background: #110616; }
+      ::-webkit-scrollbar-thumb { background-color: rgb(205, 178, 255); }
+      ::-webkit-scrollbar-thumb:hover { background-color: rgb(161, 140, 199); }
+ 
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+      html, body {
+        height: 100%;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background-color: var(--background);
+        color: var(--text);
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+ 
+      body {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        min-height: 100vh;
+      }
+ 
+      /* ── Animated background ── */
+      .animatedBg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        background:
+          radial-gradient(circle at 30% 30%, rgba(187, 134, 252, 0.2), transparent 40%),
+          radial-gradient(circle at 70% 60%, rgba(0, 255, 255, 0.15), transparent 40%),
+          radial-gradient(circle at 50% 80%, rgba(255, 0, 128, 0.2), transparent 40%);
+        filter: blur(80px);
+        z-index: 0;
+        animation: moveCircles 20s ease-in-out infinite alternate;
+        pointer-events: none;
+      }
+ 
+      @keyframes moveCircles {
+        0%   { transform: translate(0%, 0%); }
+        100% { transform: translate(-25%, -20%); }
+      }
+ 
+      body > *:not(.animatedBg) { position: relative; z-index: 1; }
+ 
+      /* ── Header ── */
+      .header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: linear-gradient(145deg, rgba(44, 33, 58, 0.95), rgba(30, 22, 42, 0.95));
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(187, 134, 252, 0.2);
+        box-shadow: 0 4px 20px rgba(187, 134, 252, 0.15);
+        z-index: 1000;
+        padding: 1rem 1.5rem;
+      }
+ 
+      .headerContent {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+ 
+      .headerContent h1 {
+        font-size: 1.6rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #bb86fc, #f7b268);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+      }
+ 
+      .navButtons { display: flex; gap: 0.75rem; flex-wrap: nowrap; white-space: nowrap; }
+ 
+      .navButton {
+        background: linear-gradient(145deg, rgba(187, 134, 252, 0.15), rgba(187, 134, 252, 0.05));
+        border: 1px solid rgba(187, 134, 252, 0.4);
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-decoration: none;
+        color: rgb(205, 178, 255);
+        transition: all 0.3s ease;
+        white-space: nowrap;
+      }
+ 
+      .navButton:hover {
+        color: #fff;
+        border-color: var(--primary);
+        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
+        transform: translateY(-2px);
+      }
+ 
+      /* ── Main content ── */
+      .mainContainer {
+        margin-top: 80px;
+        padding: 0 1.5rem 4rem 1.5rem;
+        width: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+ 
+      /* ── Hero ── */
+      .hero {
+        text-align: center;
+        padding: 0rem 0rem 2rem;
+        max-width: 680px;
+        width: 100%;
+        animation: fadeUp 0.6s ease both;
+      }
+ 
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(24px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+ 
+      .heroEmoji {
+        font-size: 4rem;
+        line-height: 1;
+        margin-bottom: 1.25rem;
+        display: block;
+        animation: floatEmoji 4s ease-in-out infinite;
+      }
+ 
+      @keyframes floatEmoji {
+        0%, 100% { transform: translateY(0); }
+        50%       { transform: translateY(-10px); }
+      }
+ 
+      .hero h2 {
+        font-size: 2.6rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        background: linear-gradient(135deg, #bb86fc, #f7b268);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        line-height: 1.15;
+      }
+ 
+      .hero p {
+        font-size: 1.05rem;
+        color: var(--textSecondary);
+        max-width: 480px;
+        margin: 0 auto;
+        line-height: 1.65;
+      }
+
+      .statsBar {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        margin-top: -1rem;
+        margin-bottom: 1rem;
+        padding: 0.9rem 1.2rem;
+        border-radius: 12px;
+        background: linear-gradient(145deg, rgba(187, 134, 252, 0.06), rgba(187, 134, 252, 0.02));
+        border: 1px solid rgba(187, 134, 252, 0.25);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      }
+
+      .statItem {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        color: var(--textSecondary);
+      }
+
+      .statItem strong {
+        color: #fff;
+        font-weight: 700;
+      }
+
+      .statIcon {
+        font-size: 1rem;
+      }
+ 
+      /* ── Divider ── */
+      .divider {
+        width: 100%;
+        max-width: 860px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(187, 134, 252, 0.3), transparent);
+        margin: 0.5rem 0 2.5rem;
+      }
+ 
+      /* ── Nav card grid ── */
+      .navGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.25rem;
+        width: 100%;
+        max-width: 860px;
+        animation: fadeUp 0.7s 0.15s ease both;
+      }
+ 
+      .navCard {
+        background: linear-gradient(145deg, rgba(187, 134, 252, 0.0075), rgba(187, 134, 252, 0.025));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        padding: 1.75rem 1.5rem;
+        text-decoration: none;
+        color: var(--text);
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+      }
+ 
+      .navCard::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top left, rgba(187, 134, 252, 0.08), transparent 65%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+ 
+      .navCard:hover::before { opacity: 1; }
+ 
+      .navCard:hover {
+        transform: translateY(-6px);
+        border-color: rgba(187, 134, 252, 0.45);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(187, 134, 252, 0.12);
+      }
+ 
+      /* accent colours per card */
+      .navCard.accent-cyan:hover  { border-color: rgba(0, 255, 255, 0.4); box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 255, 255, 0.1); }
+      .navCard.accent-pink:hover  { border-color: rgba(255, 100, 150, 0.4); box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 100, 150, 0.1); }
+      .navCard.accent-amber:hover { border-color: rgba(247, 178, 104, 0.4); box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(247, 178, 104, 0.1); }
+      .navCard.accent-green:hover { border-color: rgba(112, 221, 115, 0.4); box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(112, 221, 115, 0.1); }
+ 
+      .navCard.accent-cyan::before  { background: radial-gradient(circle at top left, rgba(0, 255, 255, 0.07), transparent 65%); }
+      .navCard.accent-pink::before  { background: radial-gradient(circle at top left, rgba(255, 100, 150, 0.07), transparent 65%); }
+      .navCard.accent-amber::before { background: radial-gradient(circle at top left, rgba(247, 178, 104, 0.07), transparent 65%); }
+      .navCard.accent-green::before { background: radial-gradient(circle at top left, rgba(112, 221, 115, 0.07), transparent 65%); }
+ 
+      .cardHeader {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+ 
+      .cardIcon {
+        font-size: 1.6rem;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+ 
+      .cardTitle {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #fff;
+      }
+ 
+      .cardDesc {
+        font-size: 0.88rem;
+        color: var(--textSecondary);
+        line-height: 1.55;
+        flex: 1;
+      }
+ 
+      .cardArrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: rgba(205, 178, 255, 0.7);
+        margin-top: 0.5rem;
+        transition: color 0.2s ease, gap 0.2s ease;
+      }
+ 
+      .navCard:hover .cardArrow { color: rgb(205, 178, 255); gap: 0.5rem; }
+      .navCard.accent-cyan:hover  .cardArrow { color: rgba(0, 255, 255, 0.85); }
+      .navCard.accent-pink:hover  .cardArrow { color: rgba(255, 150, 185, 0.9); }
+      .navCard.accent-amber:hover .cardArrow { color: rgba(247, 178, 104, 0.9); }
+      .navCard.accent-green:hover .cardArrow { color: rgba(112, 221, 115, 0.9); }
+ 
+      /* ── Section label ── */
+      .sectionLabel {
+        width: 100%;
+        max-width: 860px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(187, 134, 252, 0.5);
+        margin-bottom: 0.85rem;
+        padding-left: 2px;
+        animation: fadeUp 0.7s 0.25s ease both;
+      }
+ 
+      /* ── Community row (smaller cards) ── */
+      .communityGrid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1rem;
+        width: 100%;
+        max-width: 860px;
+        animation: fadeUp 0.7s 0.3s ease both;
+      }
+ 
+      .communityCard {
+        background: linear-gradient(145deg, rgba(187, 134, 252, 0.0075), rgba(187, 134, 252, 0.025));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 1.2rem 1.2rem;
+        text-decoration: none;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      }
+ 
+      .communityCard:hover {
+        transform: translateY(-4px);
+        border-color: rgba(187, 134, 252, 0.4);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+      }
+ 
+      .communityIcon { font-size: 1.6rem; flex-shrink: 0; }
+
+      .communityIcon img {
+        width: 40px;
+        height: 40px;
+      }
+ 
+      .communityLabel {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #fff;
+      }
+ 
+      .communitySubLabel {
+        font-size: 0.76rem;
+        color: var(--textSecondary);
+        margin-top: 1px;
+      }
+ 
+      /* ── Footer ── */
+      .footer {
+        width: 100%;
+        background-color: rgb(44, 33, 58);
+        text-align: center;
+        padding: 1rem;
+        font-size: 0.8rem;
+        color: rgb(124, 107, 155);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+ 
+      .footer a { color: var(--primary); text-decoration: none; }
+      .footer a:hover { text-decoration: underline; }
+ 
+      /* ── Responsive ── */
+      @media (max-width: 768px) {
+        html { font-size: 14px; }
+        .header { padding: 0.75rem 1rem; }
+        .headerContent h1 { font-size: 1.2rem; }
+        .navButton { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+        .mainContainer { margin-top: 70px; padding: 0 1rem 3rem; }
+        .hero h2 { font-size: 2rem; }
+        .heroEmoji { font-size: 3rem; }
+        .navGrid { grid-template-columns: 1fr 1fr; }
+        .communityGrid { grid-template-columns: 1fr; }
+      }
+ 
+      @media (max-width: 480px) {
+        .navGrid { grid-template-columns: 1fr; }
+        .navButtons { gap: 0.4rem; }
+        .navButton { padding: 0.4rem 0.65rem; font-size: 0.72rem; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="animatedBg"></div>
+
+    <header class="header">
+      <div class="headerContent">
+        <h1>💫 The Vendor List</h1>
+        <div class="navButtons">
+          <a href="/vendors.html" class="navButton">Vendors</a>
+          <a href="/faq.html" class="navButton">FAQ</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="mainContainer">
+
+      <!-- Hero -->
+    <div class="hero">
+    <span class="heroEmoji">💫</span>
+    <h2>Welcome</h2>
+    <p>
+        The Vendor List is the biggest curated list of clear net vendors where you can explore a wide variety of different products, and find exactly what you’re looking for in just a few clicks.
+    </p>
+    </div>
+
+    <div class="statsBar">
+      <div class="statItem">
+        <span class="statIcon">📦</span>
+        <span><strong>150+</strong> Vendors</span>
+      </div>
+
+      <div class="statItem">
+        <span class="statIcon">⚡</span>
+        <span>Weekly updates</span>
+      </div>
+
+      <div class="statItem">
+        <span class="statIcon">✔️</span>
+        <span>Community verified</span>
+      </div>
+    </div>
+
+      <div class="divider"></div>
+
+      <!-- Main nav cards -->
+      <p class="sectionLabel">Browse</p>
+      <div class="navGrid">
+
+        <a href="vendors.html" class="navCard">
+            <div class="cardHeader">
+                <div class="cardIcon">💫</div>
+                <div class="cardTitle">The Vendor List</div>
+            </div>
+            <div class="cardDesc">
+                Browse a curated selection of clear net vendors—you can find almost anything here.
+            </div>
+            <div class="cardArrow">Explore vendors →</div>
+        </a>
+
+        <a href="https://tor.taxi" class="navCard accent-cyan" rel="noopener noreferrer">
+          <div class="cardHeader">
+            <div class="cardIcon">🚕</div>
+            <div class="cardTitle">Tor.taxi</div>
+          </div>
+          <div class="cardDesc">A curated directory of verified .onion links — quickly find trusted sites across multiple categories.</div>
+          <div class="cardArrow">Visit Tor.taxi →</div>
+        </a>
+
+        <a href="https://daunt.link" class="navCard accent-amber" rel="noopener noreferrer">
+          <div class="cardHeader">
+            <div class="cardIcon">🔗</div>
+            <div class="cardTitle">Daunt.link</div>
+          </div>
+          <div class="cardDesc">A curated directory of verified .onion links — quickly find trusted sites across multiple categories.</div>
+          <div class="cardArrow">Visit Daunt.link →</div>
+        </a>
+
+
+
+      </div>
+
+      <!-- Community / links -->
+      <p class="sectionLabel" style="margin-top: 2.5rem;">Community & Resources</p>
+      <div class="communityGrid">
+
+        <a href="https://discord.gg/mqwB9xp8rJ" class="communityCard" target="_blank" rel="noopener noreferrer">
+          <div class="communityIcon">
+            <img src="resources/discord.png" alt="Discord" />
+          </div>
+          <div>
+            <div class="communityLabel">Discord Server</div>
+            <div class="communitySubLabel">Join the community</div>
+          </div>
+        </a>
+
+        <a href="https://www.reddit.com/r/TheVendorList/" class="communityCard" target="_blank" rel="noopener noreferrer">
+          <div class="communityIcon">
+            <img src="resources/Reddit.png" alt="Reddit" />
+          </div>
+          <div>
+            <div class="communityLabel">Subreddit</div>
+            <div class="communitySubLabel">r/TheVendorList</div>
+          </div>
+        </a>
+
+        <a href="/faq.html" class="communityCard">
+          <div class="communityIcon">🔍</div>
+          <div>
+            <div class="communityLabel">FAQ</div>
+            <div class="communitySubLabel">Frequently asked questions</div>
+          </div>
+        </a>
+
+        <a href="https://www.reddit.com/user/fuckuneedthisfor/" class="communityCard" target="_blank" rel="noopener noreferrer">
+          <div class="communityIcon">💬</div>
+          <div>
+            <div class="communityLabel">Contact</div>
+            <div class="communitySubLabel">Message me</div>
+          </div>
+        </a>
+
+      </div>
+
+    </div><!-- /mainContainer -->
+
+    <footer class="footer">
+      Need to get in contact? message me on <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a> or join the <a href="https://discord.gg/mqwB9xp8rJ/">discord server</a>.
+    </footer>
+
+  </body>
+</html>
