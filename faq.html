@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The Vendor List - FAQ</title>
+    <title>The Vendor List – FAQ</title>
     <link rel="icon" type="image/x-icon" href="Resources/favicon.ico" />
 
     <style>
@@ -11,8 +11,7 @@
         --background: #121212;
         --primary: #bb86fc;
         --text: #ffffff;
-        --text-secondary: #a0a0a0;
-        --max-content-width: 1000px;
+        --textSecondary: #bdbdbd;
       }
 
       ::-webkit-scrollbar { width: 12px; height: 12px; }
@@ -37,17 +36,17 @@
         display: flex;
         flex-direction: column;
         position: relative;
+        min-height: 100vh;
       }
 
-      .animated-bg {
+      .animatedBg {
         position: fixed;
-        top: 0;
-        left: 0;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle at 30% 30%, rgba(187, 134, 252, 0.2), transparent 40%),
-                    radial-gradient(circle at 70% 60%, rgba(0, 255, 255, 0.15), transparent 40%),
-                    radial-gradient(circle at 50% 80%, rgba(255, 0, 128, 0.2), transparent 40%);
+        top: 0; left: 0;
+        width: 200%; height: 200%;
+        background:
+          radial-gradient(circle at 30% 30%, rgba(187, 134, 252, 0.2), transparent 40%),
+          radial-gradient(circle at 70% 60%, rgba(0, 255, 255, 0.15), transparent 40%),
+          radial-gradient(circle at 50% 80%, rgba(255, 0, 128, 0.2), transparent 40%);
         filter: blur(80px);
         z-index: 0;
         animation: moveCircles 20s ease-in-out infinite alternate;
@@ -55,16 +54,16 @@
       }
 
       @keyframes moveCircles {
-        0% { transform: translate(0%, 0%); }
+        0%   { transform: translate(0%, 0%); }
         100% { transform: translate(-25%, -20%); }
       }
 
-      body > *:not(.animated-bg) { position: relative; z-index: 1; }
+      body > *:not(.animatedBg) { position: relative; z-index: 1; }
 
+      /* ── Header ── */
       .header {
         position: fixed;
-        top: 0;
-        width: 100%;
+        top: 0; width: 100%;
         background: linear-gradient(145deg, rgba(44, 33, 58, 0.95), rgba(30, 22, 42, 0.95));
         backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(187, 134, 252, 0.2);
@@ -73,32 +72,28 @@
         padding: 1rem 1.5rem;
       }
 
-      .header-content {
+      .headerContent {
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 1rem;
       }
 
-      .header-content h1 {
+      .headerContent h1 {
         font-size: 1.6rem;
         font-weight: 700;
         background: linear-gradient(135deg, #bb86fc, #f7b268);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        flex: 1 1 0;
-        min-width: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
         letter-spacing: -0.02em;
+        white-space: nowrap;
       }
 
-      .nav-buttons { display: flex; gap: 0.75rem; flex-wrap: nowrap; white-space: nowrap; }
+      .navButtons { display: flex; gap: 0.75rem; flex-wrap: nowrap; }
 
-      .nav-button {
-        background: linear-gradient(145deg, rgba(187,134,252,0.15), rgba(187,134,252,0.05));
+      .navButton {
+        background: linear-gradient(145deg, rgba(187, 134, 252, 0.15), rgba(187, 134, 252, 0.05));
         border: 1px solid rgba(187, 134, 252, 0.4);
         border-radius: 8px;
         padding: 0.6rem 1.2rem;
@@ -110,91 +105,161 @@
         white-space: nowrap;
       }
 
-      .nav-button:hover {
+      .navButton:hover {
         color: #fff;
         border-color: var(--primary);
         box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
         transform: translateY(-2px);
       }
 
-      .notification-legal {
-        width: fit-content;
-        max-width: 93%;
-        margin: 6rem auto 2rem;
-        padding: 0.75rem 1.5rem;
-        background: var(--primary);
-        color: var(--background);
-        font-weight: 600;
-        border-radius: 10px;
+      /* ── Main ── */
+      .mainContainer {
+        margin-top: 80px;
+        padding: 2rem 1.5rem 4rem;
+        width: 100%;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .pageTitle {
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        background: linear-gradient(135deg, #bb86fc, #f7b268);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
         text-align: center;
-        box-shadow: 0 4px 10px rgba(187, 134, 252, 0.4);
-        font-size: 1rem;
+      }
+
+      .pageSubtitle {
+        font-size: 0.95rem;
+        color: var(--textSecondary);
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+
+      .divider {
+        width: 100%;
+        max-width: 760px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(187, 134, 252, 0.3), transparent);
+        margin-bottom: 2.5rem;
+      }
+
+      /* ── FAQ cards ── */
+      .faqList {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+        width: 100%;
+        max-width: 760px;
+      }
+
+      .faqCard {
+        background: linear-gradient(145deg, rgba(187, 134, 252, 0.0075), rgba(187, 134, 252, 0.025));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+
+      .faqCard:hover { transform: translateY(-4px); border-color: rgba(187, 134, 252, 0.25); }
+
+      .faqHeader {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1.25rem 1.5rem;
+        cursor: pointer;
         user-select: none;
       }
 
-      .content-container {
-        flex: 1;
-        margin: 0 auto 2rem;
-        max-width: var(--max-content-width);
-        padding: 0 1.5rem;
-        width: 100%;
-      }
+      .faqEmoji { font-size: 1.3rem; flex-shrink: 0; }
 
-      .faq-card {
-        background: linear-gradient(145deg, rgba(187,134,252,0.0075), rgba(187,134,252,0.025));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 1.5rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        margin-bottom: 1.5rem;
-        transition: transform 0.2s ease;
-      }
-
-      .faq-card:hover {
-        transform: translateY(-5px);
-      }
-
-      .faq-card h2 {
-        margin: 0 0 1rem 0;
-        font-size: 1.4rem;
+      .faqQuestion {
+        font-size: 1.05rem;
+        font-weight: 700;
         color: var(--primary);
+        flex: 1;
       }
 
-      .faq-card p {
-        margin: 0 0 0.75rem 0;
-        font-size: 0.95rem;
-        color: var(--text-secondary);
-        line-height: 1.6;
+      .faqChevron {
+        font-size: 0.8rem;
+        color: rgba(205, 178, 255, 0.5);
+        transition: transform 0.25s ease;
+        flex-shrink: 0;
       }
 
-      .faq-card p:last-child {
-        margin-bottom: 0;
+      .faqCard.open .faqChevron { transform: rotate(180deg); }
+
+      .faqBody {
+        display: none;
+        padding: 0 1.5rem 1.4rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
       }
 
-      .faq-card b {
-        color: var(--text);
+      .faqCard.open .faqBody { display: block; }
+
+      .faqBody p {
+        font-size: 0.93rem;
+        color: var(--textSecondary);
+        line-height: 1.7;
+        margin-top: 1rem;
       }
 
-      .faq-card a {
+      .faqBody p + p { margin-top: 0.75rem; }
+
+      .faqBody b { color: var(--text); }
+
+      .faqBody a {
         color: var(--primary);
         text-decoration: none;
       }
 
-      .faq-card a:hover {
-        text-decoration: underline;
+      .faqBody a:hover { text-decoration: underline; }
+
+      /* ── Rating rows ── */
+      .ratingRows {
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+        margin-top: 1rem;
       }
 
-      .rating {
-        color: #ffcc00;
-        font-size: 1rem;
+      .ratingRow {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.93rem;
+        color: var(--textSecondary);
+      }
+
+      .stars {
         display: inline-flex;
         gap: 2px;
-        align-items: center;
-        margin: 0 4px;
+        flex-shrink: 0;
       }
 
-      .rating svg { margin-right: 2px; }
+      /* ── Legal banner ── */
+      .legalBanner {
+        width: 100%;
+        max-width: 760px;
+        background: rgba(187, 134, 252, 0.12);
+        border: 1px solid rgba(187, 134, 252, 0.3);
+        border-radius: 10px;
+        padding: 0.75rem 1.25rem;
+        font-size: 0.85rem;
+        color: rgba(205, 178, 255, 0.85);
+        text-align: center;
+        margin-bottom: 2rem;
+      }
 
+      /* ── Footer ── */
       .footer {
         width: 100%;
         background-color: rgb(44, 33, 58);
@@ -203,7 +268,6 @@
         font-size: 0.8rem;
         color: rgb(124, 107, 155);
         border-top: 1px solid rgba(255, 255, 255, 0.1);
-        margin-top: auto;
       }
 
       .footer a { color: var(--primary); text-decoration: none; }
@@ -211,163 +275,109 @@
 
       @media (max-width: 768px) {
         html { font-size: 14px; }
-
         .header { padding: 0.75rem 1rem; }
-
-        .header-content { gap: 0.5rem; }
-
-        .header-content h1 {
-          font-size: 1.2rem;
-          font-weight: 600;
-        }
-
-        .nav-button {
-          padding: 0.4rem 0.8rem;
-          font-size: 0.75rem;
-        }
-
-        .notification-legal {
-          margin-top: 5.5rem;
-        }
-
-        .content-container {
-          padding: 0 1rem;
-        }
-      }
-
-      @media (max-width: 400px) {
-        html { font-size: 13px; }
+        .headerContent h1 { font-size: 1.2rem; }
+        .navButton { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+        .mainContainer { padding: 1.5rem 1rem 3rem; }
       }
     </style>
   </head>
 
   <body>
-    <div class="animated-bg"></div>
+    <div class="animatedBg"></div>
 
     <header class="header">
-      <div class="header-content">
-        <h1>💫 The Vendor List - FAQ</h1>
-        <div class="nav-buttons">
-          <a href="https://discord.gg/mqwB9xp8rJ" class="nav-button">Discord</a>
-          <a href="https://www.reddit.com/r/TheVendorList/" class="nav-button">Subreddit</a>
-          <a href="https://1208s1620.github.io/index" class="nav-button">Home</a>
+      <div class="headerContent">
+        <h1>💫 The Vendor List</h1>
+        <div class="navButtons">
+          <a href="index.html" class="navButton">Home</a>
+          <a href="vendors.html" class="navButton">Vendors</a>
         </div>
       </div>
     </header>
 
-    <div class="notification-legal">⚖️ Laws vary by state — check with vendors about shipping. Most will still ship regardless.</div>
+    <div class="mainContainer">
+      <h2 class="pageTitle">Frequently Asked Questions</h2>
+      <p class="pageSubtitle">Everything you need to know about The Vendor List.</p>
+      <div class="divider"></div>
 
-    <div class="content-container">
-      <div class="faq-card">
-        <h2>💫 The Vendor List:</h2>
-        <p><b>The Vendor List is a curated hub connecting customers with legal vendors.</b> It helps users find trustworthy vendors who prioritize safety and reliability, ensuring you won't get scammed. Beyond just listings, it also connects you with other communities and similar sites, expanding your network for discovering even more vendors. Completely non-profit, <b>The Vendor List exists solely to serve the community—no monetary gain is sought.</b></p>
-      </div>
+      <div class="legalBanner">⚖️ Laws vary by state — check with vendors about shipping restrictions in your area.</div>
 
-      <div class="faq-card">
-        <h2>🏆 The rating system:</h2>
-        <p id="rating-container"></p>
-      </div>
-
-      <div class="faq-card">
-        <h2>⚠️ Legal & Safety Notice:</h2>
-        <p><b>Cannabis Products:</b> All hemp-derived cannabis products listed contain less than 0.3% Delta-9 THC by dry weight, which is below the federal legal limit. While these products are considered federally compliant, individual reactions may vary and state laws differ.</p>
-        <p><b>Other Substances:</b> Various other products may be listed including research chemicals, psychedelics, and other substances. Legal status varies significantly by jurisdiction and substance. It is your responsibility to verify the legality of any substance in your location before purchasing or possessing it.</p>
-        <p><b>Safety First:</b> Keep all products out of reach of children and pets. Consult your healthcare provider if you are pregnant, nursing, or have medical conditions before use.</p>
-        <p><b>Always research and follow proper usage guidelines for any substance. Check resources like <a href="https://erowid.org" target="_blank">Erowid</a> or <a href="https://psychonautwiki.org" target="_blank">PsychonautWiki</a> for dosage information and safety guidelines. Misuse or inaccurate dosing may result in serious adverse effects or, depending on the substance, could be life-threatening.</b></p>
-      </div>
-
-      <div class="faq-card">
-        <h2>⚖️ Liability Disclaimer:</h2>
-        <p><b>The Vendor List</b> and its owners are not responsible for any injury, harm, or adverse effects resulting from the use of these products. Any claims, complaints, or legal actions must be directed solely to the product vendor, as the website serves only as a platform and does not manufacture or control the products listed.</p>
-      </div>
+      <div class="faqList" id="faqList"></div>
     </div>
 
     <footer class="footer">
-      Need to get in contact? message me on <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a> or join the <a href="https://discord.gg/ASPwEKFWWj/">discord server</a>.
+      Need to get in contact? message me on <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a> or join the <a href="https://discord.gg/mqwB9xp8rJ/">discord server</a>.
     </footer>
 
     <script>
-      function createStarRating(rating) {
-        const starsContainer = document.createElement('span');
-        starsContainer.className = 'rating';
-        for (let i = 0; i < 3; i++) {
-          starsContainer.appendChild(createStarSVG(i, rating));
+      const faqs = [
+        {
+          emoji: "💫",
+          question: "What is The Vendor List?",
+          answer: `
+        <p><b>The Vendor List</b> is a community-curated directory of vendors offering a range of substances. It serves as a central hub where you can browse different vendors and what they sell, our goal is to help you find what your looking for faster.</p>
+        <p><b>Non-Profit:</b> This project is completely non-profit — <b>The Vendor List exists solely to serve the community and does not seek any monetary gain.</b></p>
+        `
+        },
+        {
+          emoji: "⚖️",
+          question: "What's the legal situation?",
+          answer: `<p><b>Legal Responsibility:</b> The legal status of substances varies by jurisdiction. It is <b>your responsibility</b> to verify the legality of any substance before purchasing, possessing, or using it.</p>
+                  <p><b>Illegal substances:</b> Some vendors may offer substances that are illegal in certain areas. <b>The Vendor List</b> and its owners are not responsible for any legal consequences, fines, or penalties that may result. Users assume full responsibility for their actions and any risks involved.</p>
+                  <p><b>Always research proper usage guidelines.</b> Check <a href="https://erowid.org" target="_blank">Erowid</a> or <a href="https://psychonautwiki.org" target="_blank">PsychonautWiki</a> for dosage and safety information. Inaccurate dosing may result in serious harm.</p>`
+        },
+        {
+          emoji: "📬",
+          question: "How do I get in contact or suggest a vendor?",
+          answer: `<p>You can reach out directly on <a href="https://www.reddit.com/user/fuckuneedthisfor/" target="_blank">Reddit</a> or join the <a href="https://discord.gg/mqwB9xp8rJ" target="_blank">Discord server</a>. Community feedback is always welcome — whether it's a rating dispute, a vendor suggestion, or a general question.</p>`
+        },
+        {
+          emoji: "⚠️",
+          question: "Harm reduction",
+          answer: `
+        <p><b>Research:</b> Before trying any substance, take time to thoroughly research its effects, risks, and proper usage. Individual reactions can vary greatly depending on body chemistry, tolerance, and environment.</p>
+        <p><b>Dosing & Combining:</b> Always start with the lowest possible dose. Avoid combining substances, especially if their interactions are not well understood.</p>
+        <p><b>Testing:</b> Verify what you have using a reliable reagent test kit. Misidentified or adulterated substances are a common source of harm.</p>
+        <p><b>Resources:</b> For detailed, experience-based, and scientific information, visit 
+        <a href="https://erowid.org" target="_blank">Erowid</a> and 
+        <a href="https://psychonautwiki.org" target="_blank">PsychonautWiki</a>.</p>`
+        },
+        {
+          emoji: "🛡️",
+          question: "Liability disclaimer",
+          answer: `<p><b>The Vendor List</b> and its owners are not responsible for any injury, harm, legal consequences, or other adverse effects resulting from the use, purchase, or possession of products listed on this site. All transactions, interactions, and disputes are solely between you and the vendor. This website acts only as a directory and does not manufacture, sell, or control any of the listed products.</p>`
         }
-        return starsContainer;
-      }
-
-      function createStarSVG(starIndex, rating) {
-        const star = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        star.setAttribute('width', '16');
-        star.setAttribute('height', '16');
-        star.setAttribute('viewBox', '0 0 24 24');
-        const starPath = 'M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z';
-        if (starIndex < rating && starIndex >= Math.floor(rating)) {
-          createHalfStar(star, starIndex, starPath);
-        } else {
-          createFullStar(star, starIndex, rating, starPath);
-        }
-        return star;
-      }
-
-      function createHalfStar(star, starIndex, starPath) {
-        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-        const mask = document.createElementNS('http://www.w3.org/2000/svg', 'mask');
-        mask.setAttribute('id', `half-mask-${starIndex}`);
-        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        rect.setAttribute('x', '0'); rect.setAttribute('y', '0');
-        rect.setAttribute('width', '12'); rect.setAttribute('height', '24');
-        rect.setAttribute('fill', 'white');
-        mask.appendChild(rect); defs.appendChild(mask); star.appendChild(defs);
-        const filledPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        filledPath.setAttribute('d', starPath); filledPath.setAttribute('fill', '#ffcc00');
-        filledPath.setAttribute('mask', `url(#half-mask-${starIndex})`);
-        star.appendChild(filledPath);
-        const outlinePath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        outlinePath.setAttribute('d', starPath); outlinePath.setAttribute('fill', 'none');
-        outlinePath.setAttribute('stroke', '#ffcc00'); outlinePath.setAttribute('stroke-width', '2');
-        outlinePath.setAttribute('stroke-linejoin', 'round');
-        star.appendChild(outlinePath);
-      }
-
-      function createFullStar(star, starIndex, rating, starPath) {
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', starPath);
-        path.setAttribute('fill', starIndex < Math.floor(rating) ? '#ffcc00' : 'none');
-        path.setAttribute('stroke', '#ffcc00'); path.setAttribute('stroke-width', '2');
-        path.setAttribute('stroke-linejoin', 'round');
-        star.appendChild(path);
-      }
-
-      const ratingContainer = document.getElementById("rating-container");
-
-      const ratings = [
-        { label: "Vendors widely recognized as the very best in the community, known for their exceptional quality and consistency.", value: 3 },
-        { label: "Vendors who reliably provide quality products, though not necessarily regarded as top quality in the community.", value: 2 },
-        { label: "Vendors who consistently provide products, though not necessarily regarded as good quality in the community.", value: 1 },
-        { label: "Vendors you should avoid at all costs.", value: 0 },
-        { label: "If you disagree with a rating, reach out on Discord or Reddit. Ratings are based on multiple Reddit posts and my own experience when applicable. I aim to keep the list accurate and helpful, and community feedback is always welcome." }
       ];
 
-      const ratingsWrapper = document.createElement("div");
-      ratingsWrapper.style.cssText = "display: flex; flex-direction: column; gap: 8px;";
+      const list = document.getElementById('faqList');
 
-      ratings.forEach(rating => {
-        const row = document.createElement("div");
-        row.style.cssText = "display: flex; align-items: center; gap: 10px;";
-        if (rating.value != null) {
-          const starsContainer = createStarRating(rating.value);
-          starsContainer.style.cssText = "display: flex; align-items: center;";
-          row.appendChild(starsContainer);
-        }
-        const label = document.createElement("span");
-        label.textContent = rating.label;
-        label.style.cssText = "display: inline-block; vertical-align: middle;";
-        row.appendChild(label);
-        ratingsWrapper.appendChild(row);
+      faqs.forEach((faq, idx) => {
+        const card = document.createElement('div');
+        card.className = 'faqCard';
+
+        const header = document.createElement('div');
+        header.className = 'faqHeader';
+        header.innerHTML = `<span class="faqEmoji">${faq.emoji}</span><span class="faqQuestion">${faq.question}</span><span class="faqChevron">▼</span>`;
+
+        const body = document.createElement('div');
+        body.className = 'faqBody';
+        body.innerHTML = faq.answer;
+
+        header.addEventListener('click', () => {
+          const isOpen = card.classList.contains('open');
+          document.querySelectorAll('.faqCard').forEach(c => c.classList.remove('open'));
+          if (!isOpen) card.classList.add('open');
+        });
+
+        card.appendChild(header);
+        card.appendChild(body);
+        list.appendChild(card);
+
+        // open first by default
+        if (idx === 0) card.classList.add('open');
       });
 
-      ratingContainer.appendChild(ratingsWrapper);
     </script>
   </body>
 </html>
