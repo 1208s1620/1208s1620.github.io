@@ -1034,7 +1034,7 @@
         vendors = v;
 
         // Derive harm-reduction tabs: all categories except "All" and "Marijuana"
-        const HARM_REDUCTION_TABS = categories.filter(c => c !== 'All' && c !== 'Marijuana');
+        const HARM_REDUCTION_TABS = categories.filter(c => c !== 'Marijuana');
 
         const favsKey = 'tvl_favorites';
         function loadFavorites() {
