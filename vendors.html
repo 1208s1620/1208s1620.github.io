@@ -1,1679 +1,1327 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>The Vendor List</title>
-    <link rel="icon" type="image/x-icon" href="Resources/favicon.ico" />
-
-    <style>
-      :root {
-        --background: #121212;
-        --primary: #bb86fc;
-        --text: #ffffff;
-        --textSecondary: #bdbdbd;
-      }
-
-      ::-webkit-scrollbar { width: 12px; height: 12px; }
-      ::-webkit-scrollbar-track { background: #110616; }
-      ::-webkit-scrollbar-thumb { background-color: rgb(205, 178, 255); }
-      ::-webkit-scrollbar-thumb:hover { background-color: rgb(161, 140, 199); }
-
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-
-      html, body {
-        height: 100%;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        background-color: var(--background);
-        color: var(--text);
-        scroll-behavior: smooth;
-        overflow-x: hidden;
-        font-size: 16px;
-        line-height: 1.5;
-      }
-
-      body {
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        min-height: 100vh;
-      }
-
-      /* ── Galaxy Background ── */
-      .animatedBg,
-      .animatedBg::before,
-      .animatedBg::after {
-        position: fixed;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      .animatedBg {
-        background:
-          radial-gradient(ellipse 60% 40% at 30% 40%, rgba(150,90,220,0.32) 0%, transparent 70%),
-          radial-gradient(ellipse 50% 60% at 75% 60%, rgba(30,60,180,0.22) 0%, transparent 70%),
-          radial-gradient(ellipse 55% 45% at 55% 85%, rgba(200,120,180,0.18) 0%, transparent 70%),
-          radial-gradient(ellipse 40% 50% at 10% 70%, rgba(60,30,160,0.2) 0%, transparent 65%),
-          radial-gradient(ellipse 35% 35% at 88% 15%, rgba(90,50,200,0.18) 0%, transparent 60%);
-        filter: blur(60px);
-        animation: galaxyRotate 40s linear infinite;
-      }
-
-      .animatedBg::before {
-        content: '';
-        background:
-          radial-gradient(ellipse 70% 50% at 60% 30%, rgba(160,90,220,0.12) 0%, transparent 60%),
-          radial-gradient(ellipse 40% 60% at 20% 80%, rgba(40,60,180,0.14) 0%, transparent 55%),
-          radial-gradient(ellipse 50% 40% at 85% 70%, rgba(200,120,180,0.10) 0%, transparent 55%);
-        filter: blur(40px);
-        animation: galaxyPulse 8s ease-in-out infinite alternate;
-      }
-
-      .animatedBg::after {
-        content: '';
-        background:
-          radial-gradient(ellipse 30% 30% at 50% 50%, rgba(130,70,220,0.18) 0%, transparent 70%),
-          radial-gradient(ellipse 25% 25% at 70% 20%, rgba(30,50,160,0.15) 0%, transparent 60%);
-        filter: blur(50px);
-        animation: galaxyDrift 14s ease-in-out infinite alternate;
-      }
-
-      @keyframes galaxyRotate {
-        0%   { transform: rotate(0deg)   scale(1);    }
-        33%  { transform: rotate(120deg) scale(1.08); }
-        66%  { transform: rotate(240deg) scale(0.95); }
-        100% { transform: rotate(360deg) scale(1);    }
-      }
-
-      @keyframes galaxyPulse {
-        0%   { opacity: 0.4; transform: scale(1)    translateX(0px);   }
-        50%  { opacity: 1;   transform: scale(1.05) translateX(-15px); }
-        100% { opacity: 0.6; transform: scale(0.97) translateX(10px);  }
-      }
-
-      @keyframes galaxyDrift {
-        0%   { transform: translate(0px, 0px)   scale(1);    opacity: 0.5; }
-        100% { transform: translate(40px, -30px) scale(1.12); opacity: 1;  }
-      }
-
-      body > *:not(.animatedBg) { position: relative; z-index: 1; }
-
-      .pwModalOverlay { position: fixed !important; z-index: 9999 !important; }
-
-      .header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        background: linear-gradient(145deg, rgba(44, 33, 58, 0.95), rgba(30, 22, 42, 0.95));
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(187, 134, 252, 0.2);
-        box-shadow: 0 4px 20px rgba(187, 134, 252, 0.15);
-        z-index: 1000;
-        padding: 1rem 1.5rem;
-      }
-
-      .headerContent {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 1rem;
-      }
-
-      .headerContent h1 {
-        font-size: 1.6rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, #bb86fc, #f7b268);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        flex: 1 1 0;
-        min-width: 0;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        letter-spacing: -0.02em;
-      }
-
-      .headerTotal {
-        color: var(--textSecondary);
-        -webkit-text-fill-color: var(--textSecondary);
-        background: none;
-        -webkit-background-clip: initial;
-        background-clip: initial;
-      }
-
-      .navButtons { display: flex; gap: 0.75rem; flex-wrap: nowrap; white-space: nowrap; }
-
-      .navButton {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.15), rgba(187, 134, 252, 0.05));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.6rem 1.2rem;
-        font-size: 0.85rem;
-        font-weight: 600;
-        text-decoration: none;
-        color: rgb(205, 178, 255);
-        transition: all 0.3s ease;
-        white-space: nowrap;
-      }
-
-      .navButton:hover {
-        color: #fff;
-        border-color: var(--primary);
-        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
-        transform: translateY(-2px);
-      }
-
-      .tabBar {
-        position: fixed;
-        top: 15px;
-        width: 100%;
-        background-color: transparent;
-        z-index: 999;
-        padding: 0 1.5rem;
-        overflow: visible;
-      }
-
-      .tabBarInner {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.0075), rgba(187, 134, 252, 0.025));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        padding: 0.6rem 0.75rem;
-        margin-top: 0.5rem;
-      }
-
-      .tabButtons { 
-        display: flex; 
-        gap: 0.75rem; 
-        flex-wrap: wrap;
-        scrollbar-width: none;
-       }
-
-      .tabButton {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.15), rgba(187, 134, 252, 0.05));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.6rem 1rem;
-        color: rgb(205, 178, 255);
-        font-weight: 500;
-        cursor: pointer;
-        backdrop-filter: blur(4px);
-        
-        transition: all 0.2s ease;
-        font-size: 0.9rem;
-      }
-
-      .tabButton:hover {
-        border-color: var(--primary);
-        
-        transform: translateY(-2px);
-      }
-
-      .tabButton.active {
-        border-color: var(--primary);
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.25), rgba(187, 134, 252, 0.15));
-        
-      }
-
-      .mainContainer {
-        margin-top: 40px;
-        padding: 0 1.5rem 2rem 1.5rem;
-        width: 100%;
-        flex: 1;
-      }
-
-      .contentArea { display: flex; gap: 2rem; width: 100%; min-height: 60vh; }
-
-      .tabContent { display: none; width: 100%; }
-      .tabContent.active { display: flex; gap: 2rem; width: 100%; }
-
-      .leftColumn {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        width: 250px;
-        flex-shrink: 0;
-        height: fit-content;
-      }
-
-      .subtabsPanel {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.0075), rgba(187, 134, 252, 0.025));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        overflow: hidden;
-      }
-
-      .subtabsPanel h3 {
-        font-size: 0.72rem;
-        font-weight: 700;
-        color: rgba(187, 134, 252, 0.55);
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        padding: 0.9rem 1rem 0.5rem 1rem;
-        margin: 0;
-      }
-
-      .subtabItem {
-        display: flex;
-        align-items: center;
-        gap: 0.55rem;
-        width: 100%;
-        padding: 0.6rem 1rem;
-        background: none;
-        border: none;
-        border-left: 2px solid transparent;
-        color: rgba(205, 178, 255, 0.65);
-        font-size: 0.9rem;
-        font-weight: 500;
-        font-family: inherit;
-        cursor: pointer;
-        text-align: left;
-        transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
-      }
-
-      .subtabItem:not(:last-child) {
-        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      }
-
-      .subtabItem:hover {
-        color: #fff;
-        background: rgba(187, 134, 252, 0.08);
-        border-left-color: rgba(187, 134, 252, 0.4);
-      }
-
-      .subtabItem.active {
-        color: #fff;
-        background: rgba(187, 134, 252, 0.13);
-        border-left-color: var(--primary);
-        font-weight: 600;
-      }
-
-      .subtabCount {
-        margin-left: auto;
-        font-size: 0.72rem;
-        font-weight: 500;
-        color: rgba(187, 134, 252, 0.45);
-        background: rgba(187, 134, 252, 0.1);
-        border-radius: 8px;
-        padding: 1px 6px;
-      }
-
-      .tabButton .subtabCount {
-        margin-left: 10px;
-        margin-right: -5px;
-        padding: 3px 6px;
-        position: relative;
-        top: -1px;
-      }
-
-      .tabButton.active .subtabCount {
-        color: rgba(205, 178, 255, 0.75);
-        background: rgba(187, 134, 252, 0.2);
-        margin-left: 10px;
-        margin-right: -5px;
-      }
-
-      .subtabItem.active .subtabCount {
-        color: rgba(205, 178, 255, 0.75);
-        background: rgba(187, 134, 252, 0.2);
-      }
-
-      .sortingPanel {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.0075), rgba(187, 134, 252, 0.025));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 1.5rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        height: fit-content;
-        position: relative;
-      }
-
-      .sortingPanel h3 { margin: 0 0 0.6rem 0; font-size: 1rem; color: var(--primary); font-weight: 600; }
-
-      .searchWrapper { position: relative; margin-bottom: 1.25rem; }
-
-      .searchWrapper svg {
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-        opacity: 0.5;
-      }
-
-      .searchInput {
-        width: 100%;
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.10), rgba(187, 134, 252, 0.04));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.55rem 2rem 0.55rem 2.2rem;
-        color: #fff;
-        font-size: 0.88rem;
-        font-family: inherit;
-        outline: none;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .searchInput::placeholder { color: rgba(205, 178, 255, 0.45); }
-
-      .searchInput:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.15);
-      }
-
-      .searchClear {
-        position: absolute;
-        right: 8px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: rgba(205, 178, 255, 0.55);
-        cursor: pointer;
-        font-size: 1rem;
-        line-height: 1;
-        padding: 2px 4px;
-        border-radius: 4px;
-        display: none;
-        transition: color 0.15s ease;
-      }
-
-      .searchClear:hover { color: #fff; }
-
-      .noResultsCard {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.0075), rgba(187, 134, 252, 0.025));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 1.5rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        color: var(--textSecondary);
-        font-size: 0.95rem;
-      }
-
-      /* ── Custom Sort Dropdown ── */
-      .customDropdown {
-        position: relative;
-        width: 100%;
-        user-select: none;
-      }
-
-      .customDropdownSelected {
-        width: 100%;
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.12), rgba(187, 134, 252, 0.05));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.6rem 0.8rem;
-        color: rgb(205, 178, 255);
-        font-size: 0.9rem;
-        font-weight: 500;
-        font-family: inherit;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.5rem;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
-      }
-
-      .customDropdownSelected:hover,
-      .customDropdown.open .customDropdownSelected {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(187, 134, 252, 0.15);
-        color: #fff;
-      }
-
-      .customDropdownArrow {
-        flex-shrink: 0;
-        transition: transform 0.2s ease;
-        opacity: 0.7;
-      }
-
-      .customDropdown.open .customDropdownArrow {
-        transform: rotate(180deg);
-      }
-
-      .customDropdownOptions {
-        display: none;
-        position: absolute;
-        top: calc(100% + 5px);
-        left: 0;
-        width: 100%;
-        background: linear-gradient(145deg, rgba(40, 28, 56, 0.98), rgba(24, 14, 38, 0.98));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 10px;
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(187, 134, 252, 0.08);
-        z-index: 200;
-        overflow: hidden;
-        backdrop-filter: blur(16px);
-      }
-
-      .customDropdown.open .customDropdownOptions {
-        display: block;
-        animation: dropdownIn 0.15s ease;
-      }
-
-      @keyframes dropdownIn {
-        from { opacity: 0; transform: translateY(-4px); }
-        to   { opacity: 1; transform: translateY(0); }
-      }
-
-      .customDropdownOption {
-        padding: 0.58rem 0.9rem;
-        color: rgb(205, 178, 255);
-        font-size: 0.9rem;
-        font-weight: 500;
-        font-family: inherit;
-        cursor: pointer;
-        transition: background 0.15s ease, color 0.15s ease;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-
-      .customDropdownOption:not(:last-child) {
-        border-bottom: 1px solid rgba(187, 134, 252, 0.08);
-      }
-
-      .customDropdownOption:hover {
-        background: rgba(187, 134, 252, 0.14);
-        color: #fff;
-      }
-
-      .customDropdownOption.selected {
-        background: rgba(187, 134, 252, 0.2);
-        color: #fff;
-      }
-
-      .customDropdownOption.selected::after {
-        content: '✓';
-        margin-left: auto;
-        font-size: 0.8rem;
-        color: var(--primary);
-        opacity: 0.9;
-      }
-
-      .sortOrderBtn {
-        margin-top: 0.75rem;
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.15), rgba(187, 134, 252, 0.05));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.6rem 0.8rem;
-        color: rgb(205, 178, 255);
-        cursor: pointer;
-        font-size: 0.9rem;
-        font-weight: 500;
-        transition: all 0.2s ease;
-        width: 100%;
-        text-align: center;
-        backdrop-filter: blur(4px);
-        box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
-      }
-
-      .sortOrderBtn:hover {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.2), rgba(187, 134, 252, 0.1));
-        border-color: var(--primary);
-        color: #fff;
-        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
-      }
-
-      .rankingList { display: flex; flex-direction: column; gap: 1.5rem; flex: 1; width: 100%; }
-
-      .rankCard {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.0075), rgba(187, 134, 252, 0.025));
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 1.5rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        transition: transform 0.2s ease, opacity 0.3s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-        display: flex;
-        flex-direction: column;
-        word-break: break-word;
-        opacity: 0;
-        position: relative;
-      }
-
-      .rankCard.loaded { opacity: 1; }
-      .rankCard:hover { transform: translateY(-5px); }
-
-      .favBtn {
-        position: absolute;
-        top: 0.9rem;
-        right: 0.9rem;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 4px;
-        border-radius: 50%;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-        line-height: 1;
-        opacity: 0.25;
-        transition: opacity 0.18s ease, transform 0.18s ease, background 0.18s ease;
-        z-index: 2;
-      }
-
-      .rankCard:hover .favBtn { opacity: 0.55; }
-      .rankCard .favBtn:hover { opacity: 1 !important; transform: scale(1.22); background: rgba(255, 100, 150, 0.12); }
-      .rankCard.favorited .favBtn { opacity: 1; }
-
-      .rankCard.favorited {
-        background: linear-gradient(145deg, rgba(255, 0, 0, 0.05), rgba(255, 59, 59, 0.025));
-        border-color: rgba(255, 100, 150, 0.38);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 100, 150, 0.12);
-      }
-
-      .harmReductionCard {
-        background: linear-gradient(145deg, rgba(255, 180, 0, 0.07), rgba(255, 120, 0, 0.04));
-        border: 1px solid rgba(255, 180, 0, 0.3);
-        padding: 1.5rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        opacity: 1;
-      }
-
-      .harmReductionCard h2 {
-        margin: 0;
-        font-size: 1.1rem;
-        color: rgb(255, 190, 80);
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .harmReductionCard p {
-        margin: 0;
-        font-size: 0.92rem;
-        color: var(--textSecondary);
-        line-height: 1.6;
-      }
-
-      .harmReductionCard a {
-        color: rgb(255, 190, 80);
-        text-decoration: none;
-      }
-
-      .harmReductionCard a:hover {
-        text-decoration: underline;
-      }
-
-     .favFilterBtn {
-        width: 100%;
-        margin-top: 0.75rem;
-        background: linear-gradient(145deg, rgba(200, 100, 100, 0.08), rgba(200, 100, 100, 0.03));
-        border: 1px solid rgba(200, 100, 100, 0.28);
-        border-radius: 8px;
-        padding: 0.58rem 0.85rem;
-        color: rgba(213, 106, 106, 0.85);
-        cursor: pointer;
-        font-size: 0.88rem;
-        font-weight: 600;
-        font-family: inherit;
-        text-align: left;
-        display: flex;
-        align-items: center;
-        gap: 0.45rem;
-        transition: all 0.2s ease;
-      }
-
-      .favFilterBtn.active {
-        background: linear-gradient(145deg, rgba(80, 200, 100, 0.26), rgba(80, 200, 100, 0.13));
-        border-color: rgba(80, 200, 100, 0.65);
-        color: #d8d8d8;
-        box-shadow: 0 4px 14px rgba(80, 200, 100, 0.2);
-      }
-
-      .favCount {
-        margin-left: auto;
-        background: rgba(255, 100, 150, 0.18);
-        border-radius: 10px;
-        padding: 1px 7px;
-        font-size: 0.76rem;
-        color: rgba(255, 180, 200, 0.9);
-      }
-
-      .rankCard h2 {
-        margin: 0 0 0.5rem 0;
-        font-size: 1.4rem;
-        color: var(--primary);
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 6px;
-        padding-right: 2rem;
-      }
-
-      .vendorWebsiteLink { display: inline-flex; align-items: center; }
-      .vendorWebsiteIcon { height: 20px; width: 20px; object-fit: contain; }
-
-      .rankCard h2 .indicator {
-        display: inline-flex;
-        padding: 1px 4px;
-        font-size: 0.65rem;
-        font-weight: 700;
-        border-radius: 4px;
-        user-select: none;
-      }
-
-      .rankCard p { margin: 0 0 0.75rem 0; font-size: 0.95rem; color: var(--textSecondary); flex-grow: 1; }
-      .rankCard p a { color: #bb86fc; text-decoration: none; }
-
-      .buttonsContainer { margin-top: 1rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
-      .openLinkButton {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.15), rgba(187, 134, 252, 0.05));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 8px;
-        padding: 0.6rem 1.2rem;
-        font-size: 1rem;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 0.7);
-        cursor: pointer;
-        backdrop-filter: blur(4px);
-        box-shadow: 0 4px 12px rgba(187, 134, 252, 0.1);
-        transition: all 0.3s ease;
-        white-space: nowrap;
-      }
-
-      .openLinkButton:hover {
-        color: #fff;
-        border-color: var(--primary);
-        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.25);
-      }
-
-      .footer {
-        width: 100%;
-        background-color: rgb(44, 33, 58);
-        text-align: center;
-        padding: 1rem;
-        font-size: 0.8rem;
-        color: rgb(124, 107, 155);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .footer a { color: var(--primary); text-decoration: none; }
-      .footer a:hover { text-decoration: underline; }
-
-      .indicator.new { background-color: transparent; color: #ff5700; border: 1.5px solid #ff5700; }
-      .indicator.password { background-color: transparent; color: #2eabff; border: 1.5px solid #2eabff; }
-      .indicator.cheap { background-color: transparent; color: #70dd73; border: 1.5px solid #70dd73; }
-      .indicator.recommended { background-color: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
-
-      .issuesTooltipContainer {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        cursor: pointer;
-        width: 22px;
-        height: 22px;
-        user-select: none;
-      }
-
-      .issuesTooltipContainer span.questionMark {
-        display: inline-block;
-        font-size: 1rem;
-        margin-top: -3px;
-      }
-
-      .issuesTooltip {
-        display: none;
-        position: absolute;
-        top: 50%;
-        left: calc(100% + 10px);
-        transform: translateY(-50%);
-        background: linear-gradient(145deg, rgba(40, 28, 56, 0.98), rgba(24, 14, 38, 0.98));
-        border: 1px solid rgba(187, 134, 252, 0.35);
-        border-radius: 12px;
-        box-shadow: 0 12px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(187, 134, 252, 0.08);
-        backdrop-filter: blur(16px);
-        color: var(--textSecondary);
-        white-space: nowrap;
-        z-index: 1000;
-        font-size: 0.85rem;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        line-height: 1.5;
-        min-width: 190px;
-        opacity: 0;
-        transition: opacity 0.2s ease;
-        pointer-events: none;
-      }
-
-      .issuesTooltip.visible {
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .issuesTooltipHeader {
-        background: rgba(187, 134, 252, 0.12);
-        padding: 8px 14px 8px 0;
-        text-indent: 8px;
-        border-bottom: 1px solid rgba(187, 134, 252, 0.15);
-        border-radius: 12px 12px 0 0;
-        font-weight: 700;
-        font-size: 0.78rem;
-        color: rgba(187, 134, 252, 0.8);
-        text-align:left;
-      }
-
-      .issuesTooltipContent {
-        display: flex;
-        flex-direction: column;
-        text-indent: 8px;
-      }
-
-      .issuesTooltip b {
-        color: var(--textSecondary);
-        text-decoration: none;
-        font-size: 0.85rem;
-        padding: 2px 0;
-        display: block;
-        text-align: left;
-        margin-right: 8px;
-      }
-
-      .issuesTooltip a {
-        color: #bb86fc;
-        text-decoration: none;
-        font-size: 0.85rem;
-        padding: 2px 0;
-        display: block;
-        text-align: left;
-        margin-right: 8px;
-      }
-
-      .issuesTooltip a:hover {
-        color: #fff;
-        text-decoration: underline;
-      }
-
-      .issuesTooltip div {
-        color: var(--textSecondary);
-        font-size: 0.85rem;
-        padding: 2px 0;
-      }
-
-     @media (max-width: 1024px) {
-        .contentArea { flex-direction: column; }
-        .tabContent.active { flex-direction: column; }
-        .leftColumn {
-          width: 100%;
-          flex-direction: row;
-          align-items: flex-start;
-        }
-        .sortingPanel {
-          flex: 1;
-          min-width: 0;
-        }
-        .subtabsPanel {
-          flex: 1;
-          min-width: 0;
-          overflow-y: auto;
-          scrollbar-width: none;
-        }
-
-        .subtabsPanel::-webkit-scrollbar { display: none; }
-      }
-
-      @media (max-width: 768px) {
-        html { font-size: 14px; }
-        .header { padding: 0.75rem 1rem; }
-        .headerContent { gap: 0.5rem; }
-        .headerContent h1 { font-size: 1.2rem; font-weight: 600; }
-        .navButton { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
-        .mainContainer { padding: 0 1rem 1.5rem 1rem; margin-top: 25px; }
-        .tabBar { padding: 0 1rem; top: 15px; overflow: visible; }
-        .rankCard h2 { font-size: 1.2rem; flex-wrap: wrap; gap: 8px; }
-        .rankCard h2 .indicator { font-size: 0.75rem; padding: 2px 6px; border-radius: 6px; margin-top: 4px; }
-        .tabButtons {
-          gap: 0.5rem;
-          overflow-x: auto;
-          overflow-y: visible;
-          flex-wrap: nowrap;
-          -webkit-overflow-scrolling: touch;
-          padding: 0.5rem 0;
-          margin: -0.5rem 0;
-        }
-        .tabButtons::-webkit-scrollbar { display: none; }
-        .tabButton { padding: 0.5rem 0.8rem; font-size: 0.85rem; flex-shrink: 0; }
-      }
-
-      @media (max-width: 400px) { html { font-size: 13px; } }
-
-      .pwModalOverlay {
-        display: none;
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.65);
-        backdrop-filter: blur(4px);
-        z-index: 9999;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-      }
-
-      .pwModalOverlay.open { display: flex; }
-
-      .pwModal {
-        background: linear-gradient(145deg, rgba(44, 33, 58, 0.98), rgba(28, 18, 40, 0.98));
-        border: 1px solid rgba(187, 134, 252, 0.35);
-        border-radius: 18px;
-        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(187, 134, 252, 0.1);
-        padding: 2rem;
-        max-width: 480px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 1.25rem;
-        animation: modalIn 0.2s ease;
-      }
-
-      @keyframes modalIn {
-        from { opacity: 0; transform: scale(0.95) translateY(8px); }
-        to { opacity: 1; transform: scale(1) translateY(0); }
-      }
-
-      .pwModalTitle { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
-
-      .pwModalPasswordBox {
-        background: rgba(187, 134, 252, 0.1);
-        border: 1px solid rgba(187, 134, 252, 0.35);
-        border-radius: 10px;
-        padding: 0.75rem 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.75rem;
-      }
-
-      .pwModalPasswordLabel { font-size: 0.75rem; color: rgba(205, 178, 255, 0.6); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px; }
-      .pwModalPasswordValue { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: 0.04em; }
-
-      .pwModalCopyBtn {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.2), rgba(187, 134, 252, 0.08));
-        border: 1px solid rgba(187, 134, 252, 0.4);
-        border-radius: 7px;
-        padding: 0.4rem 0.8rem;
-        color: rgb(205, 178, 255);
-        font-size: 0.8rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        white-space: nowrap;
-        flex-shrink: 0;
-      }
-
-      .pwModalCopyBtn:hover { border-color: var(--primary); color: #fff; }
-
-      .pwModalWarning {
-        font-size: 0.78rem;
-        color: rgba(189, 189, 189, 0.75);
-        line-height: 1.55;
-        border-left: 2px solid rgba(187, 134, 252, 0.4);
-        padding-left: 0.75rem;
-      }
-
-      .pwModalActions { display: flex; gap: 0.75rem; justify-content: flex-end; }
-
-      .pwModalCancel {
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 8px;
-        padding: 0.6rem 1.2rem;
-        color: var(--textSecondary);
-        font-size: 0.9rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-
-      .pwModalCancel:hover { border-color: rgba(255, 255, 255, 0.35); color: #fff; }
-
-      .pwModalProceed {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.3), rgba(187, 134, 252, 0.15));
-        border: 1px solid rgba(187, 134, 252, 0.6);
-        border-radius: 8px;
-        padding: 0.6rem 1.4rem;
-        color: #fff;
-        font-size: 0.9rem;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-
-      .pwModalProceed:hover {
-        background: linear-gradient(145deg, rgba(187, 134, 252, 0.45), rgba(187, 134, 252, 0.25));
-        box-shadow: 0 6px 18px rgba(187, 134, 252, 0.3);
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="animatedBg"></div>
-
-    <div class="pwModalOverlay" id="pwModalOverlay">
-      <div class="pwModal">
-        <div class="pwModalTitle">🔒 Site Password</div>
-        <div class="pwModalPasswordBox">
-          <div>
-            <div class="pwModalPasswordLabel">Password</div>
-            <div class="pwModalPasswordValue" id="pwModalPasswordValue"></div>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>The Vendor List</title>
+  <link rel="icon" type="image/x-icon" href="Resources/favicon.ico"/>
+  <style>
+    /* ── Design Tokens ── */
+    :root {
+      --bg: #121212;
+      --primary: #bb86fc;
+      --text: #fff;
+      --text2: #bdbdbd;
+      /* Shared surfaces */
+      --card-bg: linear-gradient(145deg, rgba(187,134,252,.0075), rgba(187,134,252,.025));
+      --card-border: rgba(255,255,255,.08);
+      --card-shadow: 0 8px 20px rgba(0,0,0,.4);
+      --modal-bg: linear-gradient(145deg, rgba(44,33,58,.98), rgba(28,18,40,.98));
+      --modal-border: rgba(187,134,252,.35);
+      --modal-shadow: 0 24px 60px rgba(0,0,0,.7), 0 0 0 1px rgba(187,134,252,.1);
+    }
+
+    ::-webkit-scrollbar { width: 12px; height: 12px; }
+    ::-webkit-scrollbar-track { background: #110616; }
+    ::-webkit-scrollbar-thumb { background: rgb(205,178,255); }
+    ::-webkit-scrollbar-thumb:hover { background: rgb(161,140,199); }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    body { display: flex; flex-direction: column; position: relative; min-height: 100vh; }
+
+    /* ── Galaxy Background ── */
+    .animatedBg, .animatedBg::before, .animatedBg::after {
+      position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
+      pointer-events: none; z-index: 0;
+    }
+    .animatedBg {
+      background:
+        radial-gradient(ellipse 60% 40% at 30% 40%, rgba(150,90,220,.32) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 75% 60%, rgba(30,60,180,.22) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 45% at 55% 85%, rgba(200,120,180,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 10% 70%, rgba(60,30,160,.2) 0%, transparent 65%),
+        radial-gradient(ellipse 35% 35% at 88% 15%, rgba(90,50,200,.18) 0%, transparent 60%);
+      filter: blur(60px);
+      animation: galaxyRotate 40s linear infinite;
+    }
+    .animatedBg::before {
+      content: '';
+      background:
+        radial-gradient(ellipse 70% 50% at 60% 30%, rgba(160,90,220,.12) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(40,60,180,.14) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 85% 70%, rgba(200,120,180,.10) 0%, transparent 55%);
+      filter: blur(40px);
+      animation: galaxyPulse 8s ease-in-out infinite alternate;
+    }
+    .animatedBg::after {
+      content: '';
+      background:
+        radial-gradient(ellipse 30% 30% at 50% 50%, rgba(130,70,220,.18) 0%, transparent 70%),
+        radial-gradient(ellipse 25% 25% at 70% 20%, rgba(30,50,160,.15) 0%, transparent 60%);
+      filter: blur(50px);
+      animation: galaxyDrift 14s ease-in-out infinite alternate;
+    }
+    @keyframes galaxyRotate {
+      0%   { transform: rotate(0deg)   scale(1); }
+      33%  { transform: rotate(120deg) scale(1.08); }
+      66%  { transform: rotate(240deg) scale(.95); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    @keyframes galaxyPulse {
+      0%   { opacity: .4; transform: scale(1)    translateX(0); }
+      50%  { opacity: 1;  transform: scale(1.05) translateX(-15px); }
+      100% { opacity: .6; transform: scale(.97)  translateX(10px); }
+    }
+    @keyframes galaxyDrift {
+      0%   { transform: translate(0, 0) scale(1);      opacity: .5; }
+      100% { transform: translate(40px,-30px) scale(1.12); opacity: 1; }
+    }
+
+    body > *:not(.animatedBg):not(.modalOverlay) { position: relative; z-index: 1; }
+
+    /* ── Header ── */
+    .header {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      padding: 1rem 1.5rem;
+      background: linear-gradient(145deg, rgba(44,33,58,.95), rgba(30,22,42,.95));
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(187,134,252,.2);
+      box-shadow: 0 4px 20px rgba(187,134,252,.15);
+    }
+    .headerContent { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .headerContent h1 {
+      font-size: 1.6rem; font-weight: 700;
+      background: linear-gradient(135deg, #bb86fc, #f7b268);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      flex: 1 1 0; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      letter-spacing: -.02em;
+    }
+    .headerTotal { color: var(--text2); -webkit-text-fill-color: var(--text2); background: none; -webkit-background-clip: initial; background-clip: initial; }
+    .navButtons { display: flex; gap: .75rem; flex-wrap: nowrap; white-space: nowrap; }
+    .navButton {
+      background: linear-gradient(145deg, rgba(187,134,252,.15), rgba(187,134,252,.05));
+      border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
+      padding: .6rem 1.2rem; font-size: .85rem; font-weight: 600;
+      text-decoration: none; color: rgb(205,178,255); transition: all .3s; white-space: nowrap;
+    }
+    .navButton:hover { color: #fff; border-color: var(--primary); box-shadow: 0 6px 18px rgba(187,134,252,.25); transform: translateY(-2px); }
+    .navButtonGear { padding: .6rem .75rem; font-size: 1rem; line-height: 1; }
+
+    /* ── Tab Bar ── */
+    .tabBar { position: fixed; top: 15px; width: 100%; z-index: 999; padding: 0 1.5rem; overflow: visible; }
+    .tabBarInner {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 16px; box-shadow: var(--card-shadow);
+      padding: .6rem .75rem; margin-top: .5rem;
+    }
+    .tabButtons { display: flex; gap: .75rem; flex-wrap: wrap; scrollbar-width: none; }
+    .tabButton {
+      background: linear-gradient(145deg, rgba(187,134,252,.15), rgba(187,134,252,.05));
+      border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
+      padding: .6rem 1rem; color: rgb(205,178,255); font-weight: 500;
+      cursor: pointer; backdrop-filter: blur(4px); transition: all .2s; font-size: .9rem;
+    }
+    .tabButton:hover { border-color: var(--primary); transform: translateY(-2px); }
+    .tabButton.active { border-color: var(--primary); background: linear-gradient(145deg, rgba(187,134,252,.25), rgba(187,134,252,.15)); }
+
+    /* ── Main Layout ── */
+    .mainContainer { margin-top: 40px; padding: 0 1.5rem 2rem; width: 100%; flex: 1; }
+    .contentArea { display: flex; gap: 2rem; width: 100%; min-height: 60vh; }
+    .tabContent { display: none; width: 100%; }
+    .tabContent.active { display: flex; gap: 2rem; width: 100%; }
+    .leftColumn { display: flex; flex-direction: column; gap: 1rem; width: 250px; flex-shrink: 0; height: fit-content; }
+
+    /* ── Shared Panel Surface ── */
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
+    }
+
+    /* ── Subtabs Panel ── */
+    .subtabsPanel { overflow: hidden; }
+    .subtabsPanel h3 {
+      font-size: .72rem; font-weight: 700; color: rgba(187,134,252,.55);
+      text-transform: uppercase; letter-spacing: .1em; padding: .9rem 1rem .5rem; margin: 0;
+    }
+    .subtabItem {
+      display: flex; align-items: center; gap: .55rem; width: 100%;
+      padding: .6rem 1rem; background: none; border: none; border-left: 2px solid transparent;
+      color: rgba(205,178,255,.65); font-size: .9rem; font-weight: 500;
+      font-family: inherit; cursor: pointer; text-align: left;
+      transition: color .15s, background .15s, border-color .15s;
+    }
+    .subtabItem:not(:last-child) { border-bottom: 1px solid rgba(255,255,255,.04); }
+    .subtabItem:hover { color: #fff; background: rgba(187,134,252,.08); border-left-color: rgba(187,134,252,.4); }
+    .subtabItem.active { color: #fff; background: rgba(187,134,252,.13); border-left-color: var(--primary); font-weight: 600; }
+
+    /* ── Count Badges ── */
+    .subtabCount {
+      margin-left: auto; font-size: .72rem; font-weight: 500;
+      color: rgba(187,134,252,.45); background: rgba(187,134,252,.1);
+      border-radius: 8px; padding: 1px 6px;
+    }
+    .tabButton .subtabCount { margin-left: 10px; margin-right: -5px; padding: 3px 6px; position: relative; top: -1px; }
+    .tabButton.active .subtabCount, .subtabItem.active .subtabCount { color: rgba(205,178,255,.75); background: rgba(187,134,252,.2); }
+
+    /* ── Sorting Panel ── */
+    .sortingPanel { padding: 1.5rem; height: fit-content; position: relative; }
+    .sortingPanel h3 { margin: 0 0 .6rem; font-size: 1rem; color: var(--primary); font-weight: 600; }
+
+    .searchWrapper { position: relative; margin-bottom: 1.25rem; }
+    .searchWrapper svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: .5; }
+    .searchInput {
+      width: 100%;
+      background: linear-gradient(145deg, rgba(187,134,252,.10), rgba(187,134,252,.04));
+      border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
+      padding: .55rem 2rem .55rem 2.2rem; color: #fff; font-size: .88rem;
+      font-family: inherit; outline: none; transition: border-color .2s, box-shadow .2s;
+    }
+    .searchInput::placeholder { color: rgba(205,178,255,.45); }
+    .searchInput:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(187,134,252,.15); }
+    .searchClear {
+      position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; color: rgba(205,178,255,.55);
+      cursor: pointer; font-size: 1rem; line-height: 1; padding: 2px 4px;
+      border-radius: 4px; display: none; transition: color .15s;
+    }
+    .searchClear:hover { color: #fff; }
+
+    /* ── No Results ── */
+    .noResultsCard { padding: 1.5rem; color: var(--text2); font-size: .95rem; }
+
+    /* ── Custom Dropdown ── */
+    .customDropdown { position: relative; width: 100%; user-select: none; }
+    .customDropdownSelected {
+      width: 100%;
+      background: linear-gradient(145deg, rgba(187,134,252,.12), rgba(187,134,252,.05));
+      border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
+      padding: .6rem .8rem; color: rgb(205,178,255); font-size: .9rem; font-weight: 500;
+      font-family: inherit; cursor: pointer; display: flex; align-items: center;
+      justify-content: space-between; gap: .5rem; transition: border-color .2s, box-shadow .2s;
+    }
+    .customDropdownSelected:hover, .customDropdown.open .customDropdownSelected {
+      border-color: var(--primary); box-shadow: 0 0 0 3px rgba(187,134,252,.15); color: #fff;
+    }
+    .customDropdownArrow { flex-shrink: 0; transition: transform .2s; opacity: .7; }
+    .customDropdown.open .customDropdownArrow { transform: rotate(180deg); }
+    .customDropdownOptions {
+      display: none; position: absolute; top: calc(100% + 5px); left: 0; width: 100%;
+      background: linear-gradient(145deg, rgba(40,28,56,.98), rgba(24,14,38,.98));
+      border: 1px solid rgba(187,134,252,.4); border-radius: 10px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.6), 0 0 0 1px rgba(187,134,252,.08);
+      z-index: 200; overflow: hidden; backdrop-filter: blur(16px);
+    }
+    .customDropdown.open .customDropdownOptions { display: block; animation: dropdownIn .15s ease; }
+    @keyframes dropdownIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+    .customDropdownOption {
+      padding: .58rem .9rem; color: rgb(205,178,255); font-size: .9rem; font-weight: 500;
+      font-family: inherit; cursor: pointer; transition: background .15s, color .15s;
+      display: flex; align-items: center; gap: .4rem;
+    }
+    .customDropdownOption:not(:last-child) { border-bottom: 1px solid rgba(187,134,252,.08); }
+    .customDropdownOption:hover { background: rgba(187,134,252,.14); color: #fff; }
+    .customDropdownOption.selected { background: rgba(187,134,252,.2); color: #fff; }
+    .customDropdownOption.selected::after { content: '✓'; margin-left: auto; font-size: .8rem; color: var(--primary); opacity: .9; }
+
+    .sortOrderBtn {
+      margin-top: .75rem;
+      background: linear-gradient(145deg, rgba(187,134,252,.15), rgba(187,134,252,.05));
+      border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
+      padding: .6rem .8rem; color: rgb(205,178,255); cursor: pointer;
+      font-size: .9rem; font-weight: 500; transition: all .2s; width: 100%; text-align: center;
+      backdrop-filter: blur(4px); box-shadow: 0 4px 12px rgba(187,134,252,.1);
+    }
+    .sortOrderBtn:hover { background: linear-gradient(145deg, rgba(187,134,252,.2), rgba(187,134,252,.1)); border-color: var(--primary); color: #fff; box-shadow: 0 6px 18px rgba(187,134,252,.25); }
+
+    /* ── Vendor Cards ── */
+    .rankingList { display: flex; flex-direction: column; gap: 1.5rem; flex: 1; width: 100%; }
+    .rankCard {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      padding: 1.5rem; border-radius: 16px; box-shadow: var(--card-shadow);
+      transition: transform .2s, opacity .3s, border-color .2s, box-shadow .2s;
+      display: flex; flex-direction: column; word-break: break-word;
+      opacity: 0; position: relative; will-change: transform;
+    }
+    .rankCard.loaded { opacity: 1; }
+    .rankCard:hover { transform: translateY(-5px); }
+
+    .favBtn {
+      position: absolute; top: .9rem; right: .9rem; background: none; border: none;
+      cursor: pointer; padding: 4px; border-radius: 50%; width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
+      line-height: 1; opacity: .25; transition: opacity .18s, transform .18s, background .18s; z-index: 2;
+    }
+    .rankCard:hover .favBtn { opacity: .55; }
+    .rankCard .favBtn:hover { opacity: 1 !important; transform: scale(1.22); background: rgba(255,100,150,.12); }
+    .rankCard.favorited .favBtn { opacity: 1; }
+    .rankCard.favorited {
+      background: linear-gradient(145deg, rgba(255,0,0,.05), rgba(255,59,59,.025));
+      border-color: rgba(255,100,150,.38);
+      box-shadow: var(--card-shadow), 0 0 0 1px rgba(255,100,150,.12);
+    }
+
+    .harmReductionCard {
+      background: linear-gradient(145deg, rgba(255,180,0,.07), rgba(255,120,0,.04));
+      border: 1px solid rgba(255,180,0,.3); padding: 1.5rem; border-radius: 16px;
+      box-shadow: var(--card-shadow); display: flex; flex-direction: column; gap: .5rem;
+    }
+    .harmReductionCard h2 { margin: 0; font-size: 1.1rem; color: rgb(255,190,80); display: flex; align-items: center; gap: .5rem; }
+    .harmReductionCard p { margin: 0; font-size: .92rem; color: var(--text2); line-height: 1.6; }
+    .harmReductionCard a { color: rgb(255,190,80); text-decoration: none; }
+    .harmReductionCard a:hover { text-decoration: underline; }
+
+    .favFilterBtn {
+      width: 100%; margin-top: .75rem;
+      background: linear-gradient(145deg, rgba(200,100,100,.08), rgba(200,100,100,.03));
+      border: 1px solid rgba(200,100,100,.28); border-radius: 8px;
+      padding: .58rem .85rem; color: rgba(213,106,106,.85);
+      cursor: pointer; font-size: .88rem; font-weight: 600; font-family: inherit;
+      text-align: left; display: flex; align-items: center; gap: .45rem; transition: all .2s;
+    }
+    .favFilterBtn.active {
+      background: linear-gradient(145deg, rgba(80,200,100,.26), rgba(80,200,100,.13));
+      border-color: rgba(80,200,100,.65); color: #d8d8d8;
+      box-shadow: 0 4px 14px rgba(80,200,100,.2);
+    }
+    .favCount { margin-left: auto; background: rgba(255,100,150,.18); border-radius: 10px; padding: 1px 7px; font-size: .76rem; color: rgba(255,180,200,.9); }
+
+    .rankCard h2 {
+      margin: 0 0 .5rem; font-size: 1.4rem; color: var(--primary);
+      display: flex; align-items: center; flex-wrap: wrap; gap: 6px; padding-right: 2rem;
+    }
+    .vendorWebsiteLink { display: inline-flex; align-items: center; }
+    .vendorWebsiteIcon { height: 20px; width: 20px; object-fit: contain; }
+    .rankCard h2 .indicator { display: inline-flex; padding: 1px 4px; font-size: .65rem; font-weight: 700; border-radius: 4px; user-select: none; }
+    .rankCard p { margin: 0 0 .75rem; font-size: .95rem; color: var(--text2); flex-grow: 1; }
+    .rankCard p a { color: #bb86fc; text-decoration: none; }
+    .buttonsContainer { margin-top: 1rem; display: flex; gap: .75rem; flex-wrap: wrap; }
+    .openLinkButton {
+      background: linear-gradient(145deg, rgba(187,134,252,.15), rgba(187,134,252,.05));
+      border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
+      padding: .6rem 1.2rem; font-size: 1rem; font-weight: 600;
+      color: rgba(255,255,255,.7); cursor: pointer; backdrop-filter: blur(4px);
+      box-shadow: 0 4px 12px rgba(187,134,252,.1); transition: all .3s; white-space: nowrap;
+    }
+    .openLinkButton:hover { color: #fff; border-color: var(--primary); box-shadow: 0 6px 18px rgba(187,134,252,.25); }
+
+    /* ── Indicators ── */
+    .indicator.new         { background: transparent; color: #ff5700; border: 1.5px solid #ff5700; }
+    .indicator.password    { background: transparent; color: #2eabff; border: 1.5px solid #2eabff; }
+    .indicator.cheap       { background: transparent; color: #70dd73; border: 1.5px solid #70dd73; }
+    .indicator.recommended { background: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
+
+    /* ── Issues Tooltip ── */
+    .issuesTooltipContainer { display: inline-flex; align-items: center; justify-content: center; position: relative; cursor: pointer; width: 22px; height: 22px; user-select: none; }
+    .issuesTooltipContainer span.questionMark { display: inline-block; font-size: 1rem; margin-top: -3px; }
+    .issuesTooltip {
+      display: none; position: absolute; top: 50%; left: calc(100% + 10px); transform: translateY(-50%);
+      background: linear-gradient(145deg, rgba(40,28,56,.98), rgba(24,14,38,.98));
+      border: 1px solid rgba(187,134,252,.35); border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.6), 0 0 0 1px rgba(187,134,252,.08);
+      backdrop-filter: blur(16px); color: var(--text2); white-space: nowrap;
+      z-index: 1000; font-size: .85rem; line-height: 1.5; min-width: 190px;
+      opacity: 0; transition: opacity .2s; pointer-events: none;
+    }
+    .issuesTooltip.visible { opacity: 1; pointer-events: auto; }
+    .issuesTooltipHeader {
+      background: rgba(187,134,252,.12); padding: 8px 14px 8px 0; text-indent: 8px;
+      border-bottom: 1px solid rgba(187,134,252,.15); border-radius: 12px 12px 0 0;
+      font-weight: 700; font-size: .78rem; color: rgba(187,134,252,.8); text-align: left;
+    }
+    .issuesTooltipContent { display: flex; flex-direction: column; text-indent: 8px; }
+    .issuesTooltip b { color: var(--text2); font-size: .85rem; padding: 2px 0; display: block; text-align: left; margin-right: 8px; }
+    .issuesTooltip a { color: #bb86fc; text-decoration: none; font-size: .85rem; padding: 2px 0; display: block; text-align: left; margin-right: 8px; }
+    .issuesTooltip a:hover { color: #fff; text-decoration: underline; }
+
+    /* ── Footer ── */
+    .footer {
+      width: 100%; background: rgb(44,33,58); text-align: center;
+      padding: 1rem; font-size: .8rem; color: rgb(124,107,155);
+      border-top: 1px solid rgba(255,255,255,.1);
+    }
+    .footer a { color: var(--primary); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+
+    /* ── Shared Modal Overlay ── */
+    .modalOverlay {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,.65); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center; padding: 1rem; 
+    }
+    .modalOverlay.open { display: flex; }
+
+    @keyframes modalIn { from { opacity: 0; transform: scale(.95) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+    /* ── Shared Modal Box ── */
+    .modal {
+      background: var(--modal-bg); border: 1px solid var(--modal-border);
+      border-radius: 18px; box-shadow: var(--modal-shadow);
+      padding: 2rem; max-width: 480px; width: 100%;
+      display: flex; flex-direction: column; gap: 1.25rem;
+      animation: modalIn .2s ease;
+    }
+    .modalTitle { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+
+    /* Password Modal */
+    .pwModalPasswordBox {
+      background: rgba(187,134,252,.1); border: 1px solid rgba(187,134,252,.35);
+      border-radius: 10px; padding: .75rem 1rem;
+      display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+    }
+    .pwModalPasswordLabel { font-size: .75rem; color: rgba(205,178,255,.6); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2px; }
+    .pwModalPasswordValue { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: .04em; }
+    .pwModalCopyBtn {
+      background: linear-gradient(145deg, rgba(187,134,252,.2), rgba(187,134,252,.08));
+      border: 1px solid rgba(187,134,252,.4); border-radius: 7px;
+      padding: .4rem .8rem; color: rgb(205,178,255); font-size: .8rem; font-weight: 600;
+      cursor: pointer; transition: all .2s; white-space: nowrap; flex-shrink: 0;
+    }
+    .pwModalCopyBtn:hover { border-color: var(--primary); color: #fff; }
+    .pwModalWarning { font-size: .78rem; color: rgba(189,189,189,.75); line-height: 1.55; border-left: 2px solid rgba(187,134,252,.4); padding-left: .75rem; }
+
+    /* Shared Modal Buttons */
+    .modalActions { display: flex; gap: .75rem; justify-content: flex-end; }
+    .modalCancel {
+      background: transparent; border: 1px solid rgba(255,255,255,.15); border-radius: 8px;
+      padding: .6rem 1.2rem; color: var(--text2); font-size: .9rem; font-weight: 600; cursor: pointer; transition: all .2s;
+    }
+    .modalCancel:hover { border-color: rgba(255,255,255,.35); color: #fff; }
+    .modalProceed {
+      background: linear-gradient(145deg, rgba(187,134,252,.3), rgba(187,134,252,.15));
+      border: 1px solid rgba(187,134,252,.6); border-radius: 8px;
+      padding: .6rem 1.4rem; color: #fff; font-size: .9rem; font-weight: 700; cursor: pointer; transition: all .2s;
+    }
+    .modalProceed:hover { background: linear-gradient(145deg, rgba(187,134,252,.45), rgba(187,134,252,.25)); box-shadow: 0 6px 18px rgba(187,134,252,.3); }
+
+    /* Request Modal */
+    .reqField { display: flex; flex-direction: column; gap: .45rem; }
+    .reqLabel { font-size: .75rem; font-weight: 700; color: rgba(187,134,252,.7); letter-spacing: .08em; }
+    .reqTextInput, .reqTextarea {
+      width: 100%;
+      background: linear-gradient(145deg, rgba(187,134,252,.10), rgba(187,134,252,.04));
+      border: 1px solid rgba(187,134,252,.35); border-radius: 9px;
+      padding: .65rem .9rem; color: #fff; font-size: .9rem; font-family: inherit;
+      outline: none; transition: border-color .2s, box-shadow .2s; caret-color: #bb86fc;
+    }
+    .reqTextInput::placeholder, .reqTextarea::placeholder { color: rgba(205,178,255,.38); }
+    .reqTextInput:focus, .reqTextarea:focus { border-color: #bb86fc; box-shadow: 0 0 0 3px rgba(187,134,252,.15); }
+    .reqTextarea {
+      resize: none; min-height: 90px; line-height: 1.55;
+      scrollbar-width: thin; scrollbar-color: rgb(205,178,255) rgba(187,134,252,.1);
+    }
+    .reqTextarea::-webkit-scrollbar { width: 6px; }
+    .reqTextarea::-webkit-scrollbar-track { background: rgba(187,134,252,.06); border-radius: 8px; }
+    .reqTextarea::-webkit-scrollbar-thumb { background: rgb(205,178,255); border-radius: 8px; }
+    .reqTextarea::-webkit-scrollbar-thumb:hover { background: #bb86fc; }
+    .reqCheckboxRow { display: flex; align-items: center; gap: .75rem; cursor: pointer; user-select: none; }
+    .reqCheckboxBox {
+      width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid rgba(187,134,252,.5);
+      background: linear-gradient(145deg, rgba(187,134,252,.08), rgba(187,134,252,.02));
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      transition: border-color .18s, background .18s, box-shadow .18s;
+    }
+    .reqCheckboxBox.checked { border-color: #bb86fc; background: linear-gradient(145deg, rgba(187,134,252,.32), rgba(187,134,252,.18)); box-shadow: 0 0 0 3px rgba(187,134,252,.15); }
+    .reqCheckboxTick { width: 10px; height: 10px; opacity: 0; transform: scale(.5); transition: opacity .15s, transform .15s; }
+    .reqCheckboxBox.checked .reqCheckboxTick { opacity: 1; transform: scale(1); }
+    .reqCheckboxLabel { margin-left: -5px; font-size: .9rem; color: rgba(205,178,255,.85); }
+    .reqNote { font-size: .78rem; color: rgba(189,189,189,.65); line-height: 1.6; border-left: 2px solid rgba(187,134,252,.35); padding-left: .75rem; }
+    .reqModalClose {
+      background: rgba(252,134,134,.12); border: 1px solid rgba(252,134,134,.6); border-radius: 8px;
+      padding: .6rem 1.4rem; color: rgba(252,134,134,.8); font-size: .9rem; font-weight: 600;
+      cursor: pointer; font-family: inherit; transition: background .2s, color .2s, box-shadow .2s;
+    }
+    .reqModalClose:hover { background: rgba(252,134,134,.22); color: #fc8686; box-shadow: 0 0 12px rgba(252,134,134,.2); }
+    .reqModalSend {
+      background: rgba(187,134,252,.12); border: 1px solid rgba(187,134,252,.6); border-radius: 8px;
+      padding: .6rem 1.4rem; color: rgba(187,134,252,.8); font-size: .9rem; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: background .2s, color .2s, box-shadow .2s;
+    }
+    .reqModalSend:hover { background: rgba(187,134,252,.22); color: #bb86fc; box-shadow: 0 0 12px rgba(187,134,252,.2); }
+
+    /* Settings Modal */
+    .settingsModal { gap: .5rem; }
+    .settingsModalTitle { font-size: 1.2rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; margin-bottom: 1rem; gap: .5rem; }
+    .settingsRow { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .25rem 0; }
+    .settingsRowLeft { display: flex; align-items: center; gap: .5rem; flex: 1; min-width: 0; }
+    .settingsRowLabel { font-size: .95rem; font-weight: 600; color: rgba(220,200,255,.9); }
+    .settingsTooltipWrap { position: relative; display: inline-flex; align-items: center; justify-content: center; cursor: default; flex-shrink: 0; }
+    .settingsTooltipBtn {
+      width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(187,134,252,.4);
+      background: rgba(187,134,252,.08); color: rgba(187,134,252,.7);
+      font-size: .65rem; font-weight: 700; font-family: inherit; cursor: help;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .15s, background .15s, color .15s; flex-shrink: 0; user-select: none; line-height: 1;
+    }
+    .settingsTooltipBtn:hover { border-color: var(--primary); background: rgba(187,134,252,.18); color: #fff; }
+    .settingsTooltipBox {
+      display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+      background: linear-gradient(145deg, rgba(40,28,56,.99), rgba(20,10,34,.99));
+      border: 1px solid rgba(187,134,252,.35); border-radius: 10px;
+      box-shadow: 0 12px 32px rgba(0,0,0,.65), 0 0 0 1px rgba(187,134,252,.07);
+      backdrop-filter: blur(16px); padding: .65rem .85rem; font-size: .8rem;
+      color: var(--text2); line-height: 1.55; white-space: normal; width: 220px;
+      z-index: 10000; text-align: left; opacity: 0; transition: opacity .18s; pointer-events: none;
+    }
+    .settingsTooltipBox::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: rgba(187,134,252,.35); }
+    .settingsTooltipBox.visible { opacity: 1; pointer-events: auto; }
+    .settingsToggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; cursor: pointer; }
+    .settingsToggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .settingsToggleTrack {
+      position: absolute; inset: 0; border-radius: 12px;
+      background: rgba(100,80,140,.25); border: 1px solid rgba(187,134,252,.25);
+      transition: background .25s, border-color .25s, box-shadow .25s;
+    }
+    .settingsToggle input:checked + .settingsToggleTrack { background: rgba(187,134,252,.35); border-color: rgba(187,134,252,.7); box-shadow: 0 0 10px rgba(187,134,252,.3); }
+    .settingsToggleThumb {
+      position: absolute; top: 4px; left: 4px; width: 16px; height: 16px; border-radius: 50%;
+      background: rgba(180,150,230,.55); transition: transform .25s, background .25s;
+      box-shadow: 0 1px 4px rgba(0,0,0,.4); pointer-events: none;
+    }
+    .settingsToggle input:checked ~ .settingsToggleThumb { transform: translateX(20px); background: var(--primary); box-shadow: 0 1px 8px rgba(187,134,252,.5); }
+    .settingsToggle.disabled { cursor: not-allowed; opacity: .45; }
+    .settingsModalActions { display: flex; gap: .75rem; justify-content: flex-end; margin-top: .8rem; }
+    .settingsModalClose {
+      background: rgba(187,134,252,.12); border: 1px solid rgba(187,134,252,.6); border-radius: 8px;
+      padding: .6rem 1.4rem; color: rgba(187,134,252,.8); font-size: .9rem; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: background .2s, color .2s, box-shadow .2s;
+    }
+    .settingsModalClose:hover { background: rgba(187,134,252,.22); color: #bb86fc; box-shadow: 0 0 12px rgba(187,134,252,.2); }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .contentArea, .tabContent.active { flex-direction: column; }
+      .leftColumn { width: 100%; flex-direction: row; align-items: flex-start; }
+      .sortingPanel { flex: 1; min-width: 0; }
+      .subtabsPanel { flex: 1; min-width: 0; overflow-y: auto; scrollbar-width: none; }
+      .subtabsPanel::-webkit-scrollbar { display: none; }
+    }
+    @media (max-width: 768px) {
+      html { font-size: 14px; }
+      .header { padding: .75rem 1rem; }
+      .headerContent { gap: .5rem; }
+      .headerContent h1 { font-size: 1.2rem; font-weight: 600; }
+      .navButton { padding: .4rem .8rem; font-size: .75rem; }
+      .mainContainer { padding: 0 1rem 1.5rem; margin-top: 25px; }
+      .tabBar { padding: 0 1rem; top: 15px; overflow: visible; }
+      .rankCard h2 { font-size: 1.2rem; flex-wrap: wrap; gap: 8px; }
+      .rankCard h2 .indicator { font-size: .75rem; padding: 2px 6px; border-radius: 6px; margin-top: 4px; }
+      .tabButtons { gap: .5rem; overflow-x: auto; overflow-y: visible; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; padding: .5rem 0; margin: -.5rem 0; }
+      .tabButtons::-webkit-scrollbar { display: none; }
+      .tabButton { padding: .5rem .8rem; font-size: .85rem; flex-shrink: 0; }
+    }
+    @media (max-width: 400px) { html { font-size: 13px; } }
+
+    body.no-rank-icons .vendorWebsiteIcon,
+    body.no-rank-icons .openLinkButton img { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="animatedBg"></div>
+
+  <!-- Password Modal -->
+  <div class="modalOverlay" id="pwModalOverlay">
+    <div class="modal">
+      <div class="modalTitle">🔒 Site Password</div>
+      <div class="pwModalPasswordBox">
+        <div>
+          <div class="pwModalPasswordLabel">Password</div>
+          <div class="pwModalPasswordValue" id="pwModalPasswordValue"></div>
+        </div>
+        <button class="pwModalCopyBtn" id="pwModalCopyBtn">Copy</button>
+      </div>
+      <div class="pwModalWarning">
+        This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.
+      </div>
+      <div class="modalActions">
+        <button class="modalCancel" id="pwModalCancel">Cancel</button>
+        <button class="modalProceed" id="pwModalProceed">Proceed to Site →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Request Modal -->
+  <div class="modalOverlay" id="reqModalOverlay">
+    <div class="modal">
+      <div class="modalTitle">📬 Request a Vendor</div>
+      <div class="reqField">
+        <label class="reqLabel">Link to Vendor</label>
+        <input type="text" class="reqTextInput" id="reqLink" placeholder="https://google.com" autocomplete="off"/>
+      </div>
+      <div class="reqField">
+        <div class="reqCheckboxRow" id="reqCheckboxRow">
+          <div class="reqCheckboxBox" id="reqCheckboxBox">
+            <svg class="reqCheckboxTick" viewBox="0 0 10 10" fill="none">
+              <polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
-          <button class="pwModalCopyBtn" id="pwModalCopyBtn">Copy</button>
-        </div>
-        <div class="pwModalWarning">
-          This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.
-        </div>
-        <div class="pwModalActions">
-          <button class="pwModalCancel" id="pwModalCancel">Cancel</button>
-          <button class="pwModalProceed" id="pwModalProceed">Proceed to Site →</button>
+          <span class="reqCheckboxLabel">I have personally tried this vendor</span>
         </div>
       </div>
+      <div class="reqField">
+        <label class="reqLabel">Rating &amp; Reason</label>
+        <textarea class="reqTextarea" id="reqRating" placeholder="How would you rate them? Share your experience, quality, shipping, etc…"></textarea>
+      </div>
+      <div class="reqNote">
+        Your request will be reviewed before any vendor is added to the list. We can't guarantee all submissions will be accepted, and it may take some time to properly review them.
+      </div>
+      <div class="modalActions">
+        <button class="reqModalClose" id="reqModalClose">Close</button>
+        <button class="reqModalSend" id="reqModalSend">Send Request →</button>
+      </div>
     </div>
+  </div>
 
-    <header class="header">
-      <div class="headerContent">
-        <h1 id="headerTitle">💫 The Vendor List</h1>
-        <div class="navButtons">
-          <a href="/home.html" class="navButton">Home</a>
-          <a href="/faq.html" class="navButton">FAQ</a>
+  <!-- Settings Modal -->
+  <div class="modalOverlay" id="settingsModalOverlay">
+    <div class="modal settingsModal">
+      <div class="settingsModalTitle">⚙️ Settings</div>
+      <div class="settingsRow">
+        <div class="settingsRowLeft">
+          <span class="settingsRowLabel">Rank card icons</span>
+          <div class="settingsTooltipWrap" id="iconsTooltipWrap">
+            <button class="settingsTooltipBtn" tabindex="-1" aria-label="More info">?</button>
+            <div class="settingsTooltipBox" id="iconsTooltipBox">
+              When disabled, vendor icons are not loaded or rendered — saving bandwidth.
+            </div>
+          </div>
         </div>
+        <label class="settingsToggle">
+          <input type="checkbox" id="iconsToggle" checked/>
+          <div class="settingsToggleTrack"></div>
+          <div class="settingsToggleThumb"></div>
+        </label>
       </div>
-    </header>
-
-    <div class="tabBar">
-      <div class="tabBarInner">
-        <div class="tabButtons" id="tabButtons"></div>
+      <div class="settingsRow">
+        <div class="settingsRowLeft">
+          <span class="settingsRowLabel">Dark mode</span>
+          <div class="settingsTooltipWrap" id="darkTooltipWrap">
+            <button class="settingsTooltipBtn" tabindex="-1" aria-label="More info">?</button>
+            <div class="settingsTooltipBox" id="darkTooltipBox">Light mode is coming soon, dark mode is the only option for now.</div>
+          </div>
+        </div>
+        <label class="settingsToggle disabled">
+          <input type="checkbox" checked disabled/>
+          <div class="settingsToggleTrack"></div>
+          <div class="settingsToggleThumb"></div>
+        </label>
+      </div>
+      <div class="settingsModalActions">
+        <button class="settingsModalClose" id="settingsModalClose">Done</button>
       </div>
     </div>
+  </div>
 
-    <div class="mainContainer">
-      <div class="contentArea" id="tabContents"></div>
+  <header class="header">
+    <div class="headerContent">
+      <h1 id="headerTitle">💫 The Vendor List</h1>
+      <div class="navButtons">
+        <a href="/home.html" class="navButton">Home</a>
+        <a href="/faq.html" class="navButton">FAQ</a>
+        <button class="navButton" id="reqNavBtn">Request</button>
+        <button class="navButton navButtonGear" id="settingsNavBtn" title="Settings">⚙️</button>
+      </div>
     </div>
+  </header>
 
-    <footer class="footer">
-      Need to get in contact? message me on <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a> or join the <a href="https://discord.gg/mqwB9xp8rJ/">discord server</a>.
-    </footer>
+  <div class="tabBar">
+    <div class="tabBarInner">
+      <div class="tabButtons" id="tabButtons"></div>
+    </div>
+  </div>
 
-    <script>
-      async function getVendors() {
-        const url = new URL("vendors.js", window.location.href).href;
-        const code = await fetch(url).then(res => res.text());
-        // Execute the code and expect it to return [categories, subcategories, vendors]
-        const [categories, subcategories, vendors] = new Function(code)();
-        return { categories, subcategories, vendors };
+  <div class="mainContainer">
+    <div class="contentArea" id="tabContents"></div>
+  </div>
+
+  <footer class="footer">
+    Need to get in contact? message me on <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a> or join the <a href="https://discord.gg/mqwB9xp8rJ/">discord server</a>.
+  </footer>
+
+  <script>
+    // ── Utilities ──────────────────────────────────────────────────────────────
+    const $ = id => document.getElementById(id);
+    const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+
+    // ── Settings ───────────────────────────────────────────────────────────────
+    const SETTINGS_KEY = 'tvl_settings';
+    const appSettings = (() => {
+      try { return Object.assign({ iconsEnabled: true }, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); }
+      catch { return { iconsEnabled: true }; }
+    })();
+    const saveSettings = () => localStorage.setItem(SETTINGS_KEY, JSON.stringify(appSettings));
+
+    function applyIconsSetting() {
+      if (appSettings.iconsEnabled) {
+        document.body.classList.remove('no-rank-icons');
+        // Restore src from data-src for any img that hasn't loaded yet.
+        // Check the *attribute* (not the IDL property) — the property can
+        // return the page's base URL when the attribute was never set.
+        document.querySelectorAll('img[data-src]').forEach(img => {
+          if (!img.getAttribute('src')) {
+            img.src = img.dataset.link ? getFavicon(img.dataset.link) : img.dataset.src;
+          }
+        });
+      } else {
+        document.body.classList.add('no-rank-icons');
+        // CSS hides them; src is left intact so no re-fetch on re-enable
+      }
+    }
+    applyIconsSetting();
+
+    // ── Settings Modal ─────────────────────────────────────────────────────────
+    const settingsOverlay = $('settingsModalOverlay');
+    $('settingsNavBtn').addEventListener('click', () => settingsOverlay.classList.add('open'));
+    $('settingsModalClose').addEventListener('click', () => settingsOverlay.classList.remove('open'));
+    settingsOverlay.addEventListener('click', e => { if (e.target === settingsOverlay) settingsOverlay.classList.remove('open'); });
+
+    const iconsToggle = $('iconsToggle');
+    iconsToggle.checked = appSettings.iconsEnabled;
+    iconsToggle.addEventListener('change', () => {
+      appSettings.iconsEnabled = iconsToggle.checked;
+      saveSettings();
+      applyIconsSetting();
+      if (appSettings.iconsEnabled) preloadAllFavicons();
+    });
+
+    // Close any open modal on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.querySelectorAll('.modalOverlay.open').forEach(m => m.classList.remove('open'));
+    });
+
+    // Close custom dropdowns on outside click
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.customDropdown'))
+        document.querySelectorAll('.customDropdown.open').forEach(d => d.classList.remove('open'));
+    });
+
+    // ── Reusable Tooltip Factory ───────────────────────────────────────────────
+    function makeTooltip(wrapEl, boxEl) {
+      let timer;
+      const show = () => { clearTimeout(timer); boxEl.style.display = 'block'; requestAnimationFrame(() => boxEl.classList.add('visible')); };
+      const hide = () => { timer = setTimeout(() => { boxEl.classList.remove('visible'); setTimeout(() => { if (!boxEl.classList.contains('visible')) boxEl.style.display = 'none'; }, 180); }, 80); };
+      const btn = wrapEl.querySelector('.settingsTooltipBtn');
+      btn.addEventListener('mouseenter', show);
+      btn.addEventListener('mouseleave', hide);
+      boxEl.addEventListener('mouseenter', () => clearTimeout(timer));
+      boxEl.addEventListener('mouseleave', hide);
+      btn.addEventListener('click', e => { e.stopPropagation(); boxEl.classList.contains('visible') ? hide() : show(); });
+    }
+    makeTooltip($('iconsTooltipWrap'), $('iconsTooltipBox'));
+    makeTooltip($('darkTooltipWrap'),  $('darkTooltipBox'));
+
+    // ── Favicon Cache ──────────────────────────────────────────────────────────
+    const faviconCache = new Map();
+
+    function preloadAllFavicons() {
+      if (!appSettings.iconsEnabled || !vendors.length) return;
+      const hosts = new Set();
+      vendors.forEach(v => {
+        const wb = v.Buttons?.find(b => b.Text === 'Website');
+        if (wb?.Link) { try { hosts.add(new URL(wb.Link).hostname); } catch {} }
+      });
+      hosts.forEach(host => {
+        if (faviconCache.has(host)) return;
+        const url = `https://www.google.com/s2/favicons?domain=${host}&sz=32`;
+        faviconCache.set(host, url); // optimistically cache
+        const img = new Image();
+        img.onerror = () => faviconCache.set(host, '/Resources/Website.png');
+        img.src = url;
+      });
+    }
+
+    function getFavicon(link) {
+      if (!appSettings.iconsEnabled) return '';
+      try {
+        const host = new URL(link).hostname;
+        if (!faviconCache.has(host)) faviconCache.set(host, `https://www.google.com/s2/favicons?domain=${host}&sz=32`);
+        return faviconCache.get(host);
+      } catch { return '/Resources/Website.png'; }
+    }
+
+    // ── App State ──────────────────────────────────────────────────────────────
+    let vendors = [];
+    let categories, subcategories, harmReductionTabs;
+
+    const HARM_REDUCTION = {
+      title: '⚠️ Harm Reduction Notice',
+      text: `Before trying any substance, take time to thoroughly research its effects, risks, and proper usage. Individual reactions can vary significantly based on factors like body chemistry, tolerance, and environment. \n\n      Start with the lowest possible dose, avoid combining substances—especially if their interactions are not well understood. Always verify what you have using a reliable reagent test kit, as misidentified substances are a common source of harm.\n\n      For detailed, experience-based and scientific information, visit \n      <a href="https://erowid.org" target="_blank">Erowid</a> and \n      <a href="https://psychonautwiki.org" target="_blank">PsychonautWiki</a>.`
+    };
+
+    // Favorites
+    const favsKey = 'tvl_favorites';
+    let favorites = (() => { try { return new Set(JSON.parse(localStorage.getItem(favsKey) || '[]')); } catch { return new Set(); } })();
+    const saveFavorites = () => localStorage.setItem(favsKey, JSON.stringify([...favorites]));
+    let showFavoritesOnly = false;
+
+    // Sort
+    let currentSortBy    = 'recommended';
+    let currentSortOrder = 'asc';
+    let currentTab       = '';
+    let currentSubSection = null;
+    let currentSearch    = '';
+
+    const sortOptions = [
+      { val: 'id',          label: '🔢 Default',    hasOrder: true  },
+      { val: 'name',        label: '🔤 Name',        hasOrder: true  },
+      { val: 'new',         label: '🆕 New',         hasOrder: false },
+      { val: 'recommended', label: '👍 Recommended', hasOrder: false },
+      { val: 'cheap',       label: '💸 Budget',      hasOrder: false },
+      { val: 'issues',      label: '⚠️ Has Issues',  hasOrder: false },
+      { val: 'favorites',   label: '❤️ Favorited',   hasOrder: false }
+    ];
+
+    // ── Password Modal ─────────────────────────────────────────────────────────
+    const pwOverlay = $('pwModalOverlay');
+    let pendingUrl = null;
+    const closePwModal = () => { pwOverlay.classList.remove('open'); pendingUrl = null; };
+    $('pwModalCancel').onclick = closePwModal;
+    pwOverlay.addEventListener('click', e => { if (e.target === pwOverlay) closePwModal(); });
+    $('pwModalCopyBtn').onclick = () => {
+      const btn = $('pwModalCopyBtn');
+      navigator.clipboard.writeText($('pwModalPasswordValue').textContent).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 1800);
+      });
+    };
+    $('pwModalProceed').onclick = () => { if (pendingUrl) window.open(pendingUrl, '_blank', 'noopener,noreferrer'); closePwModal(); };
+
+    function openPwModal(password, url) {
+      pendingUrl = url;
+      $('pwModalPasswordValue').textContent = password;
+      $('pwModalCopyBtn').textContent = 'Copy';
+      pwOverlay.classList.add('open');
+    }
+
+    // ── Request Modal ──────────────────────────────────────────────────────────
+    const reqOverlay = $('reqModalOverlay');
+    let reqChecked = false;
+    $('reqNavBtn').addEventListener('click', () => reqOverlay.classList.add('open'));
+    $('reqModalClose').addEventListener('click', () => reqOverlay.classList.remove('open'));
+    reqOverlay.addEventListener('click', e => { if (e.target === reqOverlay) reqOverlay.classList.remove('open'); });
+    $('reqCheckboxRow').addEventListener('click', () => {
+      reqChecked = !reqChecked;
+      $('reqCheckboxBox').classList.toggle('checked', reqChecked);
+    });
+
+    const reqTextarea = $('reqRating');
+    reqTextarea.addEventListener('input', () => {
+      reqTextarea.style.height = 'auto';
+      reqTextarea.style.height = reqTextarea.scrollHeight + 'px';
+    });
+
+    $('reqModalSend').addEventListener('click', () => {
+      const link   = $('reqLink').value.trim();
+      const rating = $('reqRating').value.trim();
+      if (!link) { $('reqLink').focus(); return; }
+
+      // Don't even think about touching my webhook u fucking monkey, I'll just regenerate the URL and replace it.
+      const WEBHOOK_URL = 'https://discord.com/api/webhooks/1490486192565653686/a3KomkCyVdUYY1ctCT4zjw9uG-ybg5Q9kvlUZB7CTZamLDXUJdA1ynoiiPcEuBPQ8rLr';
+
+      fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ embeds: [{
+          color: 0xBB86FC,
+          title: '📋 New vendor submission',
+          fields: [
+            { name: 'Vendor link 🔗', value: link, inline: true },
+            { name: 'Personally tried', value: reqChecked ? 'Yes ✅' : 'No ❌', inline: true },
+            { name: '\u200B', value: '\u200B', inline: false },
+            { name: '⭐ Rating & Experience ⭐', value: rating || '_Not provided_', inline: false },
+            { name: '\u200B', value: '\u200B', inline: false }
+          ],
+          footer: { text: 'The Vendor List · Vendor Request' },
+          timestamp: new Date().toISOString()
+        }] })
+      }).then(res => {
+        if (res.ok) {
+          reqOverlay.classList.remove('open');
+          $('reqLink').value = '';
+          $('reqRating').value = '';
+          reqChecked = false;
+          $('reqCheckboxBox').classList.remove('checked');
+        } else {
+          alert('Failed to send request. Please try again.');
+        }
+      }).catch(() => alert('Network error. Please try again.'));
+    });
+
+    // ── Header Title ───────────────────────────────────────────────────────────
+    function updateHeaderTitle() {
+      $('headerTitle').innerHTML = window.innerWidth > 768
+        ? `💫 The Vendor List - <span class="headerTotal">${vendors.length} total</span>`
+        : '💫 The Vendor List';
+    }
+    window.addEventListener('resize', debounce(updateHeaderTitle, 150));
+
+    // ── Sorting / Filtering ────────────────────────────────────────────────────
+    function getSortedVendors(tab) {
+      const q = currentSearch.toLowerCase();
+      return vendors
+        .filter(v => tab === 'All' || v.Sections.includes(tab))
+        .filter(v => !currentSubSection || (v.SubSections || []).includes(currentSubSection))
+        .filter(v => !showFavoritesOnly || favorites.has(v.Title))
+        .filter(v => !q || v.Title.toLowerCase().includes(q) || v.Description?.toLowerCase().includes(q))
+        .sort((a, b) => {
+          if (currentSortBy === 'id')          { const c = a.Id - b.Id; return currentSortOrder === 'desc' ? -c : c; }
+          if (currentSortBy === 'name')         { const c = a.Title.localeCompare(b.Title); return currentSortOrder === 'desc' ? -c : c; }
+          if (currentSortBy === 'new')          return a.IsNew !== b.IsNew ? (a.IsNew ? -1 : 1) : a.Id - b.Id;
+          if (currentSortBy === 'cheap')        return a.IsCheap !== b.IsCheap ? (a.IsCheap ? -1 : 1) : a.Id - b.Id;
+          if (currentSortBy === 'recommended')  return a.IsRecommended !== b.IsRecommended ? (a.IsRecommended ? -1 : 1) : a.Id - b.Id;
+          if (currentSortBy === 'issues')       return (a.Issues?.length || 0) - (b.Issues?.length || 0);
+          if (currentSortBy === 'favorites')    { const af = favorites.has(a.Title), bf = favorites.has(b.Title); return af !== bf ? (af ? -1 : 1) : a.Id - b.Id; }
+          return 0;
+        });
+    }
+
+    function refreshTab(tab) {
+      const list = $(`rankingList-${tab}`);
+      list.innerHTML = '';
+      populateVendorList(list, getSortedVendors(tab), tab);
+    }
+
+    // ── Harm Reduction Card (cloned to avoid repeated creation) ────────────────
+    let _harmCardTemplate = null;
+    function getHarmCard() {
+      if (!_harmCardTemplate) {
+        _harmCardTemplate = document.createElement('div');
+        _harmCardTemplate.className = 'harmReductionCard';
+        _harmCardTemplate.innerHTML = `<h2>${HARM_REDUCTION.title}</h2><p>${HARM_REDUCTION.text}</p>`;
+      }
+      return _harmCardTemplate.cloneNode(true);
+    }
+
+    function populateVendorList(list, vendorList, tab) {
+      const frag = document.createDocumentFragment();
+
+      if (harmReductionTabs.has(tab)) frag.appendChild(getHarmCard());
+
+      if (vendorList.length === 0) {
+        const el = document.createElement('div');
+        el.className = 'noResultsCard panel';
+        el.textContent = showFavoritesOnly && !currentSearch
+          ? 'No favorites saved here yet. Click the 🤍 on any vendor card to save it.'
+          : currentSubSection && !currentSearch
+            ? `No vendors found in "${currentSubSection}".`
+            : `No vendors found matching "${currentSearch}".`;
+        frag.appendChild(el);
+      } else {
+        vendorList.forEach(v => frag.appendChild(createVendorCard(v)));
       }
 
-      let vendors;
+      list.appendChild(frag);
+    }
 
-      const HARM_REDUCTION = {
-        title: "⚠️ Harm Reduction Notice",
-        text: `Before trying any substance, take time to thoroughly research its effects, risks, and proper usage. Individual reactions can vary significantly based on factors like body chemistry, tolerance, and environment. 
+    // ── Inline Tooltip for Issues ──────────────────────────────────────────────
+    function attachHoverTooltip(container, tip) {
+      let timer, open = false;
+      const show = () => { clearTimeout(timer); if (open) return; open = true; tip.style.display = 'block'; requestAnimationFrame(() => tip.classList.add('visible')); };
+      const hide = () => { timer = setTimeout(() => { open = false; tip.classList.remove('visible'); setTimeout(() => { if (!tip.classList.contains('visible')) tip.style.display = 'none'; }, 200); }, 120); };
+      container.addEventListener('click', e => { e.stopPropagation(); open ? hide() : show(); });
+      container.addEventListener('mouseleave', hide);
+      tip.addEventListener('mouseenter', () => clearTimeout(timer));
+      tip.addEventListener('mouseleave', hide);
+      // One shared document listener is fine — checks `open` flag so it's a no-op when closed
+      document.addEventListener('click', () => { if (open) hide(); });
+    }
 
-      Start with the lowest possible dose, avoid combining substances—especially if their interactions are not well understood. Always verify what you have using a reliable reagent test kit, as misidentified substances are a common source of harm.
+    // ── Vendor Card ────────────────────────────────────────────────────────────
+    function createVendorCard(v) {
+      const isFav = favorites.has(v.Title);
+      const card  = document.createElement('div');
+      card.className = 'rankCard' + (isFav ? ' favorited' : '');
 
-      For detailed, experience-based and scientific information, visit 
-      <a href="https://erowid.org" target="_blank">Erowid</a> and 
-      <a href="https://psychonautwiki.org" target="_blank">PsychonautWiki</a>.`
-      };
-
-      getVendors().then(({ categories, subcategories, vendors: v }) => {
-        vendors = v;
-
-        // Derive harm-reduction tabs: all categories except "All" and "Marijuana"
-        const HARM_REDUCTION_TABS = categories.filter(c => c !== 'Marijuana');
-
-        const favsKey = 'tvl_favorites';
-        function loadFavorites() {
-          try { return new Set(JSON.parse(localStorage.getItem(favsKey) || '[]')); }
-          catch { return new Set(); }
+      // ── Favourite button
+      const favBtn = document.createElement('button');
+      favBtn.className = 'favBtn';
+      favBtn.title     = isFav ? 'Remove from favorites' : 'Save to favorites';
+      favBtn.textContent = isFav ? '❤️' : '🤍';
+      favBtn.addEventListener('click', () => {
+        const nowFav = favorites.has(v.Title);
+        if (nowFav) {
+          favorites.delete(v.Title);
+          favBtn.textContent = '🤍'; favBtn.title = 'Save to favorites';
+          card.classList.remove('favorited');
+        } else {
+          favorites.add(v.Title);
+          favBtn.textContent = '❤️'; favBtn.title = 'Remove from favorites';
+          card.classList.add('favorited');
+          favBtn.style.transform = 'scale(1.4)';
+          setTimeout(() => favBtn.style.transform = '', 200);
         }
-        function saveFavorites() {
-          localStorage.setItem(favsKey, JSON.stringify([...favorites]));
-        }
-        let favorites = loadFavorites();
-        let showFavoritesOnly = false;
-
-        const pwOverlay = document.getElementById('pwModalOverlay');
-        const pwPassEl  = document.getElementById('pwModalPasswordValue');
-        const pwCopyBtn = document.getElementById('pwModalCopyBtn');
-        const pwCancel  = document.getElementById('pwModalCancel');
-        const pwProceed = document.getElementById('pwModalProceed');
-        let pendingUrl = null;
-
-        function openPwModal(password, url) {
-          pendingUrl = url;
-          pwPassEl.textContent = password;
-          pwCopyBtn.textContent = 'Copy';
-          pwOverlay.classList.add('open');
-        }
-
-        function closePwModal() {
-          pwOverlay.classList.remove('open');
-          pendingUrl = null;
-        }
-
-        pwCancel.onclick = closePwModal;
-        pwOverlay.onclick = e => { if (e.target === pwOverlay) closePwModal(); };
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') closePwModal(); });
-        pwCopyBtn.onclick = () => {
-          navigator.clipboard.writeText(pwPassEl.textContent).then(() => {
-            pwCopyBtn.textContent = 'Copied!';
-            setTimeout(() => pwCopyBtn.textContent = 'Copy', 1800);
-          });
-        };
-        pwProceed.onclick = () => {
-          if (pendingUrl) window.open(pendingUrl, '_blank', 'noopener,noreferrer');
-          closePwModal();
-        };
-
-        function updateHeaderTitle() {
-          const headerTitle = document.getElementById("headerTitle");
-          if (window.innerWidth > 768) {
-            headerTitle.innerHTML = `💫 The Vendor List - <span class="headerTotal">${vendors.length} total</span>`;
-          } else {
-            headerTitle.innerHTML = `💫 The Vendor List`;
-          }
-        }
-
-        updateHeaderTitle();
-        window.addEventListener("resize", updateHeaderTitle);
-
-        let currentSortBy = 'recommended';
-        let currentSortOrder = 'asc';
-        let currentTab = categories[0];
-        let currentSubSection = null;
-        let currentSearch = '';
-        const faviconCache = new Map();
-
-        // Close any open custom dropdowns when clicking outside
-        document.addEventListener('click', e => {
-          if (!e.target.closest('.customDropdown')) {
-            document.querySelectorAll('.customDropdown.open').forEach(d => d.classList.remove('open'));
-          }
-        });
-
-        function preloadAllFavicons() {
-          const websiteLinks = new Set();
-          vendors.forEach(vendor => {
-            const websiteBtn = vendor.Buttons?.find(b => b.Text === 'Website');
-            if (websiteBtn?.Link) {
-              try { const hostname = new URL(websiteBtn.Link).hostname; websiteLinks.add(hostname); } catch (e) {}
-            }
-          });
-          websiteLinks.forEach(hostname => {
-            const img = new Image();
-            const faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
-            img.onload = () => { faviconCache.set(hostname, faviconUrl); };
-            img.onerror = () => { faviconCache.set(hostname, 'Resources/Website.png'); };
-            img.src = faviconUrl;
-          });
-        }
-
-        function getCachedFavicon(hostname) {
-          if (faviconCache.has(hostname)) return faviconCache.get(hostname);
-          const faviconUrl = `https://www.google.com/s2/favicons?domain=${hostname}&sz=32`;
-          faviconCache.set(hostname, faviconUrl);
-          return faviconUrl;
-        }
-
-        preloadAllFavicons();
-
-        const sortOptions = [
-          { val: 'id',          label: '🔢 Default',      hasOrder: true  },
-          { val: 'name',        label: '🔤 Name',          hasOrder: true  },
-          { val: 'new',         label: '🆕 New',           hasOrder: false },
-          { val: 'recommended', label: '👍 Recommended',   hasOrder: false },
-          { val: 'cheap',       label: '💸 Budget',        hasOrder: false },
-          { val: 'issues',      label: '⚠️ Has Issues',    hasOrder: false },
-          { val: 'favorites',   label: '❤️ Favorited',     hasOrder: false }
-        ];
-
-        function switchTab(tab) {
-          currentTab = tab;
-          currentSubSection = null;
-          currentSearch = '';
-          document.querySelectorAll('.tabButton').forEach(b => {
-            b.classList.toggle('active', b.dataset.tab === tab);
-          });
-          document.querySelectorAll('.tabContent').forEach(c => c.classList.remove('active'));
-          document.getElementById(`tabContent-${tab}`).classList.add('active');
-          updateSubtabsPanels();
-          updateSortingPanel();
-          refreshTab(tab);
-        }
-
-        function switchSubSection(sub) {
-          currentSubSection = sub;
-          updateSubtabsPanels();
-          refreshTab(currentTab);
-        }
-
-        categories.forEach((tab, i) => {
-          const btn = document.createElement('button');
-          btn.className = `tabButton${i === 0 ? ' active' : ''}`;
-          btn.dataset.tab = tab;
-          
-          const labelSpan = document.createElement('span');
-          const count = tab === 'All' ? vendors.length : vendors.filter(v => v.Sections.includes(tab)).length;
-          labelSpan.textContent = tab;
-          
-          const countSpan = document.createElement('span');
-          countSpan.className = 'subtabCount';
-          countSpan.textContent = count;
-          
-          btn.appendChild(labelSpan);
-          btn.appendChild(countSpan);
-          btn.onclick = () => switchTab(tab);
-          tabButtons.appendChild(btn);
-
-          const content = document.createElement('div');
-          content.className = `tabContent${i === 0 ? ' active' : ''}`;
-          content.id = `tabContent-${tab}`;
-
-          const leftCol = document.createElement('div');
-          leftCol.className = 'leftColumn';
-
-          const sortPanel = document.createElement('div');
-          sortPanel.className = 'sortingPanel';
-          sortPanel.id = `sortingPanel-${tab}`;
-          leftCol.appendChild(sortPanel);
-
-          const subPanel = document.createElement('div');
-          subPanel.className = 'subtabsPanel';
-          subPanel.id = `subtabsPanel-${tab}`;
-          leftCol.appendChild(subPanel);
-
-          content.appendChild(leftCol);
-
-          const list = document.createElement('div');
-          list.className = 'rankingList';
-          list.id = `rankingList-${tab}`;
-          populateVendorList(list, getSortedVendors(tab), tab);
-          content.appendChild(list);
-          tabContents.appendChild(content);
-        });
-
-        updateSubtabsPanels();
-        updateSortingPanel();
-
-        function updateSubtabsPanels() {
-          categories.forEach(tab => {
-            const panel = document.getElementById(`subtabsPanel-${tab}`);
-            if (!panel) return;
-            panel.innerHTML = '';
-
-            const vendorsInTab = tab === 'All' ? vendors : vendors.filter(v => v.Sections.includes(tab));
-
-            // Use subcategories from getVendors() instead of scanning vendor SubSections fields.
-            // For "All" we flatten all subcategory lists; for other tabs we use the tab's own list.
-            let subSections;
-            if (tab === 'All') {
-              const seen = new Set();
-              subSections = [];
-              categories.forEach(c => {
-                if (c === 'All') return;
-                (subcategories[c] || []).forEach(s => {
-                  if (!seen.has(s)) { seen.add(s); subSections.push(s); }
-                });
-              });
-            } else {
-              subSections = subcategories[tab] || [];
-            }
-
-            const allItem = document.createElement('button');
-            allItem.className = `subtabItem${currentSubSection === null ? ' active' : ''}`;
-            const allLabel = document.createElement('span');
-            allLabel.textContent = 'All';
-            allItem.appendChild(allLabel);
-            const allBadge = document.createElement('span');
-            allBadge.className = 'subtabCount';
-            allBadge.textContent = vendorsInTab.length;
-            allItem.appendChild(allBadge);
-            allItem.addEventListener('click', () => {
-              if (currentSubSection !== null) switchSubSection(null);
-            });
-            panel.appendChild(allItem);
-
-            subSections.forEach(sub => {
-              // Count vendors whose SubSections field includes this sub
-              const count = vendorsInTab.filter(v => (v.SubSections || []).includes(sub)).length;
-              const item = document.createElement('button');
-              item.className = `subtabItem${currentSubSection === sub ? ' active' : ''}`;
-              const label = document.createElement('span');
-              label.textContent = sub;
-              item.appendChild(label);
-              const badge = document.createElement('span');
-              badge.className = 'subtabCount';
-              badge.textContent = count;
-              item.appendChild(badge);
-              item.addEventListener('click', () => {
-                if (currentSubSection !== sub) switchSubSection(sub);
-              });
-              panel.appendChild(item);
-            });
-          });
-        }
-
-        function createCustomDropdown(panel, tab) {
-          const wrapper = document.createElement('div');
-          wrapper.className = 'customDropdown';
-
-          const selected = document.createElement('div');
-          selected.className = 'customDropdownSelected';
-
-          const currentOpt = sortOptions.find(o => o.val === currentSortBy);
-          const labelSpan = document.createElement('span');
-          labelSpan.textContent = currentOpt ? currentOpt.label : '';
-
-          const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-          arrow.setAttribute('width', '12');
-          arrow.setAttribute('height', '12');
-          arrow.setAttribute('viewBox', '0 0 24 24');
-          arrow.setAttribute('fill', 'none');
-          arrow.setAttribute('stroke', 'rgb(205,178,255)');
-          arrow.setAttribute('stroke-width', '2.5');
-          arrow.setAttribute('stroke-linecap', 'round');
-          arrow.setAttribute('stroke-linejoin', 'round');
-          arrow.classList.add('customDropdownArrow');
-          const polyline = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-          polyline.setAttribute('points', '6 9 12 15 18 9');
-          arrow.appendChild(polyline);
-
-          selected.appendChild(labelSpan);
-          selected.appendChild(arrow);
-
-          const optionsList = document.createElement('div');
-          optionsList.className = 'customDropdownOptions';
-
-          sortOptions.forEach(opt => {
-            const item = document.createElement('div');
-            item.className = `customDropdownOption${opt.val === currentSortBy ? ' selected' : ''}`;
-            item.textContent = opt.label;
-            item.addEventListener('click', e => {
-              e.stopPropagation();
-              currentSortBy = opt.val;
-              wrapper.classList.remove('open');
-              updateSortingPanel();
-              refreshTab(currentTab);
-            });
-            optionsList.appendChild(item);
-          });
-
-          selected.addEventListener('click', e => {
-            e.stopPropagation();
-            const isOpen = wrapper.classList.contains('open');
-            document.querySelectorAll('.customDropdown.open').forEach(d => d.classList.remove('open'));
-            if (!isOpen) wrapper.classList.add('open');
-          });
-
-          wrapper.appendChild(selected);
-          wrapper.appendChild(optionsList);
-          panel.appendChild(wrapper);
-        }
-
-        function updateSortingPanel() {
-          categories.forEach(tab => {
-            const panel = document.getElementById(`sortingPanel-${tab}`);
-            if (!panel) return;
-            panel.innerHTML = '';
-
-            const searchWrapper = document.createElement('div');
-            searchWrapper.className = 'searchWrapper';
-            searchWrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(205,178,255)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`;
-            
-            const searchInput = document.createElement('input');
-            searchInput.type = 'text';
-            searchInput.className = 'searchInput';
-            searchInput.placeholder = 'Search vendors…';
-            searchInput.value = tab === currentTab ? currentSearch : '';
-            searchInput.setAttribute('autocomplete', 'off');
-            searchInput.setAttribute('spellcheck', 'false');
-
-            const clearBtn = document.createElement('button');
-            clearBtn.className = 'searchClear';
-            clearBtn.title = 'Clear search';
-            clearBtn.textContent = '✕';
-            clearBtn.style.display = searchInput.value ? 'block' : 'none';
-
-            searchInput.addEventListener('input', () => {
-              if (tab !== currentTab) return;
-              currentSearch = searchInput.value.trim();
-              clearBtn.style.display = currentSearch ? 'block' : 'none';
-              refreshTab(tab);
-            });
-
-            clearBtn.addEventListener('click', () => {
-              searchInput.value = '';
-              currentSearch = '';
-              clearBtn.style.display = 'none';
-              searchInput.focus();
-              refreshTab(tab);
-            });
-
-            searchWrapper.appendChild(searchInput);
-            searchWrapper.appendChild(clearBtn);
-            panel.appendChild(searchWrapper);
-
-            const h3 = document.createElement('h3');
-            h3.textContent = 'Sort By';
-            panel.appendChild(h3);
-
-            createCustomDropdown(panel, tab);
-
-            if (sortOptions.find(opt => opt.val === currentSortBy)?.hasOrder) {
-              const orderBtn = document.createElement('button');
-              orderBtn.className = 'sortOrderBtn';
-              if (currentSortBy === 'id') orderBtn.textContent = currentSortOrder === 'asc' ? '↑ Low to High' : '↓ High to Low';
-              else if (currentSortBy === 'name') orderBtn.textContent = currentSortOrder === 'desc' ? '↓ Z to A' : '↑ A to Z';
-              orderBtn.onclick = () => {
-                currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc';
-                updateSortingPanel();
-                refreshTab(currentTab);
-              };
-              panel.appendChild(orderBtn);
-            }
-
-            const favFilterBtn = document.createElement('button');
-            favFilterBtn.className = `favFilterBtn${showFavoritesOnly ? ' active' : ''}`;
-            favFilterBtn.innerHTML = `${showFavoritesOnly ? '❤️' : '🤍'} Favorites only <span class="favCount">${favorites.size}</span>`;
-            favFilterBtn.onclick = () => {
-              showFavoritesOnly = !showFavoritesOnly;
-              updateSortingPanel();
-              categories.forEach(t => refreshTab(t));
-            };
-            panel.appendChild(favFilterBtn);
-          });
-        }
-
-        function refreshTab(tab) {
-          const list = document.getElementById(`rankingList-${tab}`);
-          list.innerHTML = '';
-          populateVendorList(list, getSortedVendors(tab), tab);
-        }
-
-        function getSortedVendors(tab) {
-          const query = currentSearch.toLowerCase();
-          return vendors
-            .filter(v => tab === 'All' || v.Sections.includes(tab))
-            .filter(v => !currentSubSection || (v.SubSections || []).includes(currentSubSection))
-            .filter(v => !showFavoritesOnly || favorites.has(v.Title))
-            .filter(v => {
-              if (!query) return true;
-              return v.Title.toLowerCase().includes(query) || (v.Description && v.Description.toLowerCase().includes(query));
-            })
-            .sort((a, b) => {
-              let cmp = 0;
-              if (currentSortBy === 'id') cmp = a.Id - b.Id;
-              else if (currentSortBy === 'name') cmp = a.Title.localeCompare(b.Title);
-              else if (currentSortBy === 'new') return a.IsNew !== b.IsNew ? (a.IsNew ? -1 : 1) : a.Id - b.Id;
-              else if (currentSortBy === 'cheap') return a.IsCheap !== b.IsCheap ? (a.IsCheap ? -1 : 1) : a.Id - b.Id;
-              else if (currentSortBy === 'recommended') return a.IsRecommended !== b.IsRecommended ? (a.IsRecommended ? -1 : 1) : a.Id - b.Id;
-              else if (currentSortBy === 'issues') return (a.Issues?.length || 0) - (b.Issues?.length || 0);
-              else if (currentSortBy === 'favorites') {
-                const af = favorites.has(a.Title), bf = favorites.has(b.Title);
-                return af !== bf ? (af ? -1 : 1) : a.Id - b.Id;
-              }
-              return currentSortOrder === 'desc' ? -cmp : cmp;
-            });
-        }
-
-       function populateVendorList(list, vendorList, tab) {
-          if (HARM_REDUCTION_TABS.includes(tab)) {
-            const card = document.createElement('div');
-            card.className = 'harmReductionCard';
-            const h2 = document.createElement('h2');
-            h2.textContent = HARM_REDUCTION.title;
-            const p = document.createElement('p');
-            p.innerHTML = HARM_REDUCTION.text;
-            card.appendChild(h2);
-            card.appendChild(p);
-            list.appendChild(card);
-          }
-
-          if (vendorList.length === 0) {
-            const noResults = document.createElement('div');
-            noResults.className = 'noResultsCard';
-            if (showFavoritesOnly && !currentSearch) {
-              noResults.textContent = "No favorites saved here yet. Click the 🤍 on any vendor card to save it.";
-            } else if (currentSubSection && !currentSearch) {
-              noResults.textContent = `No vendors found in "${currentSubSection}".`;
-            } else {
-              noResults.textContent = `No vendors found matching "${currentSearch}".`;
-            }
-            list.appendChild(noResults);
-            return;
-          }
-
-          vendorList.forEach(v => list.appendChild(createVendorCard(v)));
-        }
-
-        function createVendorCard(v) {
-          const card = document.createElement('div');
-          card.className = 'rankCard';
-          if (favorites.has(v.Title)) card.classList.add('favorited');
-
-          const favBtn = document.createElement('button');
-          favBtn.className = 'favBtn';
-          favBtn.title = favorites.has(v.Title) ? 'Remove from favorites' : 'Save to favorites';
-          favBtn.textContent = favorites.has(v.Title) ? '❤️' : '🤍';
-          favBtn.addEventListener('click', () => {
-            if (favorites.has(v.Title)) {
-              favorites.delete(v.Title);
-              favBtn.textContent = '🤍';
-              favBtn.title = 'Save to favorites';
-              card.classList.remove('favorited');
-            } else {
-              favorites.add(v.Title);
-              favBtn.textContent = '❤️';
-              favBtn.title = 'Remove from favorites';
-              card.classList.add('favorited');
-              favBtn.style.transform = 'scale(1.4)';
-              setTimeout(() => favBtn.style.transform = '', 200);
-            }
-            saveFavorites();
-            updateSortingPanel();
-            if (showFavoritesOnly) categories.forEach(t => refreshTab(t));
-          });
-          card.appendChild(favBtn);
-
-          const h2 = document.createElement('h2');
-          const websiteBtn = v.Buttons?.find(b => b.Text === 'Website');
-          const websiteIcon = document.createElement('img');
-
-          if (websiteBtn?.Link) {
-            try {
-              const hostname = new URL(websiteBtn.Link).hostname;
-              websiteIcon.src = getCachedFavicon(hostname);
-            } catch (e) { websiteIcon.src = 'Resources/Website.png'; }
-          } else {
-            websiteIcon.src = 'Resources/Website.png';
-          }
-          websiteIcon.onerror = () => { websiteIcon.src = '/Resources/Website.png'; websiteIcon.onerror = null; };
-
-          websiteIcon.alt = 'Website';
-          websiteIcon.className = 'vendorWebsiteIcon';
-          websiteIcon.style.cssText = 'height: 40px; width: 40px; object-fit: contain; border-radius: 4px; margin-right: 5px;';
-
-          if (websiteBtn?.Link) {
-            const websiteLink = document.createElement('a');
-            websiteLink.href = websiteBtn.Link;
-            websiteLink.target = '_blank';
-            websiteLink.rel = 'noopener noreferrer';
-            websiteLink.className = 'vendorWebsiteLink';
-            websiteLink.appendChild(websiteIcon);
-            h2.appendChild(websiteLink);
-          } else {
-            h2.appendChild(websiteIcon);
-          }
-
-          h2.appendChild(document.createTextNode(v.Title));
-
-          [
-            { cond: v.IsNew, cls: 'new', txt: 'New' },
-            { cond: v.Password, cls: 'password', txt: 'Password protected' },
-            { cond: v.IsRecommended, cls: 'recommended', txt: 'Recommended' },
-            { cond: v.IsCheap, cls: 'cheap', txt: 'Budget' }
-          ].forEach(b => {
-            if (b.cond) {
-              const span = document.createElement('span');
-              span.className = `indicator ${b.cls}`;
-              span.textContent = b.txt;
-              h2.appendChild(span);
-            }
-          });
-
-          if (v.Issues?.length) {
-            const tooltipContainer = document.createElement('span');
-            tooltipContainer.className = 'issuesTooltipContainer';
-
-            const mark = document.createElement('span');
-            mark.className = 'questionMark';
-            mark.textContent = '⚠️';
-            tooltipContainer.appendChild(mark);
-
-            const tip = document.createElement('div');
-            tip.className = 'issuesTooltip';
-
-            const header = document.createElement('div');
-            header.className = 'issuesTooltipHeader';
-            header.textContent = 'Issues:';
-            tip.appendChild(header);
-
-            const tipContent = document.createElement('div');
-            tipContent.className = 'issuesTooltipContent';
-            tipContent.innerHTML = v.Issues.map((i, index) =>
-              i.Link ? `<a href="${i.Link}" target="_blank">${index + 1}. ${i.Text} 🔗</a>` : `<b>${index + 1}. ${i.Text}</b>`
-            ).join('');
-            tip.appendChild(tipContent);
-            tooltipContainer.appendChild(tip);
-
-            let hideTimer;
-            let tipOpen = false;
-
-            function showTip() {
-              clearTimeout(hideTimer);
-              if (!tipOpen) {
-                tipOpen = true;
-                tip.style.display = 'block';
-                requestAnimationFrame(() => tip.classList.add('visible'));
-              }
-            }
-            function hideTip() {
-              hideTimer = setTimeout(() => {
-                tipOpen = false;
-                tip.classList.remove('visible');
-                setTimeout(() => { if (!tip.classList.contains('visible')) tip.style.display = 'none'; }, 200);
-              }, 120);
-            }
-
-            tooltipContainer.addEventListener('click', (e) => {
-              e.stopPropagation();
-              if (tipOpen) {
-                hideTip();
-              } else {
-                showTip();
-              }
-            });
-            tooltipContainer.addEventListener('mouseleave', hideTip);
-            tip.addEventListener('mouseenter', () => clearTimeout(hideTimer));
-            tip.addEventListener('mouseleave', hideTip);
-
-            document.addEventListener('click', () => {
-              if (tipOpen) hideTip();
-            });
-
-            h2.appendChild(tooltipContainer);
-          }
-
-          card.appendChild(h2);
-
-          const p = document.createElement('p');
-          p.textContent = v.Description;
-          card.appendChild(p);
-
-          if (v.Buttons?.length) {
-            const btns = document.createElement('div');
-            btns.className = 'buttonsContainer';
-            let imagesLoaded = 0;
-            const checkAllLoaded = () => { imagesLoaded++; if (imagesLoaded === v.Buttons.length) setTimeout(() => card.classList.add('loaded'), 50); };
-
-            v.Buttons.forEach(b => {
-              const wrap = document.createElement('div');
-              wrap.style.cssText = 'display: flex; align-items: center; gap: 8px;';
-
-              const link = document.createElement('a');
-              link.href = b.Link;
-              link.target = '_blank';
-              link.rel = 'noopener noreferrer';
-              link.className = 'openLinkButton';
-
-              const icon = document.createElement('img');
-              icon.src = `Resources/${b.Text}.png`;
-              icon.alt = b.Text;
-              icon.style.cssText = 'height: 20px; width: 20px; object-fit: contain;';
-
-              link.style.cssText = 'display: flex; align-items: center; justify-content: center; text-decoration: none; color: rgb(205, 178, 255); gap: 6px;';
-              link.textContent = '';
-              link.appendChild(icon);
-              link.appendChild(document.createTextNode(b.Text));
-              icon.onerror = () => { icon.style.display = 'none'; link.textContent = b.Text; };
-              checkAllLoaded();
-              wrap.appendChild(link);
-
-              if (v.Password && b.Text === 'Website') {
-                link.onclick = e => { e.preventDefault(); openPwModal(v.Password, b.Link); };
-              }
-
-              btns.appendChild(wrap);
-            });
-
-            card.appendChild(btns);
-          } else {
-            setTimeout(() => card.classList.add('loaded'), 50);
-          }
-
-          return card;
-        }
-
-        function syncPanelHeights() {
-          const isMobile = window.innerWidth <= 1024;
-          categories.forEach(tab => {
-            const sortPanel = document.getElementById(`sortingPanel-${tab}`);
-            const subPanel = document.getElementById(`subtabsPanel-${tab}`);
-            if (!sortPanel || !subPanel) return;
-            // Always clear first so desktop is never stuck with an inline height
-            subPanel.style.height = '';
-            if (isMobile) {
-              subPanel.style.height = sortPanel.offsetHeight + 'px';
-              subPanel.style.marginTop = '0px';
-            } else {
-              subPanel.style.marginTop = '10px';
-            }
-          });
-        }
-
-        const resizeObserver = new ResizeObserver(() => syncPanelHeights());
-        categories.forEach(tab => {
-          const sortPanel = document.getElementById(`sortingPanel-${tab}`);
-          if (sortPanel) resizeObserver.observe(sortPanel);
-        });
-
-        window.addEventListener('resize', syncPanelHeights);
-        syncPanelHeights();
+        saveFavorites();
+        updateSortingPanel(); // refresh fav count badge
+        if (showFavoritesOnly) refreshTab(currentTab);
       });
-    </script>
-  </body>
+      card.appendChild(favBtn);
+
+      // ── Heading
+      const h2 = document.createElement('h2');
+      const websiteBtn = v.Buttons?.find(b => b.Text === 'Website');
+
+      const wIcon = document.createElement('img');
+      const wIconSrc = websiteBtn?.Link ? getFavicon(websiteBtn.Link) : '/Resources/Website.png';
+      wIcon.dataset.src = wIconSrc;
+      if (appSettings.iconsEnabled) wIcon.src = wIconSrc;
+      wIcon.alt   = 'Website';
+      wIcon.className = 'vendorWebsiteIcon';
+      wIcon.style.cssText = 'height:40px;width:40px;object-fit:contain;border-radius:4px;margin-right:5px';
+      wIcon.onerror = () => { wIcon.dataset.src = '/Resources/Website.png'; if (appSettings.iconsEnabled) wIcon.src = '/Resources/Website.png'; wIcon.onerror = null; };
+      wIcon.dataset.src = wIconSrc;
+
+      if (websiteBtn?.Link) wIcon.dataset.link = websiteBtn.Link;
+
+      if (websiteBtn?.Link) {
+        const a = document.createElement('a');
+        a.href = websiteBtn.Link; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.className = 'vendorWebsiteLink';
+        a.appendChild(wIcon); h2.appendChild(a);
+      } else {
+        h2.appendChild(wIcon);
+      }
+
+      h2.appendChild(document.createTextNode(v.Title));
+
+      // Badges
+      [
+        { cond: v.IsNew,         cls: 'new',         txt: 'New' },
+        { cond: v.Password,      cls: 'password',     txt: 'Password protected' },
+        { cond: v.IsRecommended, cls: 'recommended',  txt: 'Recommended' },
+        { cond: v.IsCheap,       cls: 'cheap',        txt: 'Budget' }
+      ].forEach(({ cond, cls, txt }) => {
+        if (!cond) return;
+        const span = document.createElement('span');
+        span.className = `indicator ${cls}`;
+        span.textContent = txt;
+        h2.appendChild(span);
+      });
+
+      // Issues tooltip
+      if (v.Issues?.length) {
+        const container = document.createElement('span');
+        container.className = 'issuesTooltipContainer';
+        const mark = document.createElement('span');
+        mark.className = 'questionMark'; mark.textContent = '⚠️';
+        container.appendChild(mark);
+        const tip = document.createElement('div');
+        tip.className = 'issuesTooltip';
+        tip.innerHTML = `<div class="issuesTooltipHeader">Issues:</div><div class="issuesTooltipContent">${
+          v.Issues.map((issue, i) => issue.Link
+            ? `<a href="${issue.Link}" target="_blank">${i + 1}. ${issue.Text} 🔗</a>`
+            : `<b>${i + 1}. ${issue.Text}</b>`
+          ).join('')
+        }</div>`;
+        container.appendChild(tip);
+        attachHoverTooltip(container, tip);
+        h2.appendChild(container);
+      }
+
+      card.appendChild(h2);
+
+      const p = document.createElement('p');
+      p.textContent = v.Description;
+      card.appendChild(p);
+
+      // Buttons
+      if (v.Buttons?.length) {
+        const btns = document.createElement('div');
+        btns.className = 'buttonsContainer';
+        v.Buttons.forEach(b => {
+          const link = document.createElement('a');
+          link.href = b.Link; link.target = '_blank'; link.rel = 'noopener noreferrer';
+          link.className = 'openLinkButton';
+          link.style.cssText = 'display:flex;align-items:center;justify-content:center;text-decoration:none;color:rgb(205,178,255);gap:6px';
+
+          const icon = document.createElement('img');
+          icon.dataset.src = `Resources/${b.Text}.png`;
+          if (appSettings.iconsEnabled) icon.src = `Resources/${b.Text}.png`;
+          icon.alt = b.Text;
+          icon.style.cssText = 'height:20px;width:20px;object-fit:contain';
+          icon.onerror = () => { icon.style.display = 'none'; icon.onerror = null; };
+
+          link.appendChild(icon);
+          link.appendChild(document.createTextNode(b.Text));
+
+          if (v.Password && b.Text === 'Website') {
+            link.onclick = e => { e.preventDefault(); openPwModal(v.Password, b.Link); };
+          }
+
+          btns.appendChild(link);
+        });
+        card.appendChild(btns);
+      }
+
+      // Double-rAF ensures the initial opacity:0 paint happens before transitioning to loaded
+      requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('loaded')));
+
+      return card;
+    }
+
+    // ── Panel Builders (current tab only) ──────────────────────────────────────
+    // PERF: only ever rebuilds the ACTIVE tab's panel, not all N tabs.
+
+    function updateSubtabsPanel() {
+      const tab   = currentTab;
+      const panel = $(`subtabsPanel-${tab}`);
+      if (!panel) return;
+
+      const vendorsInTab = tab === 'All' ? vendors : vendors.filter(v => v.Sections.includes(tab));
+
+      let subSections;
+      if (tab === 'All') {
+        const seen = new Set(); subSections = [];
+        categories.forEach(c => { if (c !== 'All') (subcategories[c] || []).forEach(s => { if (!seen.has(s)) { seen.add(s); subSections.push(s); } }); });
+      } else {
+        subSections = subcategories[tab] || [];
+      }
+
+      const frag = document.createDocumentFragment();
+
+      const allItem = document.createElement('button');
+      allItem.className = `subtabItem${currentSubSection === null ? ' active' : ''}`;
+      allItem.innerHTML = `<span>All</span><span class="subtabCount">${vendorsInTab.length}</span>`;
+      allItem.addEventListener('click', () => { if (currentSubSection !== null) switchSubSection(null); });
+      frag.appendChild(allItem);
+
+      subSections.forEach(sub => {
+        const count = vendorsInTab.filter(v => (v.SubSections || []).includes(sub)).length;
+        const item  = document.createElement('button');
+        item.className = `subtabItem${currentSubSection === sub ? ' active' : ''}`;
+        item.innerHTML = `<span>${sub}</span><span class="subtabCount">${count}</span>`;
+        item.addEventListener('click', () => { if (currentSubSection !== sub) switchSubSection(sub); });
+        frag.appendChild(item);
+      });
+
+      panel.innerHTML = '';
+      panel.appendChild(frag);
+    }
+
+    function updateSortingPanel() {
+      const tab   = currentTab;
+      const panel = $(`sortingPanel-${tab}`);
+      if (!panel) return;
+
+      // Search
+      const searchWrapper = document.createElement('div');
+      searchWrapper.className = 'searchWrapper';
+      searchWrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(205,178,255)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`;
+
+      const searchInput = document.createElement('input');
+      searchInput.type = 'text'; searchInput.className = 'searchInput';
+      searchInput.placeholder = 'Search vendors…'; searchInput.value = currentSearch;
+      searchInput.setAttribute('autocomplete', 'off'); searchInput.setAttribute('spellcheck', 'false');
+
+      const clearBtn = document.createElement('button');
+      clearBtn.className = 'searchClear'; clearBtn.title = 'Clear search'; clearBtn.textContent = '✕';
+      clearBtn.style.display = currentSearch ? 'block' : 'none';
+
+      // Debounced search — only fires refreshTab, not panel rebuilds
+      const doSearch = debounce(() => {
+        currentSearch = searchInput.value.trim();
+        clearBtn.style.display = currentSearch ? 'block' : 'none';
+        refreshTab(currentTab);
+      }, 150);
+
+      searchInput.addEventListener('input', doSearch);
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = ''; currentSearch = '';
+        clearBtn.style.display = 'none'; searchInput.focus(); refreshTab(currentTab);
+      });
+
+      searchWrapper.appendChild(searchInput);
+      searchWrapper.appendChild(clearBtn);
+
+      // Sort label
+      const h3 = document.createElement('h3');
+      h3.textContent = 'Sort By';
+
+      // Custom dropdown
+      const dropdown = document.createElement('div');
+      dropdown.className = 'customDropdown';
+      const curOpt = sortOptions.find(o => o.val === currentSortBy);
+      const selected = document.createElement('div');
+      selected.className = 'customDropdownSelected';
+      selected.innerHTML = `<span>${curOpt?.label || ''}</span><svg class="customDropdownArrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgb(205,178,255)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+
+      const optList = document.createElement('div');
+      optList.className = 'customDropdownOptions';
+      sortOptions.forEach(opt => {
+        const item = document.createElement('div');
+        item.className = `customDropdownOption${opt.val === currentSortBy ? ' selected' : ''}`;
+        item.textContent = opt.label;
+        item.addEventListener('click', e => {
+          e.stopPropagation();
+          currentSortBy = opt.val;
+          dropdown.classList.remove('open');
+          updateSortingPanel();
+          refreshTab(currentTab);
+        });
+        optList.appendChild(item);
+      });
+      selected.addEventListener('click', e => {
+        e.stopPropagation();
+        const wasOpen = dropdown.classList.contains('open');
+        document.querySelectorAll('.customDropdown.open').forEach(d => d.classList.remove('open'));
+        if (!wasOpen) dropdown.classList.add('open');
+      });
+      dropdown.appendChild(selected);
+      dropdown.appendChild(optList);
+
+      // Assemble
+      panel.innerHTML = '';
+      panel.appendChild(searchWrapper);
+      panel.appendChild(h3);
+      panel.appendChild(dropdown);
+
+      // Order toggle (only for sortable options)
+      if (curOpt?.hasOrder) {
+        const orderBtn = document.createElement('button');
+        orderBtn.className = 'sortOrderBtn';
+        orderBtn.textContent = currentSortBy === 'id'
+          ? (currentSortOrder === 'asc' ? '↑ Low to High' : '↓ High to Low')
+          : (currentSortOrder === 'desc' ? '↓ Z to A' : '↑ A to Z');
+        orderBtn.onclick = () => { currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc'; updateSortingPanel(); refreshTab(currentTab); };
+        panel.appendChild(orderBtn);
+      }
+
+      // Favorites filter
+      const favBtn = document.createElement('button');
+      favBtn.className = `favFilterBtn${showFavoritesOnly ? ' active' : ''}`;
+      favBtn.innerHTML = `${showFavoritesOnly ? '❤️' : '🤍'} Favorites only <span class="favCount">${favorites.size}</span>`;
+      favBtn.onclick = () => {
+        showFavoritesOnly = !showFavoritesOnly;
+        updateSortingPanel();
+        refreshTab(currentTab); // only the current (visible) tab needs updating
+      };
+      panel.appendChild(favBtn);
+    }
+
+    // ── Tab / Subsection Switching ─────────────────────────────────────────────
+    function switchTab(tab) {
+      currentTab        = tab;
+      currentSubSection = null;
+      currentSearch     = '';
+      document.querySelectorAll('.tabButton').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+      document.querySelectorAll('.tabContent').forEach(c => c.classList.remove('active'));
+      $(`tabContent-${tab}`).classList.add('active');
+      updateSubtabsPanel();
+      updateSortingPanel();
+      refreshTab(tab);
+    }
+
+    function switchSubSection(sub) {
+      currentSubSection = sub;
+      updateSubtabsPanel();
+      refreshTab(currentTab);
+    }
+
+    // ── Panel Height Sync (debounced) ──────────────────────────────────────────
+    const syncPanelHeights = debounce(() => {
+      const isMobile = window.innerWidth <= 1024;
+      // Batch all reads first, then writes (avoids forced layout thrashing)
+      const heights = categories.map(tab => {
+        const sp = $(`sortingPanel-${tab}`);
+        return sp ? sp.offsetHeight : 0;
+      });
+      categories.forEach((tab, i) => {
+        const sub = $(`subtabsPanel-${tab}`);
+        if (!sub) return;
+        sub.style.height    = isMobile ? heights[i] + 'px' : '';
+        sub.style.marginTop = isMobile ? '0' : '10px';
+      });
+    }, 100);
+
+    window.addEventListener('resize', syncPanelHeights);
+
+    // ── Bootstrap ─────────────────────────────────────────────────────────────
+    async function getVendors() {
+      const url  = new URL('vendors.js', window.location.href).href;
+      const code = await fetch(url).then(r => r.text());
+      return new Function(code)();
+    }
+
+    getVendors().then(([cats, subcats, vends]) => {
+      categories      = cats;
+      subcategories   = subcats;
+      vendors         = vends;
+      harmReductionTabs = new Set(categories.filter(c => c !== 'Marijuana'));
+      currentTab      = categories[0];
+
+      updateHeaderTitle();
+
+      const tabButtonsFrag  = document.createDocumentFragment();
+      const tabContentsFrag = document.createDocumentFragment();
+
+      categories.forEach((tab, i) => {
+        const isFirst = i === 0;
+
+        // Tab button
+        const btn = document.createElement('button');
+        btn.className  = `tabButton${isFirst ? ' active' : ''}`;
+        btn.dataset.tab = tab;
+        const count = tab === 'All' ? vendors.length : vendors.filter(v => v.Sections.includes(tab)).length;
+        btn.innerHTML = `<span>${tab}</span><span class="subtabCount">${count}</span>`;
+        btn.onclick = () => switchTab(tab);
+        tabButtonsFrag.appendChild(btn);
+
+        // Tab content shell
+        const content = document.createElement('div');
+        content.className = `tabContent${isFirst ? ' active' : ''}`;
+        content.id        = `tabContent-${tab}`;
+
+        const leftCol = document.createElement('div');
+        leftCol.className = 'leftColumn';
+
+        // sortingPanel and subtabsPanel are intentionally empty here;
+        // updateSortingPanel / updateSubtabsPanel fill them for the active tab.
+        const sortPanel = document.createElement('div');
+        sortPanel.className = 'sortingPanel panel';
+        sortPanel.id        = `sortingPanel-${tab}`;
+
+        const subPanel = document.createElement('div');
+        subPanel.className = 'subtabsPanel panel';
+        subPanel.id        = `subtabsPanel-${tab}`;
+
+        leftCol.appendChild(sortPanel);
+        leftCol.appendChild(subPanel);
+        content.appendChild(leftCol);
+
+        const list = document.createElement('div');
+        list.className = 'rankingList';
+        list.id        = `rankingList-${tab}`;
+        // Pre-render all tabs' vendor lists so switching tabs is instant
+        populateVendorList(list, getSortedVendors(tab), tab);
+        content.appendChild(list);
+        tabContentsFrag.appendChild(content);
+      });
+
+      $('tabButtons').appendChild(tabButtonsFrag);
+      $('tabContents').appendChild(tabContentsFrag);
+
+      // Build panels only for the initial (active) tab
+      updateSubtabsPanel();
+      updateSortingPanel();
+
+      // ResizeObserver for panel height sync
+      const ro = new ResizeObserver(syncPanelHeights);
+      categories.forEach(tab => { const sp = $(`sortingPanel-${tab}`); if (sp) ro.observe(sp); });
+      syncPanelHeights();
+
+      preloadAllFavicons();
+    });
+  </script>
+</body>
 </html>
