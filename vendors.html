@@ -12,7 +12,6 @@
       --primary: #bb86fc;
       --text: #fff;
       --text2: #bdbdbd;
-      /* Shared surfaces */
       --card-bg: linear-gradient(145deg, rgba(187,134,252,.0075), rgba(187,134,252,.025));
       --card-border: rgba(255,255,255,.08);
       --card-shadow: 0 8px 20px rgba(0,0,0,.4);
@@ -110,14 +109,59 @@
     }
     .headerTotal { color: var(--text2); -webkit-text-fill-color: var(--text2); background: none; -webkit-background-clip: initial; background-clip: initial; }
     .navButtons { display: flex; gap: .75rem; flex-wrap: nowrap; white-space: nowrap; }
-    .navButton {
+
+    /* ── Unified Button ── */
+    /* Every button and link-button in the app uses this one class.
+       Modifiers (.btn--fav, .btn--fav-active, .btn--report, .btn--icon) layer on top. */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       background: linear-gradient(145deg, rgba(187,134,252,.15), rgba(187,134,252,.05));
       border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
-      padding: .6rem 1.2rem; font-size: .85rem; font-weight: 600;
-      text-decoration: none; color: rgb(205,178,255); transition: all .3s; white-space: nowrap;
+      padding: .6rem 1.2rem; font-size: .85rem; font-weight: 600; line-height: 1;
+      text-decoration: none; color: rgb(205,178,255);
+      cursor: pointer; font-family: inherit; white-space: nowrap;
+      transition: color .3s, border-color .3s, box-shadow .3s, transform .3s;
+      vertical-align: middle;
     }
-    .navButton:hover { color: #fff; border-color: var(--primary); box-shadow: 0 6px 18px rgba(187,134,252,.25); transform: translateY(-2px); }
-    .navButtonGear { padding: .6rem .75rem; font-size: 1rem; line-height: 1; }
+    .btn:hover {
+      color: #fff; border-color: var(--primary);
+      box-shadow: 0 6px 18px rgba(187,134,252,.25); transform: translateY(-2px);
+    }
+
+    /* Icon-only (gear button) */
+    .btn--icon { padding: .6rem .75rem; font-size: 1rem; }
+
+    /* Favourite button — inactive */
+    .btn--fav {
+      border-color: rgba(255,100,150,.25); background: rgba(255,100,150,.06); color: rgba(255,155,185,.75);
+    }
+    .btn--fav:hover {
+      border-color: rgba(255,100,150,.55); background: rgba(255,100,150,.13); color: #ffb3cc;
+      box-shadow: 0 6px 18px rgba(255,100,150,.2); transform: none;
+    }
+
+    /* Favourite button — active/saved */
+    .btn--fav-active {
+      border-color: rgba(255,100,150,.58); background: rgba(255,100,150,.14); color: #ff9ab9;
+      box-shadow: 0 0 10px rgba(255,100,150,.15);
+    }
+    .btn--fav-active:hover {
+      border-color: rgba(255,100,150,.55); background: rgba(255,100,150,.13); color: #ffb3cc;
+      box-shadow: 0 6px 18px rgba(255,100,150,.2); transform: none;
+    }
+
+    /* Report button */
+    .btn--report {
+      border-color: rgba(255,100,60,.2); background: rgba(255,100,60,.04); color: rgba(255,148,108,.6);
+    }
+    .btn--report:hover {
+      border-color: rgba(255,100,60,.5); background: rgba(255,100,60,.12); color: rgba(255,170,135,.9);
+      box-shadow: 0 6px 18px rgba(255,100,60,.15); transform: none;
+    }
+
+    /* Card-header buttons suppress the lift */
+    .cardHeaderActions .btn { transform: none !important; }
+    .cardHeaderActions .btn:hover { transform: none !important; }
 
     /* ── Tab Bar ── */
     .tabBar { position: fixed; top: 15px; width: 100%; z-index: 999; padding: 0 1.5rem; overflow: visible; }
@@ -131,7 +175,7 @@
       background: linear-gradient(145deg, rgba(187,134,252,.15), rgba(187,134,252,.05));
       border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
       padding: .6rem 1rem; color: rgb(205,178,255); font-weight: 500;
-      cursor: pointer; backdrop-filter: blur(4px); transition: all .2s; font-size: .9rem;
+      cursor: pointer; backdrop-filter: blur(4px); transition: all .2s; font-size: .85rem;
     }
     .tabButton:hover { border-color: var(--primary); transform: translateY(-2px); }
     .tabButton.active { border-color: var(--primary); background: linear-gradient(145deg, rgba(187,134,252,.25), rgba(187,134,252,.15)); }
@@ -144,19 +188,35 @@
     .leftColumn { display: flex; flex-direction: column; gap: 1rem; width: 250px; flex-shrink: 0; height: fit-content; }
 
     /* ── Shared Panel Surface ── */
-    .panel {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      box-shadow: var(--card-shadow);
+    .panel { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; box-shadow: var(--card-shadow); }
+
+    .panelHeader {
+      display: flex; align-items: center;
+      padding: .75rem 1rem;
+      background: rgba(187,134,252,.04);
+      border-bottom: 1px solid rgba(255,255,255,.065);
+      border-radius: 16px 16px 0 0;
+    }
+
+    .panelBody {
+      padding: 0; 
+    }
+
+    .sortingPanel .panelHeader {
+      margin-left: -1.5rem;
+      margin-right: -1.5rem;
+      border-radius: 16px 16px 0 0;
+    }
+
+    .panelHeaderTitle {
+      font-size: .85rem; font-weight: 700;
+      color: #d0aaff;
+      letter-spacing: -.01em;
     }
 
     /* ── Subtabs Panel ── */
     .subtabsPanel { overflow: hidden; }
-    .subtabsPanel h3 {
-      font-size: .72rem; font-weight: 700; color: rgba(187,134,252,.55);
-      text-transform: uppercase; letter-spacing: .1em; padding: .9rem 1rem .5rem; margin: 0;
-    }
+    .subtabsPanel h3 { font-size: .72rem; font-weight: 700; color: rgba(187,134,252,.55); text-transform: uppercase; letter-spacing: .1em; padding: .9rem 1rem .5rem; margin: 0; }
     .subtabItem {
       display: flex; align-items: center; gap: .55rem; width: 100%;
       padding: .6rem 1rem; background: none; border: none; border-left: 2px solid transparent;
@@ -169,23 +229,17 @@
     .subtabItem.active { color: #fff; background: rgba(187,134,252,.13); border-left-color: var(--primary); font-weight: 600; }
 
     /* ── Count Badges ── */
-    .subtabCount {
-      margin-left: auto; font-size: .72rem; font-weight: 500;
-      color: rgba(187,134,252,.45); background: rgba(187,134,252,.1);
-      border-radius: 8px; padding: 1px 6px;
-    }
+    .subtabCount { margin-left: auto; font-size: .72rem; font-weight: 500; color: rgba(187,134,252,.45); background: rgba(187,134,252,.1); border-radius: 8px; padding: 1px 6px; }
     .tabButton .subtabCount { margin-left: 10px; margin-right: -5px; padding: 3px 6px; position: relative; top: -1px; }
     .tabButton.active .subtabCount, .subtabItem.active .subtabCount { color: rgba(205,178,255,.75); background: rgba(187,134,252,.2); }
 
     /* ── Sorting Panel ── */
-    .sortingPanel { padding: 1.5rem; height: fit-content; position: relative; }
+    .sortingPanel { padding: 0 1.5rem 1.5rem; height: fit-content; position: relative; }
     .sortingPanel h3 { margin: 0 0 .6rem; font-size: 1rem; color: var(--primary); font-weight: 600; }
-
-    .searchWrapper { position: relative; margin-bottom: 1.25rem; }
+    .searchWrapper { position: relative; margin-bottom: 1.25rem; margin-top: 1rem; }
     .searchWrapper svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; opacity: .5; }
     .searchInput {
-      width: 100%;
-      background: linear-gradient(145deg, rgba(187,134,252,.10), rgba(187,134,252,.04));
+      width: 100%; background: linear-gradient(145deg, rgba(187,134,252,.10), rgba(187,134,252,.04));
       border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
       padding: .55rem 2rem .55rem 2.2rem; color: #fff; font-size: .88rem;
       font-family: inherit; outline: none; transition: border-color .2s, box-shadow .2s;
@@ -206,16 +260,13 @@
     /* ── Custom Dropdown ── */
     .customDropdown { position: relative; width: 100%; user-select: none; }
     .customDropdownSelected {
-      width: 100%;
-      background: linear-gradient(145deg, rgba(187,134,252,.12), rgba(187,134,252,.05));
+      width: 100%; background: linear-gradient(145deg, rgba(187,134,252,.12), rgba(187,134,252,.05));
       border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
       padding: .6rem .8rem; color: rgb(205,178,255); font-size: .9rem; font-weight: 500;
       font-family: inherit; cursor: pointer; display: flex; align-items: center;
       justify-content: space-between; gap: .5rem; transition: border-color .2s, box-shadow .2s;
     }
-    .customDropdownSelected:hover, .customDropdown.open .customDropdownSelected {
-      border-color: var(--primary); box-shadow: 0 0 0 3px rgba(187,134,252,.15); color: #fff;
-    }
+    .customDropdownSelected:hover, .customDropdown.open .customDropdownSelected { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(187,134,252,.15); color: #fff; }
     .customDropdownArrow { flex-shrink: 0; transition: transform .2s; opacity: .7; }
     .customDropdown.open .customDropdownArrow { transform: rotate(180deg); }
     .customDropdownOptions {
@@ -229,17 +280,14 @@
     @keyframes dropdownIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
     .customDropdownOption {
       padding: .58rem .9rem; color: rgb(205,178,255); font-size: .9rem; font-weight: 500;
-      font-family: inherit; cursor: pointer; transition: background .15s, color .15s;
-      display: flex; align-items: center; gap: .4rem;
+      font-family: inherit; cursor: pointer; transition: background .15s, color .15s; display: flex; align-items: center; gap: .4rem;
     }
     .customDropdownOption:not(:last-child) { border-bottom: 1px solid rgba(187,134,252,.08); }
     .customDropdownOption:hover { background: rgba(187,134,252,.14); color: #fff; }
     .customDropdownOption.selected { background: rgba(187,134,252,.2); color: #fff; }
     .customDropdownOption.selected::after { content: '✓'; margin-left: auto; font-size: .8rem; color: var(--primary); opacity: .9; }
-
     .sortOrderBtn {
-      margin-top: .75rem;
-      background: linear-gradient(145deg, rgba(187,134,252,.15), rgba(187,134,252,.05));
+      margin-top: .75rem; background: linear-gradient(145deg, rgba(187,134,252,.15), rgba(187,134,252,.05));
       border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
       padding: .6rem .8rem; color: rgb(205,178,255); cursor: pointer;
       font-size: .9rem; font-weight: 500; transition: all .2s; width: 100%; text-align: center;
@@ -249,31 +297,154 @@
 
     /* ── Vendor Cards ── */
     .rankingList { display: flex; flex-direction: column; gap: 1.5rem; flex: 1; width: 100%; }
+
     .rankCard {
-      background: var(--card-bg); border: 1px solid var(--card-border);
-      padding: 1.5rem; border-radius: 16px; box-shadow: var(--card-shadow);
+      border: 1px solid rgba(255,255,255,.09);
+      border-radius: 16px; box-shadow: var(--card-shadow); overflow: hidden;
+      position: relative; opacity: 0;
       transition: transform .2s, opacity .3s, border-color .2s, box-shadow .2s;
-      display: flex; flex-direction: column; word-break: break-word;
-      opacity: 0; position: relative; will-change: transform;
+      will-change: transform;
     }
     .rankCard.loaded { opacity: 1; }
     .rankCard:hover { transform: translateY(-5px); }
-
-    .favBtn {
-      position: absolute; top: .9rem; right: .9rem; background: none; border: none;
-      cursor: pointer; padding: 4px; border-radius: 50%; width: 30px; height: 30px;
-      display: flex; align-items: center; justify-content: center; font-size: 1rem;
-      line-height: 1; opacity: .25; transition: opacity .18s, transform .18s, background .18s; z-index: 2;
+ 
+    /* Left accent bar */
+    .rankCard::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+      background: linear-gradient(to bottom, rgba(187,134,252,0), rgba(187,134,252,.7), rgba(187,134,252,0));
+      border-radius: 16px 0 0 16px; pointer-events: none; z-index: 1;
     }
-    .rankCard:hover .favBtn { opacity: .55; }
-    .rankCard .favBtn:hover { opacity: 1 !important; transform: scale(1.22); background: rgba(255,100,150,.12); }
-    .rankCard.favorited .favBtn { opacity: 1; }
+    .rankCard.has-issues::before {
+      background: linear-gradient(to bottom, rgba(187,134,252,0), rgba(187,134,252,.5) 40%, rgba(255,120,60,.5) 70%, rgba(255,120,60,0));
+    }
     .rankCard.favorited {
-      background: linear-gradient(145deg, rgba(255,0,0,.05), rgba(255,59,59,.025));
-      border-color: rgba(255,100,150,.38);
-      box-shadow: var(--card-shadow), 0 0 0 1px rgba(255,100,150,.12);
+      border-color: rgba(255,100,150,.45);
+      background: linear-gradient(145deg, rgba(255,60,100,.055), rgba(180,30,60,.03));
+      box-shadow: var(--card-shadow),
+        0 0 0 1px rgba(255,100,150,.18),
+        0 0 20px rgba(255,80,130,.12),
+        0 0 45px rgba(220,50,100,.07);
+    }
+    .rankCard.favorited::before {
+      background: linear-gradient(to bottom,
+        rgba(255,100,150,0),
+        rgba(255,100,150,.9),
+        rgba(255,100,150,0));
+      width: 4px;
     }
 
+    /* ── Card Header ── */
+    .cardHeader {
+      display: flex; align-items: center; gap: 14px;
+      padding: 1rem 1.1rem 1rem 1.3rem;
+      background: rgba(187,134,252,.04);
+    }
+    .cardFavicon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(187,134,252,.1);
+      border: 1px solid rgba(187,134,252,.2);
+      flex-shrink: 0;
+      object-fit: contain;
+
+      box-shadow: 0 0 7px var(--primary);
+    }
+    .cardHeaderCenter { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
+    .cardVendorName { font-size: 1.15rem; font-weight: 700; color: #d0aaff; line-height: 1.1; }
+    .cardTagRow { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; min-height: 18px; }
+    .cardHeaderActions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+    /* ── Indicators ── */
+    .indicator {
+      font-size: .63rem; font-weight: 700; border-radius: 4px;
+      padding: 2px 7px; border: 1.5px solid; line-height: 1.5; letter-spacing: .02em; display: inline-flex;
+    }
+    .indicator.new         { color: #ff6a1a; border-color: rgba(255,106,26,.5);  background: rgba(255,106,26,.08); }
+    .indicator.recommended { color: #c49fff; border-color: rgba(187,134,252,.5); background: rgba(187,134,252,.08); }
+    .indicator.cheap       { color: #6fdd72; border-color: rgba(111,221,114,.5); background: rgba(111,221,114,.08); }
+    .indicator.password    { color: #4ab8ff; border-color: rgba(74,184,255,.5);  background: rgba(74,184,255,.08); }
+
+    /* ── Subsection Tags Footer ── */
+    .card-tags-footer {
+      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+      padding: .65rem 1.1rem .75rem 1.3rem;
+    }
+    .tags-footer-label {
+      font-size: .63rem; font-weight: 700; color: rgba(187,134,252,.35);
+      text-transform: uppercase; letter-spacing: .12em; flex-shrink: 0;
+      margin-right: 2px;
+    }
+    .indicator.subsection {
+      color: var(--primary);
+      border-color: var(--primary);
+      background: rgba(187,134,252,.08);
+    }
+
+    /* ── Header / Body divider ── */
+    .card-divider { height: 1px; background: rgba(255,255,255,.065); }
+
+    /* ── Split body ── */
+    .card-split { display: flex; align-items: stretch; }
+    .card-body { flex: 1; min-width: 0; padding: 1rem 1.1rem 1.1rem 1.3rem; display: flex; flex-direction: column; gap: .8rem; }
+    .card-body p { margin: 0; font-size: .875rem; color: rgba(200,190,215,.65); line-height: 1.65; flex: 1; }
+    .card-body p a { color: #bb86fc; text-decoration: none; }
+
+    /* ── Buttons Container ── */
+    .buttonsContainer { display: flex; gap: 7px; flex-wrap: wrap; }
+
+    /* ── Vertical divider between body and issues ── */
+    .card-vert-divider {
+      width: 1px; flex-shrink: 0;
+      background: linear-gradient(to bottom,
+        transparent 0%,
+        rgba(255,120,60,.18) 20%,
+        rgba(255,100,60,.32) 50%,
+        rgba(255,120,60,.18) 80%,
+        transparent 100%);
+      margin: 1rem 0;
+    }
+
+    /* ── Issues Panel ── */
+    .issues-heading {
+      display: flex; align-items: center; gap: 5px;
+      font-size: .66rem; font-weight: 700;
+      color: rgba(255,140,80,.48); text-transform: uppercase; letter-spacing: .12em;
+      margin-bottom: 6px; padding-top: 1px; line-height: 1;
+    }
+    .card-issues {
+      width: 280px; flex-shrink: 0;
+      padding: 1rem 1.1rem 1.1rem .85rem;
+      display: flex; flex-direction: column; gap: .35rem;
+    }
+
+    .issue-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: .8rem; color: rgba(210,175,155,.55); line-height: 1.5;
+      padding: 6px 9px; border-radius: 8px;
+      background: rgba(255,90,40,.03);
+      border: 1px solid rgba(255,100,60,.07);
+      transition: background .15s, border-color .15s;
+    }
+    .issue-item:hover { background: rgba(255,90,40,.07); border-color: rgba(255,100,60,.15); }
+
+    .issue-num {
+      font-size: .65rem; font-weight: 700;
+      color: rgba(255,130,80,.5); flex-shrink: 0;
+      background: rgba(255,100,60,.09);
+      border: 1px solid rgba(255,100,60,.15);
+      border-radius: 4px; padding: 1px 5px; line-height: 1.7;
+      margin-top: 1px;
+    }
+
+    .issue-item a {
+      color: rgba(255,155,95,.7); text-decoration: none;
+      border-bottom: 1px solid rgba(255,155,95,.2);
+      transition: color .15s, border-color .15s;
+    }
+    .issue-item a:hover { color: rgba(255,180,130,.95); border-color: rgba(255,180,130,.4); }
+
+    /* ── Harm Reduction Card ── */
     .harmReductionCard {
       background: linear-gradient(145deg, rgba(255,180,0,.07), rgba(255,120,0,.04));
       border: 1px solid rgba(255,180,0,.3); padding: 1.5rem; border-radius: 16px;
@@ -284,6 +455,7 @@
     .harmReductionCard a { color: rgb(255,190,80); text-decoration: none; }
     .harmReductionCard a:hover { text-decoration: underline; }
 
+    /* ── Favorites filter button ── */
     .favFilterBtn {
       width: 100%; margin-top: .75rem;
       background: linear-gradient(145deg, rgba(200,100,100,.08), rgba(200,100,100,.03));
@@ -292,165 +464,80 @@
       cursor: pointer; font-size: .88rem; font-weight: 600; font-family: inherit;
       text-align: left; display: flex; align-items: center; gap: .45rem; transition: all .2s;
     }
-    .favFilterBtn.active {
-      background: linear-gradient(145deg, rgba(80,200,100,.26), rgba(80,200,100,.13));
-      border-color: rgba(80,200,100,.65); color: #d8d8d8;
-      box-shadow: 0 4px 14px rgba(80,200,100,.2);
-    }
+    .favFilterBtn.active { background: linear-gradient(145deg, rgba(80,200,100,.26), rgba(80,200,100,.13)); border-color: rgba(80,200,100,.65); color: #d8d8d8; box-shadow: 0 4px 14px rgba(80,200,100,.2); }
     .favCount { margin-left: auto; background: rgba(255,100,150,.18); border-radius: 10px; padding: 1px 7px; font-size: .76rem; color: rgba(255,180,200,.9); }
 
-    .rankCard h2 {
-      margin: 0 0 .5rem; font-size: 1.4rem; color: var(--primary);
-      display: flex; align-items: center; flex-wrap: wrap; gap: 6px; padding-right: 2rem;
-    }
-    .vendorWebsiteLink { display: inline-flex; align-items: center; }
-    .vendorWebsiteIcon { height: 20px; width: 20px; object-fit: contain; }
-    .rankCard h2 .indicator { display: inline-flex; padding: 1px 4px; font-size: .65rem; font-weight: 700; border-radius: 4px; user-select: none; }
-    .rankCard p { margin: 0 0 .75rem; font-size: .95rem; color: var(--text2); flex-grow: 1; }
-    .rankCard p a { color: #bb86fc; text-decoration: none; }
-    .buttonsContainer { margin-top: 1rem; display: flex; gap: .75rem; flex-wrap: wrap; }
-    .openLinkButton {
-      background: linear-gradient(145deg, rgba(187,134,252,.15), rgba(187,134,252,.05));
-      border: 1px solid rgba(187,134,252,.4); border-radius: 8px;
-      padding: .6rem 1.2rem; font-size: 1rem; font-weight: 600;
-      color: rgba(255,255,255,.7); cursor: pointer; backdrop-filter: blur(4px);
-      box-shadow: 0 4px 12px rgba(187,134,252,.1); transition: all .3s; white-space: nowrap;
-    }
-    .openLinkButton:hover { color: #fff; border-color: var(--primary); box-shadow: 0 6px 18px rgba(187,134,252,.25); }
-
-    /* ── Indicators ── */
-    .indicator.new         { background: transparent; color: #ff5700; border: 1.5px solid #ff5700; }
-    .indicator.password    { background: transparent; color: #2eabff; border: 1.5px solid #2eabff; }
-    .indicator.cheap       { background: transparent; color: #70dd73; border: 1.5px solid #70dd73; }
-    .indicator.recommended { background: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
-
-    /* ── Issues Tooltip ── */
-    .issuesTooltipContainer { display: inline-flex; align-items: center; justify-content: center; position: relative; cursor: pointer; width: 22px; height: 22px; user-select: none; }
-    .issuesTooltipContainer span.questionMark { display: inline-block; font-size: 1rem; margin-top: -3px; }
-    .issuesTooltip {
-      display: none; position: absolute; top: 50%; left: calc(100% + 10px); transform: translateY(-50%);
-      background: linear-gradient(145deg, rgba(40,28,56,.98), rgba(24,14,38,.98));
-      border: 1px solid rgba(187,134,252,.35); border-radius: 12px;
-      box-shadow: 0 12px 32px rgba(0,0,0,.6), 0 0 0 1px rgba(187,134,252,.08);
-      backdrop-filter: blur(16px); color: var(--text2); white-space: nowrap;
-      z-index: 1000; font-size: .85rem; line-height: 1.5; min-width: 190px;
-      opacity: 0; transition: opacity .2s; pointer-events: none;
-    }
-    .issuesTooltip.visible { opacity: 1; pointer-events: auto; }
-    .issuesTooltipHeader {
-      background: rgba(187,134,252,.12); padding: 8px 14px 8px 0; text-indent: 8px;
-      border-bottom: 1px solid rgba(187,134,252,.15); border-radius: 12px 12px 0 0;
-      font-weight: 700; font-size: .78rem; color: rgba(187,134,252,.8); text-align: left;
-    }
-    .issuesTooltipContent { display: flex; flex-direction: column; text-indent: 8px; }
-    .issuesTooltip b { color: var(--text2); font-size: .85rem; padding: 2px 0; display: block; text-align: left; margin-right: 8px; }
-    .issuesTooltip a { color: #bb86fc; text-decoration: none; font-size: .85rem; padding: 2px 0; display: block; text-align: left; margin-right: 8px; }
-    .issuesTooltip a:hover { color: #fff; text-decoration: underline; }
-
     /* ── Footer ── */
-    .footer {
-      width: 100%; background: rgb(44,33,58); text-align: center;
-      padding: 1rem; font-size: .8rem; color: rgb(124,107,155);
-      border-top: 1px solid rgba(255,255,255,.1);
-    }
+    .footer { width: 100%; background: rgb(44,33,58); text-align: center; padding: 1rem; font-size: .8rem; color: rgb(124,107,155); border-top: 1px solid rgba(255,255,255,.1); }
     .footer a { color: var(--primary); text-decoration: none; }
     .footer a:hover { text-decoration: underline; }
 
     /* ── Shared Modal Overlay ── */
-    .modalOverlay {
-      display: none; position: fixed; inset: 0; z-index: 9999;
-      background: rgba(0,0,0,.65); backdrop-filter: blur(4px);
-      align-items: center; justify-content: center; padding: 1rem; 
-    }
+    .modalOverlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,.65); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 1rem; }
     .modalOverlay.open { display: flex; }
-
     @keyframes modalIn { from { opacity: 0; transform: scale(.95) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
     /* ── Shared Modal Box ── */
-    .modal {
-      background: var(--modal-bg); border: 1px solid var(--modal-border);
-      border-radius: 18px; box-shadow: var(--modal-shadow);
-      padding: 2rem; max-width: 480px; width: 100%;
-      display: flex; flex-direction: column; gap: 1.25rem;
-      animation: modalIn .2s ease;
-    }
+    .modal { background: var(--modal-bg); border: 1px solid var(--modal-border); border-radius: 18px; box-shadow: var(--modal-shadow); padding: 2rem; max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 1.25rem; animation: modalIn .2s ease; }
     .modalTitle { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
 
     /* Password Modal */
-    .pwModalPasswordBox {
-      background: rgba(187,134,252,.1); border: 1px solid rgba(187,134,252,.35);
-      border-radius: 10px; padding: .75rem 1rem;
-      display: flex; align-items: center; justify-content: space-between; gap: .75rem;
-    }
+    .pwModalPasswordBox { background: rgba(187,134,252,.1); border: 1px solid rgba(187,134,252,.35); border-radius: 10px; padding: .75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
     .pwModalPasswordLabel { font-size: .75rem; color: rgba(205,178,255,.6); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2px; }
     .pwModalPasswordValue { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: .04em; }
-    .pwModalCopyBtn {
-      background: linear-gradient(145deg, rgba(187,134,252,.2), rgba(187,134,252,.08));
-      border: 1px solid rgba(187,134,252,.4); border-radius: 7px;
-      padding: .4rem .8rem; color: rgb(205,178,255); font-size: .8rem; font-weight: 600;
-      cursor: pointer; transition: all .2s; white-space: nowrap; flex-shrink: 0;
-    }
-    .pwModalCopyBtn:hover { border-color: var(--primary); color: #fff; }
     .pwModalWarning { font-size: .78rem; color: rgba(189,189,189,.75); line-height: 1.55; border-left: 2px solid rgba(187,134,252,.4); padding-left: .75rem; }
-
-    /* Shared Modal Buttons */
     .modalActions { display: flex; gap: .75rem; justify-content: flex-end; }
-    .modalCancel {
-      background: transparent; border: 1px solid rgba(255,255,255,.15); border-radius: 8px;
-      padding: .6rem 1.2rem; color: var(--text2); font-size: .9rem; font-weight: 600; cursor: pointer; transition: all .2s;
-    }
+    .modalCancel { background: transparent; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; padding: .6rem 1.2rem; color: var(--text2); font-size: .9rem; font-weight: 600; cursor: pointer; transition: all .2s; }
     .modalCancel:hover { border-color: rgba(255,255,255,.35); color: #fff; }
-    .modalProceed {
-      background: linear-gradient(145deg, rgba(187,134,252,.3), rgba(187,134,252,.15));
-      border: 1px solid rgba(187,134,252,.6); border-radius: 8px;
-      padding: .6rem 1.4rem; color: #fff; font-size: .9rem; font-weight: 700; cursor: pointer; transition: all .2s;
-    }
+    .modalProceed { background: linear-gradient(145deg, rgba(187,134,252,.3), rgba(187,134,252,.15)); border: 1px solid rgba(187,134,252,.6); border-radius: 8px; padding: .6rem 1.4rem; color: #fff; font-size: .9rem; font-weight: 700; cursor: pointer; transition: all .2s; }
     .modalProceed:hover { background: linear-gradient(145deg, rgba(187,134,252,.45), rgba(187,134,252,.25)); box-shadow: 0 6px 18px rgba(187,134,252,.3); }
 
     /* Request Modal */
     .reqField { display: flex; flex-direction: column; gap: .45rem; }
     .reqLabel { font-size: .75rem; font-weight: 700; color: rgba(187,134,252,.7); letter-spacing: .08em; }
-    .reqTextInput, .reqTextarea {
-      width: 100%;
-      background: linear-gradient(145deg, rgba(187,134,252,.10), rgba(187,134,252,.04));
-      border: 1px solid rgba(187,134,252,.35); border-radius: 9px;
-      padding: .65rem .9rem; color: #fff; font-size: .9rem; font-family: inherit;
-      outline: none; transition: border-color .2s, box-shadow .2s; caret-color: #bb86fc;
-    }
+    .reqTextInput, .reqTextarea { width: 100%; background: linear-gradient(145deg, rgba(187,134,252,.10), rgba(187,134,252,.04)); border: 1px solid rgba(187,134,252,.35); border-radius: 9px; padding: .65rem .9rem; color: #fff; font-size: .9rem; font-family: inherit; outline: none; transition: border-color .2s, box-shadow .2s; caret-color: #bb86fc; }
     .reqTextInput::placeholder, .reqTextarea::placeholder { color: rgba(205,178,255,.38); }
     .reqTextInput:focus, .reqTextarea:focus { border-color: #bb86fc; box-shadow: 0 0 0 3px rgba(187,134,252,.15); }
-    .reqTextarea {
-      resize: none; min-height: 90px; line-height: 1.55;
-      scrollbar-width: thin; scrollbar-color: rgb(205,178,255) rgba(187,134,252,.1);
-    }
+    .reqTextarea { resize: none; min-height: 90px; line-height: 1.55; scrollbar-width: thin; scrollbar-color: rgb(205,178,255) rgba(187,134,252,.1); }
     .reqTextarea::-webkit-scrollbar { width: 6px; }
     .reqTextarea::-webkit-scrollbar-track { background: rgba(187,134,252,.06); border-radius: 8px; }
     .reqTextarea::-webkit-scrollbar-thumb { background: rgb(205,178,255); border-radius: 8px; }
     .reqTextarea::-webkit-scrollbar-thumb:hover { background: #bb86fc; }
     .reqCheckboxRow { display: flex; align-items: center; gap: .75rem; cursor: pointer; user-select: none; }
-    .reqCheckboxBox {
-      width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid rgba(187,134,252,.5);
-      background: linear-gradient(145deg, rgba(187,134,252,.08), rgba(187,134,252,.02));
-      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-      transition: border-color .18s, background .18s, box-shadow .18s;
-    }
+    .reqCheckboxBox { width: 20px; height: 20px; border-radius: 6px; border: 1.5px solid rgba(187,134,252,.5); background: linear-gradient(145deg, rgba(187,134,252,.08), rgba(187,134,252,.02)); flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: border-color .18s, background .18s, box-shadow .18s; }
     .reqCheckboxBox.checked { border-color: #bb86fc; background: linear-gradient(145deg, rgba(187,134,252,.32), rgba(187,134,252,.18)); box-shadow: 0 0 0 3px rgba(187,134,252,.15); }
     .reqCheckboxTick { width: 10px; height: 10px; opacity: 0; transform: scale(.5); transition: opacity .15s, transform .15s; }
     .reqCheckboxBox.checked .reqCheckboxTick { opacity: 1; transform: scale(1); }
     .reqCheckboxLabel { margin-left: -5px; font-size: .9rem; color: rgba(205,178,255,.85); }
     .reqNote { font-size: .78rem; color: rgba(189,189,189,.65); line-height: 1.6; border-left: 2px solid rgba(187,134,252,.35); padding-left: .75rem; }
-    .reqModalClose {
-      background: rgba(252,134,134,.12); border: 1px solid rgba(252,134,134,.6); border-radius: 8px;
-      padding: .6rem 1.4rem; color: rgba(252,134,134,.8); font-size: .9rem; font-weight: 600;
-      cursor: pointer; font-family: inherit; transition: background .2s, color .2s, box-shadow .2s;
+
+    /* Modal action buttons reuse .btn — these are the coloured variants */
+    .btn--close-red {
+      background: rgba(252,134,134,.12); border-color: rgba(252,134,134,.6); color: rgba(252,134,134,.8);
     }
-    .reqModalClose:hover { background: rgba(252,134,134,.22); color: #fc8686; box-shadow: 0 0 12px rgba(252,134,134,.2); }
-    .reqModalSend {
-      background: rgba(187,134,252,.12); border: 1px solid rgba(187,134,252,.6); border-radius: 8px;
-      padding: .6rem 1.4rem; color: rgba(187,134,252,.8); font-size: .9rem; font-weight: 700;
-      cursor: pointer; font-family: inherit; transition: background .2s, color .2s, box-shadow .2s;
+    .btn--close-red:hover { 
+       background: rgba(252,134,134,.22); color: #fc8686; box-shadow: 0 0 12px rgba(252,134,134,.2); border-color: rgba(252,134,134, .6); transform: none; }
+
+    .btn--send-purple {
+      background: rgba(187,134,252,.12); border-color: rgba(187,134,252,.6); color: rgba(187,134,252,.8);
     }
-    .reqModalSend:hover { background: rgba(187,134,252,.22); color: #bb86fc; box-shadow: 0 0 12px rgba(187,134,252,.2); }
+    .btn--send-purple:hover { background: rgba(187,134,252,.22); color: #bb86fc; box-shadow: 0 0 12px rgba(187,134,252,.2); transform: none; }
+
+    .btn--send-red {
+      background: rgba(255,100,80,.12); border-color: rgba(255,100,80,.55); color: rgba(255,140,120,.9);
+    }
+    .btn--send-red:hover { background: rgba(255,100,80,.22); color: #ff9080; box-shadow: 0 0 12px rgba(252,134,134,.2);  border-color: rgba(255,100,80,.55); transform: none; }
+
+    .btn:disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
+
+    #reqStatusBanner, #reportStatusBanner { border-radius: 9px; padding: .65rem 1rem; font-size: .88rem; font-weight: 600; line-height: 1.5; display: none; transition: opacity .3s; }
+
+    .reqVendorName { background: rgba(187,134,252,.08); border: 1px solid rgba(187,134,252,.2); border-radius: 9px; padding: .55rem .9rem; color: rgba(205,178,255,.7); font-size: .88rem; font-style: italic; }
+    .fileUploadLabel { display: flex; align-items: center; gap: .6rem; cursor: pointer; background: linear-gradient(145deg, rgba(187,134,252,.10), rgba(187,134,252,.04)); border: 1px dashed rgba(187,134,252,.4); border-radius: 9px; padding: .7rem 1rem; color: rgba(205,178,255,.75); font-size: .88rem; transition: border-color .2s, background .2s, color .2s; }
+    .fileUploadLabel:hover { border-color: var(--primary); background: rgba(187,134,252,.12); color: #fff; }
+    .fileUploadLabel input[type="file"] { display: none; }
+    .fileUploadName { font-size: .8rem; color: rgba(205,178,255,.55); margin-top: .3rem; padding-left: .2rem; }
+    .fileUploadName:empty { display: none; }
 
     /* Settings Modal */
     .settingsModal { gap: .5rem; }
@@ -459,47 +546,19 @@
     .settingsRowLeft { display: flex; align-items: center; gap: .5rem; flex: 1; min-width: 0; }
     .settingsRowLabel { font-size: .95rem; font-weight: 600; color: rgba(220,200,255,.9); }
     .settingsTooltipWrap { position: relative; display: inline-flex; align-items: center; justify-content: center; cursor: default; flex-shrink: 0; }
-    .settingsTooltipBtn {
-      width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(187,134,252,.4);
-      background: rgba(187,134,252,.08); color: rgba(187,134,252,.7);
-      font-size: .65rem; font-weight: 700; font-family: inherit; cursor: help;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color .15s, background .15s, color .15s; flex-shrink: 0; user-select: none; line-height: 1;
-    }
+    .settingsTooltipBtn { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(187,134,252,.4); background: rgba(187,134,252,.08); color: rgba(187,134,252,.7); font-size: .65rem; font-weight: 700; font-family: inherit; cursor: help; display: flex; align-items: center; justify-content: center; transition: border-color .15s, background .15s, color .15s; flex-shrink: 0; user-select: none; line-height: 1; }
     .settingsTooltipBtn:hover { border-color: var(--primary); background: rgba(187,134,252,.18); color: #fff; }
-    .settingsTooltipBox {
-      display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
-      background: linear-gradient(145deg, rgba(40,28,56,.99), rgba(20,10,34,.99));
-      border: 1px solid rgba(187,134,252,.35); border-radius: 10px;
-      box-shadow: 0 12px 32px rgba(0,0,0,.65), 0 0 0 1px rgba(187,134,252,.07);
-      backdrop-filter: blur(16px); padding: .65rem .85rem; font-size: .8rem;
-      color: var(--text2); line-height: 1.55; white-space: normal; width: 220px;
-      z-index: 10000; text-align: left; opacity: 0; transition: opacity .18s; pointer-events: none;
-    }
+    .settingsTooltipBox { display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: linear-gradient(145deg, rgba(40,28,56,.99), rgba(20,10,34,.99)); border: 1px solid rgba(187,134,252,.35); border-radius: 10px; box-shadow: 0 12px 32px rgba(0,0,0,.65), 0 0 0 1px rgba(187,134,252,.07); backdrop-filter: blur(16px); padding: .65rem .85rem; font-size: .8rem; color: var(--text2); line-height: 1.55; white-space: normal; width: 220px; z-index: 10000; text-align: left; opacity: 0; transition: opacity .18s; pointer-events: none; }
     .settingsTooltipBox::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: rgba(187,134,252,.35); }
     .settingsTooltipBox.visible { opacity: 1; pointer-events: auto; }
     .settingsToggle { position: relative; width: 44px; height: 24px; flex-shrink: 0; cursor: pointer; }
     .settingsToggle input { opacity: 0; width: 0; height: 0; position: absolute; }
-    .settingsToggleTrack {
-      position: absolute; inset: 0; border-radius: 12px;
-      background: rgba(100,80,140,.25); border: 1px solid rgba(187,134,252,.25);
-      transition: background .25s, border-color .25s, box-shadow .25s;
-    }
+    .settingsToggleTrack { position: absolute; inset: 0; border-radius: 12px; background: rgba(100,80,140,.25); border: 1px solid rgba(187,134,252,.25); transition: background .25s, border-color .25s, box-shadow .25s; }
     .settingsToggle input:checked + .settingsToggleTrack { background: rgba(187,134,252,.35); border-color: rgba(187,134,252,.7); box-shadow: 0 0 10px rgba(187,134,252,.3); }
-    .settingsToggleThumb {
-      position: absolute; top: 4px; left: 4px; width: 16px; height: 16px; border-radius: 50%;
-      background: rgba(180,150,230,.55); transition: transform .25s, background .25s;
-      box-shadow: 0 1px 4px rgba(0,0,0,.4); pointer-events: none;
-    }
+    .settingsToggleThumb { position: absolute; top: 4px; left: 4px; width: 16px; height: 16px; border-radius: 50%; background: rgba(180,150,230,.55); transition: transform .25s, background .25s; box-shadow: 0 1px 4px rgba(0,0,0,.4); pointer-events: none; }
     .settingsToggle input:checked ~ .settingsToggleThumb { transform: translateX(20px); background: var(--primary); box-shadow: 0 1px 8px rgba(187,134,252,.5); }
     .settingsToggle.disabled { cursor: not-allowed; opacity: .45; }
     .settingsModalActions { display: flex; gap: .75rem; justify-content: flex-end; margin-top: .8rem; }
-    .settingsModalClose {
-      background: rgba(187,134,252,.12); border: 1px solid rgba(187,134,252,.6); border-radius: 8px;
-      padding: .6rem 1.4rem; color: rgba(187,134,252,.8); font-size: .9rem; font-weight: 700;
-      cursor: pointer; font-family: inherit; transition: background .2s, color .2s, box-shadow .2s;
-    }
-    .settingsModalClose:hover { background: rgba(187,134,252,.22); color: #bb86fc; box-shadow: 0 0 12px rgba(187,134,252,.2); }
 
     /* ── Responsive ── */
     @media (max-width: 1024px) {
@@ -514,19 +573,20 @@
       .header { padding: .75rem 1rem; }
       .headerContent { gap: .5rem; }
       .headerContent h1 { font-size: 1.2rem; font-weight: 600; }
-      .navButton { padding: .4rem .8rem; font-size: .75rem; }
+      .btn { padding: .4rem .8rem; font-size: .75rem; }
       .mainContainer { padding: 0 1rem 1.5rem; margin-top: 25px; }
       .tabBar { padding: 0 1rem; top: 15px; overflow: visible; }
-      .rankCard h2 { font-size: 1.2rem; flex-wrap: wrap; gap: 8px; }
-      .rankCard h2 .indicator { font-size: .75rem; padding: 2px 6px; border-radius: 6px; margin-top: 4px; }
       .tabButtons { gap: .5rem; overflow-x: auto; overflow-y: visible; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; padding: .5rem 0; margin: -.5rem 0; }
       .tabButtons::-webkit-scrollbar { display: none; }
       .tabButton { padding: .5rem .8rem; font-size: .85rem; flex-shrink: 0; }
+      .card-issues { width: 160px; }
+      .cardHeader { padding: .85rem 1rem .85rem 1.1rem; }
+      .card-body { padding: .85rem 1rem 1rem 1.1rem; }
     }
     @media (max-width: 400px) { html { font-size: 13px; } }
 
-    body.no-rank-icons .vendorWebsiteIcon,
-    body.no-rank-icons .openLinkButton img { display: none !important; }
+    body.no-rank-icons .cardFavicon,
+    body.no-rank-icons .btn img { display: none !important; }
   </style>
 </head>
 <body>
@@ -541,7 +601,7 @@
           <div class="pwModalPasswordLabel">Password</div>
           <div class="pwModalPasswordValue" id="pwModalPasswordValue"></div>
         </div>
-        <button class="pwModalCopyBtn" id="pwModalCopyBtn">Copy</button>
+        <button class="btn" id="pwModalCopyBtn">Copy</button>
       </div>
       <div class="pwModalWarning">
         This website sells products containing Delta-9 THC. The possession, purchase, or use of Delta-9 THC may be restricted or illegal depending on your state laws. By proceeding, you are responsible for knowing and complying with the regulations in your jurisdiction. Violations of these laws can result in criminal penalties, including arrest.
@@ -578,9 +638,50 @@
       <div class="reqNote">
         Your request will be reviewed before any vendor is added to the list. We can't guarantee all submissions will be accepted, and it may take some time to properly review them.
       </div>
+      <div id="reqStatusBanner"></div>
       <div class="modalActions">
-        <button class="reqModalClose" id="reqModalClose">Close</button>
-        <button class="reqModalSend" id="reqModalSend">Send Request →</button>
+        <button class="btn btn--close-red" id="reqModalClose">Close</button>
+        <button class="btn btn--send-purple" id="reqModalSend">Send Request →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Report Modal -->
+  <div class="modalOverlay" id="reportModalOverlay">
+    <div class="modal">
+      <div class="modalTitle">🚩 Report a Vendor</div>
+      <div class="reqField">
+        <label class="reqLabel">Vendor</label>
+        <div class="reqVendorName" id="reportVendorName"></div>
+      </div>
+      <div class="reqField">
+        <label class="reqLabel">Issue Experienced</label>
+        <textarea class="reqTextarea" id="reportIssue" placeholder="Describe the issue — e.g. scam, wrong product, no response, etc…"></textarea>
+      </div>
+      <div class="reqField">
+        <label class="reqLabel" style="display:flex;align-items:center;gap:.4rem;">
+          Proof (optional)
+          <div class="settingsTooltipWrap" id="proofTooltipWrap" style="display:inline-flex;">
+            <button class="settingsTooltipBtn" tabindex="-1" aria-label="More info">?</button>
+            <div class="settingsTooltipBox" id="proofTooltipBox" style="width:230px;">
+              Adding a screenshot or image as proof massively increases the chance your report being taken seriously. Reports without proof are harder to verify.
+            </div>
+          </div>
+        </label>
+        <label class="fileUploadLabel" id="fileUploadLabel">
+          <span>📎</span><span>Attach an image&hellip;</span>
+          <input type="file" id="reportImage" accept="image/*"/>
+        </label>
+        <div class="fileUploadName" id="reportImageName"></div>
+      </div>
+      <div class="reqNote">
+        Reports are reviewed before any action is taken.
+        We hope you'll have a better experience shopping with us in the future.
+      </div>
+      <div id="reportStatusBanner"></div>
+      <div class="modalActions">
+        <button class="btn btn--close-red" id="reportModalClose">Close</button>
+        <button class="btn btn--send-red" id="reportModalSend">Submit Report →</button>
       </div>
     </div>
   </div>
@@ -620,7 +721,7 @@
         </label>
       </div>
       <div class="settingsModalActions">
-        <button class="settingsModalClose" id="settingsModalClose">Done</button>
+        <button class="btn btn--send-purple" id="settingsModalClose">Done</button>
       </div>
     </div>
   </div>
@@ -629,10 +730,10 @@
     <div class="headerContent">
       <h1 id="headerTitle">💫 The Vendor List</h1>
       <div class="navButtons">
-        <a href="/home.html" class="navButton">Home</a>
-        <a href="/faq.html" class="navButton">FAQ</a>
-        <button class="navButton" id="reqNavBtn">Request</button>
-        <button class="navButton navButtonGear" id="settingsNavBtn" title="Settings">⚙️</button>
+        <a href="/home.html" class="btn">Home</a>
+        <a href="/faq.html" class="btn">FAQ</a>
+        <button class="btn" id="reqNavBtn">Request</button>
+        <button class="btn btn--icon" id="settingsNavBtn" title="Settings">⚙️</button>
       </div>
     </div>
   </header>
@@ -652,11 +753,10 @@
   </footer>
 
   <script>
-    // ── Utilities ──────────────────────────────────────────────────────────────
     const $ = id => document.getElementById(id);
     const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
 
-    // ── Settings ───────────────────────────────────────────────────────────────
+    // ── Settings ──
     const SETTINGS_KEY = 'tvl_settings';
     const appSettings = (() => {
       try { return Object.assign({ iconsEnabled: true }, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); }
@@ -667,22 +767,16 @@
     function applyIconsSetting() {
       if (appSettings.iconsEnabled) {
         document.body.classList.remove('no-rank-icons');
-        // Restore src from data-src for any img that hasn't loaded yet.
-        // Check the *attribute* (not the IDL property) — the property can
-        // return the page's base URL when the attribute was never set.
         document.querySelectorAll('img[data-src]').forEach(img => {
-          if (!img.getAttribute('src')) {
-            img.src = img.dataset.link ? getFavicon(img.dataset.link) : img.dataset.src;
-          }
+          if (!img.getAttribute('src')) img.src = img.dataset.link ? getFavicon(img.dataset.link) : img.dataset.src;
         });
       } else {
         document.body.classList.add('no-rank-icons');
-        // CSS hides them; src is left intact so no re-fetch on re-enable
       }
     }
     applyIconsSetting();
 
-    // ── Settings Modal ─────────────────────────────────────────────────────────
+    // ── Settings Modal ──
     const settingsOverlay = $('settingsModalOverlay');
     $('settingsNavBtn').addEventListener('click', () => settingsOverlay.classList.add('open'));
     $('settingsModalClose').addEventListener('click', () => settingsOverlay.classList.remove('open'));
@@ -692,23 +786,19 @@
     iconsToggle.checked = appSettings.iconsEnabled;
     iconsToggle.addEventListener('change', () => {
       appSettings.iconsEnabled = iconsToggle.checked;
-      saveSettings();
-      applyIconsSetting();
+      saveSettings(); applyIconsSetting();
       if (appSettings.iconsEnabled) preloadAllFavicons();
     });
 
-    // Close any open modal on Escape
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') document.querySelectorAll('.modalOverlay.open').forEach(m => m.classList.remove('open'));
     });
-
-    // Close custom dropdowns on outside click
     document.addEventListener('click', e => {
       if (!e.target.closest('.customDropdown'))
         document.querySelectorAll('.customDropdown.open').forEach(d => d.classList.remove('open'));
     });
 
-    // ── Reusable Tooltip Factory ───────────────────────────────────────────────
+    // ── Tooltip Factory ──
     function makeTooltip(wrapEl, boxEl) {
       let timer;
       const show = () => { clearTimeout(timer); boxEl.style.display = 'block'; requestAnimationFrame(() => boxEl.classList.add('visible')); };
@@ -723,7 +813,7 @@
     makeTooltip($('iconsTooltipWrap'), $('iconsTooltipBox'));
     makeTooltip($('darkTooltipWrap'),  $('darkTooltipBox'));
 
-    // ── Favicon Cache ──────────────────────────────────────────────────────────
+    // ── Favicon Cache ──
     const faviconCache = new Map();
 
     function preloadAllFavicons() {
@@ -736,7 +826,7 @@
       hosts.forEach(host => {
         if (faviconCache.has(host)) return;
         const url = `https://www.google.com/s2/favicons?domain=${host}&sz=32`;
-        faviconCache.set(host, url); // optimistically cache
+        faviconCache.set(host, url);
         const img = new Image();
         img.onerror = () => faviconCache.set(host, '/Resources/Website.png');
         img.src = url;
@@ -752,7 +842,7 @@
       } catch { return '/Resources/Website.png'; }
     }
 
-    // ── App State ──────────────────────────────────────────────────────────────
+    // ── App State ──
     let vendors = [];
     let categories, subcategories, harmReductionTabs;
 
@@ -761,13 +851,11 @@
       text: `Before trying any substance, take time to thoroughly research its effects, risks, and proper usage. Individual reactions can vary significantly based on factors like body chemistry, tolerance, and environment. \n\n      Start with the lowest possible dose, avoid combining substances—especially if their interactions are not well understood. Always verify what you have using a reliable reagent test kit, as misidentified substances are a common source of harm.\n\n      For detailed, experience-based and scientific information, visit \n      <a href="https://erowid.org" target="_blank">Erowid</a> and \n      <a href="https://psychonautwiki.org" target="_blank">PsychonautWiki</a>.`
     };
 
-    // Favorites
     const favsKey = 'tvl_favorites';
     let favorites = (() => { try { return new Set(JSON.parse(localStorage.getItem(favsKey) || '[]')); } catch { return new Set(); } })();
     const saveFavorites = () => localStorage.setItem(favsKey, JSON.stringify([...favorites]));
     let showFavoritesOnly = false;
 
-    // Sort
     let currentSortBy    = 'recommended';
     let currentSortOrder = 'asc';
     let currentTab       = '';
@@ -775,16 +863,13 @@
     let currentSearch    = '';
 
     const sortOptions = [
-      { val: 'id',          label: '🔢 Default',    hasOrder: true  },
       { val: 'name',        label: '🔤 Name',        hasOrder: true  },
       { val: 'new',         label: '🆕 New',         hasOrder: false },
       { val: 'recommended', label: '👍 Recommended', hasOrder: false },
-      { val: 'cheap',       label: '💸 Budget',      hasOrder: false },
-      { val: 'issues',      label: '⚠️ Has Issues',  hasOrder: false },
-      { val: 'favorites',   label: '❤️ Favorited',   hasOrder: false }
+      { val: 'cheap',       label: '💸 Budget',      hasOrder: false }
     ];
 
-    // ── Password Modal ─────────────────────────────────────────────────────────
+    // ── Password Modal ──
     const pwOverlay = $('pwModalOverlay');
     let pendingUrl = null;
     const closePwModal = () => { pwOverlay.classList.remove('open'); pendingUrl = null; };
@@ -793,8 +878,7 @@
     $('pwModalCopyBtn').onclick = () => {
       const btn = $('pwModalCopyBtn');
       navigator.clipboard.writeText($('pwModalPasswordValue').textContent).then(() => {
-        btn.textContent = 'Copied!';
-        setTimeout(() => btn.textContent = 'Copy', 1800);
+        btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1800);
       });
     };
     $('pwModalProceed').onclick = () => { if (pendingUrl) window.open(pendingUrl, '_blank', 'noopener,noreferrer'); closePwModal(); };
@@ -806,37 +890,54 @@
       pwOverlay.classList.add('open');
     }
 
-    // ── Request Modal ──────────────────────────────────────────────────────────
+    // ── Request Modal ──
     const reqOverlay = $('reqModalOverlay');
     let reqChecked = false;
-    $('reqNavBtn').addEventListener('click', () => reqOverlay.classList.add('open'));
-    $('reqModalClose').addEventListener('click', () => reqOverlay.classList.remove('open'));
-    reqOverlay.addEventListener('click', e => { if (e.target === reqOverlay) reqOverlay.classList.remove('open'); });
+
+    $('reqNavBtn').addEventListener('click', () => { hideReqStatus(); reqOverlay.classList.add('open'); });
+    $('reqModalClose').addEventListener('click', () => { reqOverlay.classList.remove('open'); hideReqStatus(); });
+    reqOverlay.addEventListener('click', e => { if (e.target === reqOverlay) { reqOverlay.classList.remove('open'); hideReqStatus(); } });
+
     $('reqCheckboxRow').addEventListener('click', () => {
       reqChecked = !reqChecked;
       $('reqCheckboxBox').classList.toggle('checked', reqChecked);
     });
 
     const reqTextarea = $('reqRating');
-    reqTextarea.addEventListener('input', () => {
-      reqTextarea.style.height = 'auto';
-      reqTextarea.style.height = reqTextarea.scrollHeight + 'px';
-    });
+    reqTextarea.addEventListener('input', () => { reqTextarea.style.height = 'auto'; reqTextarea.style.height = reqTextarea.scrollHeight + 'px'; });
+
+    const BANNER_STYLES = {
+      loading: 'background:rgba(187,134,252,.12);border:1px solid rgba(187,134,252,.35);color:rgba(205,178,255,.9);',
+      success: 'background:rgba(80,200,100,.13);border:1px solid rgba(80,200,100,.5);color:rgba(160,240,170,.95);',
+      error:   'background:rgba(252,100,100,.13);border:1px solid rgba(252,100,100,.5);color:rgba(252,170,170,.95);'
+    };
+
+    function showReqStatus(type, msg) {
+      const banner = $('reqStatusBanner');
+      banner.style.cssText = `border-radius:9px;padding:.65rem 1rem;font-size:.88rem;font-weight:600;line-height:1.5;display:block;opacity:1;${BANNER_STYLES[type]}`;
+      banner.textContent = msg;
+    }
+    function hideReqStatus() {
+      const banner = $('reqStatusBanner');
+      banner.style.opacity = '0';
+      setTimeout(() => { banner.style.display = 'none'; banner.style.opacity = ''; }, 300);
+    }
 
     $('reqModalSend').addEventListener('click', () => {
       const link   = $('reqLink').value.trim();
       const rating = $('reqRating').value.trim();
-      if (!link) { $('reqLink').focus(); return; }
+      if (!link) { showReqStatus('error', '❌ Please enter a vendor link.'); $('reqLink').focus(); return; }
+      if (!link.startsWith('https://')) { showReqStatus('error', '❌ Link must start with https://'); $('reqLink').focus(); return; }
+      if (!rating) { showReqStatus('error', '❌ Please provide a rating or experience before submitting.'); $('reqRating').focus(); return; }
 
-      // Don't even think about touching my webhook u fucking monkey, I'll just regenerate the URL and replace it.
+      const sendBtn = $('reqModalSend'), closeBtn = $('reqModalClose');
+      sendBtn.disabled = true; closeBtn.disabled = true; sendBtn.textContent = 'Sending…';
+      showReqStatus('loading', '⏳ Sending your request…');
+
       const WEBHOOK_URL = 'https://discord.com/api/webhooks/1490486192565653686/a3KomkCyVdUYY1ctCT4zjw9uG-ybg5Q9kvlUZB7CTZamLDXUJdA1ynoiiPcEuBPQ8rLr';
-
       fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ embeds: [{
-          color: 0xBB86FC,
-          title: '📋 New vendor submission',
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ embeds: [{ color: 0xBB86FC, title: '📋 New vendor submission',
           fields: [
             { name: 'Vendor link 🔗', value: link, inline: true },
             { name: 'Personally tried', value: reqChecked ? 'Yes ✅' : 'No ❌', inline: true },
@@ -844,23 +945,98 @@
             { name: '⭐ Rating & Experience ⭐', value: rating || '_Not provided_', inline: false },
             { name: '\u200B', value: '\u200B', inline: false }
           ],
-          footer: { text: 'The Vendor List · Vendor Request' },
-          timestamp: new Date().toISOString()
+          footer: { text: 'The Vendor List · Vendor Request' }, timestamp: new Date().toISOString()
         }] })
-      }).then(res => {
+      })
+      .then(res => {
+        sendBtn.disabled = false; closeBtn.disabled = false; sendBtn.textContent = 'Send Request →';
         if (res.ok) {
-          reqOverlay.classList.remove('open');
-          $('reqLink').value = '';
-          $('reqRating').value = '';
-          reqChecked = false;
-          $('reqCheckboxBox').classList.remove('checked');
-        } else {
-          alert('Failed to send request. Please try again.');
-        }
-      }).catch(() => alert('Network error. Please try again.'));
+          showReqStatus('success', '✅ Request sent! We\'ll review it and add the vendor if it\'s a good fit.');
+          $('reqLink').value = ''; $('reqRating').value = ''; reqTextarea.style.height = '';
+          reqChecked = false; $('reqCheckboxBox').classList.remove('checked');
+          setTimeout(() => { reqOverlay.classList.remove('open'); hideReqStatus(); }, 3000);
+        } else { showReqStatus('error', `❌ Something went wrong (HTTP ${res.status}). Please try again.`); }
+      })
+      .catch(() => { sendBtn.disabled = false; closeBtn.disabled = false; sendBtn.textContent = 'Send Request →'; showReqStatus('error', '❌ Network error — check your connection and try again.'); });
     });
 
-    // ── Header Title ───────────────────────────────────────────────────────────
+    // ── Report Modal ──
+    const reportOverlay = $('reportModalOverlay');
+    let reportVendorTitle = '';
+
+    const REPORT_BANNER_STYLES = {
+      loading: 'background:rgba(187,134,252,.12);border:1px solid rgba(187,134,252,.35);color:rgba(205,178,255,.9);',
+      success: 'background:rgba(80,200,100,.13);border:1px solid rgba(80,200,100,.5);color:rgba(160,240,170,.95);',
+      error:   'background:rgba(252,100,100,.13);border:1px solid rgba(252,100,100,.5);color:rgba(252,170,170,.95);'
+    };
+
+    function showReportStatus(type, msg) {
+      const banner = $('reportStatusBanner');
+      banner.style.cssText = `border-radius:9px;padding:.65rem 1rem;font-size:.88rem;font-weight:600;line-height:1.5;display:block;opacity:1;${REPORT_BANNER_STYLES[type]}`;
+      banner.textContent = msg;
+    }
+    function hideReportStatus() {
+      const banner = $('reportStatusBanner');
+      banner.style.opacity = '0';
+      setTimeout(() => { banner.style.display = 'none'; banner.style.opacity = ''; }, 300);
+    }
+
+    function openReportModal(vendorTitle) {
+      reportVendorTitle = vendorTitle;
+      $('reportVendorName').textContent = vendorTitle;
+      $('reportIssue').value = ''; $('reportIssue').style.height = '';
+      $('reportImage').value = ''; $('reportImageName').textContent = '';
+      hideReportStatus(); reportOverlay.classList.add('open');
+    }
+    function closeReportModal() { reportOverlay.classList.remove('open'); hideReportStatus(); }
+
+    $('reportModalClose').addEventListener('click', closeReportModal);
+    reportOverlay.addEventListener('click', e => { if (e.target === reportOverlay) closeReportModal(); });
+    makeTooltip($('proofTooltipWrap'), $('proofTooltipBox'));
+
+    $('reportIssue').addEventListener('input', () => { const ta = $('reportIssue'); ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; });
+    $('reportImage').addEventListener('change', () => { const file = $('reportImage').files[0]; $('reportImageName').textContent = file ? `📎 ${file.name}` : ''; });
+
+    $('reportModalSend').addEventListener('click', async () => {
+      const issue = $('reportIssue').value.trim();
+      const imageFile = $('reportImage').files[0] || null;
+      if (!issue) { showReportStatus('error', '❌ Please describe the issue before submitting.'); $('reportIssue').focus(); return; }
+
+      const sendBtn = $('reportModalSend'), closeBtn = $('reportModalClose');
+      sendBtn.disabled = true; closeBtn.disabled = true; sendBtn.textContent = 'Sending…';
+      showReportStatus('loading', '⏳ Submitting your report…');
+
+      const WEBHOOK_URL = 'https://discord.com/api/webhooks/1490486192565653686/a3KomkCyVdUYY1ctCT4zjw9uG-ybg5Q9kvlUZB7CTZamLDXUJdA1ynoiiPcEuBPQ8rLr';
+      const embedPayload = { embeds: [{ color: 0xFF5050, title: '🚩 Vendor report',
+        fields: [
+          { name: 'Vendor 🏪', value: reportVendorTitle, inline: false },
+          { name: '\u200B', value: '\u200B', inline: false },
+          { name: '⚠️ Issue Reported ⚠️', value: issue, inline: false },
+          { name: '\u200B', value: '\u200B', inline: false }
+        ],
+        ...(imageFile ? { image: { url: 'attachment://proof.png' } } : {}),
+        footer: { text: 'The Vendor List · Vendor Report' }, timestamp: new Date().toISOString()
+      }] };
+
+      try {
+        let res;
+        if (imageFile) {
+          const form = new FormData();
+          form.append('payload_json', JSON.stringify(embedPayload));
+          form.append('files[0]', imageFile, 'proof.png');
+          res = await fetch(WEBHOOK_URL, { method: 'POST', body: form });
+        } else {
+          res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(embedPayload) });
+        }
+        sendBtn.disabled = false; closeBtn.disabled = false; sendBtn.textContent = 'Submit Report →';
+        if (res.ok) { showReportStatus('success', '✅ Report submitted! We\'ll review it and take action if needed.'); setTimeout(() => { closeReportModal(); }, 3000); }
+        else { showReportStatus('error', `❌ Something went wrong (HTTP ${res.status}). Please try again.`); }
+      } catch {
+        sendBtn.disabled = false; closeBtn.disabled = false; sendBtn.textContent = 'Submit Report →';
+        showReportStatus('error', '❌ Network error — check your connection and try again.');
+      }
+    });
+
     function updateHeaderTitle() {
       $('headerTitle').innerHTML = window.innerWidth > 768
         ? `💫 The Vendor List - <span class="headerTotal">${vendors.length} total</span>`
@@ -868,7 +1044,7 @@
     }
     window.addEventListener('resize', debounce(updateHeaderTitle, 150));
 
-    // ── Sorting / Filtering ────────────────────────────────────────────────────
+    // ── Sorting / Filtering ──
     function getSortedVendors(tab) {
       const q = currentSearch.toLowerCase();
       return vendors
@@ -877,14 +1053,11 @@
         .filter(v => !showFavoritesOnly || favorites.has(v.Title))
         .filter(v => !q || v.Title.toLowerCase().includes(q) || v.Description?.toLowerCase().includes(q))
         .sort((a, b) => {
-          if (currentSortBy === 'id')          { const c = a.Id - b.Id; return currentSortOrder === 'desc' ? -c : c; }
           if (currentSortBy === 'name')         { const c = a.Title.localeCompare(b.Title); return currentSortOrder === 'desc' ? -c : c; }
           if (currentSortBy === 'new')          return a.IsNew !== b.IsNew ? (a.IsNew ? -1 : 1) : a.Id - b.Id;
           if (currentSortBy === 'cheap')        return a.IsCheap !== b.IsCheap ? (a.IsCheap ? -1 : 1) : a.Id - b.Id;
           if (currentSortBy === 'recommended')  return a.IsRecommended !== b.IsRecommended ? (a.IsRecommended ? -1 : 1) : a.Id - b.Id;
-          if (currentSortBy === 'issues')       return (a.Issues?.length || 0) - (b.Issues?.length || 0);
-          if (currentSortBy === 'favorites')    { const af = favorites.has(a.Title), bf = favorites.has(b.Title); return af !== bf ? (af ? -1 : 1) : a.Id - b.Id; }
-          return 0;
+         return 0;
         });
     }
 
@@ -894,7 +1067,7 @@
       populateVendorList(list, getSortedVendors(tab), tab);
     }
 
-    // ── Harm Reduction Card (cloned to avoid repeated creation) ────────────────
+    // ── Harm Reduction Card ──
     let _harmCardTemplate = null;
     function getHarmCard() {
       if (!_harmCardTemplate) {
@@ -907,9 +1080,7 @@
 
     function populateVendorList(list, vendorList, tab) {
       const frag = document.createDocumentFragment();
-
       if (harmReductionTabs.has(tab)) frag.appendChild(getHarmCard());
-
       if (vendorList.length === 0) {
         const el = document.createElement('div');
         el.className = 'noResultsCard panel';
@@ -922,80 +1093,44 @@
       } else {
         vendorList.forEach(v => frag.appendChild(createVendorCard(v)));
       }
-
       list.appendChild(frag);
     }
 
-    // ── Inline Tooltip for Issues ──────────────────────────────────────────────
-    function attachHoverTooltip(container, tip) {
-      let timer, open = false;
-      const show = () => { clearTimeout(timer); if (open) return; open = true; tip.style.display = 'block'; requestAnimationFrame(() => tip.classList.add('visible')); };
-      const hide = () => { timer = setTimeout(() => { open = false; tip.classList.remove('visible'); setTimeout(() => { if (!tip.classList.contains('visible')) tip.style.display = 'none'; }, 200); }, 120); };
-      container.addEventListener('click', e => { e.stopPropagation(); open ? hide() : show(); });
-      container.addEventListener('mouseleave', hide);
-      tip.addEventListener('mouseenter', () => clearTimeout(timer));
-      tip.addEventListener('mouseleave', hide);
-      // One shared document listener is fine — checks `open` flag so it's a no-op when closed
-      document.addEventListener('click', () => { if (open) hide(); });
-    }
-
-    // ── Vendor Card ────────────────────────────────────────────────────────────
+    // ── Vendor Card ──
     function createVendorCard(v) {
-      const isFav = favorites.has(v.Title);
-      const card  = document.createElement('div');
-      card.className = 'rankCard' + (isFav ? ' favorited' : '');
+      const isFav     = favorites.has(v.Title);
+      const hasIssues = v.Issues?.length > 0;
 
-      // ── Favourite button
-      const favBtn = document.createElement('button');
-      favBtn.className = 'favBtn';
-      favBtn.title     = isFav ? 'Remove from favorites' : 'Save to favorites';
-      favBtn.textContent = isFav ? '❤️' : '🤍';
-      favBtn.addEventListener('click', () => {
-        const nowFav = favorites.has(v.Title);
-        if (nowFav) {
-          favorites.delete(v.Title);
-          favBtn.textContent = '🤍'; favBtn.title = 'Save to favorites';
-          card.classList.remove('favorited');
-        } else {
-          favorites.add(v.Title);
-          favBtn.textContent = '❤️'; favBtn.title = 'Remove from favorites';
-          card.classList.add('favorited');
-          favBtn.style.transform = 'scale(1.4)';
-          setTimeout(() => favBtn.style.transform = '', 200);
-        }
-        saveFavorites();
-        updateSortingPanel(); // refresh fav count badge
-        if (showFavoritesOnly) refreshTab(currentTab);
-      });
-      card.appendChild(favBtn);
+      const card = document.createElement('div');
+      card.className = 'rankCard' + (isFav ? ' favorited' : '') + (hasIssues ? ' has-issues' : '');
 
-      // ── Heading
-      const h2 = document.createElement('h2');
+      // ── Card Header ──
+      const cardHeader = document.createElement('div');
+      cardHeader.className = 'cardHeader';
+
+      // Favicon
       const websiteBtn = v.Buttons?.find(b => b.Text === 'Website');
-
-      const wIcon = document.createElement('img');
-      const wIconSrc = websiteBtn?.Link ? getFavicon(websiteBtn.Link) : '/Resources/Website.png';
+      const wIconSrc   = websiteBtn?.Link ? getFavicon(websiteBtn.Link) : '/Resources/Website.png';
+      const wIcon      = document.createElement('img');
+      wIcon.className  = 'cardFavicon';
+      wIcon.alt        = v.Title;
       wIcon.dataset.src = wIconSrc;
-      if (appSettings.iconsEnabled) wIcon.src = wIconSrc;
-      wIcon.alt   = 'Website';
-      wIcon.className = 'vendorWebsiteIcon';
-      wIcon.style.cssText = 'height:40px;width:40px;object-fit:contain;border-radius:4px;margin-right:5px';
-      wIcon.onerror = () => { wIcon.dataset.src = '/Resources/Website.png'; if (appSettings.iconsEnabled) wIcon.src = '/Resources/Website.png'; wIcon.onerror = null; };
-      wIcon.dataset.src = wIconSrc;
-
       if (websiteBtn?.Link) wIcon.dataset.link = websiteBtn.Link;
+      if (appSettings.iconsEnabled) wIcon.src = wIconSrc;
+      wIcon.onerror = () => { wIcon.src = '/Resources/Website.png'; wIcon.onerror = null; };
+      cardHeader.appendChild(wIcon);
 
-      if (websiteBtn?.Link) {
-        const a = document.createElement('a');
-        a.href = websiteBtn.Link; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.className = 'vendorWebsiteLink';
-        a.appendChild(wIcon); h2.appendChild(a);
-      } else {
-        h2.appendChild(wIcon);
-      }
+      // Center: name + tags
+      const center = document.createElement('div');
+      center.className = 'cardHeaderCenter';
 
-      h2.appendChild(document.createTextNode(v.Title));
+      const nameEl = document.createElement('div');
+      nameEl.className = 'cardVendorName';
+      nameEl.textContent = v.Title;
+      center.appendChild(nameEl);
 
-      // Badges
+      const tagRow = document.createElement('div');
+      tagRow.className = 'cardTagRow';
       [
         { cond: v.IsNew,         cls: 'new',         txt: 'New' },
         { cond: v.Password,      cls: 'password',     txt: 'Password protected' },
@@ -1006,80 +1141,159 @@
         const span = document.createElement('span');
         span.className = `indicator ${cls}`;
         span.textContent = txt;
-        h2.appendChild(span);
+        tagRow.appendChild(span);
+      });
+      center.appendChild(tagRow);
+      cardHeader.appendChild(center);
+
+      // Action buttons
+      const actions = document.createElement('div');
+      actions.className = 'cardHeaderActions';
+
+      const favBtn = document.createElement('button');
+      favBtn.className = `btn${isFav ? ' btn--fav-active' : ' btn--fav'}`;
+      favBtn.innerHTML = isFav ? '❤️ Saved' : '🤍 Save';
+      favBtn.addEventListener('click', () => {
+        const nowFav = favorites.has(v.Title);
+        if (nowFav) {
+          favorites.delete(v.Title);
+          favBtn.innerHTML = '🤍 Save';
+          favBtn.className = 'btn btn--fav';
+          card.classList.remove('favorited');
+        } else {
+          favorites.add(v.Title);
+          favBtn.innerHTML = '❤️ Saved';
+          favBtn.className = 'btn btn--fav-active';
+          card.classList.add('favorited');
+        }
+        saveFavorites();
+        updateSortingPanel();
+        if (showFavoritesOnly) refreshTab(currentTab);
       });
 
-      // Issues tooltip
-      if (v.Issues?.length) {
-        const container = document.createElement('span');
-        container.className = 'issuesTooltipContainer';
-        const mark = document.createElement('span');
-        mark.className = 'questionMark'; mark.textContent = '⚠️';
-        container.appendChild(mark);
-        const tip = document.createElement('div');
-        tip.className = 'issuesTooltip';
-        tip.innerHTML = `<div class="issuesTooltipHeader">Issues:</div><div class="issuesTooltipContent">${
-          v.Issues.map((issue, i) => issue.Link
-            ? `<a href="${issue.Link}" target="_blank">${i + 1}. ${issue.Text} 🔗</a>`
-            : `<b>${i + 1}. ${issue.Text}</b>`
-          ).join('')
-        }</div>`;
-        container.appendChild(tip);
-        attachHoverTooltip(container, tip);
-        h2.appendChild(container);
-      }
+      const reportBtn = document.createElement('button');
+      reportBtn.className = 'btn btn--report';
+      reportBtn.innerHTML = '🚩 Report';
+      reportBtn.addEventListener('click', () => openReportModal(v.Title));
 
-      card.appendChild(h2);
+      actions.appendChild(favBtn);
+      actions.appendChild(reportBtn);
+      cardHeader.appendChild(actions);
+      card.appendChild(cardHeader);
+
+      // ── Header / Body divider ──
+      const divider = document.createElement('div');
+      divider.className = 'card-divider';
+      card.appendChild(divider);
+
+      // ── Split wrapper ──
+      const cardSplit = document.createElement('div');
+      cardSplit.className = 'card-split';
+
+      // ── Body (left) ──
+      const body = document.createElement('div');
+      body.className = 'card-body';
+
+      if (v.SubSections?.length > 0) {
+        const subsRow = document.createElement('div');
+        subsRow.className = 'card-tags-footer';
+        subsRow.style.padding = '0';
+
+        v.SubSections.forEach(sub => {
+          const tag = document.createElement('span');
+          tag.className = 'indicator subsection';
+          tag.textContent = sub;
+          subsRow.appendChild(tag);
+        });
+
+        body.appendChild(subsRow);
+
+        const subsDivider = document.createElement('div');
+        subsDivider.className = 'card-divider';
+        body.appendChild(subsDivider);
+      }
 
       const p = document.createElement('p');
       p.textContent = v.Description;
-      card.appendChild(p);
+      body.appendChild(p);
 
-      // Buttons
       if (v.Buttons?.length) {
         const btns = document.createElement('div');
         btns.className = 'buttonsContainer';
         v.Buttons.forEach(b => {
           const link = document.createElement('a');
           link.href = b.Link; link.target = '_blank'; link.rel = 'noopener noreferrer';
-          link.className = 'openLinkButton';
-          link.style.cssText = 'display:flex;align-items:center;justify-content:center;text-decoration:none;color:rgb(205,178,255);gap:6px';
+          link.className = 'btn';
 
           const icon = document.createElement('img');
           icon.dataset.src = `Resources/${b.Text}.png`;
           if (appSettings.iconsEnabled) icon.src = `Resources/${b.Text}.png`;
           icon.alt = b.Text;
-          icon.style.cssText = 'height:20px;width:20px;object-fit:contain';
+          icon.style.cssText = 'height:16px;width:16px;object-fit:contain';
           icon.onerror = () => { icon.style.display = 'none'; icon.onerror = null; };
-
           link.appendChild(icon);
           link.appendChild(document.createTextNode(b.Text));
 
           if (v.Password && b.Text === 'Website') {
             link.onclick = e => { e.preventDefault(); openPwModal(v.Password, b.Link); };
           }
-
           btns.appendChild(link);
         });
-        card.appendChild(btns);
+        body.appendChild(btns);
       }
 
-      // Double-rAF ensures the initial opacity:0 paint happens before transitioning to loaded
-      requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('loaded')));
+      cardSplit.appendChild(body);
 
+      // ── Issues panel (right) ──
+      if (hasIssues) {
+        const vertDiv = document.createElement('div');
+        vertDiv.className = 'card-vert-divider';
+        cardSplit.appendChild(vertDiv);
+
+        const issuesSection = document.createElement('div');
+        issuesSection.className = 'card-issues';
+
+        const heading = document.createElement('div');
+        heading.className = 'issues-heading';
+        heading.innerHTML = '<span>⚠</span> Known issues';
+        issuesSection.appendChild(heading);
+
+        v.Issues.forEach((issue, i) => {
+          const item = document.createElement('div');
+          item.className = 'issue-item';
+          const num = document.createElement('span');
+          num.className = 'issue-num';
+          num.textContent = i + 1;
+          item.appendChild(num);
+          if (issue.Link) {
+            const a = document.createElement('a');
+            a.href = issue.Link; a.target = '_blank'; a.rel = 'noopener noreferrer';
+            a.textContent = issue.Text + ' ↗';
+            item.appendChild(a);
+          } else {
+            const t = document.createElement('span');
+            t.textContent = issue.Text;
+            item.appendChild(t);
+          }
+          issuesSection.appendChild(item);
+        });
+
+        cardSplit.appendChild(issuesSection);
+      }
+
+      card.appendChild(cardSplit);
+
+      requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('loaded')));
       return card;
     }
 
-    // ── Panel Builders (current tab only) ──────────────────────────────────────
-    // PERF: only ever rebuilds the ACTIVE tab's panel, not all N tabs.
-
+    // ── Panel Builders ──
     function updateSubtabsPanel() {
       const tab   = currentTab;
       const panel = $(`subtabsPanel-${tab}`);
       if (!panel) return;
 
       const vendorsInTab = tab === 'All' ? vendors : vendors.filter(v => v.Sections.includes(tab));
-
       let subSections;
       if (tab === 'All') {
         const seen = new Set(); subSections = [];
@@ -1089,7 +1303,6 @@
       }
 
       const frag = document.createDocumentFragment();
-
       const allItem = document.createElement('button');
       allItem.className = `subtabItem${currentSubSection === null ? ' active' : ''}`;
       allItem.innerHTML = `<span>All</span><span class="subtabCount">${vendorsInTab.length}</span>`;
@@ -1105,8 +1318,15 @@
         frag.appendChild(item);
       });
 
+      const subHeader = document.createElement('div');
+      subHeader.className = 'panelHeader';
+      subHeader.innerHTML = '<span class="panelHeaderTitle">Categories</span>';
+      const body = document.createElement('div');
+      body.className = 'panelBody';
+      body.appendChild(frag);
       panel.innerHTML = '';
-      panel.appendChild(frag);
+      panel.appendChild(subHeader);
+      panel.appendChild(body);
     }
 
     function updateSortingPanel() {
@@ -1114,7 +1334,6 @@
       const panel = $(`sortingPanel-${tab}`);
       if (!panel) return;
 
-      // Search
       const searchWrapper = document.createElement('div');
       searchWrapper.className = 'searchWrapper';
       searchWrapper.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgb(205,178,255)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`;
@@ -1128,7 +1347,6 @@
       clearBtn.className = 'searchClear'; clearBtn.title = 'Clear search'; clearBtn.textContent = '✕';
       clearBtn.style.display = currentSearch ? 'block' : 'none';
 
-      // Debounced search — only fires refreshTab, not panel rebuilds
       const doSearch = debounce(() => {
         currentSearch = searchInput.value.trim();
         clearBtn.style.display = currentSearch ? 'block' : 'none';
@@ -1144,11 +1362,6 @@
       searchWrapper.appendChild(searchInput);
       searchWrapper.appendChild(clearBtn);
 
-      // Sort label
-      const h3 = document.createElement('h3');
-      h3.textContent = 'Sort By';
-
-      // Custom dropdown
       const dropdown = document.createElement('div');
       dropdown.className = 'customDropdown';
       const curOpt = sortOptions.find(o => o.val === currentSortBy);
@@ -1163,11 +1376,8 @@
         item.className = `customDropdownOption${opt.val === currentSortBy ? ' selected' : ''}`;
         item.textContent = opt.label;
         item.addEventListener('click', e => {
-          e.stopPropagation();
-          currentSortBy = opt.val;
-          dropdown.classList.remove('open');
-          updateSortingPanel();
-          refreshTab(currentTab);
+          e.stopPropagation(); currentSortBy = opt.val;
+          dropdown.classList.remove('open'); updateSortingPanel(); refreshTab(currentTab);
         });
         optList.appendChild(item);
       });
@@ -1180,13 +1390,17 @@
       dropdown.appendChild(selected);
       dropdown.appendChild(optList);
 
-      // Assemble
-      panel.innerHTML = '';
-      panel.appendChild(searchWrapper);
-      panel.appendChild(h3);
-      panel.appendChild(dropdown);
+      const favBtn = document.createElement('button');
+      favBtn.className = `favFilterBtn${showFavoritesOnly ? ' active' : ''}`;
+      favBtn.innerHTML = `${showFavoritesOnly ? '❤️' : '🤍'} Favorites only <span class="favCount">${favorites.size}</span>`;
+      favBtn.onclick = () => { showFavoritesOnly = !showFavoritesOnly; updateSortingPanel(); refreshTab(currentTab); };
 
-      // Order toggle (only for sortable options)
+      // ── Wrap all content below the header ──
+      const body = document.createElement('div');
+      body.className = 'panelBody';
+      body.appendChild(searchWrapper);
+      body.appendChild(dropdown);
+
       if (curOpt?.hasOrder) {
         const orderBtn = document.createElement('button');
         orderBtn.className = 'sortOrderBtn';
@@ -1194,48 +1408,37 @@
           ? (currentSortOrder === 'asc' ? '↑ Low to High' : '↓ High to Low')
           : (currentSortOrder === 'desc' ? '↓ Z to A' : '↑ A to Z');
         orderBtn.onclick = () => { currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc'; updateSortingPanel(); refreshTab(currentTab); };
-        panel.appendChild(orderBtn);
+        body.appendChild(orderBtn);
       }
 
-      // Favorites filter
-      const favBtn = document.createElement('button');
-      favBtn.className = `favFilterBtn${showFavoritesOnly ? ' active' : ''}`;
-      favBtn.innerHTML = `${showFavoritesOnly ? '❤️' : '🤍'} Favorites only <span class="favCount">${favorites.size}</span>`;
-      favBtn.onclick = () => {
-        showFavoritesOnly = !showFavoritesOnly;
-        updateSortingPanel();
-        refreshTab(currentTab); // only the current (visible) tab needs updating
-      };
-      panel.appendChild(favBtn);
+      body.appendChild(favBtn);
+
+      const sortHeader = document.createElement('div');
+      sortHeader.className = 'panelHeader';
+      sortHeader.innerHTML = '<span class="panelHeaderTitle">Filter & Sorting</span>';
+
+      panel.innerHTML = '';
+      panel.appendChild(sortHeader);
+      panel.appendChild(body);
     }
 
-    // ── Tab / Subsection Switching ─────────────────────────────────────────────
+    // ── Tab / Subsection Switching ──
     function switchTab(tab) {
-      currentTab        = tab;
-      currentSubSection = null;
-      currentSearch     = '';
+      currentTab = tab; currentSubSection = null; currentSearch = '';
       document.querySelectorAll('.tabButton').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
       document.querySelectorAll('.tabContent').forEach(c => c.classList.remove('active'));
       $(`tabContent-${tab}`).classList.add('active');
-      updateSubtabsPanel();
-      updateSortingPanel();
-      refreshTab(tab);
+      updateSubtabsPanel(); updateSortingPanel(); refreshTab(tab);
     }
 
     function switchSubSection(sub) {
-      currentSubSection = sub;
-      updateSubtabsPanel();
-      refreshTab(currentTab);
+      currentSubSection = sub; updateSubtabsPanel(); refreshTab(currentTab);
     }
 
-    // ── Panel Height Sync (debounced) ──────────────────────────────────────────
+    // ── Panel Height Sync ──
     const syncPanelHeights = debounce(() => {
       const isMobile = window.innerWidth <= 1024;
-      // Batch all reads first, then writes (avoids forced layout thrashing)
-      const heights = categories.map(tab => {
-        const sp = $(`sortingPanel-${tab}`);
-        return sp ? sp.offsetHeight : 0;
-      });
+      const heights = categories.map(tab => { const sp = $(`sortingPanel-${tab}`); return sp ? sp.offsetHeight : 0; });
       categories.forEach((tab, i) => {
         const sub = $(`subtabsPanel-${tab}`);
         if (!sub) return;
@@ -1246,7 +1449,7 @@
 
     window.addEventListener('resize', syncPanelHeights);
 
-    // ── Bootstrap ─────────────────────────────────────────────────────────────
+    // ── Bootstrap ──
     async function getVendors() {
       const url  = new URL('vendors.js', window.location.href).href;
       const code = await fetch(url).then(r => r.text());
@@ -1254,11 +1457,11 @@
     }
 
     getVendors().then(([cats, subcats, vends]) => {
-      categories      = cats;
-      subcategories   = subcats;
-      vendors         = vends;
+      categories    = cats;
+      subcategories = subcats;
+      vendors       = vends;
       harmReductionTabs = new Set(categories.filter(c => c !== 'Marijuana'));
-      currentTab      = categories[0];
+      currentTab    = categories[0];
 
       updateHeaderTitle();
 
@@ -1268,16 +1471,14 @@
       categories.forEach((tab, i) => {
         const isFirst = i === 0;
 
-        // Tab button
         const btn = document.createElement('button');
-        btn.className  = `tabButton${isFirst ? ' active' : ''}`;
+        btn.className   = `tabButton${isFirst ? ' active' : ''}`;
         btn.dataset.tab = tab;
         const count = tab === 'All' ? vendors.length : vendors.filter(v => v.Sections.includes(tab)).length;
         btn.innerHTML = `<span>${tab}</span><span class="subtabCount">${count}</span>`;
         btn.onclick = () => switchTab(tab);
         tabButtonsFrag.appendChild(btn);
 
-        // Tab content shell
         const content = document.createElement('div');
         content.className = `tabContent${isFirst ? ' active' : ''}`;
         content.id        = `tabContent-${tab}`;
@@ -1285,8 +1486,6 @@
         const leftCol = document.createElement('div');
         leftCol.className = 'leftColumn';
 
-        // sortingPanel and subtabsPanel are intentionally empty here;
-        // updateSortingPanel / updateSubtabsPanel fill them for the active tab.
         const sortPanel = document.createElement('div');
         sortPanel.className = 'sortingPanel panel';
         sortPanel.id        = `sortingPanel-${tab}`;
@@ -1302,7 +1501,6 @@
         const list = document.createElement('div');
         list.className = 'rankingList';
         list.id        = `rankingList-${tab}`;
-        // Pre-render all tabs' vendor lists so switching tabs is instant
         populateVendorList(list, getSortedVendors(tab), tab);
         content.appendChild(list);
         tabContentsFrag.appendChild(content);
@@ -1311,11 +1509,9 @@
       $('tabButtons').appendChild(tabButtonsFrag);
       $('tabContents').appendChild(tabContentsFrag);
 
-      // Build panels only for the initial (active) tab
       updateSubtabsPanel();
       updateSortingPanel();
 
-      // ResizeObserver for panel height sync
       const ro = new ResizeObserver(syncPanelHeights);
       categories.forEach(tab => { const sp = $(`sortingPanel-${tab}`); if (sp) ro.observe(sp); });
       syncPanelHeights();
