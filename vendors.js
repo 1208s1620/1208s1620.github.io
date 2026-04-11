@@ -1,3 +1,5 @@
+const NoDescriptionWarning = "No description, if you'd like one to be added get in contact."
+
 const Categories = ["All", "Marijuana", "Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Peptides", "Other"];
 
 const SubCategories = {
@@ -14,6 +16,7 @@ const SubCategories = {
         "Mescaline",
         "MDMA",
         "MDA",
+        "2C-B",
         "5-MAPB",
         "N,N-DMT",
         "4-HO-MET",
@@ -35,7 +38,7 @@ const SubCategories = {
         "ETH-LAD",
         "1cP-AL-LAD",
         "N,N-Dipropyltryptamine (DPT)",
-        "Methallylescaline (MAL)",
+        "Methallylescaline (MAL)"
 
     ],
 
@@ -44,13 +47,20 @@ const SubCategories = {
         "2F-DCK",
         "2-FXiPr",
         "3-ME-PCP",
+        "3-MEO-PCE",
+        "3,4-MD-PCP",
+        "3-HO-PCP",
+        "O-PCE",
         "FXE",
         "Isophenidine"
     ],
     
     "Stimulants": [
         "Isopropylphenidate",
-        //"Cocaine"
+        "Cocaine",
+        "Adderall",
+        "2-FMA",
+        "Ritalin"
     ], 
     
     "Benzodiazepines": [
@@ -62,7 +72,10 @@ const SubCategories = {
         "Bromonordiazepam",
         "N-Ethyl-Nitrazepam",
         "Ethyl-Flualprazolam",
-        "Ethyl-Bromazolam"
+        "Ethyl-Bromazolam",
+        "Klonopin",
+        "Bromazolam",
+        "Clonazepam"
     ],
     
     "Opioids": [
@@ -70,7 +83,13 @@ const SubCategories = {
         "7-Hydroxymitragynine",
         "MGM-15",
         "Pseudoindoxyl",
-        "O-DSMT"
+        "O-DSMT",
+        "Codiene",
+        "Dihydrocodiene",
+        "Oxycodone",
+        "Tramadol",
+        "Tapetadol",
+        "Tapentadol"
     ],
     
     "Peptides": [
@@ -94,7 +113,14 @@ const SubCategories = {
     
     "Other": [
         "Gabapentin",
-        "Viagra"
+        "Viagra",
+        "Tusi",
+        "Chlorpromazine (Thorazine)",
+        "Viagra",
+        "Promethazine",
+        "Carisoprodol",
+        "Pregabalin",
+        "Zolpiclone"
     ]
 };
 
@@ -1132,7 +1158,7 @@ const Vendors = [
         Title: "Elyxr",
         Description: "ELYXR LA was founded in October 2020 with a focus on providing high-quality Delta-8 products, but the brand’s success didn’t happen overnight. By leveraging the strengths of its individual member groups and building a strong infrastructure as a team, ELYXR LA was able to quickly expand its product line and customer base. Unlike many other brands, ELYXR LA is committed to serving a deeper purpose by providing exceptional product quality, artistic design, and unparalleled customer service. With over 2,000+ products, ELYXR LA sets itself apart by offering same-day shipping and putting quality before profit. ELYXR LA is a brand that customers can trust.",
         Sections: ["Marijuana", "Psychedelics"],
-        SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+        SubSections: ["Flower", "Concentrates", "Vapes", "Edibles", "4-PrO-DMT"],
         
         Buttons: [
         { Text: "Website", Link: "https://www.elyxr.com/" },
@@ -1709,7 +1735,7 @@ const Vendors = [
         Title: "Rift Chems",
         Description: "Rift Chems is the best site to buy research chemicals in the USA, including: Bromazolam, Rilmazafone, Clobromazolam, O-dsmt, 2fdck, SR-17018, Fluoprazolam, 2FXiPr, 4fmph, , Phenazolam, 4-metmp, Bromonordiazepam & more.",
         Sections: ["Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Other"],
-        SubSections: ["2F-DCK", "3-ME-PCP", "2-FXiPr", "FXE", "Isophenidine", "Fluprazolam", "Rilmazofone", "Clobromazolam", "Norflurazepam", "Pynazolam", "Bromonordiazepam", "N-Ethyl-Nitrazepam", "Ethyl-Flualprazolam", "Ethyl-Bromazolam", "Isopropylphenidate", "O-DSMT"],
+        SubSections: ["Clonazepam", "Ritalin", "Tramadol", "Tapetadol", "2-FMA", "3-HO-PCP", "4-PrO-DMT", "2F-DCK", "3-ME-PCP", "2-FXiPr", "FXE", "Isophenidine", "Fluprazolam", "Rilmazofone", "Clobromazolam", "Norflurazepam", "Pynazolam", "Bromonordiazepam", "N-Ethyl-Nitrazepam", "Ethyl-Flualprazolam", "Ethyl-Bromazolam", "Isopropylphenidate", "O-DSMT"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://riftchems.com/" }
@@ -1725,16 +1751,22 @@ const Vendors = [
         { Text: "Website", Link: "https://fractalelephant.com/" }
         ]
     },
-    /*{
+    {
         Title: "Saturn Meds",
-        Description: "No description yet!",
-        Sections: ["Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Other"],
-        SubSections: ["Flower", "Ketamine", "LSD", "Cocaine"],
+        Description: "WELCOME To Saturn Meds, The only LEGIT source for pharmacy grade products on the public internet. We Sell DMT Carts, Lsd Tabs, Gel Tabs, MDMA, Edibles And Much More! All of the highest and purest quality.",
+        Sections: ["Marijuana", "Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Other"],
+        SubSections: [
+            "Flower", "Ketamine", "LSD", "Cocaine", "Adderall", "MDMA", "N,N-DMT", 
+            "Mescaline", "Tusi", "Xanax", "2C-B", "MDA", "Concentrates", "Shrooms", 
+            "Klonopin", "Bromazolam", "Chlorpromazine (Thorazine)", "Viagra", "Tapentadol", 
+            "Gabapentin", "Promethazine", "Semaglutide", "Carisoprodol", "Codiene", "Dihydrocodiene",
+            "Pregabalin", "Oxycodone", "Zolpiclone"
+        ],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://saturnmeds.com/" }
         ]
-    },*/
+    },
     {
         Title: "EVERYCHEM",
         Description: "We are an innovative company that focuses on providing high-quality reference materials for research labs across the globe. With the best chemists and manufacturers, you are guaranteed the safety and efficacy expected of a leader in the industry.",
@@ -1757,7 +1789,7 @@ const Vendors = [
     },
     {
         Title: "PRIMAL PHARMA",
-        Description: "No description yet!",
+        Description: NoDescriptionWarning,
         Sections: ["Peptides", "Other"],
         SubSections: ["Retatrutide", "Trenbolone", "TB-500", "Ipamorelin", "BPC-157", "Melanotan II", "IGF1-LR3", "Viagra", "Semaglutide"],
         IsNew: false,
@@ -1765,6 +1797,16 @@ const Vendors = [
         { Text: "Website", Link: "https://primalpharma.org/" }
         ]
     },
+    {
+        Title: "Clandestine / Mol. Sol. LLC",
+        Description: NoDescriptionWarning,
+        Sections: ["Opioids"],
+        SubSections: ["Natural kratom", "MGM-15", "7-OH"],
+        IsNew: false,
+        Buttons: [
+        { Text: "Website", Link: "https://clandestine7oh.com/" }
+        ]
+    }
 ];
 
 return [Categories, SubCategories, Vendors];
