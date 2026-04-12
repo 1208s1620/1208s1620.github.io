@@ -55,9 +55,12 @@ const SubCategories = {
         "3-MEO-PCE",
         "3,4-MD-PCP",
         "3-HO-PCP",
+        "O-PCP",
         "O-PCE",
-        "FXE",
-        "Isophenidine"
+        "MXPCP",
+        "Fluorexetamine",
+        "Isophenidine",
+        "Tilmetamine"
     ],
     
     "Stimulants": [
@@ -65,22 +68,38 @@ const SubCategories = {
         "Cocaine",
         "Adderall",
         "2-FMA",
-        "Ritalin"
+        "Ritalin",
+        "MDPIHP",
+        "2-Me-PiHP",
+        "4-MeTMP",
+        "DMNPC"
     ], 
     
     "Benzodiazepines": [
+        "Alprazolam",
         "Fluprazolam",
         "Rilmazofone",
         "Clobromazolam",
         "Norflurazepam",
         "Pynazolam",
         "Bromonordiazepam",
+        "Fluoprazolam",
         "N-Ethyl-Nitrazepam",
         "Ethyl-Flualprazolam",
         "Ethyl-Bromazolam",
         "Klonopin",
         "Bromazolam",
-        "Clonazepam"
+        "Clonazepam",
+        "Nifoxipam",
+        "Avizafone",
+        "Tianeptine",
+        "Desalkylgidazepam",
+        "Deschloroetizolam",
+        "Flubrotizolam",
+        "Fluclotizolam",
+        "Fluloprazolam",
+        "Rilmazafone",
+        "3-Hydroxyphenazepam"
     ],
     
     "Opioids": [
@@ -94,7 +113,13 @@ const SubCategories = {
         "Oxycodone",
         "Tramadol",
         "Tapetadol",
-        "Tapentadol"
+        "Tapentadol",
+        "PiPTapentadol",
+        "Methiodone",
+        "DPP-26",
+        "SR-17018",
+        "SR-14968",
+        "Nortilidine"
     ],
     
     "Peptides": [
@@ -125,7 +150,9 @@ const SubCategories = {
         "Promethazine",
         "Carisoprodol",
         "Pregabalin",
-        "Zolpiclone"
+        "Zolpiclone",
+        "Methyl-K",
+        "Tianeptine"
     ]
 };
 
@@ -1740,7 +1767,7 @@ const Vendors = [
         Title: "Rift Chems",
         Description: "Rift Chems is the best site to buy research chemicals in the USA, including: Bromazolam, Rilmazafone, Clobromazolam, O-dsmt, 2fdck, SR-17018, Fluoprazolam, 2FXiPr, 4fmph, , Phenazolam, 4-metmp, Bromonordiazepam & more.",
         Sections: ["Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Other"],
-        SubSections: ["Clonazepam", "Ritalin", "Tramadol", "Tapetadol", "2-FMA", "3-HO-PCP", "4-PrO-DMT", "2F-DCK", "3-ME-PCP", "2-FXiPr", "FXE", "Isophenidine", "Fluprazolam", "Rilmazofone", "Clobromazolam", "Norflurazepam", "Pynazolam", "Bromonordiazepam", "N-Ethyl-Nitrazepam", "Ethyl-Flualprazolam", "Ethyl-Bromazolam", "Isopropylphenidate", "O-DSMT"],
+        SubSections: ["Clonazepam", "Ritalin", "Tramadol", "Tapetadol", "2-FMA", "3-HO-PCP", "4-PrO-DMT", "2F-DCK", "3-ME-PCP", "2-FXiPr", "Fluorexetamine", "Isophenidine", "Fluprazolam", "Rilmazofone", "Clobromazolam", "Norflurazepam", "Pynazolam", "Bromonordiazepam", "N-Ethyl-Nitrazepam", "Ethyl-Flualprazolam", "Ethyl-Bromazolam", "Isopropylphenidate", "O-DSMT"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://riftchems.com/" }
@@ -1762,7 +1789,7 @@ const Vendors = [
         Sections: ["Marijuana", "Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Other"],
         SubSections: [
             "Flower", "Ketamine", "LSD", "Cocaine", "Adderall", "MDMA", "N,N-DMT", 
-            "Mescaline", "Tusi", "Xanax", "2C-B", "MDA", "Concentrates", "Shrooms", 
+            "Mescaline", "Tusi", "Alprazolam", "2C-B", "MDA", "Concentrates", "Shrooms", 
             "Klonopin", "Bromazolam", "Chlorpromazine (Thorazine)", "Viagra", "Tapentadol", 
             "Gabapentin", "Promethazine", "Semaglutide", "Carisoprodol", "Codiene", "Dihydrocodiene",
             "Pregabalin", "Oxycodone", "Zolpiclone"
@@ -1811,7 +1838,62 @@ const Vendors = [
         Buttons: [
         { Text: "Website", Link: "https://clandestine7oh.com/" }
         ]
-    }
+    },
+    {
+        Title: "Autogen Research Services",
+        Description: "High quality products, At competitive Price!",
+        Sections: ["Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Other"],
+        SubSections: [
+            "4-HO-MET", "Ethyl-Bromazolam", "Nifoxipam", "Avizafone", "MDPIHP", 
+            "2-Me-PiHP", "O-DSMT", "4-MeTMP", "DMNPC", "Methiodone", "Methyl-K", 
+            "DPP-26", "SR-14968", "SR-17018", "O-PCP", "Ethyl-Bromazolam", "MXPCP", 
+            "Nortilidine", "PiPTapentadol", "2-FXiPr", "Fluprazolam", "Pynazolam", 
+            "Tianeptine", "Ethyl-Flualprazolam"
+        ],
+        IsNew: false,
+        Buttons: [
+        { Text: "Website", Link: "https://autogenresearch.services/" }
+        ]
+    },
+    {
+        Title: "NOVEL SCIENCE SHOP",
+        Description: NoDescriptionWarning,
+        Sections: ["Dissociatives", "Benzodiazepines", "Other"],
+        SubSections: [
+            "Clobromazolam", "Desalkylgidazepam", "Deschloroetizolam", "Ethyl-Bromazolam", "Flubrotizolam",
+            "Fluclotizolam", "Fluloprazolam", "Fluorexetamine", "Pyrazolam", "Rilmazafone"
+        ],
+        IsNew: false,
+        Buttons: [
+        { Text: "Website", Link: "https://novelscienceshop.is/" }
+        ]
+    },
+    {
+        Title: "Sunnyside Research Store",
+        Description: NoDescriptionWarning,
+        Sections: ["Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Other"],
+        SubSections: [
+            "Ethyl-Bromazolam", "Ethyl-Flualprazolam", "Rilmazafone", "Tilmetamine",
+            "Clobromazolam", "Rilmazafone", "3-Hydroxyphenazepam"
+        ],
+        IsNew: false,
+        Buttons: [
+        { Text: "Website", Link: "https://sunnysideresearchstore.net/" }
+        ]
+    },
+    {
+        Title: "Sunnyside Research Store",
+        Description: NoDescriptionWarning,
+        Sections: ["Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Other"],
+        SubSections: [
+            "Ethyl-Bromazolam", "Ethyl-Flualprazolam", "Rilmazafone", "Tilmetamine",
+            "Clobromazolam", "Rilmazafone", "3-Hydroxyphenazepam"
+        ],
+        IsNew: false,
+        Buttons: [
+        { Text: "Website", Link: "https://sunnysideresearchstore.net/" }
+        ]
+    },
 ];
 
 return [Categories, SubCategories, Vendors, Note];
