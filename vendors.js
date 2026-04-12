@@ -1,5 +1,10 @@
 const NoDescriptionWarning = "No description, if you'd like one to be added get in contact."
 
+const Note = {
+    title: "📋 What's New",
+    text: "Vendor cards have been fully redesigned with a cleaner layout and improved readability. Each card now displays a visible list of products offered by that vendor, making it easier to find what you're looking for.\n\nReporting is now live — you can now flag any vendor directly from their card if you encounter an issue. Vendor request submissions also now show a confirmation so you know your request was received.\n\nPanels across the site have titled headers for better navigation, a number of theme refinements have been applied, and a few new vendors have been added to the list.\n\nHarm reduction is a priority. Expanded safety information, dosage guidance, and substance-specific resources are coming soon — hopefully to help you make informed decisions and stay safe.\n\n— Dabatron"
+}
+
 const Categories = ["All", "Marijuana", "Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Peptides", "Other"];
 
 const SubCategories = {
@@ -1158,7 +1163,7 @@ const Vendors = [
         Title: "Elyxr",
         Description: "ELYXR LA was founded in October 2020 with a focus on providing high-quality Delta-8 products, but the brand’s success didn’t happen overnight. By leveraging the strengths of its individual member groups and building a strong infrastructure as a team, ELYXR LA was able to quickly expand its product line and customer base. Unlike many other brands, ELYXR LA is committed to serving a deeper purpose by providing exceptional product quality, artistic design, and unparalleled customer service. With over 2,000+ products, ELYXR LA sets itself apart by offering same-day shipping and putting quality before profit. ELYXR LA is a brand that customers can trust.",
         Sections: ["Marijuana", "Psychedelics"],
-        SubSections: ["Flower", "Concentrates", "Vapes", "Edibles", "4-PrO-DMT"],
+        SubSections: ["Flower", "Concentrates", "Vapes", "Edibles", "4-PrO-DMT", "7-OH"],
         
         Buttons: [
         { Text: "Website", Link: "https://www.elyxr.com/" },
@@ -1470,7 +1475,7 @@ const Vendors = [
         Title: "Wicked Tablets",
         Description: "Wicked Tablets lives for the relentless pursuit to create unique, reliable, and responsibly sourced mind-expanding products more accessible to curious, conscious adults. Wicked is a small, independent brand aiming to leave a big mark in the development of psychedelic treatments, and responsible recreational use",
         Sections: ["Psychedelics", "Opioids"],
-        SubSections: ["5-MAPB", "4-HO-MET", "4-HO-DET", "4-PrO-DMT", "SR-17018"],
+        SubSections: ["5-MAPB", "4-HO-MET", "4-HO-DET", "4-PrO-DMT", "SR-17018", "MGM-15"],
         
         IsNew: false, IsRecommended: true,
         
@@ -1809,4 +1814,4 @@ const Vendors = [
     }
 ];
 
-return [Categories, SubCategories, Vendors];
+return [Categories, SubCategories, Vendors, Note];
