@@ -1874,19 +1874,6 @@ const Vendors = [
         ]
     },
     {
-        Title: "Sunnyside Research Store",
-        Description: NoDescriptionWarning,
-        Sections: ["Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Other"],
-        SubSections: [
-            "Ethyl-Bromazolam", "Ethyl-Flualprazolam", "Rilmazafone", "Tilmetamine",
-            "Clobromazolam", "Rilmazafone", "3-Hydroxyphenazepam"
-        ],
-        IsNew: false,
-        Buttons: [
-        { Text: "Website", Link: "https://sunnysideresearchstore.net/" }
-        ]
-    },
-    {
         Title: "Happiness Delivers",
         Description: NoDescriptionWarning,
         Sections: ["Marijuana", "Psychedelics", "Other"],
