@@ -592,6 +592,25 @@
 <body>
   <div class="animatedBg"></div>
 
+  <!-- Note on Load Modal -->
+  <div class="modalOverlay" id="noteModalOverlay">
+    <div class="modal">
+      <div class="modalTitle" id="noteModalTitle"></div>
+      <div style="font-size:.9rem;color:var(--text2);line-height:1.65;white-space:pre-line;" id="noteModalBody"></div>
+      <div class="modalActions">
+        <div class="reqCheckboxRow" id="noteCheckboxRow">
+          <div class="reqCheckboxBox" id="noteCheckboxBox">
+            <svg class="reqCheckboxTick" viewBox="0 0 10 10" fill="none">
+              <polyline points="1.5,5 4,7.5 8.5,2.5" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span class="reqCheckboxLabel">Don't show again</span>
+        </div>
+        <button class="btn btn--send-purple" id="noteModalClose">Okay →</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Password Modal -->
   <div class="modalOverlay" id="pwModalOverlay">
     <div class="modal">
@@ -1456,12 +1475,35 @@
       return new Function(code)();
     }
 
-    getVendors().then(([cats, subcats, vends]) => {
+    getVendors().then(([cats, subcats, vends, note]) => {
       categories    = cats;
       subcategories = subcats;
       vendors       = vends;
       harmReductionTabs = new Set(categories.filter(c => c !== 'Marijuana'));
       currentTab    = categories[0];
+
+      // ── Note on Load Modal ──
+      const noteOverlay = $('noteModalOverlay');
+      let noteDismissed = false;
+
+      const closeNoteModal = () => {
+        if (noteDismissed) localStorage.setItem('tvl_note_seen', note.title);
+        noteOverlay.classList.remove('open');
+      };
+
+      $('noteModalClose').addEventListener('click', closeNoteModal);
+      noteOverlay.addEventListener('click', e => { if (e.target === noteOverlay) closeNoteModal(); });
+
+      $('noteCheckboxRow').addEventListener('click', () => {
+        noteDismissed = !noteDismissed;
+        $('noteCheckboxBox').classList.toggle('checked', noteDismissed);
+      });
+
+      if (note?.title && note?.text && localStorage.getItem('tvl_note_seen') !== note.title) {
+        $('noteModalTitle').textContent = note.title;
+        $('noteModalBody').textContent  = note.text;
+        noteOverlay.classList.add('open');
+      }
 
       updateHeaderTitle();
 
