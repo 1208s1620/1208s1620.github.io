@@ -1905,7 +1905,7 @@ const Vendors = [
         Description: "Divine Science Society recognizes that modern life often feels disconnected from the sacred. In a world driven by science, technology, and material pursuits, many feel a longing for something deeper—an inner knowing that transcends the ordinary. At Divine Science Society, we honor the wisdom already within you, guiding you to reconnect with the sacred presence that has always been part of your being.",
         Sections: ["Marijuana", "Psychedelics", "Other"],
         SubSections: [
-            "Shrooms", "LSD", "MDMA", "N,N-DMT", ""
+            "Shrooms", "LSD", "MDMA", "N,N-DMT"
         ],
         IsNew: false,
         Buttons: [
