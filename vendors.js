@@ -1260,14 +1260,6 @@ const Vendors = [
         ]
     },
     {
-        Title: "ZAZA DELIVERY",
-        Description: "ZAZA Delivery is your go-to online store for premium CBD and THCa products. We offer a wide selection of vapes, edibles, flower, and concentrates, all delivered straight to your door. Our products are compliant with the 2018 Farm Bill, making them federally legal.",
-        Sections: ["Marijuana"],
-        SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
-        Buttons: [{ Text: "Website", Link: "https://shopzazadelivery.com/" }]
-    },
-    {
         Title: "Black Tie CBD",
         Description: "Our THCA flower rivals top-shelf dispensary cannabis. Grown indoors and hand-trimmed, our strains deliver dense nugs, loud terpenes, and consistent effects—without the high price or legal risks. We back every batch with third-party lab reports, full compliance under the 2018 Farm Bill, and a 30-day satisfaction guarantee.",
         Sections: ["Marijuana"],
@@ -1502,7 +1494,7 @@ const Vendors = [
         Title: "Wicked Tablets",
         Description: "Wicked Tablets lives for the relentless pursuit to create unique, reliable, and responsibly sourced mind-expanding products more accessible to curious, conscious adults. Wicked is a small, independent brand aiming to leave a big mark in the development of psychedelic treatments, and responsible recreational use",
         Sections: ["Psychedelics", "Opioids"],
-        SubSections: ["5-MAPB", "4-HO-MET", "4-HO-DET", "4-PrO-DMT", "SR-17018", "MGM-15"],
+        SubSections: ["5-MAPB", "4-HO-MET", "4-HO-DET", "4-PrO-DMT", "SR-17018", "MGM-15", "7-OH"],
         
         IsNew: false, IsRecommended: true,
         
@@ -1894,6 +1886,36 @@ const Vendors = [
         { Text: "Website", Link: "https://sunnysideresearchstore.net/" }
         ]
     },
+    {
+        Title: "Happiness Delivers",
+        Description: NoDescriptionWarning,
+        Sections: ["Marijuana", "Psychedelics", "Other"],
+        SubSections: [
+            "Flower", "Concentrates", "Vapes", "Edibles", "Tinctures",
+            "N,N-DMT", "MDMA", "Shrooms"
+        ],
+        IsNew: false,
+        Buttons: [
+            { Text: "Website", Link: "https://happinessdelivers.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/happinessdelivers" }
+        ]
+    },
+    {
+        Title: "Divine Science Society Shop",
+        Description: "Divine Science Society recognizes that modern life often feels disconnected from the sacred. In a world driven by science, technology, and material pursuits, many feel a longing for something deeper—an inner knowing that transcends the ordinary. At Divine Science Society, we honor the wisdom already within you, guiding you to reconnect with the sacred presence that has always been part of your being.",
+        Sections: ["Marijuana", "Psychedelics", "Other"],
+        SubSections: [
+            "Shrooms", "LSD", "MDMA", "N,N-DMT", ""
+        ],
+        IsNew: false,
+        Buttons: [
+            { Text: "Website", Link: "https://divinesciencesociety.org/" },
+            { Text: "Facebook", Link: "https://www.facebook.com/p/Divine-Science-Society-61572709735235/" },
+            { Text: "Twitter", Link: "https://x.com/DivineSciSo" },
+            { Text: "Instagram", Link: "https://www.instagram.com/Divinescienceso" },
+            { Text: "TikTok", Link: "https://www.tiktok.com/@Divinesciencesociety" }
+        ]
+    }
 ];
 
 return [Categories, SubCategories, Vendors, Note];
