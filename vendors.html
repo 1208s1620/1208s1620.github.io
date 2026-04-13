@@ -635,6 +635,13 @@
         <input type="text" class="reqTextInput" id="reqLink" placeholder="https://google.com" autocomplete="off"/>
       </div>
       <div class="reqField">
+        <label class="reqLabel">Your Email (optional)</label>
+        <input type="email" class="reqTextInput" id="reqEmail" placeholder="you@example.com" autocomplete="email"/>
+      </div>
+      <div class="reqNote">
+        Provide your email and I'll reach out with an update once it's been reviewed. Keep an eye out for an email from <a href="mailto:thevendorlist@proton.me" style="color:rgba(189,189,189,.75);text-underline-offset:2px;">thevendorlist@proton.me</a>
+      </div>
+      <div class="reqField">
         <div class="reqCheckboxRow" id="reqCheckboxRow">
           <div class="reqCheckboxBox" id="reqCheckboxBox">
             <svg class="reqCheckboxTick" viewBox="0 0 10 10" fill="none">
@@ -666,6 +673,13 @@
       <div class="reqField">
         <label class="reqLabel">Vendor</label>
         <div class="reqVendorName" id="reportVendorName"></div>
+      </div>
+      <div class="reqField">
+        <label class="reqLabel">Your Email (optional)</label>
+        <input type="email" class="reqTextInput" id="reportEmail" placeholder="you@example.com" autocomplete="email"/>
+        </div>
+      <div class="reqNote">
+        Provide your email and I'll reach out with an update once it's been reviewed. Keep an eye out for an email from <a href="mailto:thevendorlist@proton.me" style="color:rgba(189,189,189,.75);text-underline-offset:2px;">thevendorlist@proton.me</a>
       </div>
       <div class="reqField">
         <label class="reqLabel">Issue Experienced</label>
@@ -1021,7 +1035,8 @@
             { name: 'Vendor link 🔗', value: link, inline: true },
             { name: 'Personally tried', value: reqChecked ? 'Yes ✅' : 'No ❌', inline: true },
             { name: '\u200B', value: '\u200B', inline: false },
-            { name: '⭐ Rating & Experience ⭐', value: rating || '_Not provided_', inline: false },
+            { name: '⭐ Rating & Experience ⭐', value: rating || '_Not provided_', inline: true },
+            { name: 'Email 📧', value: $('reqEmail').value.trim() || '_Not provided_', inline: true },
             { name: '\u200B', value: '\u200B', inline: false }
           ],
           footer: { text: 'The Vendor List · Vendor Request' }, timestamp: new Date().toISOString()
@@ -1031,7 +1046,7 @@
         sendBtn.disabled = false; closeBtn.disabled = false; sendBtn.textContent = 'Send Request →';
         if (res.ok) {
           showReqStatus('success', '✅ Request sent! We\'ll review it and add the vendor if it\'s a good fit.');
-          $('reqLink').value = ''; $('reqRating').value = ''; reqTextarea.style.height = '';
+          $('reqEmail').value = ''; $('reqLink').value = ''; $('reqRating').value = ''; reqTextarea.style.height = '';
           reqChecked = false; $('reqCheckboxBox').classList.remove('checked');
           setTimeout(() => { reqOverlay.classList.remove('open'); hideReqStatus(); }, 3000);
         } else { showReqStatus('error', `❌ Something went wrong (HTTP ${res.status}). Please try again.`); }
@@ -1067,7 +1082,12 @@
       $('reportImage').value = ''; $('reportImageName').textContent = '';
       hideReportStatus(); reportOverlay.classList.add('open');
     }
-    function closeReportModal() { reportOverlay.classList.remove('open'); hideReportStatus(); }
+
+    function closeReportModal() { 
+      reportOverlay.classList.remove('open'); 
+      hideReportStatus();
+      $('reportEmail').value = '';
+    }
 
     $('reportModalClose').addEventListener('click', closeReportModal);
     reportOverlay.addEventListener('click', e => { if (e.target === reportOverlay) closeReportModal(); });
@@ -1088,9 +1108,10 @@
       const WEBHOOK_URL = 'https://discord.com/api/webhooks/1490486192565653686/a3KomkCyVdUYY1ctCT4zjw9uG-ybg5Q9kvlUZB7CTZamLDXUJdA1ynoiiPcEuBPQ8rLr';
       const embedPayload = { embeds: [{ color: 0xFF5050, title: '🚩 Vendor report',
         fields: [
-          { name: 'Vendor 🏪', value: reportVendorTitle, inline: false },
+          { name: 'Vendor 🏪', value: reportVendorTitle, inline: true },
+          { name: 'Email 📧', value: $('reportEmail').value.trim() || '_Not provided_', inline: true },
           { name: '\u200B', value: '\u200B', inline: false },
-          { name: '⚠️ Issue Reported ⚠️', value: issue, inline: false },
+          { name: '⚠️ Issue Reported ⚠️', value: issue, inline: true },
           { name: '\u200B', value: '\u200B', inline: false }
         ],
         ...(imageFile ? { image: { url: 'attachment://proof.png' } } : {}),
@@ -1108,7 +1129,7 @@
           res = await fetch(WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(embedPayload) });
         }
         sendBtn.disabled = false; closeBtn.disabled = false; sendBtn.textContent = 'Submit Report →';
-        if (res.ok) { showReportStatus('success', '✅ Report submitted! We\'ll review it and take action if needed.'); setTimeout(() => { closeReportModal(); }, 3000); }
+        if (res.ok) { $('reportEmail').value = ''; showReportStatus('success', '✅ Report submitted! We\'ll review it and take action if needed.'); setTimeout(() => { closeReportModal(); }, 3000); }
         else { showReportStatus('error', `❌ Something went wrong (HTTP ${res.status}). Please try again.`); }
       } catch {
         sendBtn.disabled = false; closeBtn.disabled = false; sendBtn.textContent = 'Submit Report →';
