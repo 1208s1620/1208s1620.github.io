@@ -39,68 +39,35 @@
         min-height: 100vh;
       }
 
-       /* ── Galaxy Background ── */
-      .animatedBg,
-      .animatedBg::before,
-      .animatedBg::after {
+      /* ── Galaxy Background ── */
+      .animatedBg {
         position: fixed;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
+        top: -50%; left: -50%;
+        width: 200%; height: 200%;
         pointer-events: none;
         z-index: 0;
-      }
-
-      .animatedBg {
+        will-change: transform;
+        transform: translateZ(0);
         background:
-          radial-gradient(ellipse 60% 40% at 30% 40%, rgba(150,90,220,0.32) 0%, transparent 70%),
-          radial-gradient(ellipse 50% 60% at 75% 60%, rgba(30,60,180,0.22) 0%, transparent 70%),
-          radial-gradient(ellipse 55% 45% at 55% 85%, rgba(200,120,180,0.18) 0%, transparent 70%),
-          radial-gradient(ellipse 40% 50% at 10% 70%, rgba(60,30,160,0.2) 0%, transparent 65%),
-          radial-gradient(ellipse 35% 35% at 88% 15%, rgba(90,50,200,0.18) 0%, transparent 60%);
-        filter: blur(60px);
+          radial-gradient(ellipse 55% 38% at 30% 40%, rgba(150,90,220,.28) 0%, rgba(150,90,220,.08) 40%, transparent 70%),
+          radial-gradient(ellipse 45% 55% at 75% 60%, rgba(30,60,180,.20) 0%, rgba(30,60,180,.05) 40%, transparent 70%),
+          radial-gradient(ellipse 50% 42% at 55% 85%, rgba(200,120,180,.16) 0%, rgba(200,120,180,.04) 40%, transparent 70%),
+          radial-gradient(ellipse 38% 48% at 10% 70%, rgba(60,30,160,.18) 0%, rgba(60,30,160,.04) 40%, transparent 65%),
+          radial-gradient(ellipse 32% 32% at 88% 15%, rgba(90,50,200,.16) 0%, rgba(90,50,200,.04) 40%, transparent 60%);
         animation: galaxyRotate 40s linear infinite;
       }
 
-      .animatedBg::before {
-        content: '';
-        background:
-          radial-gradient(ellipse 70% 50% at 60% 30%, rgba(160,90,220,0.12) 0%, transparent 60%),
-          radial-gradient(ellipse 40% 60% at 20% 80%, rgba(40,60,180,0.14) 0%, transparent 55%),
-          radial-gradient(ellipse 50% 40% at 85% 70%, rgba(200,120,180,0.10) 0%, transparent 55%);
-        filter: blur(40px);
-        animation: galaxyPulse 8s ease-in-out infinite alternate;
-      }
-
-      .animatedBg::after {
-        content: '';
-        background:
-          radial-gradient(ellipse 30% 30% at 50% 50%, rgba(130,70,220,0.18) 0%, transparent 70%),
-          radial-gradient(ellipse 25% 25% at 70% 20%, rgba(30,50,160,0.15) 0%, transparent 60%);
-        filter: blur(50px);
-        animation: galaxyDrift 14s ease-in-out infinite alternate;
-      }
+      .animatedBg::before,
+      .animatedBg::after { display: none; }
 
       @keyframes galaxyRotate {
-        0%   { transform: rotate(0deg)   scale(1);    }
-        33%  { transform: rotate(120deg) scale(1.08); }
-        66%  { transform: rotate(240deg) scale(0.95); }
-        100% { transform: rotate(360deg) scale(1);    }
+        from { transform: rotate(0deg)   scale(1); }
+        33%  { transform: rotate(120deg) scale(1.05); }
+        66%  { transform: rotate(240deg) scale(.97); }
+        to   { transform: rotate(360deg) scale(1); }
       }
 
-      @keyframes galaxyPulse {
-        0%   { opacity: 0.4; transform: scale(1)    translateX(0px);   }
-        50%  { opacity: 1;   transform: scale(1.05) translateX(-15px); }
-        100% { opacity: 0.6; transform: scale(0.97) translateX(10px);  }
-      }
-
-      @keyframes galaxyDrift {
-        0%   { transform: translate(0px, 0px)   scale(1);    opacity: 0.5; }
-        100% { transform: translate(40px, -30px) scale(1.12); opacity: 1;  }
-      }
-
-      body > *:not(.animatedBg) { position: relative; z-index: 1; }
+      body > *:not(.animatedBg):not(.modalOverlay) { position: relative; z-index: 1; }
 
       /* ── Header ── */
       .header {
