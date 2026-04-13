@@ -6,7 +6,6 @@
   <title>The Vendor List</title>
   <link rel="icon" type="image/x-icon" href="Resources/favicon.ico"/>
   <style>
-    /* ── Design Tokens ── */
     :root {
       --bg: #121212;
       --primary: #bb86fc;
@@ -40,7 +39,6 @@
 
     body { display: flex; flex-direction: column; position: relative; min-height: 100vh; }
 
-    /* ── Galaxy Background ── */
     .animatedBg {
       position: fixed;
       top: -50%; left: -50%;
@@ -70,7 +68,6 @@
 
     body > *:not(.animatedBg):not(.modalOverlay) { position: relative; z-index: 1; }
 
-    /* ── Header ── */
     .header {
       position: fixed; top: 0; width: 100%; z-index: 1000;
       padding: 1rem 1.5rem;
@@ -90,9 +87,6 @@
     .headerTotal { color: var(--text2); -webkit-text-fill-color: var(--text2); background: none; -webkit-background-clip: initial; background-clip: initial; }
     .navButtons { display: flex; gap: .75rem; flex-wrap: nowrap; white-space: nowrap; }
 
-    /* ── Unified Button ── */
-    /* Every button and link-button in the app uses this one class.
-       Modifiers (.btn--fav, .btn--fav-active, .btn--report, .btn--icon) layer on top. */
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 6px;
       background: linear-gradient(145deg, rgba(187,134,252,.15), rgba(187,134,252,.05));
@@ -108,10 +102,8 @@
       box-shadow: 0 6px 18px rgba(187,134,252,.25); transform: translateY(-2px);
     }
 
-    /* Icon-only (gear button) */
     .btn--icon { padding: .6rem .75rem; font-size: 1rem; }
 
-    /* Favourite button — inactive */
     .btn--fav {
       border-color: rgba(255,100,150,.25); background: rgba(255,100,150,.06); color: rgba(255,155,185,.75);
     }
@@ -120,7 +112,6 @@
       box-shadow: 0 6px 18px rgba(255,100,150,.2); transform: none;
     }
 
-    /* Favourite button — active/saved */
     .btn--fav-active {
       border-color: rgba(255,100,150,.58); background: rgba(255,100,150,.14); color: #ff9ab9;
       box-shadow: 0 0 10px rgba(255,100,150,.15);
@@ -130,7 +121,6 @@
       box-shadow: 0 6px 18px rgba(255,100,150,.2); transform: none;
     }
 
-    /* Report button */
     .btn--report {
       border-color: rgba(255,100,60,.2); background: rgba(255,100,60,.04); color: rgba(255,148,108,.6);
     }
@@ -139,11 +129,9 @@
       box-shadow: 0 6px 18px rgba(255,100,60,.15); transform: none;
     }
 
-    /* Card-header buttons suppress the lift */
     .cardHeaderActions .btn { transform: none !important; }
     .cardHeaderActions .btn:hover { transform: none !important; }
 
-    /* ── Tab Bar ── */
     .tabBar { position: fixed; top: 15px; width: 100%; z-index: 999; padding: 0 1.5rem; overflow: visible; }
     .tabBarInner {
       background: var(--card-bg); border: 1px solid var(--card-border);
@@ -160,27 +148,24 @@
     .tabButton:hover { border-color: var(--primary); transform: translateY(-2px); }
     .tabButton.active { border-color: var(--primary); background: linear-gradient(145deg, rgba(187,134,252,.25), rgba(187,134,252,.15)); }
 
-    /* ── Main Layout ── */
     .mainContainer { margin-top: 40px; padding: 0 1.5rem 2rem; width: 100%; flex: 1; }
     .contentArea { display: flex; gap: 2rem; width: 100%; min-height: 60vh; }
     .tabContent { display: none; width: 100%; }
     .tabContent.active { display: flex; gap: 2rem; width: 100%; }
     .leftColumn { display: flex; flex-direction: column; gap: 1rem; width: 250px; flex-shrink: 0; height: fit-content; }
 
-    /* ── Shared Panel Surface ── */
     .panel { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; box-shadow: var(--card-shadow); }
 
     .panelHeader {
-      display: flex; align-items: center;
+      display: flex; align-items: center; justify-content: space-between;
       padding: .75rem 1rem;
       background: rgba(187,134,252,.04);
       border-bottom: 1px solid rgba(255,255,255,.065);
       border-radius: 16px 16px 0 0;
+      gap: .5rem;
     }
 
-    .panelBody {
-      padding: 0; 
-    }
+    .panelBody { padding: 0; }
 
     .sortingPanel .panelHeader {
       margin-left: -1.5rem;
@@ -192,9 +177,42 @@
       font-size: .85rem; font-weight: 700;
       color: #d0aaff;
       letter-spacing: -.01em;
+      flex-shrink: 0;
     }
 
-    /* ── Subtabs Panel ── */
+    .subcatSearchWrap {
+      position: relative;
+      flex: 1;
+      max-width: 120px;
+    }
+    .subcatSearchWrap svg {
+      position: absolute; left: 7px; top: 50%; transform: translateY(-50%);
+      pointer-events: none; opacity: .45;
+    }
+    .subcatSearch {
+      width: 100%;
+      background: rgba(187,134,252,.08);
+      border: 1px solid rgba(187,134,252,.22);
+      border-radius: 6px;
+      padding: .28rem .5rem .28rem 1.7rem;
+      color: #fff; font-size: .76rem;
+      font-family: inherit; outline: none;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+      caret-color: var(--primary);
+    }
+    .subcatSearch::placeholder { color: rgba(205,178,255,.35); }
+    .subcatSearch:focus {
+      border-color: rgba(187,134,252,.55);
+      background: rgba(187,134,252,.12);
+      box-shadow: 0 0 0 2px rgba(187,134,252,.1);
+    }
+    .subcatItem--hidden { display: none !important; }
+    .subcatNoResults {
+      padding: .6rem 1rem .75rem;
+      font-size: .8rem; color: rgba(187,134,252,.4);
+      font-style: italic;
+    }
+
     .subtabsPanel { overflow: hidden; }
     .subtabsPanel h3 { font-size: .72rem; font-weight: 700; color: rgba(187,134,252,.55); text-transform: uppercase; letter-spacing: .1em; padding: .9rem 1rem .5rem; margin: 0; }
     .subtabItem {
@@ -208,12 +226,10 @@
     .subtabItem:hover { color: #fff; background: rgba(187,134,252,.08); border-left-color: rgba(187,134,252,.4); }
     .subtabItem.active { color: #fff; background: rgba(187,134,252,.13); border-left-color: var(--primary); font-weight: 600; }
 
-    /* ── Count Badges ── */
     .subtabCount { margin-left: auto; font-size: .72rem; font-weight: 500; color: rgba(187,134,252,.45); background: rgba(187,134,252,.1); border-radius: 8px; padding: 1px 6px; }
     .tabButton .subtabCount { margin-left: 10px; margin-right: -5px; padding: 3px 6px; position: relative; top: -1px; }
     .tabButton.active .subtabCount, .subtabItem.active .subtabCount { color: rgba(205,178,255,.75); background: rgba(187,134,252,.2); }
 
-    /* ── Sorting Panel ── */
     .sortingPanel { padding: 0 1.5rem 1.5rem; height: fit-content; position: relative; }
     .sortingPanel h3 { margin: 0 0 .6rem; font-size: 1rem; color: var(--primary); font-weight: 600; }
     .searchWrapper { position: relative; margin-bottom: 1.25rem; margin-top: 1rem; }
@@ -234,10 +250,8 @@
     }
     .searchClear:hover { color: #fff; }
 
-    /* ── No Results ── */
     .noResultsCard { padding: 1.5rem; color: var(--text2); font-size: .95rem; }
 
-    /* ── Custom Dropdown ── */
     .customDropdown { position: relative; width: 100%; user-select: none; }
     .customDropdownSelected {
       width: 100%; background: linear-gradient(145deg, rgba(187,134,252,.12), rgba(187,134,252,.05));
@@ -275,7 +289,6 @@
     }
     .sortOrderBtn:hover { background: linear-gradient(145deg, rgba(187,134,252,.2), rgba(187,134,252,.1)); border-color: var(--primary); color: #fff; box-shadow: 0 6px 18px rgba(187,134,252,.25); }
 
-    /* ── Vendor Cards ── */
     .rankingList { display: flex; flex-direction: column; gap: 1.5rem; flex: 1; width: 100%; }
 
     .rankCard {
@@ -287,8 +300,7 @@
     }
     .rankCard.loaded { opacity: 1; }
     .rankCard:hover { transform: translateY(-5px); }
- 
-    /* Left accent bar */
+
     .rankCard::before {
       content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
       background: linear-gradient(to bottom, rgba(187,134,252,0), rgba(187,134,252,.7), rgba(187,134,252,0));
@@ -313,21 +325,15 @@
       width: 4px;
     }
 
-    /* ── Card Header ── */
     .cardHeader {
       display: flex; align-items: center; gap: 14px;
       padding: 1rem 1.1rem 1rem 1.3rem;
       background: rgba(187,134,252,.04);
     }
     .cardFavicon {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: rgba(187,134,252,.1);
-      border: 1px solid rgba(187,134,252,.2);
-      flex-shrink: 0;
-      object-fit: contain;
-
+      width: 44px; height: 44px; border-radius: 10px;
+      background: rgba(187,134,252,.1); border: 1px solid rgba(187,134,252,.2);
+      flex-shrink: 0; object-fit: contain;
       box-shadow: 0 0 7px var(--primary);
     }
     .cardHeaderCenter { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 0; }
@@ -335,7 +341,6 @@
     .cardTagRow { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; min-height: 18px; }
     .cardHeaderActions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 
-    /* ── Indicators ── */
     .indicator {
       font-size: .63rem; font-weight: 700; border-radius: 4px;
       padding: 2px 7px; border: 1.5px solid; line-height: 1.5; letter-spacing: .02em; display: inline-flex;
@@ -345,7 +350,6 @@
     .indicator.cheap       { color: #6fdd72; border-color: rgba(111,221,114,.5); background: rgba(111,221,114,.08); }
     .indicator.password    { color: #4ab8ff; border-color: rgba(74,184,255,.5);  background: rgba(74,184,255,.08); }
 
-    /* ── Subsection Tags Footer ── */
     .card-tags-footer {
       display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
       padding: .65rem 1.1rem .75rem 1.3rem;
@@ -361,19 +365,15 @@
       background: rgba(187,134,252,.08);
     }
 
-    /* ── Header / Body divider ── */
     .card-divider { height: 1px; background: rgba(255,255,255,.065); }
 
-    /* ── Split body ── */
     .card-split { display: flex; align-items: stretch; }
     .card-body { flex: 1; min-width: 0; padding: 1rem 1.1rem 1.1rem 1.3rem; display: flex; flex-direction: column; gap: .8rem; }
     .card-body p { margin: 0; font-size: .875rem; color: rgba(200,190,215,.65); line-height: 1.65; flex: 1; }
     .card-body p a { color: #bb86fc; text-decoration: none; }
 
-    /* ── Buttons Container ── */
     .buttonsContainer { display: flex; gap: 7px; flex-wrap: wrap; }
 
-    /* ── Vertical divider between body and issues ── */
     .card-vert-divider {
       width: 1px; flex-shrink: 0;
       background: linear-gradient(to bottom,
@@ -385,7 +385,6 @@
       margin: 1rem 0;
     }
 
-    /* ── Issues Panel ── */
     .issues-heading {
       display: flex; align-items: center; gap: 5px;
       font-size: .66rem; font-weight: 700;
@@ -424,7 +423,6 @@
     }
     .issue-item a:hover { color: rgba(255,180,130,.95); border-color: rgba(255,180,130,.4); }
 
-    /* ── Harm Reduction Card ── */
     .harmReductionCard {
       background: linear-gradient(145deg, rgba(255,180,0,.07), rgba(255,120,0,.04));
       border: 1px solid rgba(255,180,0,.3); padding: 1.5rem; border-radius: 16px;
@@ -435,7 +433,6 @@
     .harmReductionCard a { color: rgb(255,190,80); text-decoration: none; }
     .harmReductionCard a:hover { text-decoration: underline; }
 
-    /* ── Favorites filter button ── */
     .favFilterBtn {
       width: 100%; margin-top: .75rem;
       background: linear-gradient(145deg, rgba(200,100,100,.08), rgba(200,100,100,.03));
@@ -447,21 +444,51 @@
     .favFilterBtn.active { background: linear-gradient(145deg, rgba(80,200,100,.26), rgba(80,200,100,.13)); border-color: rgba(80,200,100,.65); color: #d8d8d8; box-shadow: 0 4px 14px rgba(80,200,100,.2); }
     .favCount { margin-left: auto; background: rgba(255,100,150,.18); border-radius: 10px; padding: 1px 7px; font-size: .76rem; color: rgba(255,180,200,.9); }
 
-    /* ── Footer ── */
-    .footer { width: 100%; background: rgb(44,33,58); text-align: center; padding: 1rem; font-size: .8rem; color: rgb(124,107,155); border-top: 1px solid rgba(255,255,255,.1); }
+    /* ── Pagination Controls ── */
+    .paginationControls {
+      display: flex; flex-direction: column; align-items: center; gap: .85rem;
+      padding: 1.25rem .5rem .25rem;
+    }
+    .pageInfo {
+      font-size: .78rem; color: rgba(187,134,252,.5); letter-spacing: .03em;
+    }
+    .pageBtnRow {
+      display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; justify-content: center;
+    }
+    .pageBtn {
+      padding: .38rem .65rem; font-size: .8rem; min-width: 34px;
+      font-weight: 600; line-height: 1;
+    }
+    .pageBtn--active {
+      background: linear-gradient(145deg, rgba(187,134,252,.3), rgba(187,134,252,.18)) !important;
+      border-color: var(--primary) !important; color: #fff !important;
+      box-shadow: 0 0 12px rgba(187,134,252,.22) !important;
+    }
+    .pageBtn:disabled { opacity: .28; cursor: not-allowed; pointer-events: none; }
+    .pageEllipsis {
+      color: rgba(187,134,252,.38); font-size: .85rem; padding: 0 .15rem; line-height: 1;
+      user-select: none;
+    }
+
+
+
+    .footer {
+      width: 100%; text-align: center; padding: 1.2rem 1rem;
+      background: linear-gradient(145deg, rgba(44,33,58,.95), rgba(30,22,42,.95));
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(187,134,252,.2);
+      font-size: 0.8rem; color: rgba(124,107,155,1);
+    }
     .footer a { color: var(--primary); text-decoration: none; }
     .footer a:hover { text-decoration: underline; }
 
-    /* ── Shared Modal Overlay ── */
     .modalOverlay { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,.65); backdrop-filter: blur(4px); align-items: center; justify-content: center; padding: 1rem; }
     .modalOverlay.open { display: flex; }
     @keyframes modalIn { from { opacity: 0; transform: scale(.95) translateY(8px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-    /* ── Shared Modal Box ── */
     .modal { background: var(--modal-bg); border: 1px solid var(--modal-border); border-radius: 18px; box-shadow: var(--modal-shadow); padding: 2rem; max-width: 480px; width: 100%; display: flex; flex-direction: column; gap: 1.25rem; animation: modalIn .2s ease; }
     .modalTitle { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
 
-    /* Password Modal */
     .pwModalPasswordBox { background: rgba(187,134,252,.1); border: 1px solid rgba(187,134,252,.35); border-radius: 10px; padding: .75rem 1rem; display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
     .pwModalPasswordLabel { font-size: .75rem; color: rgba(205,178,255,.6); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2px; }
     .pwModalPasswordValue { font-size: 1.1rem; font-weight: 700; color: #fff; letter-spacing: .04em; }
@@ -472,7 +499,6 @@
     .modalProceed { background: linear-gradient(145deg, rgba(187,134,252,.3), rgba(187,134,252,.15)); border: 1px solid rgba(187,134,252,.6); border-radius: 8px; padding: .6rem 1.4rem; color: #fff; font-size: .9rem; font-weight: 700; cursor: pointer; transition: all .2s; }
     .modalProceed:hover { background: linear-gradient(145deg, rgba(187,134,252,.45), rgba(187,134,252,.25)); box-shadow: 0 6px 18px rgba(187,134,252,.3); }
 
-    /* Request Modal */
     .reqField { display: flex; flex-direction: column; gap: .45rem; }
     .reqLabel { font-size: .75rem; font-weight: 700; color: rgba(187,134,252,.7); letter-spacing: .08em; }
     .reqTextInput, .reqTextarea { width: 100%; background: linear-gradient(145deg, rgba(187,134,252,.10), rgba(187,134,252,.04)); border: 1px solid rgba(187,134,252,.35); border-radius: 9px; padding: .65rem .9rem; color: #fff; font-size: .9rem; font-family: inherit; outline: none; transition: border-color .2s, box-shadow .2s; caret-color: #bb86fc; }
@@ -491,23 +517,12 @@
     .reqCheckboxLabel { margin-left: -5px; font-size: .9rem; color: rgba(205,178,255,.85); }
     .reqNote { font-size: .78rem; color: rgba(189,189,189,.65); line-height: 1.6; border-left: 2px solid rgba(187,134,252,.35); padding-left: .75rem; }
 
-    /* Modal action buttons reuse .btn — these are the coloured variants */
-    .btn--close-red {
-      background: rgba(252,134,134,.12); border-color: rgba(252,134,134,.6); color: rgba(252,134,134,.8);
-    }
-    .btn--close-red:hover { 
-       background: rgba(252,134,134,.22); color: #fc8686; box-shadow: 0 0 12px rgba(252,134,134,.2); border-color: rgba(252,134,134, .6); transform: none; }
-
-    .btn--send-purple {
-      background: rgba(187,134,252,.12); border-color: rgba(187,134,252,.6); color: rgba(187,134,252,.8);
-    }
+    .btn--close-red { background: rgba(252,134,134,.12); border-color: rgba(252,134,134,.6); color: rgba(252,134,134,.8); }
+    .btn--close-red:hover { background: rgba(252,134,134,.22); color: #fc8686; box-shadow: 0 0 12px rgba(252,134,134,.2); border-color: rgba(252,134,134,.6); transform: none; }
+    .btn--send-purple { background: rgba(187,134,252,.12); border-color: rgba(187,134,252,.6); color: rgba(187,134,252,.8); }
     .btn--send-purple:hover { background: rgba(187,134,252,.22); color: #bb86fc; box-shadow: 0 0 12px rgba(187,134,252,.2); transform: none; }
-
-    .btn--send-red {
-      background: rgba(255,100,80,.12); border-color: rgba(255,100,80,.55); color: rgba(255,140,120,.9);
-    }
-    .btn--send-red:hover { background: rgba(255,100,80,.22); color: #ff9080; box-shadow: 0 0 12px rgba(252,134,134,.2);  border-color: rgba(255,100,80,.55); transform: none; }
-
+    .btn--send-red { background: rgba(255,100,80,.12); border-color: rgba(255,100,80,.55); color: rgba(255,140,120,.9); }
+    .btn--send-red:hover { background: rgba(255,100,80,.22); color: #ff9080; box-shadow: 0 0 12px rgba(252,134,134,.2); border-color: rgba(255,100,80,.55); transform: none; }
     .btn:disabled { opacity: .45; cursor: not-allowed; pointer-events: none; }
 
     #reqStatusBanner, #reportStatusBanner { border-radius: 9px; padding: .65rem 1rem; font-size: .88rem; font-weight: 600; line-height: 1.5; display: none; transition: opacity .3s; }
@@ -519,7 +534,6 @@
     .fileUploadName { font-size: .8rem; color: rgba(205,178,255,.55); margin-top: .3rem; padding-left: .2rem; }
     .fileUploadName:empty { display: none; }
 
-    /* Settings Modal */
     .settingsModal { gap: .5rem; }
     .settingsModalTitle { font-size: 1.2rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; margin-bottom: 1rem; gap: .5rem; }
     .settingsRow { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .25rem 0; }
@@ -540,7 +554,6 @@
     .settingsToggle.disabled { cursor: not-allowed; opacity: .45; }
     .settingsModalActions { display: flex; gap: .75rem; justify-content: flex-end; margin-top: .8rem; }
 
-    /* ── Responsive ── */
     @media (max-width: 1024px) {
       .contentArea, .tabContent.active { flex-direction: column; }
       .leftColumn { width: 100%; flex-direction: row; align-items: flex-start; }
@@ -562,6 +575,7 @@
       .card-issues { width: 160px; }
       .cardHeader { padding: .85rem 1rem .85rem 1.1rem; }
       .card-body { padding: .85rem 1rem 1rem 1.1rem; }
+      .subcatSearch { max-width: 90px; }
     }
     @media (max-width: 400px) { html { font-size: 13px; } }
 
@@ -689,6 +703,7 @@
   <div class="modalOverlay" id="settingsModalOverlay">
     <div class="modal settingsModal">
       <div class="settingsModalTitle">⚙️ Settings</div>
+
       <div class="settingsRow">
         <div class="settingsRowLeft">
           <span class="settingsRowLabel">Rank card icons</span>
@@ -705,6 +720,32 @@
           <div class="settingsToggleThumb"></div>
         </label>
       </div>
+
+      <div class="settingsRow">
+        <div class="settingsRowLeft">
+          <span class="settingsRowLabel">Vendors per page</span>
+          <div class="settingsTooltipWrap" id="pageSizeTooltipWrap">
+            <button class="settingsTooltipBtn" tabindex="-1" aria-label="More info">?</button>
+            <div class="settingsTooltipBox" id="pageSizeTooltipBox">
+              How many vendor cards to show per page. Smaller values load faster; choose "All" to disable pagination entirely.
+            </div>
+          </div>
+        </div>
+        <div class="customDropdown" id="pageSizeDropdown" style="width:90px;">
+          <div class="customDropdownSelected" id="pageSizeSelected">
+            <span id="pageSizeLabel">20</span>
+            <svg class="customDropdownArrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgb(205,178,255)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="customDropdownOptions" id="pageSizeOptions">
+            <div class="customDropdownOption" data-value="10">10</div>
+            <div class="customDropdownOption" data-value="20">20</div>
+            <div class="customDropdownOption" data-value="50">50</div>
+            <div class="customDropdownOption" data-value="100">100</div>
+            <div class="customDropdownOption" data-value="0">All</div>
+          </div>
+        </div>
+      </div>
+
       <div class="settingsRow">
         <div class="settingsRowLeft">
           <span class="settingsRowLabel">Dark mode</span>
@@ -719,6 +760,7 @@
           <div class="settingsToggleThumb"></div>
         </label>
       </div>
+
       <div class="settingsModalActions">
         <button class="btn btn--send-purple" id="settingsModalClose">Done</button>
       </div>
@@ -748,7 +790,11 @@
   </div>
 
   <footer class="footer">
-    Need to get in contact? message me on <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a> or join the <a href="https://discord.gg/mqwB9xp8rJ/">discord server</a>.
+    Need to get in contact? message me on
+    <a href="https://www.reddit.com/user/fuckuneedthisfor/">reddit</a>,
+    join the <a href="https://discord.gg/mqwB9xp8rJ/">discord server</a>,
+    or email me at
+    <a href="mailto:thevendorlist@proton.me">thevendorlist@proton.me</a>.
   </footer>
 
   <script>
@@ -758,8 +804,8 @@
     // ── Settings ──
     const SETTINGS_KEY = 'tvl_settings';
     const appSettings = (() => {
-      try { return Object.assign({ iconsEnabled: true }, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); }
-      catch { return { iconsEnabled: true }; }
+      try { return Object.assign({ iconsEnabled: true, pageSize: 20 }, JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}')); }
+      catch { return { iconsEnabled: true, pageSize: 20 }; }
     })();
     const saveSettings = () => localStorage.setItem(SETTINGS_KEY, JSON.stringify(appSettings));
 
@@ -789,6 +835,38 @@
       if (appSettings.iconsEnabled) preloadAllFavicons();
     });
 
+    // ── Page Size Custom Dropdown ──
+    const pageSizeDropdown = $('pageSizeDropdown');
+    const pageSizeLabel    = $('pageSizeLabel');
+    const pageSizeOptions  = $('pageSizeOptions');
+
+    // Set initial label from saved setting
+    const pageSizeDisplay = appSettings.pageSize === 0 ? 'All' : String(appSettings.pageSize);
+    pageSizeLabel.textContent = pageSizeDisplay;
+
+    // Mark selected option
+    pageSizeOptions.querySelectorAll('.customDropdownOption').forEach(opt => {
+      if (parseInt(opt.dataset.value, 10) === appSettings.pageSize) opt.classList.add('selected');
+      opt.addEventListener('click', e => {
+        e.stopPropagation();
+        const val = parseInt(opt.dataset.value, 10);
+        appSettings.pageSize = val;
+        saveSettings();
+        pageSizeLabel.textContent = val === 0 ? 'All' : String(val);
+        pageSizeOptions.querySelectorAll('.customDropdownOption').forEach(o => o.classList.toggle('selected', o === opt));
+        pageSizeDropdown.classList.remove('open');
+        currentPage = 1;
+        refreshTab(currentTab);
+      });
+    });
+
+    $('pageSizeSelected').addEventListener('click', e => {
+      e.stopPropagation();
+      const wasOpen = pageSizeDropdown.classList.contains('open');
+      document.querySelectorAll('.customDropdown.open').forEach(d => d.classList.remove('open'));
+      if (!wasOpen) pageSizeDropdown.classList.add('open');
+    });
+
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') document.querySelectorAll('.modalOverlay.open').forEach(m => m.classList.remove('open'));
     });
@@ -809,8 +887,9 @@
       boxEl.addEventListener('mouseleave', hide);
       btn.addEventListener('click', e => { e.stopPropagation(); boxEl.classList.contains('visible') ? hide() : show(); });
     }
-    makeTooltip($('iconsTooltipWrap'), $('iconsTooltipBox'));
-    makeTooltip($('darkTooltipWrap'),  $('darkTooltipBox'));
+    makeTooltip($('iconsTooltipWrap'),    $('iconsTooltipBox'));
+    makeTooltip($('darkTooltipWrap'),     $('darkTooltipBox'));
+    makeTooltip($('pageSizeTooltipWrap'), $('pageSizeTooltipBox'));
 
     // ── Favicon Cache ──
     const faviconCache = new Map();
@@ -860,6 +939,7 @@
     let currentTab       = '';
     let currentSubSection = null;
     let currentSearch    = '';
+    let currentPage      = 1;
 
     const sortOptions = [
       { val: 'name',        label: '🔤 Name',        hasOrder: true  },
@@ -1048,7 +1128,13 @@
       const q = currentSearch.toLowerCase();
       return vendors
         .filter(v => tab === 'All' || v.Sections.includes(tab))
-        .filter(v => !currentSubSection || (v.SubSections || []).includes(currentSubSection))
+        .filter(v => {
+          // If no subsection is selected, show everything
+          if (!currentSubSection) return true;
+          // Support both SubSections (array) and SubSection (string) field names
+          const subs = v.SubSections || (v.SubSection ? [v.SubSection] : []);
+          return subs.some(s => s === currentSubSection);
+        })
         .filter(v => !showFavoritesOnly || favorites.has(v.Title))
         .filter(v => !q || v.Title.toLowerCase().includes(q) || v.Description?.toLowerCase().includes(q))
         .sort((a, b) => {
@@ -1056,7 +1142,7 @@
           if (currentSortBy === 'new')          return a.IsNew !== b.IsNew ? (a.IsNew ? -1 : 1) : a.Id - b.Id;
           if (currentSortBy === 'cheap')        return a.IsCheap !== b.IsCheap ? (a.IsCheap ? -1 : 1) : a.Id - b.Id;
           if (currentSortBy === 'recommended')  return a.IsRecommended !== b.IsRecommended ? (a.IsRecommended ? -1 : 1) : a.Id - b.Id;
-         return 0;
+          return 0;
         });
     }
 
@@ -1077,9 +1163,111 @@
       return _harmCardTemplate.cloneNode(true);
     }
 
+    // ── Pagination Helpers ──
+    function getPageNumbers(current, total) {
+      if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+      const pages = [];
+      if (current <= 4) {
+        for (let i = 1; i <= 5; i++) pages.push(i);
+        pages.push('…');
+        pages.push(total);
+      } else if (current >= total - 3) {
+        pages.push(1);
+        pages.push('…');
+        for (let i = total - 4; i <= total; i++) pages.push(i);
+      } else {
+        pages.push(1);
+        pages.push('…');
+        for (let i = current - 1; i <= current + 1; i++) pages.push(i);
+        pages.push('…');
+        pages.push(total);
+      }
+      return pages;
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function scrollToList(tab) {
+      const list = $(`rankingList-${tab}`);
+      if (list) {
+        const top = list.getBoundingClientRect().top + window.scrollY - 120;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      }
+    }
+
+    function createPaginationControls(page, totalPages, total, pageSize, tab) {
+      const startIdx = (page - 1) * pageSize + 1;
+      const endIdx   = Math.min(page * pageSize, total);
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'paginationControls';
+
+      const info = document.createElement('span');
+      info.className = 'pageInfo';
+      info.textContent = `Showing ${startIdx}–${endIdx} of ${total} vendors`;
+      wrapper.appendChild(info);
+
+      const btnRow = document.createElement('div');
+      btnRow.className = 'pageBtnRow';
+
+      const prev = document.createElement('button');
+      prev.className = 'btn pageBtn';
+      prev.innerHTML = '← Prev';
+      prev.disabled = page === 1;
+      prev.addEventListener('click', () => {
+        currentPage = page - 1;
+        refreshTab(tab);
+        scrollToList(tab);
+      });
+      btnRow.appendChild(prev);
+
+      getPageNumbers(page, totalPages).forEach(p => {
+        if (p === '…') {
+          const ellipsis = document.createElement('span');
+          ellipsis.className = 'pageEllipsis';
+          ellipsis.textContent = '…';
+          btnRow.appendChild(ellipsis);
+        } else {
+          const btn = document.createElement('button');
+          btn.className = `btn pageBtn${p === page ? ' pageBtn--active' : ''}`;
+          btn.textContent = p;
+          btn.addEventListener('click', () => {
+            if (p !== currentPage) { currentPage = p; refreshTab(tab); scrollToList(tab); }
+          });
+          btnRow.appendChild(btn);
+        }
+      });
+
+      const next = document.createElement('button');
+      next.className = 'btn pageBtn';
+      next.innerHTML = 'Next →';
+      next.disabled = page === totalPages;
+      next.addEventListener('click', () => {
+        currentPage = page + 1;
+        refreshTab(tab);
+        scrollToList(tab);
+      });
+      btnRow.appendChild(next);
+
+      wrapper.appendChild(btnRow);
+      return wrapper;
+    }
+
+    // ── Populate Vendor List ──
     function populateVendorList(list, vendorList, tab) {
       const frag = document.createDocumentFragment();
       if (harmReductionTabs.has(tab)) frag.appendChild(getHarmCard());
+
+      const rawPageSize = appSettings.pageSize;
+      const useAll      = rawPageSize === 0;
+      const pageSize    = useAll ? vendorList.length : rawPageSize;
+      const totalPages  = useAll || pageSize === 0 ? 1 : Math.max(1, Math.ceil(vendorList.length / pageSize));
+
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1)          currentPage = 1;
+
       if (vendorList.length === 0) {
         const el = document.createElement('div');
         el.className = 'noResultsCard panel';
@@ -1090,8 +1278,15 @@
             : `No vendors found matching "${currentSearch}".`;
         frag.appendChild(el);
       } else {
-        vendorList.forEach(v => frag.appendChild(createVendorCard(v)));
+        const startIdx  = (currentPage - 1) * pageSize;
+        const pageSlice = useAll ? vendorList : vendorList.slice(startIdx, startIdx + pageSize);
+        pageSlice.forEach(v => frag.appendChild(createVendorCard(v)));
+
+        if (totalPages > 1) {
+          frag.appendChild(createPaginationControls(currentPage, totalPages, vendorList.length, pageSize, tab));
+        }
       }
+
       list.appendChild(frag);
     }
 
@@ -1103,11 +1298,9 @@
       const card = document.createElement('div');
       card.className = 'rankCard' + (isFav ? ' favorited' : '') + (hasIssues ? ' has-issues' : '');
 
-      // ── Card Header ──
       const cardHeader = document.createElement('div');
       cardHeader.className = 'cardHeader';
 
-      // Favicon
       const websiteBtn = v.Buttons?.find(b => b.Text === 'Website');
       const wIconSrc   = websiteBtn?.Link ? getFavicon(websiteBtn.Link) : '/Resources/Website.png';
       const wIcon      = document.createElement('img');
@@ -1119,7 +1312,6 @@
       wIcon.onerror = () => { wIcon.src = '/Resources/Website.png'; wIcon.onerror = null; };
       cardHeader.appendChild(wIcon);
 
-      // Center: name + tags
       const center = document.createElement('div');
       center.className = 'cardHeaderCenter';
 
@@ -1145,7 +1337,6 @@
       center.appendChild(tagRow);
       cardHeader.appendChild(center);
 
-      // Action buttons
       const actions = document.createElement('div');
       actions.className = 'cardHeaderActions';
 
@@ -1180,31 +1371,28 @@
       cardHeader.appendChild(actions);
       card.appendChild(cardHeader);
 
-      // ── Header / Body divider ──
       const divider = document.createElement('div');
       divider.className = 'card-divider';
       card.appendChild(divider);
 
-      // ── Split wrapper ──
       const cardSplit = document.createElement('div');
       cardSplit.className = 'card-split';
 
-      // ── Body (left) ──
       const body = document.createElement('div');
       body.className = 'card-body';
 
-      if (v.SubSections?.length > 0) {
+      // Support both SubSections (array) and SubSection (string)
+      const subSecs = v.SubSections || (v.SubSection ? [v.SubSection] : []);
+      if (subSecs.length > 0) {
         const subsRow = document.createElement('div');
         subsRow.className = 'card-tags-footer';
         subsRow.style.padding = '0';
-
-        v.SubSections.forEach(sub => {
+        subSecs.forEach(sub => {
           const tag = document.createElement('span');
           tag.className = 'indicator subsection';
           tag.textContent = sub;
           subsRow.appendChild(tag);
         });
-
         body.appendChild(subsRow);
 
         const subsDivider = document.createElement('div');
@@ -1243,7 +1431,6 @@
 
       cardSplit.appendChild(body);
 
-      // ── Issues panel (right) ──
       if (hasIssues) {
         const vertDiv = document.createElement('div');
         vertDiv.className = 'card-vert-divider';
@@ -1293,6 +1480,7 @@
       if (!panel) return;
 
       const vendorsInTab = tab === 'All' ? vendors : vendors.filter(v => v.Sections.includes(tab));
+
       let subSections;
       if (tab === 'All') {
         const seen = new Set(); subSections = [];
@@ -1301,28 +1489,91 @@
         subSections = subcategories[tab] || [];
       }
 
-      const frag = document.createDocumentFragment();
-      const allItem = document.createElement('button');
-      allItem.className = `subtabItem${currentSubSection === null ? ' active' : ''}`;
-      allItem.innerHTML = `<span>All</span><span class="subtabCount">${vendorsInTab.length}</span>`;
-      allItem.addEventListener('click', () => { if (currentSubSection !== null) switchSubSection(null); });
-      frag.appendChild(allItem);
-
-      subSections.forEach(sub => {
-        const count = vendorsInTab.filter(v => (v.SubSections || []).includes(sub)).length;
-        const item  = document.createElement('button');
-        item.className = `subtabItem${currentSubSection === sub ? ' active' : ''}`;
-        item.innerHTML = `<span>${sub}</span><span class="subtabCount">${count}</span>`;
-        item.addEventListener('click', () => { if (currentSubSection !== sub) switchSubSection(sub); });
-        frag.appendChild(item);
-      });
-
+      // ── Panel Header ──
       const subHeader = document.createElement('div');
       subHeader.className = 'panelHeader';
-      subHeader.innerHTML = '<span class="panelHeaderTitle">Categories</span>';
+
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'panelHeaderTitle';
+      titleSpan.textContent = 'Categories';
+      subHeader.appendChild(titleSpan);
+
+      const searchWrap = document.createElement('div');
+      searchWrap.className = 'subcatSearchWrap';
+      searchWrap.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgb(205,178,255)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`;
+
+      const subcatInput = document.createElement('input');
+      subcatInput.type = 'text';
+      subcatInput.className = 'subcatSearch';
+      subcatInput.placeholder = 'Filter…';
+      subcatInput.setAttribute('autocomplete', 'off');
+      subcatInput.setAttribute('spellcheck', 'false');
+      searchWrap.appendChild(subcatInput);
+      subHeader.appendChild(searchWrap);
+
+      // ── Build list body FIRST, then wire search ──
       const body = document.createElement('div');
       body.className = 'panelBody';
-      body.appendChild(frag);
+
+      const allItem = document.createElement('button');
+      allItem.className = `subtabItem${currentSubSection === null ? ' active' : ''}`;
+      allItem.dataset.sub = 'all';
+      allItem.innerHTML = `<span>All</span><span class="subtabCount">${vendorsInTab.length}</span>`;
+      allItem.addEventListener('click', () => {
+        if (currentSubSection !== null) {
+          currentSubSection = null;
+          currentPage = 1;
+          refreshTab(currentTab);
+          updateSubtabsPanel();
+        }
+      });
+      body.appendChild(allItem);
+
+      subSections.forEach(sub => {
+        // Count using the same defensive logic as getSortedVendors
+        const count = vendorsInTab.filter(v => {
+          const subs = v.SubSections || (v.SubSection ? [v.SubSection] : []);
+          return subs.some(s => s === sub);
+        }).length;
+
+        const item = document.createElement('button');
+        item.className = `subtabItem${currentSubSection === sub ? ' active' : ''}`;
+        item.dataset.sub = sub.toLowerCase();
+        item.innerHTML = `<span>${sub}</span><span class="subtabCount">${count}</span>`;
+        item.addEventListener('click', () => {
+          if (currentSubSection !== sub) {
+            currentSubSection = sub;
+            currentPage = 1;
+            refreshTab(currentTab);
+            updateSubtabsPanel();
+          }
+        });
+        body.appendChild(item);
+      });
+
+      const noSubResults = document.createElement('div');
+      noSubResults.className = 'subcatNoResults';
+      noSubResults.textContent = 'No matching categories.';
+      noSubResults.style.display = 'none';
+      body.appendChild(noSubResults);
+
+      // ── Subcategory text search (only filters the sidebar list, doesn't change vendor results) ──
+      subcatInput.addEventListener('input', () => {
+        const q = subcatInput.value.trim().toLowerCase();
+        let visibleCount = 0;
+        body.querySelectorAll('.subtabItem').forEach(item => {
+          const sub = item.dataset.sub;
+          if (!q || sub === 'all' || sub.includes(q)) {
+            item.classList.remove('subcatItem--hidden');
+            if (sub !== 'all') visibleCount++;
+          } else {
+            item.classList.add('subcatItem--hidden');
+          }
+        });
+        noSubResults.style.display = (q && visibleCount === 0) ? 'block' : 'none';
+      });
+
+      // ── Assemble panel ──
       panel.innerHTML = '';
       panel.appendChild(subHeader);
       panel.appendChild(body);
@@ -1349,13 +1600,16 @@
       const doSearch = debounce(() => {
         currentSearch = searchInput.value.trim();
         clearBtn.style.display = currentSearch ? 'block' : 'none';
+        currentPage = 1;
         refreshTab(currentTab);
       }, 150);
 
       searchInput.addEventListener('input', doSearch);
       clearBtn.addEventListener('click', () => {
         searchInput.value = ''; currentSearch = '';
-        clearBtn.style.display = 'none'; searchInput.focus(); refreshTab(currentTab);
+        clearBtn.style.display = 'none'; searchInput.focus();
+        currentPage = 1;
+        refreshTab(currentTab);
       });
 
       searchWrapper.appendChild(searchInput);
@@ -1376,6 +1630,7 @@
         item.textContent = opt.label;
         item.addEventListener('click', e => {
           e.stopPropagation(); currentSortBy = opt.val;
+          currentPage = 1;
           dropdown.classList.remove('open'); updateSortingPanel(); refreshTab(currentTab);
         });
         optList.appendChild(item);
@@ -1392,9 +1647,12 @@
       const favBtn = document.createElement('button');
       favBtn.className = `favFilterBtn${showFavoritesOnly ? ' active' : ''}`;
       favBtn.innerHTML = `${showFavoritesOnly ? '❤️' : '🤍'} Favorites only <span class="favCount">${favorites.size}</span>`;
-      favBtn.onclick = () => { showFavoritesOnly = !showFavoritesOnly; updateSortingPanel(); refreshTab(currentTab); };
+      favBtn.onclick = () => {
+        showFavoritesOnly = !showFavoritesOnly;
+        currentPage = 1;
+        updateSortingPanel(); refreshTab(currentTab);
+      };
 
-      // ── Wrap all content below the header ──
       const body = document.createElement('div');
       body.className = 'panelBody';
       body.appendChild(searchWrapper);
@@ -1406,7 +1664,11 @@
         orderBtn.textContent = currentSortBy === 'id'
           ? (currentSortOrder === 'asc' ? '↑ Low to High' : '↓ High to Low')
           : (currentSortOrder === 'desc' ? '↓ Z to A' : '↑ A to Z');
-        orderBtn.onclick = () => { currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc'; updateSortingPanel(); refreshTab(currentTab); };
+        orderBtn.onclick = () => {
+          currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc';
+          currentPage = 1;
+          updateSortingPanel(); refreshTab(currentTab);
+        };
         body.appendChild(orderBtn);
       }
 
@@ -1421,17 +1683,13 @@
       panel.appendChild(body);
     }
 
-    // ── Tab / Subsection Switching ──
+    // ── Tab Switching ──
     function switchTab(tab) {
-      currentTab = tab; currentSubSection = null; currentSearch = '';
+      currentTab = tab; currentSubSection = null; currentSearch = ''; currentPage = 1;
       document.querySelectorAll('.tabButton').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
       document.querySelectorAll('.tabContent').forEach(c => c.classList.remove('active'));
       $(`tabContent-${tab}`).classList.add('active');
       updateSubtabsPanel(); updateSortingPanel(); refreshTab(tab);
-    }
-
-    function switchSubSection(sub) {
-      currentSubSection = sub; updateSubtabsPanel(); refreshTab(currentTab);
     }
 
     // ── Panel Height Sync ──
