@@ -587,18 +587,6 @@ const Vendors = [
         Buttons: [{ Text: "Website", Link: "https://homegrownhappiness.store/" }]
     },
     {
-        Title: "Green Wrld",
-        Description: "Cannabis & Hemp genetics company specializing in creating one of a kind strains never seen before! We also offer THCA products such as flower and concentrates.",
-        Sections: ["Marijuana"],
-        SubSections: ["Flower", "Concentrates"],
-        
-        Buttons: [
-        { Text: "Website", Link: "http://greenwrldexclusive.com/" },
-        { Text: "Twitter", Link: "https://x.com/realGreenWRLD" },
-        { Text: "Youtube", Link: "https://www.youtube.com/@GreenWRLDCO" },
-        ]
-    },
-    {
         Title: "The Flower Girls",
         Description: "The Flower Girls is a brand focused on creating a social community dedicated to empowering, educating, and engaging women who are passionate about cannabis. Their THCA flower shop collaborates with them, offering products for flower enthusiasts, according to their Instagram account . ",
         Sections: ["Marijuana"],
