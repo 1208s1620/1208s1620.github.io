@@ -1,11 +1,19 @@
-const NoDescriptionWarning = "No description, if you'd like one to be added get in contact."
-
 const Note = {
     title: "📋 What's New",
     text: "Vendor cards have been fully redesigned with a cleaner layout and improved readability. Each card now displays a visible list of products offered by that vendor, making it easier to find what you're looking for.\n\nReporting is now live — you can now flag any vendor directly from their card if you encounter an issue. Vendor request submissions also now show a confirmation so you know your request was received.\n\nPanels across the site have titled headers for better navigation, a number of theme refinements have been applied, and a few new vendors have been added to the list.\n\nHarm reduction is a priority. Expanded safety information, dosage guidance, and substance-specific resources are coming soon — hopefully to help you make informed decisions and stay safe.\n\n— Dabatron"
 }
 
-const Categories = ["All", "Marijuana", "Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Peptides", "Other"];
+const Categories = [
+    "All", 
+    "Marijuana", 
+    "Psychedelics", 
+    "Dissociatives", 
+    "Stimulants", 
+    "Benzodiazepines", 
+    "Opioids", 
+    "Peptides", 
+    "Other"
+];
 
 const SubCategories = {
     "Marijuana": [
@@ -155,6 +163,8 @@ const SubCategories = {
         "Tianeptine"
     ]
 };
+
+const NoDescriptionWarning = "No description, if you'd like one to be added get in contact."
 
 const Vendors = [
     {
@@ -1764,22 +1774,6 @@ const Vendors = [
         ]
     },
     {
-        Title: "Saturn Meds",
-        Description: "WELCOME To Saturn Meds, The only LEGIT source for pharmacy grade products on the public internet. We Sell DMT Carts, Lsd Tabs, Gel Tabs, MDMA, Edibles And Much More! All of the highest and purest quality.",
-        Sections: ["Marijuana", "Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Other"],
-        SubSections: [
-            "Flower", "Ketamine", "LSD", "Cocaine", "Adderall", "MDMA", "N,N-DMT", 
-            "Mescaline", "Tusi", "Alprazolam", "2C-B", "MDA", "Concentrates", "Shrooms", 
-            "Klonopin", "Bromazolam", "Chlorpromazine (Thorazine)", "Viagra", "Tapentadol", 
-            "Gabapentin", "Promethazine", "Semaglutide", "Carisoprodol", "Codiene", "Dihydrocodiene",
-            "Pregabalin", "Oxycodone", "Zolpiclone"
-        ],
-        IsNew: false,
-        Buttons: [
-        { Text: "Website", Link: "https://saturnmeds.com/" }
-        ]
-    },
-    {
         Title: "EVERYCHEM",
         Description: "We are an innovative company that focuses on providing high-quality reference materials for research labs across the globe. With the best chemists and manufacturers, you are guaranteed the safety and efficacy expected of a leader in the industry.",
         Sections: ["Peptides", "Other"],
@@ -1851,10 +1845,10 @@ const Vendors = [
     {
         Title: "Sunnyside Research Store",
         Description: NoDescriptionWarning,
-        Sections: ["Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Opioids", "Other"],
+        Sections: ["Dissociatives", "Benzodiazepines", "Other"],
         SubSections: [
             "Ethyl-Bromazolam", "Ethyl-Flualprazolam", "Rilmazafone", "Tilmetamine",
-            "Clobromazolam", "Rilmazafone", "3-Hydroxyphenazepam"
+            "Clobromazolam", "3-Hydroxyphenazepam"
         ],
         IsNew: false,
         Buttons: [
@@ -1878,7 +1872,7 @@ const Vendors = [
     {
         Title: "Divine Science Society Shop",
         Description: "Divine Science Society recognizes that modern life often feels disconnected from the sacred. In a world driven by science, technology, and material pursuits, many feel a longing for something deeper—an inner knowing that transcends the ordinary. At Divine Science Society, we honor the wisdom already within you, guiding you to reconnect with the sacred presence that has always been part of your being.",
-        Sections: ["Marijuana", "Psychedelics", "Other"],
+        Sections: ["Psychedelics", "Other"],
         SubSections: [
             "Shrooms", "LSD", "MDMA", "N,N-DMT"
         ],
@@ -1889,6 +1883,30 @@ const Vendors = [
             { Text: "Twitter", Link: "https://x.com/DivineSciSo" },
             { Text: "Instagram", Link: "https://www.instagram.com/Divinescienceso" },
             { Text: "TikTok", Link: "https://www.tiktok.com/@Divinesciencesociety" }
+        ]
+    },
+    {
+        Title: "MushMore SuppleMents",
+        Description: "Your trusted source for premium mushroom supplements. Discover nature’s powerful remedies with our carefully curated selection of mushroom extracts, crafted to support your well-being naturally. Our products are formulated to harness the incredible benefits of mushrooms. Explore our site to find the perfect supplement for your health journey. Embrace the magic of mushrooms with Mushmore.",
+        Sections: ["Psychedelics", "Other"],
+        SubSections: [
+            "Shrooms", "LSD", "MDMA", "N,N-DMT"
+        ],
+        IsNew: false,
+        Buttons: [
+            { Text: "Website", Link: "https://mushmore.store/" }
+        ]
+    },
+    {
+        Title: "I The Universe / Itheom",
+        Description: "Our mission is to provide the community and its members with information on safe uses, practices, overall understanding, and general guidance of natural and synthetic psychedelics. We believe these medicines, when approached with intention and respect, can serve as catalysts for healing, expanded awareness, and deeper connection to oneself, others, and the natural world. Through education, guidance, and community support, we seek to promote safe exploration and meaningful integration.",
+        Sections: ["Dissociatives", "Psychedelics", "Other"],
+        SubSections: [
+            "Shrooms", "LSD", "MDMA", "Ketamine"
+        ],
+        IsNew: false,
+        Buttons: [
+            { Text: "Website", Link: "https://mushmore.store/" }
         ]
     }
 ];
