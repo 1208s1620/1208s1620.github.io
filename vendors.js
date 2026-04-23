@@ -1,7 +1,14 @@
 const Note = {
     title: "📋 What's New",
     text: "Vendor cards have been fully redesigned with a cleaner layout and improved readability. Each card now displays a visible list of products offered by that vendor, making it easier to find what you're looking for.\n\nReporting is now live — you can now flag any vendor directly from their card if you encounter an issue. Vendor request submissions also now show a confirmation so you know your request was received.\n\nPanels across the site have titled headers for better navigation, a number of theme refinements have been applied, and a few new vendors have been added to the list.\n\nHarm reduction is a priority. Expanded safety information, dosage guidance, and substance-specific resources are coming soon — hopefully to help you make informed decisions and stay safe.\n\n— Dabatron"
-}
+};
+
+const Countries = [
+    "International",
+    "United States Of America",
+    "Canada",
+    "Australia"
+];
 
 const Categories = [
     "All", 
@@ -52,7 +59,6 @@ const SubCategories = {
         "1cP-AL-LAD",
         "N,N-Dipropyltryptamine (DPT)",
         "Methallylescaline (MAL)"
-
     ],
 
     "Dissociatives": [
@@ -73,9 +79,8 @@ const SubCategories = {
     
     "Stimulants": [
         "Isopropylphenidate",
-        "Cocaine",
-        "Adderall",
         "2-FMA",
+        "4-FMA",
         "Ritalin",
         "MDPIHP",
         "2-Me-PiHP",
@@ -84,7 +89,6 @@ const SubCategories = {
     ], 
     
     "Benzodiazepines": [
-        "Alprazolam",
         "Fluprazolam",
         "Rilmazofone",
         "Clobromazolam",
@@ -95,8 +99,6 @@ const SubCategories = {
         "N-Ethyl-Nitrazepam",
         "Ethyl-Flualprazolam",
         "Ethyl-Bromazolam",
-        "Klonopin",
-        "Bromazolam",
         "Clonazepam",
         "Nifoxipam",
         "Avizafone",
@@ -146,19 +148,13 @@ const SubCategories = {
         "AOD-9604",
         "Tesamorelin",
         "Selank",
-        "Semaglutide"
+        "Semaglutide",
+        "GB-115"
     ], 
     
     "Other": [
         "Gabapentin",
         "Viagra",
-        "Tusi",
-        "Chlorpromazine (Thorazine)",
-        "Viagra",
-        "Promethazine",
-        "Carisoprodol",
-        "Pregabalin",
-        "Zolpiclone",
         "Methyl-K",
         "Tianeptine"
     ]
@@ -170,9 +166,16 @@ const Vendors = [
     {
         Title: "Clubhouse Drops",
         Description: "Clubhouse Drops specializes in exotic brands, they offer a curated selection of flower and concentrates from trusted brands like 710 Labs and Coldfire, delivering high-quality cannabis experiences.",
+        
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        Password: "CLUB", IsRecommended: true,
+        
+        Password: "CLUB", 
+        IsRecommended: true,
+
+        RequiresID: true,
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
             { Text: "Website", Link: "https://clubhousedrops.com/clubhouse-drops/", Warning: true }
         ]
@@ -180,9 +183,15 @@ const Vendors = [
     {
         Title: "Crysp",
         Description: "Crysp sources high-quality cannabis products from passionate growers who care about the plant. They ensure their flower and concentrates are clean, flavorful, and affordable, providing customers with premium experiences without breaking the bank.",
+        
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+        
         IsRecommended: true,
+
+        RequiresID: true,
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://crysp.co/" },
         { Text: "Instagram", Link: "https://www.instagram.com/crysp.co/" }
@@ -191,9 +200,15 @@ const Vendors = [
     {
         Title: "Simply Mary",
         Description: "SimplyMary offers a curated selection of high-quality THCa products, including flower, concentrates, and edibles. Their THCa flower strains, such as Wagyu and Dr. J, are cultivated by reputable brands like Snowtill and Platinum Barn, ensuring top-tier quality and potency. Each product undergoes rigorous third-party lab testing to verify cannabinoid content and purity, providing customers with a clean and reliable experience.",
+        
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+        
         IsRecommended: true, 
+
+        RequiresID: true,
+        ShipsTo: ["United States Of America"],
+        
         Buttons: [
         { Text: "Website", Link: "https://simplymary.co/" },
         { Text: "Instagram", Link: "https://www.instagram.com/simplymary/" }
@@ -202,22 +217,29 @@ const Vendors = [
     {
         Title: "Shop Hello Mary",
         Description: "Shop Hello Mary offers a diverse selection of premium THCa cannabis products, including top-shelf flower, solventless rosin concentrates, and edibles. Their offerings feature strains like 818 OG, Hash Burger, and Halle Berry, cultivated by reputable producers to ensure quality and potency.",
+       
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
         
+        RequiresID: true,
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
-        { Text: "Website", Link: "https://shophellomary.com/" },
-        { Text: "Instagram", Link: "https://www.instagram.com/hellomary0fficial/" },
-        
+            { Text: "Website", Link: "https://shophellomary.com/" },
+            { Text: "Instagram", Link: "https://www.instagram.com/hellomary0fficial/" },
         ]
     },
     {
         Title: "Quantum Exotics",
         Description: "We think cannabis should be easily accessible, affordable, convenient, and transparent. Convenience and total privacy in the shopping journey is our ideal. But most importantly, we believe in supporting the American farmers who make all of this possible. Our core values are a commitment to product quality and to world-class customer experiences. Our company culture is one that fosters open communication and open doors: everybody here has a voice, and we believe that by investing in both our people and our customers, we all will rise.",
-       Sections: ["Marijuana"],
+        
+        Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
         
         IsRecommended: true,  
+
+        RequiresID: true,
+        ShipsTo: ["United States Of America"],
 
         Buttons: [
         { Text: "Website", Link: "https://www.quantumexotics.com/" },
@@ -227,9 +249,12 @@ const Vendors = [
     {
         Title: "Sherlocks Glass",
         Description: "Established in 2015, Sherlocks Glass & Dispensary is the premier cannabis store in Raleigh and Durham, North Carolina. We offer the city's largest selection of THCa Flower strains meticulously handpicked for flavor profile and effect. Find top quality Hash Rosin and a wide range of delta 9 edibles, vapes, and high-end American-made glass pipes. We are the only premier Puffco product supplier in North Carolina. ",
+        
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
         
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://sherlocksglass.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/sherlocksglass/" },
@@ -240,9 +265,13 @@ const Vendors = [
     {
         Title: "CANNA HAUS FARMS",
         Description: "Canna Haus Farms was founded with a simple belief: the best cannabis comes from living soil, clean inputs, and pure, solventless extraction. Since day one, we have been committed to regenerative organic practices, cultivating in native soil outdoors and crafting small-batch harvests in controlled indoor environments — always staying true to our roots in living soil and solventless resin production. We are growers, hashmakers, and stewards of the land. Our approach focuses on building healthy, living ecosystems beneath our plants, where natural biology thrives. Instead of relying on bottled nutrients or synthetic additives, we nurture our soils with cover crops, compost, and closed-loop regenerative methods that feed the soil, not just the plants. This deep relationship with the land is what gives our resin its unique expression of terroir — and it’s why we believe living soil is the foundation of truly authentic cannabis.",
+        
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
         
+        RequiresID: true,
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://cannahausfarms.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/cannahausfarms/" }
@@ -255,6 +284,8 @@ const Vendors = [
         SubSections: ["Flower", "Concentrates", "Vapes"],
         IsNew: false, IsRecommended: false, IsCheap: true, 
         
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://tesorohemp.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/tesorohempco/" },
@@ -277,6 +308,8 @@ const Vendors = [
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Edibles"],
 
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://www.bakeboxx.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/bakeboxxofficial/" },
@@ -291,6 +324,9 @@ const Vendors = [
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
         
+        RequiresID: true,
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://caliblaise.net/" },
         { Text: "Instagram", Link: "https://www.instagram.com/caliblaise_online/" },
@@ -305,6 +341,8 @@ const Vendors = [
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
 
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://oleskoolhemp.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/oleskoolhemp/" },
@@ -317,6 +355,9 @@ const Vendors = [
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
         
+        RequiresID: true,
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://illesthaze.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/caliblaise_online/" },
@@ -331,6 +372,8 @@ const Vendors = [
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
         
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://thehempcollect.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/modernherbcogoodsofficial/" },
@@ -344,6 +387,8 @@ const Vendors = [
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
         
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://thehempbarn.com/" },
         { Text: "Facebook", Link: "https://www.facebook.com/thehempbarn/" },
@@ -356,6 +401,9 @@ const Vendors = [
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
         IsNew: false, 
+
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://www.themadskunk.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/Themadskunkva/" },
@@ -368,6 +416,8 @@ const Vendors = [
         Description: "Indacloud is here to give you what you came looking for. An incredible time, a good laugh, a great sleep, or a vacation from reality. The only thing we take seriously is making sure everyone is happy. So, we do a damn good job of having the safest and greatest products on the market at incredible prices.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
+
+        ShipsTo: ["United States Of America"],
         
         Buttons: [
         { Text: "Website", Link: "https://indacloud.co/" },
@@ -381,6 +431,8 @@ const Vendors = [
         Description: "At Purplecandygas.com, we don’t just sell THCA products—we set the standard. Our premium THCA flower is cultivated with precision, care, and an obsession. We partner with top-tier farms that grow under optimal conditions, ensuring every bud is rich in natural cannabinoids and bursting with terpene profiles that deliver both potency and flavor. Our extraction and curing processes are clean, transparent, and lab-tested—giving you a smooth, consistent experience every time. Whether you're looking for deep relaxation, creative clarity, or just a genuinely elevated vibe, our THCA delivers a high you can feel good about.",
         Sections: ["Marijuana"],
         SubSections: ["Flower"],
+
+        ShipsTo: ["United States Of America"],
         
         Buttons: [
         { Text: "Website", Link: "https://purplecandygas.com/" },
@@ -393,6 +445,8 @@ const Vendors = [
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
         
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://www.daily-hi.com/" },
         { Text: "Instagram", Link: "http://instagram.com/shopdailyhi/" },
@@ -405,6 +459,8 @@ const Vendors = [
         Description: "WNC CBD is a family-owned business based in Asheville that’s known for producing some of the highest quality hemp products available. They prioritize quality over quantity, combining innovation, community values, and exceptional customer service to support natural wellness and a balanced lifestyle.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+
+        ShipsTo: ["United States Of America"],
 
         Buttons: [
         { Text: "Website", Link: "https://wnc-cbd.com/" },
@@ -419,6 +475,8 @@ const Vendors = [
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
         
+        ShipsTo: ["United States Of America"],
+
         Buttons: [
         { Text: "Website", Link: "https://www.risehempllc.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/risehempcollc/" },
@@ -431,6 +489,7 @@ const Vendors = [
         Description: "Your premium cannabis and amanita mushshrooms marketplace. High-quality psychoactive products that can be delivered directly to your door, legally. Designed in California, U.S.A.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+        ShipsTo: ["United States Of America"],
         IsNew: false, 
         Buttons: [
         { Text: "Website", Link: "https://surfsidebrands.com/" }
@@ -441,7 +500,7 @@ const Vendors = [
         Description: "High Society 420 is a New England-based collective bringing together leading brands to fulfill the community's needs with authenticity and quality. Our group combines the strengths of top cultivators, craft producers, and trusted retailers to offer a diverse range of premium products. The High Society 420 experience includes exotic THCA flower, artisanal concentrates, gourmet edibles, and innovative vape products. By uniting under one banner, we deliver unmatched selection and expertise, setting a new standard for THCA culture and lifestyle across the region.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://neptuneseedbank.com/" },
         { Text: "Telegram", Link: "https://t.me/+v_5IPtdBkes5ZGEx" },
@@ -454,7 +513,7 @@ const Vendors = [
         Description: "Neptune Seed Bank specializes in top-quality cannabis products curated for every lifestyle. Shop now and experience their finest selection.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://neptuneseedbank.com/" },
         { Text: "Telegram", Link: "https://t.me/+v_5IPtdBkes5ZGEx" },
@@ -467,6 +526,7 @@ const Vendors = [
         Description: "Pack Trapper is a wholesale THCA supplier that offers a wide range of products, including flower, concentrates, vapes, edibles, and more.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+        ShipsTo: ["United States Of America"],
         IsCheap: true, 
         Buttons: [
         { Text: "Website", Link: "https://packtrapper.com/" },
@@ -478,6 +538,7 @@ const Vendors = [
         Description: "Rosslyn Direct was born from a simple belief: cannabis should be clean, potent, and expressive of the plant’s true nature — not stripped down, diluted, or over-marketed. We’re not here to chase trends. We’re here to preserve and deliver the full spectrum of what this plant can offer when treated with respect. Everything we carry is built on a foundation of trust in the process, the people, and the product. We partner with like minded cultivators and extractors who share our obsession with purity and who understand that great cannabis is grown, not manufactured. Our products start with clean, healthy plants cultivated without shortcuts, harvested at peak ripeness, and processed with intention.",
         Sections: ["Marijuana"],
         SubSections: ["Concentrates"],
+        ShipsTo: ["United States Of America"],
         IsNew: false, IsCheap: false, 
         Buttons: [
         { Text: "Website", Link: "https://rosslyn.direct/" },
@@ -495,6 +556,7 @@ const Vendors = [
         Description: "",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+        ShipsTo: ["United States Of America"],
         IsCheap: false, 
         Buttons: [
         { Text: "Website", Link: "https://www.rootsandreleaf.com/" },
@@ -506,6 +568,7 @@ const Vendors = [
         Description: "At Topshelf NC, we rely on nature and technique—not chemicals—to bring out the best in the plant. Our solventless extraction process uses only ice, water, heat, and pressure to collect and concentrate trichomes through methods like ice water hash and rosin pressing. No hydrocarbons. No shortcuts.  By processing in small batches, we maintain the integrity of each cultivar and preserve its full-spectrum character—delivering a true expression of the plant in every jar. The result is a terpene-rich, unfiltered concentrate that carries the original aroma, flavor, and structure of the flower it came from. To us, solventless is more than a process—it’s a commitment to quality, transparency, and respect for the plant’s natural form. From cultivation to extraction, everything we do at Topshelf NC is rooted in intention, so you can experience cannabis the way it was meant to be.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+        ShipsTo: ["United States Of America"],
         IsCheap: false, 
         Buttons: [
         { Text: "Website", Link: "https://topshelfnc.com/" },
@@ -518,6 +581,7 @@ const Vendors = [
         Description: "Industrial Hemp Farms is an Colorado-based hemp and CBD distributor offering both retail and wholesale. We are one of the largest suppliers of hemp flower and CBD products in the United States. Our hemp flower products range from indoor-grown hemp strains to low-cost hemp extracts. Industrial Hemp Farms is one of the largest distributors of CBD isolate, CBD distillate, and other hemp concentrates in the United States. We also carry various popular CBD products, including CBD hemp oil, CBD gummies, and finished hemp products, at unbeatable prices. Join our thousands of happy customers, whether you are a retail customer looking for affordable, quality hemp products or a business owner looking for wholesale items. Browse our many hemp products to get bargain pricing. Why pay full marked-up pricing when you can buy affordable hemp right from the source?",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Edibles"],
+        ShipsTo: ["United States Of America"],
         IsCheap: false,
         Buttons: [
         { Text: "Website", Link: "https://industrialhempfarms.com/" },
@@ -530,6 +594,7 @@ const Vendors = [
         Description: "Land Of The Free. Home Of The Brave. Where Ego And Excuses Are Checked At The Door And You Solve Your Problems By Taking A Deep Breath And Going Outside. We Handcraft Our Live Resin In Small Batches From Terpene Rich Cannabis Sativa Grown In The Ruggedly Beautiful Pacific Northwest. The Best Cannabis In The World Grows Here And It’s With That Cannabis That We Proudly Make Live Resin Vapes That Taste Great And Work As Hard As You Do.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+        ShipsTo: ["United States Of America"],
         IsCheap: false, 
         Buttons: [
         { Text: "Website", Link: "https://discoverwildwood.com/" },
@@ -541,6 +606,7 @@ const Vendors = [
         Description: "Discount Pharms is one of the largest wholesale THCA suppliers in the country. The quality of our products and our low prices have helped us quickly become America’s preferred THCA vendor.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
+        ShipsTo: ["United States Of America"],
         IsCheap: true, 
         Buttons: [
         { Text: "Website", Link: "http://discountpharms.com/" }
@@ -551,6 +617,7 @@ const Vendors = [
         Description: "HIGH THCA Hemp Flower stocks the best THCA Flower pounds, half pounds and quarter pounds. Buy strains of THCA flower for less than $100 an ounce when you buy a quarter pound or more.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
+        ShipsTo: ["United States Of America"],
         IsCheap: true, 
         Buttons: [
         { Text: "Website", Link: "http://highthcahempflower.com/" }
@@ -561,6 +628,7 @@ const Vendors = [
         Description: "The Delta Connect specializing in THCA products, including flower rosin. One Reddit user mentioned getting Ice Cream Cake from The Delta Connect. The vendor also offers strains like Banana Kush THCA Moroccan Hash Hybrid, which is described as potent.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
+        ShipsTo: ["United States Of America"],
         IsCheap: true, IsRecommended: false, 
         Buttons: [
         { Text: "Website", Link: "https://thedeltaconnect.com/" },
@@ -577,6 +645,7 @@ const Vendors = [
         Description: "Miracle Of The Desert is your go-to for organic, high-tier THCa flower, cartridges, rosin, and more. Grown in California’s desert, the heart of U.S. cannabis cultivation, we offer the hottest strains, rotating fresh inventory, and both premium and budget-friendly options.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
+        ShipsTo: ["United States Of America"],
         IsCheap: true, 
         Buttons: [
         { Text: "Website", Link: "http://miracleofthedesert.com/" },
@@ -593,6 +662,7 @@ const Vendors = [
         Description: "At Homegrown Happiness, we’re a family-owned company dedicated to bringing you the finest in cannabis products. Rooted in our values of quality, integrity, and care, we’re committed to offering a selection of premium cannabis that supports your well being.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Edibles"],
+        ShipsTo: ["United States Of America"],
         
         Buttons: [{ Text: "Website", Link: "https://homegrownhappiness.store/" }]
     },
@@ -601,15 +671,16 @@ const Vendors = [
         Description: "The Flower Girls is a brand focused on creating a social community dedicated to empowering, educating, and engaging women who are passionate about cannabis. Their THCA flower shop collaborates with them, offering products for flower enthusiasts, according to their Instagram account . ",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
+        ShipsTo: ["United States Of America"],
 
         Buttons: [{ Text: "Website", Link: "https://theflowergirls.shop/" }]
     },
     {
         Title: "Well Crafted Canna",
         Description: "Well Crafted Canna is a family-owned and operated business based in North Carolina, specializing in federally compliant, artisanally crafted, hemp-derived cannabis products. They emphasize a grassroots philosophy, prioritizing customer safety and satisfaction above all else.",
-       Sections: ["Marijuana"],
+        Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [{ Text: "Website", Link: "http://wellcraftedcanna.com/" }]
     },
     {
@@ -617,6 +688,7 @@ const Vendors = [
         Description: "Damn Good offers flower grown locally in North Carolina. With fresh batches each week. Damn Good® Concentrates are here. From rosin and sugar to badder, crumble, hash, and shatter — each one made with pure inputs and loud terp profiles. No fillers, no BS. Just potent, flavorful hits every time.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+        ShipsTo: ["United States Of America"],
         IsRecommended: false, 
         Buttons: [
         { Text: "Website", Link: "https://tokesugar.com/" },
@@ -630,6 +702,7 @@ const Vendors = [
         Description: "Puffy / Myqwin offers premium THCa flower, weed vapes, and potent cannabis extracts at unbeatable prices. Shop legal cannabis products including live rosin, badder and crumble for unbeatable prices.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+        ShipsTo: ["United States Of America"],
         IsCheap: true, 
         Buttons: [
         { Text: "Website", Link: "https://www.myqwin.com/" },
@@ -648,9 +721,18 @@ const Vendors = [
         Description: "Lost In Translation (aka LIT Farms) are world known pioneers of hemp, bringing together generations of breeding experience.",
         Sections: ["Marijuana"],
         SubSections: ["Flower"],
-    IsCheap: true, 
+        ShipsTo: ["United States Of America"],
+        IsCheap: true, 
         Buttons: [
-        { Text: "Website", Link: "https://litfarms.com/" }
+            { Text: "Website", Link: "https://litfarms.com/" }
+        ],
+
+        Issues: [
+            { Text: "Moldy flower", Link: "https://www.reddit.com/r/LitFarms/comments/1gjglcp/moldy_package/"},
+            { Text: "Moldy flower (again)", Link: "https://www.reddit.com/r/LitFarms/comments/1iemcmr/mold_bud_rot/"},
+            { Text: "Moldy flower (again)", Link: "https://www.reddit.com/r/LitFarms/comments/1jufil2/this_is_kinda_sad_strawberry_horchata_supreme_mold/"},
+            { Text: "Mold and bugs (again)", Link: "https://www.reddit.com/r/LitFarms/comments/1obvv5k/mold_and_bug/"},
+            { Text: "Bait and switch", Link: "https://www.reddit.com/r/LitFarms/comments/1kqo8gl/bait_and_switch_threatened_to_flag_my_account_for/"}
         ]
     },
     {
@@ -658,7 +740,7 @@ const Vendors = [
         Description: "J Litty offers a wide variety of THCA products including flower, rosin, badder, crumble, and live resin, however, they have a less than stellar reputation.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://jlittys.com/" },
         { Text: "Twitter", Link: "https://x.com/jlittys" },
@@ -670,7 +752,7 @@ const Vendors = [
         Description: "If you're looking for CBD, CBG, Delta 9, THCa, and similar products, you must try the award-winning products at Flow Gardens!",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://flowgardens.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/flowgardens420_3.0/" },
@@ -682,7 +764,7 @@ const Vendors = [
         Description: "Since 2018 Upstate Hemp Co has been synonymous with 'high-end' flower. We would rather 'out of stock' than provide sub-par or dangerous products.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [{ Text: "Website", Link: "https://upstatehempco.com/" }]
     },
     {
@@ -690,7 +772,7 @@ const Vendors = [
         Description: "At HMP, we champion a farm-direct approach that connects you with the finest THCa products sourced from trusted local farmers. Our strong ties to the farming community ensure that every product is cultivated with care, utilizing sustainable practices to deliver pure and potent THCa straight from farm to you. Experience the difference of quality, community, and transparency.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Edibles"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://hmp.store/" },
         { Text: "Telegram", Link: "https://t.me/+4EigdvFFky0xYjhh" },
@@ -703,7 +785,7 @@ const Vendors = [
         Description: "At HMP, we champion a farm-direct approach that connects you with the finest THCa products sourced from trusted local farmers. Our strong ties to the farming community ensure that every product is cultivated with care, utilizing sustainable practices to deliver pure and potent THCa straight from farm to you. Experience the difference of quality, community, and transparency.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://thcawholesale.deals/" },
         { Text: "Telegram", Link: "https://t.me/+4EigdvFFky0xYjhh" },
@@ -714,7 +796,7 @@ const Vendors = [
         Description: "Mystic Smoke offers premium THCa and Hemp products. The best THCa shatter, Sugar, Diamonds and more. Farm bill compliant.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://mysticsmoke.cloud/" },
 
@@ -725,7 +807,7 @@ const Vendors = [
         Description: "",
         Sections: ["Marijuana"],
         SubSections: ["Concentrates"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://enlightenhemp.co/" },
 
@@ -736,7 +818,7 @@ const Vendors = [
         Description: "Bay Smokes kicked off when William and Katiana, a young couple with a serious love for cannabis, jumped into the game back in 2018. William was just 21, living in Arizona with Katiana, when the Farm Bill dropped and they saw their shot to start a CBD hustle. For two years, they lived like nomads, cruising the West Coast, hitting up over 100 farms and extractors to lock down the best product for their brand. When Delta-8 started buzzing in 2020, they launched Bay Smokes, knowing it’d eventually turn into the cannabis gig they dreamed of. Two years later, they rolled out THCA flower—the real deal they had been waiting for—and now they’re stoked to sling it nationwide, blazing trails in the legal weed scene. Since then, the company has grown to nearly 100 employees and is based in Charlotte, North Carolina.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://baysmokes.com/" },
         { Text: "Youtube", Link: "https://www.youtube.com/@baysmokes" },
@@ -751,7 +833,7 @@ const Vendors = [
         Description: "We specialize in bringing you the finest THCa Flower this country has to offer right to your door!!! We ship nationwide.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.thehemphut508.com/" },
         { Text: "Youtube", Link: "https://www.youtube.com/@HempHut508" },
@@ -770,6 +852,7 @@ const Vendors = [
         Description: "Hand-selected from only the finest sources of craft Cannabis and concentrates sourced in California. Our quality and pricing are guaranteed to seriously rival your local dispensary or plug",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
+        ShipsTo: ["United States Of America"],
         IsRecommended: true, IsCheap: true, 
         Buttons: [
         { Text: "Website", Link: "https://legendarythcacbd.com/", Warning: true }
@@ -784,6 +867,7 @@ const Vendors = [
         Description: "I AM HEMP Inc is a family oriented THCa/Hemp/CBD wellness company. We strive to offer pricing that’s fair and top quality. The healing power of this plant is why we do what we do.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
+        ShipsTo: ["United States Of America"],
         IsCheap: true,
         Buttons: [
         { Text: "Website", Link: "https://www.iamhemp.co/" },
@@ -794,6 +878,7 @@ const Vendors = [
         Description: "Here at CannaCrunchersCBD, we aim to supply only the highest quality products and products that our customers can both trust and love.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
+        ShipsTo: ["United States Of America"],
         IsCheap: true, IsRecommended: false, 
         Buttons: [{ Text: "Website", Link: "https://cannacruncherscbd.com/" }]
     },
@@ -802,7 +887,7 @@ const Vendors = [
         Description: "Canna Cured offers THCa in various forms to cater to different preferences: THCa Flower and THCa Concentrates.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [{ Text: "Website", Link: "https://cannacured.com/" }]
     },
     {
@@ -810,7 +895,7 @@ const Vendors = [
         Description: "At Pure Canna Co, we are committed to curating solventless cannabis products with a deep respect for purity, craftsmanship, and culture. With over 20 years of combined experience our team brings industry insight and genuine passion to every batch. We specialize in premium, full-spectrum rosin extracts made using only heat and pressure—never solvents. From fresh-pressed jars to cold-cured cultivars, every product is strain-specific, small-batch, and connoisseur-crafted to preserve the natural complexity of each plant. Backed by third-party COAs and aligned with the 2018 Farm Bill (≤0.3% Δ9 THC), we are proud to provide federally compliant, top-tier solventless experiences.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.purecannaco.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/pure.canna.co?igshid=djF5MnlpNWM5M254/" },
@@ -821,13 +906,16 @@ const Vendors = [
         Description: "Top Quality Thca products. Free shipping over $150.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         IsCheap: true, IsRecommended: true,
         
         Buttons: [
         { Text: "Website", Link: "https://www.jgrows420.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/jgrows_710" },
         { Text: "Twitter", Link: "https://twitter.com/Jgrows420" },
+        ],
+        Issues: [
+            {Text: "Goes up on prices before sales"},
         ]
     },
     {
@@ -835,7 +923,7 @@ const Vendors = [
         Description: "Zero Point Extraction is a 7,500 square foot hemp extraction facility in Prineville, Oregon that has been in operation since 2019. We are dedicated to producing and developing high-quality hemp-derived distillate, isolate, and crumble that can be incorporated into a variety of finished products such as tinctures, vapes, gummies, and capsules.",
         Sections: ["Marijuana"],
         SubSections: ["Concentrates", "Vapes"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://zeropointextraction.com/" },
         { Text: "Location", Link: "https://maps.app.goo.gl/uK2zh9k3NhNBZ189A" }
@@ -846,7 +934,7 @@ const Vendors = [
         Description: "At Alive & Well, we don’t just create products—we craft experiences. Guided by the philosophy of delivering good karma, one gram at a time, we are committed to redefining wellness through exceptional hemp products that enrich lives and support holistic health. With over 30 years of experience, research, and innovation, we strive to elevate cannabis culture by blending the best of tradition and modern science.",
         Sections: ["Marijuana"],
         SubSections: ["Concentrates", "Vapes"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://zeropointextraction.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/aliveandwell.life/" },
@@ -859,26 +947,15 @@ const Vendors = [
         Description: "Exotic THCa Flower & Concentrates · Veteran-owned, lab-tested, and priced to move. Shop wax, badder, crumble & smalls.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Edibles"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [{ Text: "Website", Link: "https://www.veterangrownhemp.com/" }]
-    },
-    {
-        Title: "Frosty Club",
-        Description: "Over a decade ago, Max and I entered the cannabis industry. We watched cannabis evolve from underground markets into a regulated, rapidly expanding industry. We saw the potential. We also saw the problems. By 2019, the hemp industry was booming, but distributors were failing retailers. Shop owners were being handed falsified COAs and non-compliant products. They couldn’t get anyone on the phone when they needed to order. When we finally did place an order, it took a week to arrive—sometimes longer. Retailers needed speed. They needed reliability. They needed a partner, not just a supplier. So we founded frosty club with one clear mission. Help business owners that sell hemp grow their business.",
-       Sections: ["Marijuana"],
-        SubSections: ["Flower", "Concentrates", "Edibles"],
-
-        Buttons: [
-        { Text: "Website", Link: "https://frostyclub.com/" },
-        { Text: "Youtube", Link: "https://www.youtube.com/channel/UCFbtb_pvIp5inPLpNzPugTw/videos" }
-        ]
     },
     {
         Title: "DR. Ganja",
         Description: "Dr.Ganja brings customers all around the world the best variety of legal hemp products.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.drganja.com/" },
         { Text: "Facebook", Link: "https://www.facebook.com/realdrganja" },
@@ -890,7 +967,7 @@ const Vendors = [
         Description: "We are a mom and pop store in Texas. Our family farm and processors are in Oregon. We are Farm Bill compliant.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://southernharvesthemp.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/southern.harvest.hemp" },
@@ -901,7 +978,7 @@ const Vendors = [
         Description: "The mission of Diesel Hemp™ is to share our passion through the boutique, high-end products that we produce ourselves. Our Cultivar-specific product line derived from our in-house bred and grown, proprietary cultivars are truly unique and rare. Our products are NOT made by someone else, our Hemp is NOT bred, grown or produced by anyone else, as we are truly a vertically integrated company, with 100% control over our supply and quality.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.dieselhemp.com/product-category/thca-flower/" },
         { Text: "Instagram", Link: "https://www.instagram.com/dieselhemp/" },
@@ -913,7 +990,7 @@ const Vendors = [
         Description: "The mission of Diesel Hemp™ is to share our passion through the boutique, high-end products that we produce ourselves. Our Cultivar-specific product line derived from our in-house bred and grown, proprietary cultivars are truly unique and rare. Our products are NOT made by someone else, our Hemp is NOT bred, grown or produced by anyone else, as we are truly a vertically integrated company, with 100% control over our supply and quality.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Edibles"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://highhippy.com/" }
         ]
@@ -923,7 +1000,7 @@ const Vendors = [
         Description: "We're a small farm that got into the CBD world when the founder needed a way to use his property to make a living. Our first year we grew two strains. Now, we're working with other farmers to offer quality CBD hemp flower. If we don't provide the flower ourselves, we will list the growing methods and details of the farm we sourced our flower from. We'll never take credit for something we didn't produce ourselves, and we want you to know the details behind the plants. ",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Edibles"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://eighthorseshemp.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/8horseshemp" }
@@ -934,7 +1011,7 @@ const Vendors = [
         Description: "Rest easy knowing that all products on our website comply with the 2018 USDA Farm Bill, containing less than 0.3% Delta-9 THC. We prioritize both quality and full compliance, ensuring you receive products you can trust.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://nowicann.com" }
         ]
@@ -944,7 +1021,7 @@ const Vendors = [
         Description: "At YAGA Farms, we are more than just cultivators—we are passionate artisans dedicated to growing the highest-quality cannabis through innovative techniques, scientific precision, and an unwavering commitment to freshness. Every strain we produce is the result of years of research, hands-on expertise, and a deep love for the plant.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.yagafarms.com/" }
         ]
@@ -954,7 +1031,7 @@ const Vendors = [
         Description: "Revelry is a California-born cannabis and smell proof gear lifestyle brand built for life off the clock. We create high-quality THCA products and purpose-driven gear that elevate everyday experiences—whether you're deep in the woods or just unwinding at home. Our brand is rooted in a love for the outdoors, music, and good company, blending laid-back vibes with premium craftsmanship. From our THCA pre rolls and flower to our smell proof smoking kits, everything we make is designed to support a lifestyle of adventure and ease. Wherever you go, Revelry is made to go with you.",
         Sections: ["Marijuana"],
         SubSections: ["Flower"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.revelryhemp.com/" }
         ]
@@ -964,7 +1041,7 @@ const Vendors = [
         Description: "Discover premium herbal products at Preston Herb Co. Explore our selection of natural remedies and wellness solutions.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.prestonherbco.com/" },
         { Text: "Twitter", Link: "https://x.com/Prestonherbco" },
@@ -978,7 +1055,7 @@ const Vendors = [
         Description: "Every item we offer is made with peak-quality hemp, directly sourced from plants grown and harvested in the Smoky Mountains of East Tennessee.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.smokymountaincbd.com/" },
         { Text: "Facebook", Link: "https://www.facebook.com/smokymountaincbd/" },
@@ -990,7 +1067,7 @@ const Vendors = [
         Description: "At Wildflower Hemp Co, we understand that true quality cannot be rushed. That’s why we allow our carefully cultivated plants to undergo a full month cure before processing. This meticulous approach guarantees the perfect moisture ratio of water to flower, resulting in a smooth and enjoyable burn with every gram.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://wildflowerhempco.com/" }
         ]
@@ -1000,7 +1077,7 @@ const Vendors = [
         Description: "Small-batch THCa flower and concentrates grown by the best farmers in the Pacific Northwest—cultivated with organic practices, rich in terpenes, and crafted with care from seed to sale.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://luckyelk.com/" },
         { Text: "Facebook", Link: "https://www.facebook.com/luckyelkhemp/" },
@@ -1013,7 +1090,7 @@ const Vendors = [
         Description: "Experience all forms of Hashish, Static Sift, Bubble Hash, Rosin, Jam & More, Piatella, Mutantella, & Various other experimental creations.",
         Sections: ["Marijuana"],
         SubSections: ["Concentrates"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://brbubble.com/" },
         ]
@@ -1023,7 +1100,7 @@ const Vendors = [
         Description: "Experience all forms of Hashish, Static Sift, Bubble Hash, Rosin, Jam & More, Piatella, Mutantella, & Various other experimental creations.",
         Sections: ["Marijuana"],
         SubSections: ["Concentrates"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://revivehemp.store/" },
         { Text: "TikTok", Link: "https://www.tiktok.com/@revivehemp3" }
@@ -1034,7 +1111,7 @@ const Vendors = [
         Description: "Organic Premium Cannabis Products - We are a family owned and operated company that is purpose driven working hard to bring the purest organic natural remedies to market.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://aretehemp.com/" },
         { Text: "Facebook", Link: "https://www.facebook.com/aretehemp" },
@@ -1049,7 +1126,7 @@ const Vendors = [
         Description: "Sun-grown, living soil, no-till, organic, Mendocino County cannabis cultivation since 1978. Award Winning Strains, Expert Growers, Elk Creek Genetics.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.elkcreekgenetics.com/category/all-products" },
 
@@ -1060,7 +1137,7 @@ const Vendors = [
         Description: "Herbal Healers was started in 2017 out of my college dorm room, on a mission to provide humanity with the highest quality CBD products and education at a fair price. I have always loved cannabis, and in 2017 I saw an opportunity to get in on an industry that would be able to make a real positive impact on people's lives. At the time I was in college for health sciences, not really enjoying what I was learning and knew that wanted to start a business before I graduated, so that I'd have something established for when I graduated. So, I asked my mom if she would help me get it started, and since she already has a few successful businesses, it would provide me the knowledge and habits to run a successful business. She agreed, fast forward to now and she is still along for the ride! Check out what separates us below!",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://herbalhealerscbd.com/" },
         { Text: "Facebook", Link: "https://www.facebook.com/theherbalhealers/" },
@@ -1073,7 +1150,7 @@ const Vendors = [
         Description: "Our potency levels range from mild to strong, so you can control your own cannabis experience. Our Delta-8, Delta-9, and Delta-10 THC and THCa products reward you with feelings of relaxation, relief, energy, creativity and joy to the levels you desire.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.earthyselect.com/" },
         { Text: "Facebook", Link: "https://www.facebook.com/earthyselect/" },
@@ -1088,7 +1165,7 @@ const Vendors = [
         Description: "Hemp Hop started because of the significant experience with a family member. In 2014, after sourcing CBD capsules, he noticed some relief in different areas. Today he is a healthy, happy person. The delivery service was started to ensure these hemp products get to other families as well. We aim to create and sell quality, affordable products for everyone.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://hemphop.co/" },
         { Text: "Instagram", Link: "https://www.instagram.com/hemphop.farms" },
@@ -1100,7 +1177,7 @@ const Vendors = [
         Description: "The folks behind @rozfromfrasier have been involved in the cannabis community since their teenage years. Having witnessed many trends and ideas come and go over the decades, they realized that the cannabis world is changing rapidly and finally decided it was high time to start interacting with the cannabis community in a more modern context.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [{ Text: "Website", Link: "https://rozfromfrasier.com/" }]
     },
     {
@@ -1108,7 +1185,7 @@ const Vendors = [
         Description: "Since the very beginning our top priorities have been quality, safety, satisfaction, and good pricing. We continue to uphold these values to this day. Bringing customers top quality organic products, from Greenhouse, Light Deps (light deprivation) and Indoor grown methods. Our Company was founded in the Southern Maryland area and was built from the ground up through passion and dedication to consistent quality and equitable business practice. We look forward with enthusiasm and we welcome you to The Southern Maryland Experience.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://thesomdexp.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/thesomdexperiencellc" },
@@ -1123,7 +1200,7 @@ const Vendors = [
         Description: "At GreenGas, we’re delivering a new generation of hemp — fresh, potent, and fully compliant. Thanks to the 2018 Farm Bill, hemp products containing less than 0.3% Delta-9 THC by dry weight are federally legal. Our flower comes from the same plant species as traditional marijuana, but it’s carefully cultivated and processed to meet strict federal standards — giving you the premium quality you deserve, without the worry.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://greengashemp.me/" },
 
@@ -1134,7 +1211,7 @@ const Vendors = [
         Description: "Shop THCa products at SeshCity! Buy your THCa shatter, flower, dabs, vapes and more online! Free shipping! Ounces of dabs for under $290! NEW DROPS!",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [{ Text: "Website", Link: "https://seshcity.shop/" }]
     },
     {
@@ -1142,7 +1219,7 @@ const Vendors = [
         Description: "Asheville Dispensary, the premier cannabis destination in Asheville, NC, & Chattanooga, TN. Buy THCA flower, Delta 9 THC, & CBD. Shop online.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://avldispensary.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/avldispensary/" },
@@ -1155,7 +1232,7 @@ const Vendors = [
         Description: "At Sticky Buds, we pride ourselves on offering the highest quality cannabis products on the market at unbeatable prices. Whether you’re in search of top-shelf flower, cutting-edge vapes, or potent concentrates, we’ve got you covered. With our commitment to excellence, we ensure that every product meets rigorous standards for potency and purity. Plus, with lightning-fast shipping, all orders are dispatched within 24 hours, so you can enjoy your favorite products sooner. Explore our wide selection and experience the Sticky Buds difference today!",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://sticky-buds.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/sti.ckybuds420/" }
@@ -1166,7 +1243,7 @@ const Vendors = [
         Description: "Welcome to our cannabis wonderland, where passion meets excellence. Immerse yourself in a world of unparalleled quality and innovation. Our mission is to provide you with top-notch products, exceptional customer service, and a sense of community. Explore our offerings, embrace the magic of cannabis, and unlock a realm of endless possibilities. Join us on this green adventure and let your cannabis journey begin.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.snapdragonhemp.com/" }
         ]
@@ -1176,7 +1253,7 @@ const Vendors = [
         Description: "Tired of buying overpriced and low-quality products in fancy packaging? At Boston Hemp Inc. we stay true to our grassroots approach and are consistent in providing the highest quality products and raw materials at an affordable price. After five years of being in business since the inception of the hemp industry, Boston Hemp Inc has made it a priority to provide our customers with the highest quality hemp products, lab tested, and 100% insured for your maximum confidence in purity.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://bostonhempinc.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/boston_hempire/" },
@@ -1189,7 +1266,7 @@ const Vendors = [
         Description: "ELYXR LA was founded in October 2020 with a focus on providing high-quality Delta-8 products, but the brand’s success didn’t happen overnight. By leveraging the strengths of its individual member groups and building a strong infrastructure as a team, ELYXR LA was able to quickly expand its product line and customer base. Unlike many other brands, ELYXR LA is committed to serving a deeper purpose by providing exceptional product quality, artistic design, and unparalleled customer service. With over 2,000+ products, ELYXR LA sets itself apart by offering same-day shipping and putting quality before profit. ELYXR LA is a brand that customers can trust.",
         Sections: ["Marijuana", "Psychedelics"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles", "4-PrO-DMT", "7-OH"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.elyxr.com/" },
         { Text: "Instagram", Link: "https://www.facebook.com/elyxrla101/" },
@@ -1203,7 +1280,7 @@ const Vendors = [
         Description: "Binoid is your best source for the highest quality and effective products made from hemp-derived CBD & Delta 8 THC. Based in Los Angeles, California we at Binoid are dedicated to providing you with CBD & Delta 8 products you can trust, and enjoy.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.binoidcbd.com/" }
         ]
@@ -1213,7 +1290,7 @@ const Vendors = [
         Description: "We don't just grow cannabis; we cultivate it in a living, thriving soil system we've crafted from scratch. Our precise blend of coco, peat moss, compost, lava rock & minerals comes to life when properly made compost extract hits the soil. We closely analyze & maintain our ecosystem using microscope analysis and soil testing. These are our living soil beds filled with soil we will use for years to come. While other growers discard soil after each harvest, we're cultivating a permanent, living environment that gets richer and more robust with every cycle.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Edibles"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://stoneybranch.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/stoneybranchag/" }
@@ -1224,7 +1301,7 @@ const Vendors = [
         Description: "Holy City Farms is a family-owned and operated hemp farm in South Carolina offering premium type 2 and 3 CBD products delivered to your door.",
         Sections: ["Marijuana"],
         SubSections: ["Flower"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://holycityfarms.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/holycityfarms/" },
@@ -1239,7 +1316,7 @@ const Vendors = [
         Description: "Golden Hour Hemp started in 2020 as a hemp farm in Waldo, Florida with 6,000 sqft of greenhouses, 10,000 sqft of garden space, and a 5-acre field. We grew our own flower for 2 years, but farming cannabis in Florida is no easy task, and we wanted to focus on our newest pivot into processing. The time on the farm was a great experience we will always cherish, and  we hope to return to farming again in 2025.  By May of 2021 we opened our first processing and production facility, where we focused primarily on making joints and blunts for shops and brands nationwide. And by 2022, instead of growing our own flower in Florida, we partnered with an Oregon farm who grows all of our flower for us. As of late 2023 we have opened up our website to individual consumers, giving brand-level quality at wholesale pricing directly to the end customer.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
-
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://goldenhourhemp.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/goldenhourhemp/" },
@@ -1251,7 +1328,7 @@ const Vendors = [
         Description: "At Smoke Kind, we are passionate about delivering only the finest products to improve your lifestyle. Whether you're seeking premium strains, exclusive edibles, or top-tier vapes, we carefully curate each item to ensure quality, satisfaction.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://smokekind.com/" },
         { Text: "Instagram", Link: "https://x.com/SmokeKindTHCa" },
@@ -1262,7 +1339,7 @@ const Vendors = [
         Description: "Our THCA flower rivals top-shelf dispensary cannabis. Grown indoors and hand-trimmed, our strains deliver dense nugs, loud terpenes, and consistent effects—without the high price or legal risks. We back every batch with third-party lab reports, full compliance under the 2018 Farm Bill, and a 30-day satisfaction guarantee.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.blacktiecbd.net/" },
         { Text: "Instagram", Link: "https://www.instagram.com/blacktiestandard/" }
@@ -1273,7 +1350,7 @@ const Vendors = [
         Description: "Feeling is the secret, and our mission is to help people feel better everyday. High-CBD, low-THC means all the benefits and none of the common negative side effects like anxiety and paranoia. We have been breeding and growing high CBD cannabis for over 10 years, and are excited to finally offer these revolutionary products to people all over the world. It’s time for a new wave of cannabis that can enhance your lifestyle, not hinder it.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://secretnature.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/secretnature_ca/" }
@@ -1284,7 +1361,7 @@ const Vendors = [
         Description: "Feeling is the secret, and our mission is to help people feel better everyday. High-CBD, low-THC means all the benefits and none of the common negative side effects like anxiety and paranoia. We have been breeding and growing high CBD cannabis for over 10 years, and are excited to finally offer these revolutionary products to people all over the world. It’s time for a new wave of cannabis that can enhance your lifestyle, not hinder it.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [{ Text: "Website", Link: "https://exhalewell.com/" }]
     },
     {
@@ -1292,6 +1369,7 @@ const Vendors = [
         Description: "Feeling is the secret, and our mission is to help people feel better everyday. High-CBD, low-THC means all the benefits and none of the common negative side effects like anxiety and paranoia. We have been breeding and growing high CBD cannabis for over 10 years, and are excited to finally offer these revolutionary products to people all over the world. It’s time for a new wave of cannabis that can enhance your lifestyle, not hinder it.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
+        ShipsTo: ["United States Of America"],
         IsCheap: true, 
         Buttons: [
         { Text: "Website", Link: "https://vivimu.com/" }
@@ -1305,7 +1383,7 @@ const Vendors = [
         Title: "MC Nutraceuticals",
         Description: "MC Nutraceuticals, a subsidiary of MC Global Holdings, is focused on bringing brands the highest quality input materials for their customers, along with same day shipments for our raw materials. Our pricing stays completely competitive and will stay ahead of the price compression in the industry, to make sure that you are getting the best quality, service, and pricing the industry can provide. We also outsource white labeling for our customers, formulations, and custom product development through our partner network.",
         Sections: ["Wholesale"],
-        Rating: 2,
+        ShipsTo: ["United States Of America"],
         
         Buttons: [{ Text: "Website", Link: "https://mcnutraceuticals.com/" }]
     },
@@ -1314,7 +1392,8 @@ const Vendors = [
         Description: "No description currently.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
+
         Buttons: [{ Text: "Website", Link: "https://hemp-flower.com/" }]
     },
     {
@@ -1322,7 +1401,7 @@ const Vendors = [
         Description: "No description currently.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [{ Text: "Website", Link: "https://whiteashreserve.com/" }]
     },
     {
@@ -1330,7 +1409,7 @@ const Vendors = [
         Description: "Cosmic Hemp Gardens was created from a passion for finding the highest quality hemp flower in a fast growing and ever-changing environment. Our goal is to consistently provide our clients with access to some of the best craft hemp flower available on the market. We pride ourselves on our customer service and attention to detail and hope to earn your business for years to come.",
         Sections: ["Marijuana"],
         SubSections: ["Flower"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.cosmichempgardens.com/" }
         ]
@@ -1340,7 +1419,7 @@ const Vendors = [
         Description: "We are a diversified hemp farm located in Marshall, NC focused on producing the highest quality CBD, CBG, and CBDV products on the market. Our mission is to create products as though the health and well-being of our loved ones depend on it. This starts with the plants themselves, which is why we grow using Beyond Organic methods. This means no pesticides, no synthetic fertilizers—no exceptions. Plant medicine must be pure and without adulterants which is why we focus our energy on small-batch cultivation techniques that allow us to give each plant the attention it deserves. The most potent and effective products will naturally be derived from plants grown this way.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.akirabotanicals.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/akirabotanicals/" },
@@ -1353,7 +1432,7 @@ const Vendors = [
         Description: " Best Buds is a online based premium cannabis company headquartered in the Lowcountry of South Carolina. We focus on top shelf legal cannabis products including flower, edibles, vapes and concentrates. All of Best Buds goods are derived from hemp and are 2018 Farm Bill compliant and Federally legal, meaning you can feel comfortable and safe ordering our products online for discreet delivery to your hands!",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://bestbudsbff.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/bestbudsbff.com_/" },
@@ -1366,7 +1445,7 @@ const Vendors = [
         Description: "We’re not just here to sell you something—we’re here to share a secret. A secret that could change the way you think about hemp. A secret that’s about pure, premium, and perfectly crafted hemp. And the best part? We’re only getting started.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.bkshemp.com/" }
         ]
@@ -1376,7 +1455,7 @@ const Vendors = [
         Description: "We’re a family-owned business driven by a passion for the science of cannabinoids and a commitment to educating our customers on how they work within the body. What sets us apart? It’s our focus on education, exclusive formulations, and using only the highest quality ingredients in all of our products. 🌱 We hold ourselves to the highest standards, with everything produced in our own lab and third-party tested for quality and transparency. As a Christian family, we believe in the power of plant-based medicine and its responsible use. 🌿",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://blackowlhempclinic.com/" },
         { Text: "Instagram", Link: "https://www.instagram.com/blackowlcbd/" },
@@ -1388,7 +1467,7 @@ const Vendors = [
         Description: "In accordance with our commitment to employing organic cultivation practices, every flower strain is cultivated without using any products containing microbial, mycotoxins, heavy metals and pesticides, or foreign matter. This policy also applies to any products derived from any of our hemp flower strains. Samples from every type of flower strain and other products are submitted to an independent and government-approved testing laboratory to provide you with a third-party analysis of the cannabinoid and terpene content We listen to customer feedback and make adjustments accordingly We love what we do and hold each other accountable making it easy to provide superior products, come try us out!",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://fernvalleyfarms.com/" },
         { Text: "Facebook", Link: "https://www.facebook.com/fernvalleycbd" },
@@ -1401,7 +1480,7 @@ const Vendors = [
         Description: "Gold Standard isn’t just setting a new standard in cannabis—we’re leading a movement. For too long, people have faced uncertainty and inconsistency in their search for clean, high-quality cannabis. That ends now. We connect people with the finest cannabis—pure, potent, and trustworthy—so they can elevate their well-being, expand their potential, and experience life at a higher level. Rooted in integrity and innovation, we’re here to raise the bar for quality, access, and trust in the cannabis industry.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://goldcbd.com/" },
         { Text: "Facebook", Link: "https://www.facebook.com/GoldStandardCBD/" },
@@ -1413,7 +1492,7 @@ const Vendors = [
         Description: "",
         Sections: ["Marijuana"],
         SubSections: ["Flower"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [{ Text: "Website", Link: "https://handcraftedfarmers.com/" }]
     },
     {
@@ -1421,7 +1500,7 @@ const Vendors = [
         Description: "",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://retrobakery.net/" },
         { Text: "Twitter", Link: "https://twitter.com/RetroBakery420" },
@@ -1434,7 +1513,7 @@ const Vendors = [
         Description: "At Kache, we’re passionate about crafting premium THCA products that deliver unmatched quality, purity, and experience. With over 20 years of industry expertise, we bring deep hemp knowledge and a commitment to excellence in everything we do—from top-shelf flower and high-end extracts to innovative vaporizers and delicious edibles. Our focus is simple: curate premium experiences for connoisseurs who care about what they consume. Every Kache product is single sourced, tested, and formulated with integrity, ensuring clean natural ingredients and consistent potency. In a market full of noise, Kache stands out as a brand you can trust—rooted in experience, backed by science, and driven by passion. Welcome to better hemp. Welcome to Kache.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates", "Vapes", "Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://kache.shop/" },
         { Text: "Facebook", Link: "https://www.facebook.com/profile.php?id=61580937033659" },
@@ -1448,7 +1527,7 @@ const Vendors = [
         Description: "No description currently.",
         Sections: ["Marijuana"],
         SubSections: ["Flower"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://topcolatn.com/" },
         { Text: "Instagram", Link: "https://instagram.com/topcola_cbd/" }
@@ -1459,7 +1538,7 @@ const Vendors = [
         Description: "Amish Grown is a premium supplier of high-quality THCa products that are handcrafted by skilled artisans using traditional methods. We pride ourselves on our commitment to sustainable farming practices and our dedication to producing pure and potent THCa that delivers a satisfying and enjoyable experience.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [
         { Text: "Website", Link: "https://www.amishgrown.com/s/shop" },
         { Text: "Instagram", Link: "https://instagram.com/topcola_cbd/" }
@@ -1470,7 +1549,7 @@ const Vendors = [
         Description: "Experience the best in cannabis-infused snacks with Granny's. Our premium-quality gummies and pretzels are made with top-grade ingredients, ensuring consistent potency and flavor. Discover why Granny's is the trusted choice for delicious, reliable cannabis edibles.",
         Sections: ["Marijuana"],
         SubSections: ["Edibles"],
-        
+        ShipsTo: ["United States Of America"],
         Buttons: [{ Text: "Website", Link: "https://yourgrannys.com/" }]
     },
     {
@@ -1478,10 +1557,11 @@ const Vendors = [
         Description: "At Alderson Family Farms, we blend quality with care, crafting exceptional hemp strains that support your relaxation and wellness needs.",
         Sections: ["Marijuana"],
         SubSections: ["Flower", "Concentrates"],
+        ShipsTo: ["United States Of America"],
         IsRecommended: true,
         Buttons: [
         { Text: "Website", Link: "https://aldersonfamilyfarms.store/" },
-        { Text: "Discord", Link: "https://discord.gg/JfsqJhTzBB" },
+        { Text: "Discord", Link: "https://discord.gg/TrT5YPw9" },
         { Text: "Twitter", Link: "https://x.com/martybacardi89"},
         { Text: "Facebook", Link: "https://www.facebook.com/aldersonfamilyfarms" }
         ]
@@ -1493,7 +1573,8 @@ const Vendors = [
         Description: "Wicked Tablets lives for the relentless pursuit to create unique, reliable, and responsibly sourced mind-expanding products more accessible to curious, conscious adults. Wicked is a small, independent brand aiming to leave a big mark in the development of psychedelic treatments, and responsible recreational use",
         Sections: ["Psychedelics", "Opioids"],
         SubSections: ["5-MAPB", "4-HO-MET", "4-HO-DET", "4-PrO-DMT", "SR-17018", "MGM-15", "7-OH"],
-        
+        ShipsTo: ["United States Of America"],
+
         IsNew: false, IsRecommended: true,
         
         Buttons: [
@@ -1505,7 +1586,8 @@ const Vendors = [
         Description: "Before we even started our company, we have been long-time psychedelic enthusiasts. Improving access to the benefits of psychedelics has been one of our major goals, and along with our affection for mycology we were happy to bring the magic of mushrooms to people through our grow bags mushroom genetics. We will continue to do so, for those that desire them. We know, however, that mushrooms take time to grow, and metocin is an accessible compound that produces effects we are similarly fond of.",
         Sections: ["Psychedelics"],
         SubSections: ["5-MAPB", "4-HO-MET"],
-        
+        ShipsTo: ["United States Of America"],
+
         IsNew: false,
         
         Buttons: [
@@ -1522,7 +1604,8 @@ const Vendors = [
         Description: "SōKO Cannabis is the highest rated top-shelf luxury Cannabis and Psychedelics company with only the most potent and pure products available online. We use only Premium organic cannabis and pure grade Metocin from the happy farmers and scientists who care for their craft.",
         Sections: ["Psychedelics"],
         SubSections: ["5-MAPB", "4-HO-MET"],
-        
+        ShipsTo: ["United States Of America"],
+
         IsNew: false,
         
         Buttons: [
@@ -1538,7 +1621,8 @@ const Vendors = [
         Description: "Chemiverse is a Canadian research chemical company (chemiverse.ca) dedicated to sourcing the highest quality tryptamines and lysergamides. Our mission is to share innovative chemicals to support revolutionary laboratory research.  All our chemicals are tested by a third party laboratory to ensure purity and no contaminants.",
         Sections: ["Psychedelics"],
         SubSections: ["1cP-AL-LAD", "1P-LSD", "1V-LSD", "4-AcO-DMT", "4-AcO-MET", "4-HO-MET", "4-PrO-MET", "5-MeO-DMT", "5-MeO-MiPT", "5-MeO-MALT", "N,N-Dipropyltryptamine (DPT)", "Methallylescaline (MAL)"],
-        
+        ShipsTo: ["International", "United States Of America", "Canada"],
+
         IsNew: false,
         
         Buttons: [
@@ -1550,7 +1634,8 @@ const Vendors = [
         Description: "Welcome to Chems.ca — North America’s trusted source for authentic, high-purity research materials. Our small, highly dedicated team is focused on one thing: providing researchers with consistent, verified, and reliable compounds sourced only from reputable laboratories. When you choose Chems.ca, you’re not just receiving high-quality products — you’re gaining a partner who genuinely cares about your analytical research. Every compound in our catalog undergoes third-party testing to confirm identity and purity. No substitutes. No inconsistencies. No unexpected deviations. Safety is at the core of everything we do. All materials are stored in cold-regulated environments and nothing is pre-packaged. Every order is freshly prepared inside a clean, sealed environment, separate from storage, ensuring your samples remain uncontaminated.",
         Sections: ["Psychedelics"],
         SubSections: ["ALD-52", "5-MeO-MiPT", "1P-LSD", "5-MeO-MALT", "4-PrO-DMT", "1V-LSD", "4-HO-MET", "1cP-LSD", "ETH-LAD", "4-HO-MiPT", "1D-LSD"],
-        
+        ShipsTo: ["International", "United States Of America", "Canada"],
+
         IsNew: false,
         
         Buttons: [
@@ -1562,7 +1647,8 @@ const Vendors = [
         Description: "",
         Sections: ["Peptides", "Other"],
         SubSections: ["Gabapentin", "Retatrutide"],
-        
+        ShipsTo: ["International", "United States Of America", "Australia", "Canada"],
+
         IsNew: false,
         
         Buttons: [
@@ -1574,7 +1660,8 @@ const Vendors = [
         Description: "Our vision is to build a reputation for enhancing the quality of life for sports enthusiasts and those who embrace an active lifestyle. We are dedicated to helping people not only look great but also feel their best. Our product range caters to both men and women, from hardcore bodybuilders to everyday fitness enthusiasts. Whether you're pushing your limits in the gym or maintaining a healthy lifestyle, we have the perfect supplements to support your journey. We are backed by a team of highly skilled professionals, including quality control specialists and market researchers, who ensure that we source only the highest-quality products tailored to meet our customers' needs. Our IT specialists are committed to safeguarding the integrity of our online store and, most importantly, protecting customer data with the highest standards of security. Our Shipping Managers ensure prompt deliveries, while our dedicated customer service team is always ready to respond to any queries or concerns within 24 hours.",
         Sections: ["Peptides", "Other"],
         SubSections: ["Retatrutide"],
-        
+        ShipsTo: ["International", "United States Of America", "Australia", "Canada"],
+
         IsNew: false,
         
         Buttons: [
@@ -1587,7 +1674,8 @@ const Vendors = [
         Description: "With a combined 40 years of experience in importing and selling wholesale kratom Distro, our team has seen just about everything there is to see in this industry.  From bad harvests to import bans to doctored imported powder and customs seizures, we’ve figured out who to trust for our south Asian kratom sources, and what it takes to get the world’s best kratom into your hands without any hassles or stress.  Give us a little patience as we nail down the retail side of things and we we will be the last site you ever need for kratom.",
         Sections: ["Opioids"],
         SubSections: ["Natural kratom", "7-Hydroxymitragynine", "MGM-15"],
-        
+        ShipsTo: ["United States Of America"],
+
         IsNew: false,
         
         Buttons: [
@@ -1600,7 +1688,8 @@ const Vendors = [
         Description: "At Powder Solutions, we pride ourselves on providing the finest 7-OH and mitragynine products available. Our commitment to quality and integrity ensures that every product meets the highest standards. We believe in transparency and never cut corners, delivering only the best for our customers. Experience the difference with Powder Solutions! In a fierce market that has new 7OH Tablets and even entirely new vendors popping up every week… The competition is constant. There’s one problem… Most of these vendors have effective 7-OH for your first and second order… then BAM!  For your next order, you finally place a large one and you end up getting diluted 7-Hydroxymitragynine. At PS, we never sell a product we don’t enjoy ourself. Whether it’s our 7OH Tablets, 7OH powder or our tasty 7-OH Strips, we commit to CONSTANT quality in every product we sell PERMANENTLY!",
         Sections: ["Opioids"],
         SubSections: ["Natural kratom", "7-Hydroxymitragynine", "Pseudoindoxyl", "MGM-15"],
-        
+        ShipsTo: ["United States Of America"],
+
         IsNew: false,
         
         Buttons: [
@@ -1612,7 +1701,8 @@ const Vendors = [
         Description: "No description currently.",
         Sections: ["Opioids"],
         SubSections: ["Natural kratom", "7-Hydroxymitragynine", "Pseudoindoxyl", "MGM-15"],
-        
+        ShipsTo: ["United States Of America"],
+
         IsNew: false,
         
         Buttons: [
@@ -1624,7 +1714,8 @@ const Vendors = [
         Description: "We offer Kratom 100% guaranteed organic and free from additives. Pure Leaf Kratom is entirely transparent and only seeks to connect Kratom lovers to the highest quality Kratom in the market. Every product we offer is safe and chemical-free. So browse with a sense of security that you’re at a trusted source for all things kratom. Our partners harvest the Kratom plant with natural methods passed down for centuries. What you get is a pure experience with a brand that’s on your side.",
         Sections: ["Opioids"],
         SubSections: ["Natural kratom", "7-Hydroxymitragynine", "Pseudoindoxyl", "MGM-15"],
-        
+        ShipsTo: ["United States Of America"],
+
         IsNew: false,
         
         Buttons: [
@@ -1637,7 +1728,8 @@ const Vendors = [
         Description: "We are proud to be the pioneers of this industry, leading the way as the first company to introduce a pure 7-hydroxymitragynine product to the market. Our commitment to innovation and quality has set the standard, inspiring others to follow in our footsteps. While our product is often imitated, it remains unmatched in its purity and effectiveness—a true testament to our dedication to excellence.",
         Sections: ["Opioids"],
         SubSections: ["7-Hydroxymitragynine"],
-        
+        ShipsTo: ["United States Of America"],
+
         IsNew: false,
         
         Buttons: [
@@ -1650,7 +1742,8 @@ const Vendors = [
         Description: "Bulk Kratom Now was started to fill the need for quality bulk kratom online. Our goal is to make kratom more affordable to all, whether it be a single buyer on a tight budget, or a company looking for wholesale. There is a better way to buy kratom – a more cost effective and less intrusive process. When buying bulk kratom online from us, you can save a large amount of money and earn redeemable loyalty reward points on each and every purchase. Bulk kratom Now isn’t your typical online kratom vendor because we stock over 33 different strains of kratom powder and capsules. The wide diversity of kratom strains is something we take pride in. Rest assured that even though we are a bulk kratom vendor, we offer high-quality leaf and you can expect the same premium kratom sold for high prices locally and online but at a much lower price point.",
         Sections: ["Opioids"],
         SubSections: ["Natural kratom", "7-Hydroxymitragynine", "Pseudoindoxyl", "MGM-15"],
-        
+        ShipsTo: ["United States Of America"],
+
         IsNew: false,
         
         Buttons: [
@@ -1662,7 +1755,8 @@ const Vendors = [
         Description: "Certified by the American Kratom Association, Golden Monk combines the latest in kratom cultivation practices with the reverence of ancient traditions to provide the highest quality kratom on the market.",
         Sections: ["Opioids"],
         SubSections: ["Natural kratom"],
-        
+        ShipsTo: ["United States Of America"],
+
         IsNew: false,
         
         Buttons: [
@@ -1674,7 +1768,8 @@ const Vendors = [
         Description: "At Bronx Extracts we pride ourselves on providing the finest 7-OH and mitragynine products available. Our commitment to quality and integrity ensures that every product meets the highest standards. We believe in transparency and never cut corners, delivering only the best for our customers. Experience the difference with Bronx Extracts!",
         Sections: ["Opioids"],
         SubSections: ["Natural kratom", "7-Hydroxymitragynine", "Pseudoindoxyl", "MGM-15"],
-        
+        ShipsTo: ["United States Of America"],
+
         IsNew: false,
         
         Buttons: [
@@ -1686,6 +1781,7 @@ const Vendors = [
         Description: "No description currently.",
         Sections: ["Opioids"],
         SubSections: ["MGM-15"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://tbkyellow.com" }
@@ -1696,6 +1792,7 @@ const Vendors = [
         Description: "No description currently.",
         Sections: ["Opioids"],
         SubSections: ["7-Hydroxymitragynine", "Pseudoindoxyl", "MGM-15"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://etxtracts.com" },
@@ -1707,6 +1804,7 @@ const Vendors = [
         Description: "No description currently.",
         Sections: ["Opioids"],
         SubSections: ["MGM-15"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://mgmedicalabs.org/" },
@@ -1718,6 +1816,7 @@ const Vendors = [
         Description: "We’re not here to flood the market. We’re here to raise the bar. Others have approached us with cheaper shortcuts – we don’t take them. We stand by what matters: quality over quantity, integrity over hype, and products that never disappoint. Stout Alkz didn’t join the movement. We built it. For the customer. For the research. For the standar",
         Sections: ["Opioids"],
         SubSections: ["Natural kratom", "7-Hydroxymitragynine", "Pseudoindoxyl", "MGM-15", "SR-17018"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://stoutalkz.com" }
@@ -1728,6 +1827,7 @@ const Vendors = [
         Description: "No description currently.",
         Sections: ["Opioids"],
         SubSections: ["7-Hydroxymitragynine", "Pseudoindoxyl", "MGM-15"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://koalatykratom.com" }
@@ -1738,6 +1838,7 @@ const Vendors = [
         Description: "At Catalyst Edge Labs, we’re all about making science approachable and exciting for everyone. We started this journey because we believe that groundbreaking tools like 7-OH shouldn’t just be for big labs or elite researchers—they should be available to anyone with a spark of curiosity.",
         Sections: ["Opioids"],
         SubSections: ["7-Hydroxymitragynine", "Pseudoindoxyl", "MGM-15"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://catalystedgelab.com" }
@@ -1748,6 +1849,7 @@ const Vendors = [
         Description: "Try our proprietary Kratom extract. None of our products have synthetic kratom alkaloids. Experience the difference of our exclusive water-based photo conversion process. No solvents, no synthetic chemicals - just pure MGM at honest prices (MGM is 2.5x potent as synthetic kratom alkaloids with same effects, lasts 10 hours!).",
         Sections: ["Opioids"],
         SubSections: ["7-Hydroxymitragynine", "Pseudoindoxyl", "MGM-15"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://rituallypure.com" }
@@ -1757,7 +1859,8 @@ const Vendors = [
         Title: "Rift Chems",
         Description: "Rift Chems is the best site to buy research chemicals in the USA, including: Bromazolam, Rilmazafone, Clobromazolam, O-dsmt, 2fdck, SR-17018, Fluoprazolam, 2FXiPr, 4fmph, , Phenazolam, 4-metmp, Bromonordiazepam & more.",
         Sections: ["Psychedelics", "Dissociatives", "Stimulants", "Benzodiazepines", "Other"],
-        SubSections: ["Clonazepam", "Ritalin", "Tramadol", "Tapetadol", "2-FMA", "3-HO-PCP", "4-PrO-DMT", "2F-DCK", "3-ME-PCP", "2-FXiPr", "Fluorexetamine", "Isophenidine", "Fluprazolam", "Rilmazofone", "Clobromazolam", "Norflurazepam", "Pynazolam", "Bromonordiazepam", "N-Ethyl-Nitrazepam", "Ethyl-Flualprazolam", "Ethyl-Bromazolam", "Isopropylphenidate", "O-DSMT"],
+        SubSections: ["Clonazepam", "Ritalin", "Tramadol", "Tapetadol", "Tapentadol", "Fluoprazolam", "4-FMA", "2-FMA", "3,4-MD-PCP", "3-HO-PCP", "4-PrO-DMT", "2F-DCK", "3-ME-PCP", "3-MEO-PCE", "2-FXiPr", "Fluorexetamine", "Isophenidine", "Fluprazolam", "Rilmazofone", "Clobromazolam", "Norflurazepam", "Pynazolam", "Bromonordiazepam", "N-Ethyl-Nitrazepam", "Ethyl-Flualprazolam", "Ethyl-Bromazolam", "Isopropylphenidate", "O-DSMT", "O-PCE"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://riftchems.com/" }
@@ -1768,6 +1871,7 @@ const Vendors = [
         Description: "At Fractal Elephant we have put together quality psychedelics for sale online that meet customers quality expectations. We have been in business since 2020 and our goal is to provide high quality products at affordable prices. Our customers can expect nothing but the best from us and our products!",
         Sections: ["Marijuana", "Psychedelics"],
         SubSections: ["Flower", "4-HO-MET", "Mescaline", "2-CB", "LSD", "MDMA", "MDA", "Shrooms", "N,N-DMT"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://fractalelephant.com/" }
@@ -1777,7 +1881,8 @@ const Vendors = [
         Title: "EVERYCHEM",
         Description: "We are an innovative company that focuses on providing high-quality reference materials for research labs across the globe. With the best chemists and manufacturers, you are guaranteed the safety and efficacy expected of a leader in the industry.",
         Sections: ["Peptides", "Other"],
-        SubSections: [],
+        ShipsTo: ["United States Of America"],
+        SubSections: ["GB-115"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://everychem.com/" }
@@ -1788,6 +1893,7 @@ const Vendors = [
         Description: "⚠️ ATTENTION - SCAM ALERT! Beware of scam websites - osgear.ORG and osgear.CO⚠️ ✅ osgear.TO is the only genuine site!",
         Sections: ["Peptides", "Other"],
         SubSections: ["Retatrutide", "Trenbolone", "CJC-1295", "Ipamorelin", "BPC-157", "TB-500", "IGF-1 LR3", "GHRP-6", "GHRP-2", "Hexarelin", "MK-677 (Ibutamoren)", "Melanotan II", "AOD-9604", "Tesamorelin", "Selank"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://osgear.to/" }
@@ -1798,6 +1904,7 @@ const Vendors = [
         Description: NoDescriptionWarning,
         Sections: ["Peptides", "Other"],
         SubSections: ["Retatrutide", "Trenbolone", "TB-500", "Ipamorelin", "BPC-157", "Melanotan II", "IGF1-LR3", "Viagra", "Semaglutide"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://primalpharma.org/" }
@@ -1808,6 +1915,7 @@ const Vendors = [
         Description: NoDescriptionWarning,
         Sections: ["Opioids"],
         SubSections: ["Natural kratom", "MGM-15", "7-OH"],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://clandestine7oh.com/" }
@@ -1824,6 +1932,7 @@ const Vendors = [
             "Nortilidine", "PiPTapentadol", "2-FXiPr", "Fluprazolam", "Pynazolam", 
             "Tianeptine", "Ethyl-Flualprazolam"
         ],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://autogenresearch.services/" }
@@ -1837,6 +1946,7 @@ const Vendors = [
             "Clobromazolam", "Desalkylgidazepam", "Deschloroetizolam", "Ethyl-Bromazolam", "Flubrotizolam",
             "Fluclotizolam", "Fluloprazolam", "Fluorexetamine", "Pyrazolam", "Rilmazafone"
         ],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://novelscienceshop.is/" }
@@ -1850,6 +1960,7 @@ const Vendors = [
             "Ethyl-Bromazolam", "Ethyl-Flualprazolam", "Rilmazafone", "Tilmetamine",
             "Clobromazolam", "3-Hydroxyphenazepam"
         ],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://sunnysideresearchstore.net/" }
@@ -1863,6 +1974,7 @@ const Vendors = [
             "Flower", "Concentrates", "Vapes", "Edibles", "Tinctures",
             "N,N-DMT", "MDMA", "Shrooms"
         ],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
             { Text: "Website", Link: "https://happinessdelivers.com/" },
@@ -1876,6 +1988,7 @@ const Vendors = [
         SubSections: [
             "Shrooms", "LSD", "MDMA", "N,N-DMT"
         ],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
             { Text: "Website", Link: "https://divinesciencesociety.org/" },
@@ -1892,6 +2005,7 @@ const Vendors = [
         SubSections: [
             "Shrooms", "LSD", "MDMA", "N,N-DMT"
         ],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
             { Text: "Website", Link: "https://mushmore.store/" }
@@ -1904,11 +2018,12 @@ const Vendors = [
         SubSections: [
             "Shrooms", "LSD", "MDMA", "Ketamine"
         ],
+        ShipsTo: ["United States Of America"],
         IsNew: false,
         Buttons: [
-            { Text: "Website", Link: "https://itheom.org/" }
+            { Text: "Website", Link: "https://mushmore.store/" }
         ]
     }
 ];
 
-return [Categories, SubCategories, Vendors, Note];
+return [Countries, Categories, SubCategories, Vendors, Note];
