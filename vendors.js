@@ -1,6 +1,13 @@
 const Note = {
     title: "📋 What's New",
-    text: "Vendor cards have been fully redesigned with a cleaner layout and improved readability. Each card now displays a visible list of products offered by that vendor, making it easier to find what you're looking for.\n\nReporting is now live — you can now flag any vendor directly from their card if you encounter an issue. Vendor request submissions also now show a confirmation so you know your request was received.\n\nPanels across the site have titled headers for better navigation, a number of theme refinements have been applied, and a few new vendors have been added to the list.\n\nHarm reduction is a priority. Expanded safety information, dosage guidance, and substance-specific resources are coming soon — hopefully to help you make informed decisions and stay safe.\n\n— Dabatron"
+    text: `If you would like your brand removed from the The Vendor List or need any changes made, please contact me using the details below.
+
+Proof of ownership is required for all removal or modification requests. If you email me directly from your buisness email, there is no need.
+
+Discord: discord.gg/mqwB9xp8rJ  
+Email: thevendorlist@proton.me  
+
+— Dabatron`
 };
 
 const Countries = [
@@ -1864,17 +1871,6 @@ const Vendors = [
         IsNew: false,
         Buttons: [
         { Text: "Website", Link: "https://riftchems.com/" }
-        ]
-    },
-    {
-        Title: "Fractal Elephant",
-        Description: "At Fractal Elephant we have put together quality psychedelics for sale online that meet customers quality expectations. We have been in business since 2020 and our goal is to provide high quality products at affordable prices. Our customers can expect nothing but the best from us and our products!",
-        Sections: ["Marijuana", "Psychedelics"],
-        SubSections: ["Flower", "4-HO-MET", "Mescaline", "2-CB", "LSD", "MDMA", "MDA", "Shrooms", "N,N-DMT"],
-        ShipsTo: ["United States Of America"],
-        IsNew: false,
-        Buttons: [
-        { Text: "Website", Link: "https://fractalelephant.com/" }
         ]
     },
     {
