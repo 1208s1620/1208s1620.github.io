@@ -1568,7 +1568,6 @@ const Vendors = [
         IsRecommended: true,
         Buttons: [
         { Text: "Website", Link: "https://aldersonfamilyfarms.store/" },
-        { Text: "Discord", Link: "https://discord.gg/TrT5YPw9" },
         { Text: "Twitter", Link: "https://x.com/martybacardi89"},
         { Text: "Facebook", Link: "https://www.facebook.com/aldersonfamilyfarms" }
         ]
